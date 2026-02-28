@@ -81,12 +81,12 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       },
     ],
     trustSignals: [
-      { value: 'EN/PT', label: 'Bilingual and bicultural bridge' },
+      { value: 'EN/PT', label: 'Bilingual, born Canadian-Madeiran' },
       { value: '4h', label: 'Owner response target' },
       { value: '56-point', label: 'Turnover quality checklist' },
     ],
     architectureEyebrow: 'Built For Overseas Owners',
-    architectureTitle: 'Not the biggest operator on the island. The most trusted.',
+    architectureTitle: 'Small on purpose. One owner, one point of contact, full accountability.',
     architectureLink: 'How We Operate',
     serviceTiles: [
       {
@@ -115,7 +115,7 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       },
       {
         title: 'Premium White-Glove (Phase 2)',
-        blurb: 'Curated arrivals, family-friendly concierge, and vetted local experiences.',
+        blurb: 'Welcome packs, family-friendly concierge, and local experiences with vetted partners.',
         image: pexelsMadeiraImages.villageRuggedMountains.src,
         alt: 'Madeira village between rugged mountains',
         hrefKey: 'howItWorks',
@@ -153,10 +153,10 @@ export const homepageContent: Record<Locale, HomePageContent> = {
           'We run day-to-day operations with monthly reports, maintenance logs, and SLA-driven support.',
       },
     ],
-    finalEyebrow: 'Peace Of Mind Starts Here',
-    finalTitle: 'If you own in Madeira but live abroad, we become your trusted local point of contact.',
+    finalEyebrow: 'Ready To Talk?',
+    finalTitle: 'Own property in Madeira but live abroad? We handle it locally, you stay in the loop.',
     finalSubtitle:
-      'Start with a 30-minute diagnostic call and get a practical roadmap for care, hosting, and compliance.',
+      'Start with a 30-minute diagnostic call. We\'ll map out what your property needs for care, hosting, or compliance.',
     finalPrimaryCta: 'Book Consultation',
     finalSecondaryCta: 'View Pricing',
   },
@@ -188,12 +188,12 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       },
     ],
     trustSignals: [
-      { value: 'EN/PT', label: 'Ponte bilingue e bicultural' },
+      { value: 'EN/PT', label: 'Bilingue, nascida canadiana-madeirense' },
       { value: '4h', label: 'Objetivo de resposta ao proprietário' },
       { value: '56 pontos', label: 'Checklist de qualidade no turnover' },
     ],
     architectureEyebrow: 'Feito Para Proprietários no Estrangeiro',
-    architectureTitle: 'Não somos o maior operador da ilha. Somos o mais fiável.',
+    architectureTitle: 'Pequenos de propósito. Uma responsável, um ponto de contacto, total responsabilidade.',
     architectureLink: 'Como Operamos',
     serviceTiles: [
       {
@@ -222,7 +222,7 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       },
       {
         title: 'Premium White-Glove (Fase 2)',
-        blurb: 'Chegadas curadas, concierge familiar e experiências locais validadas.',
+        blurb: 'Welcome packs, concierge familiar e experiências locais com parceiros validados.',
         image: pexelsMadeiraImages.villageRuggedMountains.src,
         alt: 'Aldeia da Madeira entre montanhas escarpadas',
         hrefKey: 'howItWorks',
@@ -260,10 +260,10 @@ export const homepageContent: Record<Locale, HomePageContent> = {
           'Executamos a operação diária com relatórios mensais, registo de manutenção e suporte por SLA.',
       },
     ],
-    finalEyebrow: 'A Tranquilidade Começa Aqui',
-    finalTitle: 'Se tem imóvel na Madeira mas vive fora, tornamo-nos o seu ponto local de confiança.',
+    finalEyebrow: 'Pronto Para Falar?',
+    finalTitle: 'Tem imóvel na Madeira mas vive fora? Nós tratamos localmente, você acompanha tudo.',
     finalSubtitle:
-      'Comece com uma chamada de diagnóstico de 30 minutos e receba um roteiro prático de cuidado, hosting e conformidade.',
+      'Comece com uma chamada de diagnóstico de 30 minutos. Mapeamos o que o seu imóvel precisa em cuidado, hosting ou conformidade.',
     finalPrimaryCta: 'Marcar Consulta',
     finalSecondaryCta: 'Ver Preços',
   },

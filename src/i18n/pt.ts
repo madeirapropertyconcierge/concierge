@@ -126,8 +126,8 @@ const pt = {
     metaTitle: "Preços | Madeira Property Concierge",
     metaDescription: "Preços transparentes por nível: €100-€250/mês em home care, 15%-18% em hosting, 20%-25% em full-service e €50-€150/estadia em white-glove.",
     hero: {
-      title: "Preços Transparentes, Valor Real",
-      subtitle: "Sem taxas ocultas. Sem surpresas. Escolha o nível que se adequa às suas necessidades.",
+      title: "Preços Claros, Sem Surpresas",
+      subtitle: "Sem taxas ocultas. Escolha o nível que se adequa ao que precisa.",
     },
     popular: "Mais Popular",
     perMonth: "/mês",
@@ -198,7 +198,7 @@ const pt = {
   blog: {
     title: "Blog",
     metaTitle: "Blog | Madeira Property Concierge",
-    metaDescription: "Insights especializados sobre gestão de propriedades na Madeira, licenciamento AL, dicas de investimento e vida na ilha.",
+    metaDescription: "Artigos práticos sobre gestão de propriedades na Madeira, licenciamento AL, investimento e vida na ilha.",
     readMore: "Ler Mais",
     publishedOn: "Publicado em",
     backToBlog: "← Voltar ao Blog",
