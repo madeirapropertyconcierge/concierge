@@ -1,0 +1,47 @@
+---
+import type { LegalSection } from '../../lib/pageContent/legal';
+
+interface Props {
+  section: LegalSection;
+}
+
+const { section } = Astro.props;
+---
+
+<article class="step-card">
+  <h2 class="text-2xl text-charcoal">{section.title}</h2>
+  <p class="mt-2 text-sm leading-relaxed text-charcoal/72 sm:text-base">{section.body}</p>
+
+  {section.items && (
+    <ul class="mt-3 space-y-2 text-sm leading-relaxed text-charcoal/74 sm:text-base">
+      {section.items.map((item) => (
+        <li class="flex gap-2">
+          <span class="mt-[0.35rem] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ocean-blue/80"></span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  {section.links && (
+    <div class="mt-4 flex flex-wrap gap-3">
+      {section.links.map((link) => {
+        const isExternal = link.href.startsWith('http');
+        return (
+          <a
+            href={link.href}
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noopener noreferrer' : undefined}
+            class="inline-flex items-center rounded-full border border-ocean-blue/22 bg-ocean-blue/8 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.08em] text-ocean-blue transition-colors hover:bg-ocean-blue hover:text-white"
+          >
+            {link.label}
+          </a>
+        );
+      })}
+    </div>
+  )}
+
+  {section.note && (
+    <p class="mt-3 text-xs font-semibold uppercase tracking-[0.08em] text-red-700">{section.note}</p>
+  )}
+</article>

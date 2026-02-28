@@ -4,22 +4,19 @@ import pt from "./pt";
 const translations = { en, pt } as const;
 
 export type Locale = keyof typeof translations;
-export type TranslationKey = keyof typeof en;
+export type TranslationKey = string;
 
 export function t(locale: Locale, key: string): string {
-  const keys = key.split(".");
-  let value: any = translations[locale];
-  for (const k of keys) {
-    value = value?.[k];
-  }
-  if (value === undefined) {
-    // Fallback to English
-    value = translations.en;
-    for (const k of keys) {
-      value = value?.[k];
-    }
-  }
-  return value ?? key;
+  const value = key
+    .split(".")
+    .reduce<unknown>((current, segment) => {
+      if (current && typeof current === "object") {
+        return (current as Record<string, unknown>)[segment];
+      }
+      return undefined;
+    }, translations[locale]);
+
+  return typeof value === "string" ? value : key;
 }
 
 export function getCurrentLocale(url: URL): Locale {

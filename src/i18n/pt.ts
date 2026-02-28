@@ -1,4 +1,6 @@
-const pt: Record<string, any> = {
+import en from "./en";
+
+const pt = {
   // Site-wide
   site: {
     title: "Madeira Property Concierge",
@@ -20,95 +22,9 @@ const pt: Record<string, any> = {
     languageToggle: "EN",
   },
 
-  // Homepage
-  hero: {
-    title: "A Sua Parceira de Confiança na Ilha da Madeira",
-    subtitle: "Gestão premium de propriedades e serviços de concierge para proprietários internacionais. Bilingue. Design-driven. Pessoalmente investida.",
-    cta: "Consulta Gratuita",
-    secondaryCta: "Explorar Serviços",
-    trustBadge1: "Bilingue EN/PT",
-    trustBadge2: "Licenciada e Segurada",
-    trustBadge3: "Avaliações 5 Estrelas",
-  },
-
-  painPoints: {
-    title: "Compreendemos os Seus Desafios",
-    subtitle: "Ter uma propriedade à distância na Madeira traz desafios únicos. Nós resolvemos todos.",
-    cards: {
-      distance: {
-        title: "Gestão à Distância",
-        description: "Não pode estar presente para cada chamada de manutenção, check-in de hóspedes ou reunião com empreiteiros. Somos os seus olhos, ouvidos e mãos no terreno.",
-      },
-      language: {
-        title: "Barreiras Linguísticas",
-        description: "Navegar na burocracia portuguesa, empreiteiros e serviços locais sem falar português fluente cria atrasos dispendiosos e mal-entendidos.",
-      },
-      compliance: {
-        title: "Complexidade Legal",
-        description: "Licenciamento de Alojamento Local, obrigações fiscais, regulamentos de segurança — a conformidade imobiliária portuguesa é um campo minado para não residentes.",
-      },
-      quality: {
-        title: "Qualidade Inconsistente",
-        description: "Encontrar prestadores de serviços fiáveis e com padrões de qualidade numa ilha é desafiante. Um mau empreiteiro pode custar milhares.",
-      },
-    },
-  },
-
-  serviceOverview: {
-    title: "Serviços Adaptados às Suas Necessidades",
-    subtitle: "De gestão completa a projetos pontuais, escolha o nível de apoio certo para si.",
-    tiers: {
-      essentials: {
-        title: "Essenciais",
-        description: "Monitorização de propriedade e manutenção básica para proprietários que querem tranquilidade.",
-        price: "Desde €150/mês",
-      },
-      professional: {
-        title: "Profissional",
-        description: "Gestão completa de propriedade com serviços de hóspedes para propriedades de aluguer.",
-        price: "Desde €300/mês",
-      },
-      premium: {
-        title: "Premium",
-        description: "Serviço de excelência com otimização de receitas e suporte concierge completo.",
-        price: "Desde €500/mês",
-      },
-      project: {
-        title: "Por Projeto",
-        description: "Serviços pontuais: renovações, licenciamento AL, mobiliário e configuração.",
-        price: "Orçamento Personalizado",
-      },
-    },
-    cta: "Ver Todos os Serviços",
-  },
-
-  aboutTeaser: {
-    title: "Conheça a Lisa",
-    subtitle: "Canadiana-Portuguesa. Diretora de UX tornada concierge de propriedades. Mãe solteira que escolheu a Madeira.",
-    description: "Não me limitei a mudar-me para a Madeira — reconstruí a minha vida aqui. Com mais de 15 anos como Diretora de UX, trago o design thinking à gestão de propriedades: cada detalhe importa, cada processo é intencional, e cada experiência de cliente é criada com cuidado.",
-    cta: "Ler a Minha História",
-  },
-
   testimonials: {
     title: "O Que Dizem os Nossos Clientes",
     subtitle: "A confiança de proprietários de todo o mundo.",
-  },
-
-  marketStats: {
-    title: "O Mercado Imobiliário da Madeira em Números",
-    subtitle: "Os setores de turismo e imobiliário da ilha continuam a crescer de forma constante.",
-    stats: {
-      tourism: { value: "4M+", label: "Visitantes Anuais", source: "INE Portugal, 2024" },
-      growth: { value: "12%", label: "Crescimento do Valor Imobiliário (Anual)", source: "Idealista, 2024" },
-      occupancy: { value: "78%", label: "Taxa Média de Ocupação", source: "AirDNA, 2024" },
-      yield: { value: "6-8%", label: "Rendimento Médio de Aluguer", source: "Global Property Guide, 2024" },
-    },
-  },
-
-  ctaBanner: {
-    title: "Pronto Para Desfrutar Sem Stress?",
-    subtitle: "Marque uma consulta gratuita de 30 minutos. Vamos discutir a sua propriedade, os seus objetivos e como podemos ajudar.",
-    cta: "Marcar Consulta Gratuita",
   },
 
   // Footer
@@ -312,6 +228,6 @@ const pt: Record<string, any> = {
     description: "A página que procura não existe ou foi movida.",
     cta: "Ir para o Início",
   },
-};
+} as const satisfies typeof en;
 
 export default pt;

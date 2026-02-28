@@ -81,9 +81,9 @@ const pageSchema = [
       <article class="reveal">
         <a
           href={`/${lang}/blog/${featuredPost.slug}`}
-          class="group grid overflow-hidden rounded-[1.7rem] border border-charcoal/12 bg-white/85 shadow-[0_26px_60px_rgba(16,32,43,0.14)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_34px_70px_rgba(16,32,43,0.18)] md:grid-cols-[1.25fr_1fr]"
+          class="group grid overflow-hidden rounded-[1.7rem] border border-charcoal/12 bg-white/85 shadow-[0_26px_60px_rgba(16,32,43,0.14)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_34px_70px_rgba(16,32,43,0.18)] md:h-[28rem] md:grid-cols-[1.25fr_1fr]"
         >
-          <div class="relative min-h-[14rem] overflow-hidden sm:min-h-[15rem]">
+          <div class="relative h-64 overflow-hidden sm:h-72 md:h-full">
             <img
               src={featuredPost.coverImage}
               alt={featuredPost.coverAlt}
@@ -93,7 +93,7 @@ const pageSchema = [
             <div class="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent"></div>
           </div>
 
-          <div class="flex flex-col justify-between p-5 sm:p-6">
+          <div class="flex flex-col gap-5 p-5 sm:p-6">
             <div>
               <p class="inline-flex rounded-full border border-charcoal/16 bg-cream/70 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-charcoal/70">
                 {copy.featuredLabel}
@@ -104,7 +104,7 @@ const pageSchema = [
               <p class="mt-4 text-sm leading-relaxed text-charcoal/75 sm:text-base">{featuredPost.excerpt}</p>
             </div>
 
-            <div class="mt-6 flex flex-wrap items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.11em] text-charcoal/60">
+            <div class="flex flex-wrap items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.11em] text-charcoal/60">
               <span>{new Date(featuredPost.publishedAt).toLocaleDateString(lang === 'pt' ? 'pt-PT' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
               <span aria-hidden>•</span>
               <span>{featuredPost.readingMinutes} min</span>

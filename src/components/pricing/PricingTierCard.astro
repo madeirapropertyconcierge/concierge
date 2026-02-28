@@ -1,0 +1,68 @@
+---
+import type { PricingTier } from '../../lib/pageContent/pricing';
+
+interface Props {
+  tier: PricingTier;
+  index: number;
+  mostPopularLabel: string;
+  customQuoteLabel: string;
+  primaryCtaLabel: string;
+  projectCtaLabel: string;
+  contactHref: string;
+}
+
+const {
+  tier,
+  index,
+  mostPopularLabel,
+  customQuoteLabel,
+  primaryCtaLabel,
+  projectCtaLabel,
+  contactHref,
+} = Astro.props;
+---
+
+<article
+  class:list={[
+    'pricing-card premium-panel reveal flex h-full flex-col p-6 sm:p-7',
+    tier.highlight ? 'pricing-card-featured' : '',
+    index > 0 ? 'reveal-delay-1' : '',
+  ]}
+>
+  <div class="pricing-badge-slot">
+    {tier.highlight ? (
+      <p class="eyebrow w-fit !border-ocean-blue/30 !bg-ocean-blue/12 !text-ocean-blue">{mostPopularLabel}</p>
+    ) : (
+      <span aria-hidden="true" class="pricing-badge-placeholder"></span>
+    )}
+  </div>
+
+  <header class="mt-3 min-h-[6.5rem]">
+    <h2 class="text-3xl text-charcoal">{tier.title}</h2>
+    <p class="mt-2 text-sm leading-relaxed text-charcoal/66">{tier.audience}</p>
+  </header>
+
+  <div class="pricing-price mt-5">
+    {tier.price ? (
+      <p class="text-3xl leading-tight text-charcoal sm:text-4xl">{tier.price}</p>
+    ) : (
+      <p class="pricing-quote text-3xl text-charcoal">{customQuoteLabel}</p>
+    )}
+  </div>
+
+  <ul class="mt-6 grid flex-1 gap-3 text-sm text-charcoal/72">
+    {tier.features.map((feature) => (
+      <li class="flex items-start gap-2.5">
+        <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ocean-blue"></span>
+        <span>{feature}</span>
+      </li>
+    ))}
+  </ul>
+
+  <a
+    href={contactHref}
+    class="mt-8 inline-flex w-full items-center justify-center rounded-full bg-charcoal px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-ocean-blue"
+  >
+    {tier.price ? primaryCtaLabel : projectCtaLabel}
+  </a>
+</article>

@@ -21,5 +21,4 @@ export const SITE = {
   },
 } as const;
 
-export const CALENDLY_URL = "https://calendly.com/madeirapropertyconcierge/consultation";
 export const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";

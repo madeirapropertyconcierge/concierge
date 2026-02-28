@@ -13,6 +13,18 @@ export interface BlogPost {
   body: Record<Locale, string[]>;
 }
 
+export interface LocalizedBlogPost {
+  slug: string;
+  publishedAt: string;
+  updatedAt?: string;
+  readingMinutes: number;
+  coverImage: string;
+  coverAlt: string;
+  title: string;
+  excerpt: string;
+  body: string[];
+}
+
 export const blogPosts: BlogPost[] = [
   {
     slug: 'buying-property-madeira-guide',
@@ -361,26 +373,7 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export function getLocalizedBlogPosts(lang: Locale) {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-    publishedAt: post.publishedAt,
-    updatedAt: post.updatedAt,
-    readingMinutes: post.readingMinutes,
-    coverImage: post.coverImage,
-    coverAlt: post.coverAlt[lang],
-    title: post.title[lang],
-    excerpt: post.excerpt[lang],
-    body: post.body[lang],
-  }));
-}
-
-export function getLocalizedBlogPostBySlug(slug: string, lang: Locale) {
-  const post = blogPosts.find((entry) => entry.slug === slug);
-  if (!post) {
-    return null;
-  }
-
+function localizeBlogPost(post: BlogPost, lang: Locale): LocalizedBlogPost {
   return {
     slug: post.slug,
     publishedAt: post.publishedAt,
@@ -392,4 +385,17 @@ export function getLocalizedBlogPostBySlug(slug: string, lang: Locale) {
     excerpt: post.excerpt[lang],
     body: post.body[lang],
   };
+}
+
+export function getLocalizedBlogPosts(lang: Locale): LocalizedBlogPost[] {
+  return blogPosts.map((post) => localizeBlogPost(post, lang));
+}
+
+export function getLocalizedBlogPostBySlug(slug: string, lang: Locale): LocalizedBlogPost | null {
+  const post = blogPosts.find((entry) => entry.slug === slug);
+  if (!post) {
+    return null;
+  }
+
+  return localizeBlogPost(post, lang);
 }

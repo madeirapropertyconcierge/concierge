@@ -20,95 +20,9 @@ const en = {
     languageToggle: "PT",
   },
 
-  // Homepage
-  hero: {
-    title: "Your Trusted Property Partner on Madeira Island",
-    subtitle: "Premium property management and concierge services for international owners. Bilingual. Design-driven. Personally invested.",
-    cta: "Get a Free Consultation",
-    secondaryCta: "Explore Services",
-    trustBadge1: "Bilingual EN/PT",
-    trustBadge2: "Licensed & Insured",
-    trustBadge3: "5-Star Reviews",
-  },
-
-  painPoints: {
-    title: "We Understand Your Challenges",
-    subtitle: "Owning property remotely on Madeira comes with unique challenges. We solve them all.",
-    cards: {
-      distance: {
-        title: "Managing from Afar",
-        description: "You can't be there for every maintenance call, guest check-in, or contractor meeting. We're your eyes, ears, and hands on the ground.",
-      },
-      language: {
-        title: "Language Barriers",
-        description: "Navigating Portuguese bureaucracy, contractors, and local services without fluent Portuguese creates costly delays and misunderstandings.",
-      },
-      compliance: {
-        title: "Legal Complexity",
-        description: "Alojamento Local licensing, tax obligations, safety regulations — Portuguese property compliance is a minefield for non-residents.",
-      },
-      quality: {
-        title: "Inconsistent Quality",
-        description: "Finding reliable, quality-conscious service providers on an island is challenging. One bad contractor can cost thousands.",
-      },
-    },
-  },
-
-  serviceOverview: {
-    title: "Services Tailored to Your Needs",
-    subtitle: "From full-service management to one-off projects, choose the level of support that's right for you.",
-    tiers: {
-      essentials: {
-        title: "Essentials",
-        description: "Property monitoring and basic upkeep for owners who want peace of mind.",
-        price: "From €150/mo",
-      },
-      professional: {
-        title: "Professional",
-        description: "Complete property management with guest services for rental properties.",
-        price: "From €300/mo",
-      },
-      premium: {
-        title: "Premium",
-        description: "White-glove service with revenue optimization and full concierge support.",
-        price: "From €500/mo",
-      },
-      project: {
-        title: "Project-Based",
-        description: "One-time services: renovations, AL licensing, furnishing, and setup.",
-        price: "Custom Quote",
-      },
-    },
-    cta: "View All Services",
-  },
-
-  aboutTeaser: {
-    title: "Meet Lisa",
-    subtitle: "Canadian-Portuguese. UX Director turned property concierge. Single mum who chose Madeira.",
-    description: "I didn't just move to Madeira — I rebuilt my life here. With 15+ years as a UX Director, I bring design thinking to property management: every detail matters, every process is intentional, and every client experience is crafted with care.",
-    cta: "Read My Story",
-  },
-
   testimonials: {
     title: "What Our Clients Say",
     subtitle: "Trusted by property owners from across the globe.",
-  },
-
-  marketStats: {
-    title: "Madeira's Property Market at a Glance",
-    subtitle: "The island's tourism and property sectors continue to grow steadily.",
-    stats: {
-      tourism: { value: "4M+", label: "Annual Visitors", source: "INE Portugal, 2024" },
-      growth: { value: "12%", label: "Property Value Growth (YoY)", source: "Idealista, 2024" },
-      occupancy: { value: "78%", label: "Average Occupancy Rate", source: "AirDNA, 2024" },
-      yield: { value: "6-8%", label: "Average Rental Yield", source: "Global Property Guide, 2024" },
-    },
-  },
-
-  ctaBanner: {
-    title: "Ready to Enjoy Ownership Without the Stress?",
-    subtitle: "Book a free 30-minute consultation. We'll discuss your property, your goals, and how we can help.",
-    cta: "Book Your Free Consultation",
   },
 
   // Footer
