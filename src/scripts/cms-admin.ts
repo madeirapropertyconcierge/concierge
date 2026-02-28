@@ -197,6 +197,7 @@ let activeEditableElement: HTMLElement | null = null;
 let bannerResizeObserver: ResizeObserver | null = null;
 
 const BANNER_OFFSET_CSS_VAR = '--cms-admin-banner-offset';
+const LOGOUT_MARKER_STORAGE_KEY = 'cms-admin-force-logout';
 
 const MARKDOWN_BLOCK_TAGS = new Set(['P', 'DIV', 'LI', 'BLOCKQUOTE']);
 const TEXT_TAGS = new Set([
@@ -1217,6 +1218,30 @@ function getLibraryEditorField(name: string): string {
   return '';
 }
 
+function hasForcedLogoutMarker(): boolean {
+  try {
+    return window.sessionStorage.getItem(LOGOUT_MARKER_STORAGE_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function setForcedLogoutMarker(): void {
+  try {
+    window.sessionStorage.setItem(LOGOUT_MARKER_STORAGE_KEY, '1');
+  } catch {
+    // Ignore storage failures in privacy-restricted contexts.
+  }
+}
+
+function clearForcedLogoutMarker(): void {
+  try {
+    window.sessionStorage.removeItem(LOGOUT_MARKER_STORAGE_KEY);
+  } catch {
+    // Ignore storage failures in privacy-restricted contexts.
+  }
+}
+
 function findSelectedLibraryItem(): CmsMediaItem | null {
   if (!workingState || !selectedLibraryItemId) {
     return null;
@@ -1310,6 +1335,28 @@ function normalizeImageSrc(src: string): string {
   }
 }
 
+function imageDedupKey(src: string): string {
+  const normalized = normalizeImageSrc(src);
+  if (!normalized) {
+    return '';
+  }
+
+  if (normalized.startsWith('/')) {
+    return normalized;
+  }
+
+  try {
+    const resolved = new URL(normalized);
+    if (resolved.hostname.toLowerCase() === 'images.pexels.com') {
+      return `${resolved.origin}${resolved.pathname}`;
+    }
+
+    return resolved.toString();
+  } catch {
+    return normalized;
+  }
+}
+
 function mergeLocaleText(base: LocaleText, incoming: LocaleText): LocaleText {
   return {
     en: base.en.trim() || incoming.en.trim(),
@@ -1345,14 +1392,15 @@ function addGalleryCandidate(
   map: Map<string, CmsGalleryItem>,
   candidate: CmsGalleryItem,
 ): void {
-  const key = normalizeImageSrc(candidate.src);
-  if (!key) {
+  const key = imageDedupKey(candidate.src);
+  const normalizedSrc = normalizeImageSrc(candidate.src);
+  if (!key || !normalizedSrc) {
     return;
   }
 
   const nextCandidate: CmsGalleryItem = {
     ...candidate,
-    src: key,
+    src: normalizedSrc,
     sourceLabels: [...candidate.sourceLabels],
   };
 
@@ -1367,6 +1415,7 @@ function addGalleryCandidate(
   if (nextCandidate.libraryItemId) {
     existing.libraryItemId = nextCandidate.libraryItemId;
     existing.source = 'library';
+    existing.src = nextCandidate.src;
     existing.alt = deepClone(nextCandidate.alt);
     existing.caption = nextCandidate.caption ? deepClone(nextCandidate.caption) : undefined;
     existing.attributionName = nextCandidate.attributionName;
@@ -1377,6 +1426,7 @@ function addGalleryCandidate(
 
   if (GALLERY_SOURCE_PRIORITY[nextCandidate.source] < GALLERY_SOURCE_PRIORITY[existing.source]) {
     existing.source = nextCandidate.source;
+    existing.src = nextCandidate.src;
   }
 
   existing.alt = mergeLocaleText(existing.alt, nextCandidate.alt);
@@ -1529,8 +1579,13 @@ function addGalleryItemToLibrary(item: CmsGalleryItem): CmsMediaItem | null {
   }
 
   const normalizedTarget = normalizeImageSrc(item.src);
+  const dedupKey = imageDedupKey(item.src);
+  if (!normalizedTarget || !dedupKey) {
+    return null;
+  }
+
   const existing = workingState.mediaLibrary.items.find(
-    (libraryItem) => normalizeImageSrc(libraryItem.src) === normalizedTarget,
+    (libraryItem) => imageDedupKey(libraryItem.src) === dedupKey,
   );
 
   if (existing) {
@@ -1555,53 +1610,107 @@ function addGalleryItemToLibrary(item: CmsGalleryItem): CmsMediaItem | null {
   return nextItem;
 }
 
-function createLibraryItemFromGallery(item: CmsGalleryItem): CmsMediaItem {
-  return {
-    id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
-      ? crypto.randomUUID()
-      : `media-${Date.now()}`,
-    src: normalizeImageSrc(item.src),
-    alt: deepClone(item.alt),
-    attributionName: item.attributionName,
-    attributionUrl: item.attributionUrl,
-    licenseUrl: item.licenseUrl,
-    caption: item.caption ? deepClone(item.caption) : undefined,
-  };
+interface LibraryCleanupResult {
+  duplicatesRemoved: number;
+  unusedRemoved: number;
 }
 
-function ensureAllGalleryItemsInLibrary(): number {
-  if (!workingState) {
-    return 0;
-  }
+function collectActiveImageKeys(): Set<string> {
+  const keys = new Set<string>();
 
-  const normalizedToLibraryId = new Map<string, string>();
-  for (const item of workingState.mediaLibrary.items) {
-    const normalized = normalizeImageSrc(item.src);
-    if (normalized) {
-      normalizedToLibraryId.set(normalized, item.id);
-    }
-  }
-
-  const allGalleryItems = collectGalleryItems();
-  let addedCount = 0;
-
-  for (const item of allGalleryItems) {
-    const normalized = normalizeImageSrc(item.src);
-    if (!normalized || normalizedToLibraryId.has(normalized)) {
+  for (const item of globalGalleryItems) {
+    if (item.source === 'library') {
       continue;
     }
 
-    const nextItem = createLibraryItemFromGallery(item);
-    workingState.mediaLibrary.items.unshift(nextItem);
-    normalizedToLibraryId.set(normalized, nextItem.id);
-    addedCount += 1;
+    const key = imageDedupKey(item.src);
+    if (key) {
+      keys.add(key);
+    }
   }
 
-  if (addedCount > 0) {
+  if (!workingState) {
+    return keys;
+  }
+
+  for (const image of workingState.page.images) {
+    const key = imageDedupKey(image.src);
+    if (key) {
+      keys.add(key);
+    }
+  }
+
+  for (const localeKey of ['en', 'pt'] as const) {
+    const key = imageDedupKey(workingState.page.seo[localeKey].ogImage);
+    if (key) {
+      keys.add(key);
+    }
+  }
+
+  for (const post of workingState.blogPosts) {
+    const coverKey = imageDedupKey(post.coverImage);
+    if (coverKey) {
+      keys.add(coverKey);
+    }
+
+    for (const localeKey of ['en', 'pt'] as const) {
+      const seoKey = imageDedupKey(post.seoByLocale[localeKey].ogImage);
+      if (seoKey) {
+        keys.add(seoKey);
+      }
+    }
+  }
+
+  return keys;
+}
+
+function pruneLibraryToActiveReferences(): LibraryCleanupResult {
+  if (!workingState) {
+    return {
+      duplicatesRemoved: 0,
+      unusedRemoved: 0,
+    };
+  }
+
+  const activeKeys = collectActiveImageKeys();
+  const seen = new Set<string>();
+  const nextItems: CmsMediaItem[] = [];
+  let duplicatesRemoved = 0;
+  let unusedRemoved = 0;
+
+  for (const item of workingState.mediaLibrary.items) {
+    const dedupKey = imageDedupKey(item.src);
+    const normalizedSrc = normalizeImageSrc(item.src);
+    if (!dedupKey || !normalizedSrc || !activeKeys.has(dedupKey)) {
+      unusedRemoved += 1;
+      continue;
+    }
+
+    if (seen.has(dedupKey)) {
+      duplicatesRemoved += 1;
+      continue;
+    }
+
+    seen.add(dedupKey);
+    nextItems.push({
+      ...item,
+      src: normalizedSrc,
+    });
+  }
+
+  if (duplicatesRemoved > 0 || unusedRemoved > 0) {
+    const nextIds = new Set(nextItems.map((item) => item.id));
+    if (selectedLibraryItemId && !nextIds.has(selectedLibraryItemId)) {
+      selectedLibraryItemId = null;
+    }
+    workingState.mediaLibrary.items = nextItems;
     workingState.mediaLibrary.updatedAt = nowIso();
   }
 
-  return addedCount;
+  return {
+    duplicatesRemoved,
+    unusedRemoved,
+  };
 }
 
 function openGalleryItemEditor(item: CmsGalleryItem): void {
@@ -2043,16 +2152,23 @@ function hydrateStateFromResponse(response: ContentResponse): void {
   globalGalleryItems = deepClone(response.galleryItems ?? []);
   selectedImageTarget = null;
   selectedLibraryItemId = null;
-  const syncedLibraryItems = ensureAllGalleryItemsInLibrary();
+  const cleanup = pruneLibraryToActiveReferences();
 
   applyCurrentState();
   renderImageLibrary();
   renderBlogSelect();
   hydrateSeoForm();
   hydrateImageEditorForm();
-  if (syncedLibraryItems > 0) {
+  if (cleanup.duplicatesRemoved > 0 || cleanup.unusedRemoved > 0) {
+    const removedParts: string[] = [];
+    if (cleanup.duplicatesRemoved > 0) {
+      removedParts.push(`${cleanup.duplicatesRemoved} duplicate image${cleanup.duplicatesRemoved === 1 ? '' : 's'}`);
+    }
+    if (cleanup.unusedRemoved > 0) {
+      removedParts.push(`${cleanup.unusedRemoved} unlinked image${cleanup.unusedRemoved === 1 ? '' : 's'}`);
+    }
     setDirty(true);
-    setStatus(`Added ${syncedLibraryItems} missing images to library. Publish to save.`);
+    setStatus(`Cleaned media library: removed ${removedParts.join(' and ')}. Publish to save.`);
     return;
   }
 
@@ -2148,10 +2264,21 @@ async function uploadImage(formData: FormData): Promise<void> {
 }
 
 async function logout(): Promise<void> {
-  await fetch('/api/admin/logout', {
-    method: 'POST',
-    credentials: 'include',
-  });
+  suppressBeforeUnloadPrompt = true;
+  setForcedLogoutMarker();
+
+  try {
+    await fetch('/api/admin/logout', {
+      method: 'POST',
+      credentials: 'include',
+      cache: 'no-store',
+      keepalive: true,
+    });
+  } catch {
+    // Keep local logout state even if request fails.
+  } finally {
+    suppressBeforeUnloadPrompt = false;
+  }
 
   authenticated = false;
   disableEditMode();
@@ -2287,6 +2414,7 @@ function bindAuthUI(): void {
       return;
     }
 
+    clearForcedLogoutMarker();
     authenticated = true;
     closeLoginModal();
     setBannerVisibility();
@@ -2502,9 +2630,11 @@ async function boot(): Promise<void> {
   document.addEventListener('submit', lockFormSubmit, true);
   document.addEventListener('click', handleEditClick, true);
 
-  authenticated = await checkSession();
+  const forceLoggedOut = hasForcedLogoutMarker();
+  authenticated = forceLoggedOut ? false : await checkSession();
 
   if (authenticated) {
+    clearForcedLogoutMarker();
     const content = await fetchContent();
     hydrateStateFromResponse(content);
 

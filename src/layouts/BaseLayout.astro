@@ -60,7 +60,23 @@ const resolvedCanonicalUrl = effectiveCanonical.startsWith('http')
   ? effectiveCanonical
   : `${SITE.url}${effectiveCanonical.startsWith('/') ? effectiveCanonical : `/${effectiveCanonical}`}`;
 const ogSourceImage = cmsSeo.ogImage.trim() || ogImage;
-const requestOrigin = Astro.url.origin;
+
+function resolveMetadataOrigin(): string {
+  const forwardedHost = Astro.request.headers.get('x-forwarded-host')?.trim();
+  const forwardedProto = Astro.request.headers.get('x-forwarded-proto')?.trim() || 'https';
+  if (forwardedHost && !forwardedHost.includes('localhost') && !forwardedHost.startsWith('127.0.0.1')) {
+    return `${forwardedProto}://${forwardedHost}`;
+  }
+
+  const host = Astro.request.headers.get('host')?.trim();
+  if (host && !host.includes('localhost') && !host.startsWith('127.0.0.1')) {
+    return `${forwardedProto}://${host}`;
+  }
+
+  return SITE.url;
+}
+
+const metadataOrigin = resolveMetadataOrigin();
 
 function resolveImageUrl(path: string): string {
   if (path.startsWith('http')) {
@@ -68,7 +84,7 @@ function resolveImageUrl(path: string): string {
   }
 
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  return `${requestOrigin}${normalizedPath}`;
+  return `${metadataOrigin}${normalizedPath}`;
 }
 
 const resolvedOgImage = resolveImageUrl(ogSourceImage);

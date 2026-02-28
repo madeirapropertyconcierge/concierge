@@ -1,6 +1,3 @@
-import { readdir } from 'node:fs/promises';
-import { basename, extname, relative, resolve } from 'node:path';
-import { pexelsMadeiraImages, PEXELS_LICENSE_URL } from '../lib/pexelsImages';
 import {
   listBlogPosts,
   listPageDocuments,
@@ -18,16 +15,6 @@ export interface CmsGalleryImage extends CmsMediaItem {
   libraryItemId?: string;
 }
 
-const IMAGE_FILE_EXTENSIONS = new Set([
-  '.jpg',
-  '.jpeg',
-  '.png',
-  '.webp',
-  '.gif',
-  '.avif',
-  '.svg',
-]);
-
 function normalizeImageSrc(src: string): string {
   const trimmed = src.trim();
   if (!trimmed || trimmed.startsWith('data:') || trimmed.startsWith('blob:')) {
@@ -43,6 +30,28 @@ function normalizeImageSrc(src: string): string {
   }
 
   return `/${trimmed.replace(/^\/+/, '')}`;
+}
+
+function imageDedupKey(src: string): string {
+  const normalized = normalizeImageSrc(src);
+  if (!normalized) {
+    return '';
+  }
+
+  if (normalized.startsWith('/')) {
+    return normalized;
+  }
+
+  try {
+    const resolved = new URL(normalized);
+    if (resolved.hostname.toLowerCase() === 'images.pexels.com') {
+      return `${resolved.origin}${resolved.pathname}`;
+    }
+
+    return resolved.toString();
+  } catch {
+    return normalized;
+  }
 }
 
 function toLocaleText(value: string): LocaleText {
@@ -87,14 +96,15 @@ function addGalleryCandidate(
   map: Map<string, CmsGalleryImage>,
   candidate: CmsGalleryImage,
 ): void {
-  const key = normalizeImageSrc(candidate.src);
-  if (!key) {
+  const key = imageDedupKey(candidate.src);
+  const normalizedSrc = normalizeImageSrc(candidate.src);
+  if (!key || !normalizedSrc) {
     return;
   }
 
   const nextCandidate: CmsGalleryImage = {
     ...candidate,
-    src: key,
+    src: normalizedSrc,
     sourceLabels: [...candidate.sourceLabels],
   };
 
@@ -109,6 +119,7 @@ function addGalleryCandidate(
   if (nextCandidate.libraryItemId) {
     existing.libraryItemId = nextCandidate.libraryItemId;
     existing.source = 'library';
+    existing.src = nextCandidate.src;
     existing.alt = nextCandidate.alt;
     existing.caption = nextCandidate.caption;
     existing.attributionName = nextCandidate.attributionName;
@@ -119,6 +130,7 @@ function addGalleryCandidate(
 
   if (GALLERY_SOURCE_PRIORITY[nextCandidate.source] < GALLERY_SOURCE_PRIORITY[existing.source]) {
     existing.source = nextCandidate.source;
+    existing.src = nextCandidate.src;
   }
 
   existing.alt = mergeLocaleText(existing.alt, nextCandidate.alt);
@@ -128,65 +140,11 @@ function addGalleryCandidate(
   existing.licenseUrl = existing.licenseUrl.trim() || nextCandidate.licenseUrl.trim();
 }
 
-function fallbackAltFromPath(filePath: string): string {
-  const base = basename(filePath, extname(filePath))
-    .replace(/[-_]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-
-  return base || 'Website image';
-}
-
-async function walkDirectory(directoryPath: string): Promise<string[]> {
-  const results: string[] = [];
-  let entries: Awaited<ReturnType<typeof readdir>>;
-
-  try {
-    entries = await readdir(directoryPath, { withFileTypes: true });
-  } catch {
-    return results;
-  }
-
-  for (const entry of entries) {
-    const absolute = resolve(directoryPath, entry.name);
-
-    if (entry.isDirectory()) {
-      const nested = await walkDirectory(absolute);
-      results.push(...nested);
-      continue;
-    }
-
-    if (!entry.isFile()) {
-      continue;
-    }
-
-    const extension = extname(entry.name).toLowerCase();
-    if (!IMAGE_FILE_EXTENSIONS.has(extension)) {
-      continue;
-    }
-
-    results.push(absolute);
-  }
-
-  return results;
-}
-
-async function listPublicImageAssets(): Promise<string[]> {
-  const publicRoot = resolve(process.cwd(), 'public');
-  const imageRoot = resolve(publicRoot, 'images');
-  const files = await walkDirectory(imageRoot);
-  return files.map((absolute) => {
-    const normalized = relative(publicRoot, absolute).replaceAll('\\', '/');
-    return `/${normalized}`;
-  });
-}
-
 export async function collectSiteGalleryImages(): Promise<CmsGalleryImage[]> {
-  const [mediaLibrary, pages, blogPosts, publicImages] = await Promise.all([
+  const [mediaLibrary, pages, blogPosts] = await Promise.all([
     loadMediaLibrary(),
     listPageDocuments(),
     listBlogPosts(),
-    listPublicImageAssets(),
   ]);
 
   const map = new Map<string, CmsGalleryImage>();
@@ -268,32 +226,6 @@ export async function collectSiteGalleryImages(): Promise<CmsGalleryImage[]> {
         sourceLabels: [`Blog SEO ${localeKey.toUpperCase()}: ${post.slug}`],
       });
     }
-  }
-
-  for (const [key, item] of Object.entries(pexelsMadeiraImages)) {
-    addGalleryCandidate(map, {
-      id: `pexels:${key}`,
-      src: item.src,
-      alt: toLocaleText(item.alt),
-      attributionName: item.photographer,
-      attributionUrl: item.photoUrl,
-      licenseUrl: PEXELS_LICENSE_URL,
-      source: 'visible',
-      sourceLabels: [`Pexels catalog: ${item.label}`],
-    });
-  }
-
-  for (const src of publicImages) {
-    addGalleryCandidate(map, {
-      id: `public:${src}`,
-      src,
-      alt: toLocaleText(fallbackAltFromPath(src)),
-      attributionName: '',
-      attributionUrl: '',
-      licenseUrl: '',
-      source: 'visible',
-      sourceLabels: ['Public asset'],
-    });
   }
 
   return Array.from(map.values()).sort((a, b) => a.src.localeCompare(b.src));

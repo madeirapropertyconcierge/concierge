@@ -1,7 +1,7 @@
 export const SITE = {
   name: "Madeira Property Concierge",
   tagline: "Boutique hosting and property care for overseas owners who want peace of mind",
-  url: "https://madeirapropertyconcierge.com",
+  url: "https://madeirapropertyconcierge.vercel.app",
   email: "hello@madeirapropertyconcierge.com",
   phone: "+351 XXX XXX XXX",
   whatsapp: "351967637133",
