@@ -97,9 +97,12 @@ export function getLegalPageContent(
             title: 'Recipients and International Transfers',
             body: 'Data may be shared with service providers strictly needed to run our operations (for example hosting, email, forms, and scheduling tools).',
             items: [
+              'Hosting provider: Vercel (infrastructure and site delivery).',
+              'Analytics provider: Vercel Web Analytics, loaded only after explicit cookie consent.',
               'Processors act under contractual confidentiality and data-protection obligations.',
               'If data is transferred outside the EEA, we apply lawful safeguards such as Standard Contractual Clauses.',
             ],
+            links: [{ label: 'Vercel Privacy Policy', href: 'https://vercel.com/legal/privacy-policy' }],
           },
           {
             title: 'Your Rights and Complaints',
@@ -115,7 +118,8 @@ export function getLegalPageContent(
             title: 'Cookies and Similar Technologies',
             body: 'We use strictly necessary cookies for site operation. Non-essential cookies (such as analytics/marketing) require prior consent.',
             items: [
-              'No non-essential cookies should run before your explicit acceptance.',
+              'No non-essential cookies run before your explicit acceptance.',
+              'Vercel Web Analytics is enabled only after you click Accept in the cookie banner.',
               'You can change cookie preferences at any time through browser settings and local storage controls.',
             ],
             links: [{ label: 'Terms and cookie details', href: context.termsHref }],
@@ -241,9 +245,12 @@ export function getLegalPageContent(
             title: 'Destinatários e Transferências Internacionais',
             body: 'Os dados podem ser partilhados com subcontratantes estritamente necessários ao funcionamento do serviço (alojamento, email, formulários, agendamento).',
             items: [
+              'Fornecedor de alojamento: Vercel (infraestrutura e entrega do website).',
+              'Fornecedor de analítica: Vercel Web Analytics, ativado apenas após consentimento explícito de cookies.',
               'Os subcontratantes atuam com deveres contratuais de confidencialidade e proteção de dados.',
               'Se houver transferências fora do EEE, aplicamos salvaguardas legais como Cláusulas Contratuais-Tipo.',
             ],
+            links: [{ label: 'Política de Privacidade da Vercel', href: 'https://vercel.com/legal/privacy-policy' }],
           },
           {
             title: 'Direitos do Titular e Reclamações',
@@ -259,7 +266,8 @@ export function getLegalPageContent(
             title: 'Cookies e Tecnologias Semelhantes',
             body: 'Utilizamos cookies estritamente necessários para operação do website. Cookies não essenciais (analíticos/marketing) exigem consentimento prévio.',
             items: [
-              'Não devem ser ativados cookies não essenciais antes da sua aceitação explícita.',
+              'Não são ativados cookies não essenciais antes da sua aceitação explícita.',
+              'A Vercel Web Analytics só é ativada depois de clicar em Aceitar no banner de cookies.',
               'Pode alterar preferências de cookies a qualquer momento nas definições do navegador e do armazenamento local.',
             ],
             links: [{ label: 'Termos e informação de cookies', href: context.termsHref }],
