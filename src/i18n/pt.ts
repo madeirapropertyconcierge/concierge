@@ -24,7 +24,7 @@ const pt = {
 
   testimonials: {
     title: "O Que Dizem os Nossos Clientes",
-    subtitle: "A confiança de proprietários de todo o mundo.",
+    subtitle: "O que dizem os proprietários com quem trabalhamos.",
   },
 
   // Footer
@@ -46,8 +46,8 @@ const pt = {
     metaTitle: "Serviços de Gestão de Propriedades | Madeira Property Concierge",
     metaDescription: "Modelo de 4 níveis: Tier A Guarda de Chaves + Home Care, Tier B Hosting Essentials, Tier C Gestão AL Full-Service e Tier D White-Glove.",
     hero: {
-      title: "Gestão de Propriedades, Reinventada",
-      subtitle: "Cada serviço desenhado com cuidado, entregue com precisão e adaptado às necessidades únicas da sua propriedade.",
+      title: "Gestão de Propriedades Que Funciona",
+      subtitle: "Cada serviço é pensado para o seu imóvel e para a forma como quer geri-lo.",
     },
   },
 
@@ -55,10 +55,10 @@ const pt = {
   about: {
     title: "Sobre a Lisa",
     metaTitle: "Sobre a Lisa | Madeira Property Concierge",
-    metaDescription: "Conheça a Lisa — Diretora de UX, ponte bilingue EN/PT e fundadora da Madeira Property Concierge com raízes madeirenses e 3+ anos na ilha.",
+    metaDescription: "Conheça a Lisa, fundadora da Madeira Property Concierge. Experiência em UX, bilingue EN/PT, raízes madeirenses e 3+ anos a viver na ilha.",
     hero: {
-      title: "A Pessoa Por Trás da Promessa",
-      subtitle: "Não uma agência sem rosto. Uma pessoa real com investimento real no seu sucesso.",
+      title: "Com Quem Vai Trabalhar",
+      subtitle: "Uma pessoa gere tudo. Vai saber sempre quem é responsável.",
     },
     story: {
       title: "A Minha História",
@@ -70,24 +70,24 @@ const pt = {
       title: "Porque Sou Diferente",
       bilingual: {
         title: "Verdadeiramente Bilingue",
-        description: "Inglês e Português nativos. Não me limito a traduzir — navego nuances culturais que previnem mal-entendidos dispendiosos.",
+        description: "Inglês e Português nativos. Trato das diferenças culturais que causam mal-entendidos caros entre proprietários e fornecedores locais.",
       },
       design: {
         title: "Abordagem Design Thinking",
-        description: "15 anos de UX ensinaram-me a obsessionar com detalhes, otimizar processos e colocar a experiência do cliente em primeiro lugar — sempre.",
+        description: "15 anos em UX significam que deteto o que vai falhar antes de ser problema, e crio processos que se mantêm.",
       },
       personal: {
         title: "Pessoalmente Investida",
         description: "Vivo na Madeira e crio aqui a minha filha. A minha reputação é local, visível e diretamente ligada aos seus resultados.",
       },
       network: {
-        title: "Rede Madeirense Autêntica",
-        description: "Construída através de raízes familiares e relações locais. Recebe fornecedores validados com padrões, SLAs e documentação.",
+        title: "Rede Local Madeirense",
+        description: "Raízes familiares e anos de relações locais. Recebe fornecedores validados com padrões claros e documentação.",
       },
     },
     promise: {
       title: "A Minha Promessa",
-      text: "Trato cada propriedade como se fosse minha. Comunico proativamente, resolvo problemas antes que se agravem e nunca corto nos cantos. Se algo correr mal, vai ouvir primeiro de mim — com uma solução já em mãos.",
+      text: "Trato cada propriedade como se fosse minha. Aviso antes dos problemas crescerem e não corto nos cantos. Se algo correr mal, vai ouvir primeiro de mim, com uma solução já a caminho.",
     },
   },
 
@@ -97,8 +97,8 @@ const pt = {
     metaTitle: "Como Funciona | Madeira Property Concierge",
     metaDescription: "Integração e operação lideradas pela fundadora: chamada de diagnóstico, auditoria do imóvel, setup e gestão mensal com SLAs claros.",
     hero: {
-      title: "Simples, Transparente, Eficaz",
-      subtitle: "Da primeira chamada à gestão completa — eis exatamente o que esperar.",
+      title: "Direto do Início ao Fim",
+      subtitle: "Da primeira chamada à gestão completa, eis o que esperar.",
     },
     steps: {
       step1: {
