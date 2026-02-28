@@ -54,7 +54,7 @@ export const pexelsMadeiraImages = {
   villageRuggedMountains: {
     label: 'Madeira Village in Rugged Mountains',
     src: 'https://images.pexels.com/photos/33637860/pexels-photo-33637860.jpeg?auto=compress&cs=tinysrgb&w=2000',
-    alt: 'Village homes nestled between rocky mountains in Madeira',
+    alt: 'Village homes between rocky mountains in Madeira',
     photoUrl: 'https://www.pexels.com/photo/aerial-view-of-madeira-village-amidst-rugged-mountains-33637860/',
     photographer: 'Liane Ferreira',
   },
@@ -82,7 +82,7 @@ export const pexelsMadeiraImages = {
   fruitMarketStalls: {
     label: 'Fruit Market Stalls in Madeira',
     src: 'https://images.pexels.com/photos/33713285/pexels-photo-33713285.jpeg?auto=compress&cs=tinysrgb&w=2000',
-    alt: 'Vibrant fruit market stalls in Madeira',
+    alt: 'Fruit market stalls in Madeira',
     photoUrl: 'https://www.pexels.com/photo/vibrant-fruit-market-stalls-in-madeira-portugal-33713285/',
     photographer: 'Liane Ferreira',
   },
