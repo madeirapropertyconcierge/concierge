@@ -30,7 +30,7 @@ const {
   title = SITE.name,
   description = '',
   lang = 'en',
-  ogImage = '/images/og-default.jpg',
+  ogImage = '/images/madeira/funchal-bay.jpg',
   twitterImage = ogImage,
   ogType = 'website',
   publishedTime,
@@ -60,8 +60,19 @@ const resolvedCanonicalUrl = effectiveCanonical.startsWith('http')
   ? effectiveCanonical
   : `${SITE.url}${effectiveCanonical.startsWith('/') ? effectiveCanonical : `/${effectiveCanonical}`}`;
 const ogSourceImage = cmsSeo.ogImage.trim() || ogImage;
-const resolvedOgImage = ogSourceImage.startsWith('http') ? ogSourceImage : `${SITE.url}${ogSourceImage}`;
-const resolvedTwitterImage = ogSourceImage.startsWith('http') ? ogSourceImage : `${SITE.url}${ogSourceImage}`;
+const requestOrigin = Astro.url.origin;
+
+function resolveImageUrl(path: string): string {
+  if (path.startsWith('http')) {
+    return path;
+  }
+
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${requestOrigin}${normalizedPath}`;
+}
+
+const resolvedOgImage = resolveImageUrl(ogSourceImage);
+const resolvedTwitterImage = resolveImageUrl(cmsSeo.ogImage.trim() || twitterImage);
 const effectiveOgTitle = cmsSeo.ogTitle.trim() || pageTitle;
 const effectiveOgDescription = cmsSeo.ogDescription.trim() || effectiveDescription;
 const isBlogPage = currentPath.includes('/blog');
