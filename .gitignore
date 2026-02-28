@@ -27,3 +27,4 @@ pnpm-debug.log*
 business_plan.docx
 .tmp/*
 .vercel/
+public/cms-admin.js

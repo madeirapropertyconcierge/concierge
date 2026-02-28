@@ -3,7 +3,6 @@ import AdminBanner from './AdminBanner.astro';
 import AdminLoginModal from './AdminLoginModal.astro';
 import ImageLibraryPanel from './ImageLibraryPanel.astro';
 import BlogManagerPanel from './BlogManagerPanel.astro';
-import cmsAdminClientUrl from '../../scripts/cms-admin.ts?url';
 
 interface Props {
   pageId: string;
@@ -27,7 +26,7 @@ const { pageId, locale, isBlogPage } = Astro.props;
   <BlogManagerPanel />
 </div>
 
-<script type="module" src={cmsAdminClientUrl}></script>
+<script type="module" src="/cms-admin.js"></script>
 
 <style is:global>
   .cms-hidden { display: none !important; }

@@ -6,13 +6,14 @@
     "node": "24.x"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
+    "dev": "bun run cms:bundle-admin && astro dev",
+    "build": "bun run cms:bundle-admin && astro build",
     "build:vercel": "bunx vercel build",
-    "preview": "astro preview",
+    "preview": "bun run cms:bundle-admin && astro preview",
     "deploy:preview": "bunx vercel deploy --yes",
     "deploy:prod": "bunx vercel deploy --prod --yes",
     "astro": "astro",
+    "cms:bundle-admin": "bun run scripts/bundle-cms-admin.ts",
     "cms:hash-password": "bun run scripts/hash-admin-password.ts",
     "test": "bun test"
   },
@@ -20,6 +21,7 @@
     "@astrojs/vercel": "^9.0.4",
     "@tailwindcss/vite": "^4.2.1",
     "@types/sanitize-html": "^2.16.0",
+    "@vercel/analytics": "^1.6.1",
     "astro": "^5.17.1",
     "cheerio": "^1.2.0",
     "marked": "^17.0.3",
