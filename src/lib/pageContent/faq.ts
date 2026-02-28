@@ -86,8 +86,8 @@ const faqPageContent = {
       },
     ],
     closing: {
-      title: 'Tem uma questão específica sobre o seu imóvel?',
-      body: 'Falamos consigo e recomendamos o nível certo para o seu contexto atual.',
+      title: 'Tem uma dúvida sobre o seu imóvel?',
+      body: 'Podemos avaliar a sua situação e sugerir qual nível faz sentido.',
       cta: 'Marcar Chamada de Diagnóstico',
     },
   },
@@ -153,8 +153,8 @@ const faqPageContent = {
       },
     ],
     closing: {
-      title: 'Have a property-specific question?',
-      body: "Let's review your context and recommend the right tier for your current stage.",
+      title: 'Have a question about your property?',
+      body: "We can look at your situation and suggest which tier makes sense.",
       cta: 'Book Diagnostic Call',
     },
   },
