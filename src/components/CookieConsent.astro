@@ -44,22 +44,30 @@ const { labels, privacyUrl } = Astro.props;
   </div>
 </div>
 
-<script is:inline>
-  const consentKey = 'cookie-consent';
+<script>
+  import {
+    COOKIE_CONSENT_ACCEPTED_VALUE,
+    COOKIE_CONSENT_CHANGED_EVENT,
+    COOKIE_CONSENT_DECLINED_VALUE,
+    COOKIE_CONSENT_STORAGE_KEY,
+    type CookieConsentValue,
+  } from '../lib/cookieConsent';
+
   const container = document.querySelector('[data-cookie-consent]');
 
-  if (container && !localStorage.getItem(consentKey)) {
+  if (container && !localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY)) {
     container.classList.remove('hidden');
   }
 
   const acceptButton = container?.querySelector('[data-cookie-accept]');
   const declineButton = container?.querySelector('[data-cookie-decline]');
 
-  const closeBanner = (value) => {
-    localStorage.setItem(consentKey, value);
+  const closeBanner = (value: CookieConsentValue) => {
+    localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, value);
+    window.dispatchEvent(new CustomEvent(COOKIE_CONSENT_CHANGED_EVENT, { detail: value }));
     container?.classList.add('hidden');
   };
 
-  acceptButton?.addEventListener('click', () => closeBanner('accepted'));
-  declineButton?.addEventListener('click', () => closeBanner('declined'));
+  acceptButton?.addEventListener('click', () => closeBanner(COOKIE_CONSENT_ACCEPTED_VALUE));
+  declineButton?.addEventListener('click', () => closeBanner(COOKIE_CONSENT_DECLINED_VALUE));
 </script>

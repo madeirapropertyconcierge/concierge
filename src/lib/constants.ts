@@ -4,7 +4,7 @@ export const SITE = {
   url: "https://madeirapropertyconcierge.com",
   email: "hello@madeirapropertyconcierge.com",
   phone: "+351 XXX XXX XXX",
-  whatsapp: "+351XXXXXXXXX",
+  whatsapp: "351967637133",
   address: "Funchal, Madeira Island, Portugal",
   legal: {
     legalName: "Madeira Property Concierge (replace with full registered entity name before launch)",
