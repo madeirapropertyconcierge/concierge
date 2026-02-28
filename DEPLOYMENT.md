@@ -1,18 +1,14 @@
 # Deployment (Vercel + GitHub)
 
-## 1) Local prerequisites
+## Automatic production deploy
 
-- Bun installed
-- Vercel CLI authenticated: `bunx vercel login`
-- Repo secrets in `.env` (see `.env.example`)
+Production deploys are automatic through Vercel Git integration.
 
-## 2) Push code
+Trigger:
 
-```bash
-git push origin main
-```
+- every push to `main` on `madeirapropertyconcierge/concierge`
 
-## 3) Configure Vercel environment variables
+## Vercel environment variables (runtime)
 
 Set these in Vercel Project Settings for `Development`, `Preview`, and `Production`:
 
@@ -23,17 +19,14 @@ Set these in Vercel Project Settings for `Development`, `Preview`, and `Producti
 - `GITHUB_REPO`
 - `GITHUB_BRANCH` (`main`)
 
-## 4) Deploy with Bun scripts
+## Important
+
+- The commit author/committer must be a user that belongs to the Vercel team.
+- If commits are authored as another GitHub account, Vercel blocks the Git-triggered deployment.
+
+## Manual fallback
 
 ```bash
 bun run build
-bun run deploy:preview
 bun run deploy:prod
 ```
-
-## 5) GitHub token minimum permissions
-
-- Repository access: only this repository
-- Repository permissions:
-  - `Contents`: Read and write
-  - `Metadata`: Read-only (default)
