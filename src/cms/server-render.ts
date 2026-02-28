@@ -11,6 +11,10 @@ function escapeJsString(value: string): string {
   return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 }
 
+function isSimpleLinkLabelTarget(childrenCount: number): boolean {
+  return childrenCount === 0;
+}
+
 export function getLocaleFromPath(pathname: string): Locale {
   return pathname.startsWith('/pt') ? 'pt' : 'en';
 }
@@ -50,6 +54,7 @@ export function applyCmsPageDocumentToHtml(
     $(field.selector).each((_index, element) => {
       const node = $(element);
       const tagName = 'tagName' in element ? element.tagName.toLowerCase() : '';
+      const simpleLabelTarget = isSimpleLinkLabelTarget(node.children().length);
 
       if (!tagName) {
         return;
@@ -57,10 +62,14 @@ export function applyCmsPageDocumentToHtml(
 
       if (tagName === 'a') {
         node.attr('href', href);
-        node.html(renderedLabel);
+        if (simpleLabelTarget) {
+          node.html(renderedLabel);
+        }
       } else {
-        node.text(stripMarkdown(label));
         node.attr('data-cms-href', href);
+        if (simpleLabelTarget) {
+          node.text(stripMarkdown(label));
+        }
 
         if (tagName === 'button') {
           node.attr('type', 'button');

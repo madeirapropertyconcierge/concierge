@@ -6,6 +6,7 @@ import {
   loadMediaLibrary,
   loadPageDocument,
 } from '../../../cms/content-loader';
+import { collectSiteGalleryImages } from '../../../cms/image-gallery';
 import { getAuthEnv, tryGetGithubEnv } from '../../../cms/config';
 import { getSessionToken, verifySessionToken } from '../../../cms/auth';
 import { getBranchHeadSha } from '../../../cms/github-publisher';
@@ -51,12 +52,14 @@ export const GET: APIRoute = async ({ url, cookies }) => {
       ? allBlogPosts
       : allBlogPosts.filter((post) => post.status === 'published');
     let branchSha: string | null = null;
+    let galleryItems: Awaited<ReturnType<typeof collectSiteGalleryImages>> = [];
 
     if (sessionValid) {
       const githubEnv = tryGetGithubEnv();
-      if (githubEnv) {
-        branchSha = await getBranchHeadSha(githubEnv);
-      }
+      [branchSha, galleryItems] = await Promise.all([
+        githubEnv ? getBranchHeadSha(githubEnv) : Promise.resolve(null),
+        collectSiteGalleryImages(),
+      ]);
     }
 
     return jsonResponse({
@@ -64,6 +67,7 @@ export const GET: APIRoute = async ({ url, cookies }) => {
       mediaLibrary,
       blogPosts,
       branchSha,
+      galleryItems,
       authenticated: sessionValid,
     });
   } catch (error) {

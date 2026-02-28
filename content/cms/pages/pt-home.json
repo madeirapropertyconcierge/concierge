@@ -3,19 +3,19 @@
   "updatedAt": "2026-02-28T17:51:19.049Z",
   "seo": {
     "en": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "canonical": ""
+      "title": "Madeira Property Concierge | Boutique Hosting and Property Care",
+      "description": "Boutique hosting and property care in Madeira for overseas owners. Founder-led execution with bilingual EN/PT support and clear monthly reporting.",
+      "ogTitle": "Madeira Property Concierge | Boutique Hosting and Property Care",
+      "ogDescription": "Boutique hosting and property care in Madeira for overseas owners. Founder-led execution with bilingual EN/PT support and clear monthly reporting.",
+      "ogImage": "/images/madeira/funchal-bay.jpg",
+      "canonical": "/en/"
     },
     "pt": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
+      "title": "Madeira Property Concierge | Hosting Boutique e Cuidado de Propriedade",
+      "description": "Hosting boutique e cuidado de propriedade na Madeira para proprietarios no estrangeiro. Execucao liderada pela fundadora com suporte bilingue EN/PT e reporting claro.",
+      "ogTitle": "Madeira Property Concierge | Hosting Boutique e Cuidado de Propriedade",
+      "ogDescription": "Hosting boutique e cuidado de propriedade na Madeira para proprietarios no estrangeiro. Execucao liderada pela fundadora com suporte bilingue EN/PT e reporting claro.",
+      "ogImage": "/images/madeira/funchal-bay.jpg",
       "canonical": "/pt/"
     }
   },

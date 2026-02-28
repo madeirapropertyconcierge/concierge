@@ -1,51 +1,157 @@
-<div id="cms-blog-manager" class="cms-hidden cms-panel" data-admin-allow>
+<div id="cms-blog-manager" class="cms-hidden cms-panel cms-panel-xl" data-admin-allow>
   <header class="cms-row cms-space-between" data-admin-allow>
     <h3 class="cms-title">Blog Manager</h3>
-    <button id="cms-blog-manager-close" class="cms-btn cms-btn-muted" data-admin-allow>Close</button>
+    <button id="cms-blog-manager-close" class="cms-btn cms-btn-muted" type="button" data-admin-allow>Close</button>
   </header>
 
-  <div class="cms-row cms-gap-2" data-admin-allow>
+  <div class="cms-row cms-wrap" data-admin-allow>
     <select id="cms-blog-select" data-admin-allow></select>
-    <button id="cms-blog-new" class="cms-btn cms-btn-primary" data-admin-allow>New</button>
-    <button id="cms-blog-duplicate" class="cms-btn cms-btn-muted" data-admin-allow>Duplicate</button>
-    <button id="cms-blog-delete" class="cms-btn cms-btn-muted" data-admin-allow>Delete</button>
+    <button id="cms-blog-new" class="cms-btn cms-btn-primary" type="button" data-admin-allow>New post</button>
+    <button id="cms-blog-duplicate" class="cms-btn cms-btn-muted" type="button" data-admin-allow>Duplicate</button>
+    <button id="cms-blog-delete" class="cms-btn cms-btn-danger" type="button" data-admin-allow>Delete</button>
   </div>
 
-  <form id="cms-blog-form" class="cms-blog-form" data-admin-allow>
-    <input name="slug" placeholder="slug" required data-admin-allow />
-    <select name="status" data-admin-allow>
-      <option value="draft">draft</option>
-      <option value="published">published</option>
-    </select>
-    <input name="publishedAt" placeholder="YYYY-MM-DD" data-admin-allow />
-    <input name="readingMinutes" type="number" min="1" step="1" placeholder="Reading minutes" data-admin-allow />
-    <input name="coverImage" placeholder="Cover image URL" data-admin-allow />
-    <input name="tags" placeholder="tag1,tag2" data-admin-allow />
+  <form id="cms-blog-form" class="cms-form" data-admin-allow>
+    <section class="cms-section-card" data-admin-allow>
+      <h4 class="cms-title-small" data-admin-allow>Post Setup</h4>
+      <div class="cms-grid-2" data-admin-allow>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Slug</span>
+          <input name="slug" required data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Status</span>
+          <select name="status" data-admin-allow>
+            <option value="draft">draft</option>
+            <option value="published">published</option>
+          </select>
+        </label>
+      </div>
 
-    <input name="titleEn" placeholder="Title EN" data-admin-allow />
-    <textarea name="excerptEn" rows="2" placeholder="Excerpt EN" data-admin-allow></textarea>
-    <textarea name="bodyEn" rows="8" placeholder="Body EN (markdown)" data-admin-allow></textarea>
-    <input name="coverAltEn" placeholder="Cover alt EN" data-admin-allow />
+      <div class="cms-grid-3" data-admin-allow>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Published at</span>
+          <input name="publishedAt" placeholder="YYYY-MM-DD" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Reading minutes</span>
+          <input name="readingMinutes" type="number" min="1" step="1" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Tags</span>
+          <input name="tags" placeholder="tag1,tag2" data-admin-allow />
+        </label>
+      </div>
 
-    <input name="titlePt" placeholder="Title PT" data-admin-allow />
-    <textarea name="excerptPt" rows="2" placeholder="Excerpt PT" data-admin-allow></textarea>
-    <textarea name="bodyPt" rows="8" placeholder="Body PT (markdown)" data-admin-allow></textarea>
-    <input name="coverAltPt" placeholder="Cover alt PT" data-admin-allow />
+      <div class="cms-grid-2" data-admin-allow>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Cover image URL</span>
+          <input name="coverImage" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Cover alt (EN)</span>
+          <input name="coverAltEn" data-admin-allow />
+        </label>
+      </div>
 
-    <input name="seoTitleEn" placeholder="SEO title EN" data-admin-allow />
-    <textarea name="seoDescEn" rows="2" placeholder="SEO description EN" data-admin-allow></textarea>
-    <input name="ogTitleEn" placeholder="OG title EN" data-admin-allow />
-    <textarea name="ogDescEn" rows="2" placeholder="OG description EN" data-admin-allow></textarea>
-    <input name="ogImageEn" placeholder="OG image EN" data-admin-allow />
-    <input name="canonicalEn" placeholder="Canonical EN" data-admin-allow />
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Cover alt (PT)</span>
+        <input name="coverAltPt" data-admin-allow />
+      </label>
+    </section>
 
-    <input name="seoTitlePt" placeholder="SEO title PT" data-admin-allow />
-    <textarea name="seoDescPt" rows="2" placeholder="SEO description PT" data-admin-allow></textarea>
-    <input name="ogTitlePt" placeholder="OG title PT" data-admin-allow />
-    <textarea name="ogDescPt" rows="2" placeholder="OG description PT" data-admin-allow></textarea>
-    <input name="ogImagePt" placeholder="OG image PT" data-admin-allow />
-    <input name="canonicalPt" placeholder="Canonical PT" data-admin-allow />
+    <div class="cms-locale-grid" data-admin-allow>
+      <section class="cms-section-card" data-admin-allow>
+        <h4 class="cms-title-small" data-admin-allow>English Content</h4>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Title</span>
+          <input name="titleEn" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Excerpt</span>
+          <textarea name="excerptEn" rows="2" data-admin-allow></textarea>
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Body (markdown)</span>
+          <textarea name="bodyEn" rows="10" data-admin-allow></textarea>
+        </label>
+      </section>
 
-    <button type="submit" class="cms-btn cms-btn-success" data-admin-allow>Save Post To Draft</button>
+      <section class="cms-section-card" data-admin-allow>
+        <h4 class="cms-title-small" data-admin-allow>Portuguese Content</h4>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Title</span>
+          <input name="titlePt" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Excerpt</span>
+          <textarea name="excerptPt" rows="2" data-admin-allow></textarea>
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Body (markdown)</span>
+          <textarea name="bodyPt" rows="10" data-admin-allow></textarea>
+        </label>
+      </section>
+    </div>
+
+    <div class="cms-locale-grid" data-admin-allow>
+      <section class="cms-section-card" data-admin-allow>
+        <h4 class="cms-title-small" data-admin-allow>English SEO</h4>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>SEO title</span>
+          <input name="seoTitleEn" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>SEO description</span>
+          <textarea name="seoDescEn" rows="2" data-admin-allow></textarea>
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>OG title</span>
+          <input name="ogTitleEn" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>OG description</span>
+          <textarea name="ogDescEn" rows="2" data-admin-allow></textarea>
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>OG image URL</span>
+          <input name="ogImageEn" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Canonical URL</span>
+          <input name="canonicalEn" data-admin-allow />
+        </label>
+      </section>
+
+      <section class="cms-section-card" data-admin-allow>
+        <h4 class="cms-title-small" data-admin-allow>Portuguese SEO</h4>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>SEO title</span>
+          <input name="seoTitlePt" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>SEO description</span>
+          <textarea name="seoDescPt" rows="2" data-admin-allow></textarea>
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>OG title</span>
+          <input name="ogTitlePt" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>OG description</span>
+          <textarea name="ogDescPt" rows="2" data-admin-allow></textarea>
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>OG image URL</span>
+          <input name="ogImagePt" data-admin-allow />
+        </label>
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Canonical URL</span>
+          <input name="canonicalPt" data-admin-allow />
+        </label>
+      </section>
+    </div>
+
+    <button type="submit" class="cms-btn cms-btn-success" data-admin-allow>Apply post changes</button>
   </form>
 </div>

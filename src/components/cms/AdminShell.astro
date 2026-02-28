@@ -3,6 +3,9 @@ import AdminBanner from './AdminBanner.astro';
 import AdminLoginModal from './AdminLoginModal.astro';
 import ImageLibraryPanel from './ImageLibraryPanel.astro';
 import BlogManagerPanel from './BlogManagerPanel.astro';
+import SeoEditorPanel from './SeoEditorPanel.astro';
+import ImageEditorPanel from './ImageEditorPanel.astro';
+import '../../styles/cms-admin.css';
 
 interface Props {
   pageId: string;
@@ -22,124 +25,10 @@ const { pageId, locale, isBlogPage } = Astro.props;
 >
   <AdminLoginModal />
   <AdminBanner />
+  <SeoEditorPanel />
+  <ImageEditorPanel />
   <ImageLibraryPanel />
   <BlogManagerPanel />
 </div>
 
 <script type="module" src="/cms-admin.js"></script>
-
-<style is:global>
-  .cms-hidden { display: none !important; }
-  .cms-fixed { position: fixed; }
-  .cms-inset-0 { inset: 0; }
-  .cms-z-max { z-index: 1200; }
-  .cms-z-top { z-index: 1100; }
-  .cms-top-0 { top: 0; }
-  .cms-left-0 { left: 0; }
-  .cms-right-0 { right: 0; }
-  .cms-bg-slate-900\/70 { background: rgba(15, 23, 42, 0.7); }
-  .cms-min-h-full { min-height: 100%; }
-  .cms-items-center { align-items: center; }
-  .cms-justify-center { justify-content: center; }
-  .cms-p-4 { padding: 1rem; }
-  .cms-w-full { width: 100%; }
-  .cms-max-w-sm { max-width: 26rem; }
-  .cms-space-y-4 > * + * { margin-top: 1rem; }
-  .cms-space-y-2 > * + * { margin-top: 0.5rem; }
-  .cms-card, .cms-banner, .cms-panel {
-    border-radius: 14px;
-    border: 1px solid rgba(148, 163, 184, 0.35);
-    background: rgba(8, 15, 28, 0.95);
-    color: #f8fafc;
-    box-shadow: 0 14px 40px rgba(2, 6, 23, 0.45);
-    backdrop-filter: blur(8px);
-  }
-  .cms-card, .cms-banner { padding: 1rem; }
-  .cms-panel {
-    position: fixed;
-    top: 4.5rem;
-    right: 1rem;
-    max-height: calc(100vh - 5.5rem);
-    overflow: auto;
-    width: min(95vw, 34rem);
-    padding: 1rem;
-    z-index: 1150;
-  }
-  .cms-title { margin: 0; font-size: 1.05rem; font-weight: 700; }
-  .cms-subtitle { margin: 0; font-size: 0.8rem; color: rgba(226, 232, 240, 0.8); }
-  .cms-row { display: flex; align-items: center; gap: 0.5rem; }
-  .cms-flex { display: flex; }
-  .cms-wrap { flex-wrap: wrap; }
-  .cms-space-between { justify-content: space-between; }
-  .cms-gap-2 { gap: 0.5rem; }
-  .cms-pill {
-    display: inline-flex;
-    padding: 0.2rem 0.5rem;
-    border-radius: 999px;
-    border: 1px solid rgba(148, 163, 184, 0.5);
-    font-size: 0.72rem;
-    color: #e2e8f0;
-  }
-  .cms-field { display: grid; gap: 0.4rem; font-size: 0.85rem; }
-  .cms-field input,
-  #cms-image-upload-form input,
-  #cms-blog-form input,
-  #cms-blog-form textarea,
-  #cms-blog-form select,
-  #cms-blog-select {
-    width: 100%;
-    border-radius: 8px;
-    border: 1px solid rgba(148, 163, 184, 0.5);
-    background: rgba(15, 23, 42, 0.7);
-    color: #f8fafc;
-    padding: 0.45rem 0.55rem;
-    font-size: 0.83rem;
-  }
-  #cms-blog-form { display: grid; gap: 0.45rem; margin-top: 0.75rem; }
-  .cms-btn {
-    border: 1px solid rgba(148, 163, 184, 0.5);
-    border-radius: 8px;
-    padding: 0.4rem 0.65rem;
-    font-size: 0.78rem;
-    font-weight: 600;
-    cursor: pointer;
-    background: rgba(30, 41, 59, 0.7);
-    color: #f8fafc;
-  }
-  .cms-btn-primary { background: #0f766e; border-color: #0f766e; }
-  .cms-btn-success { background: #166534; border-color: #166534; }
-  .cms-btn-muted { background: rgba(30, 41, 59, 0.7); }
-  .cms-error { color: #fecaca; font-size: 0.8rem; }
-  .cms-blog-form textarea { min-height: 5rem; }
-  .cms-library-grid {
-    margin-top: 0.75rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
-    gap: 0.5rem;
-  }
-  .cms-library-item {
-    border: 1px solid rgba(148, 163, 184, 0.4);
-    border-radius: 8px;
-    padding: 0.4rem;
-    background: rgba(30, 41, 59, 0.45);
-  }
-  .cms-library-item img {
-    width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    border-radius: 6px;
-  }
-  [data-cms-editing='true'] {
-    outline: 2px dashed rgba(15, 118, 110, 0.9);
-    outline-offset: 2px;
-    cursor: text;
-  }
-  .cms-navigate-locked a,
-  .cms-navigate-locked button,
-  .cms-navigate-locked [role='button'] {
-    cursor: crosshair !important;
-  }
-  body.cms-admin-offset {
-    padding-top: 4.4rem;
-  }
-</style>

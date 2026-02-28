@@ -49,4 +49,33 @@ describe('cms server render', () => {
     expect(output).toContain('src="/images/library/hero.jpg"');
     expect(output).toContain('alt="Hero image"');
   });
+
+  it('preserves complex link structure while updating href', () => {
+    const page: CmsPageDocument = {
+      pageId: 'en-home',
+      updatedAt: '2026-02-28T00:00:00.000Z',
+      seo: {
+        en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+        pt: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+      },
+      texts: [],
+      links: [
+        {
+          id: 'link:tile',
+          selector: 'main > a:nth-of-type(1)',
+          label: { en: 'Will not replace card', pt: '' },
+          href: { en: '/en/contact', pt: '' },
+        },
+      ],
+      images: [],
+    };
+
+    const input = '<html><body><main><a href="/old"><img src="/tile.jpg" alt="tile" /><span>Card label</span></a></main></body></html>';
+    const output = applyCmsPageDocumentToHtml(input, page, 'en');
+
+    expect(output).toContain('href="/en/contact"');
+    expect(output).toContain('<img src="/tile.jpg" alt="tile">');
+    expect(output).toContain('<span>Card label</span>');
+    expect(output).not.toContain('Will not replace card');
+  });
 });

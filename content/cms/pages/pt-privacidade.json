@@ -3,19 +3,19 @@
   "updatedAt": "2026-02-28T17:51:19.053Z",
   "seo": {
     "en": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "canonical": ""
+      "title": "Privacy Policy | Madeira Property Concierge",
+      "description": "Learn how Madeira Property Concierge collects, uses, stores, and protects personal data across our website, contact channels, and service operations.",
+      "ogTitle": "Privacy Policy | Madeira Property Concierge",
+      "ogDescription": "Learn how Madeira Property Concierge collects, uses, stores, and protects personal data across our website, contact channels, and service operations.",
+      "ogImage": "/images/madeira/coastal-viewpoint.jpg",
+      "canonical": "/en/privacy"
     },
     "pt": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
+      "title": "Politica de Privacidade | Madeira Property Concierge",
+      "description": "Saiba como a Madeira Property Concierge recolhe, utiliza, armazena e protege dados pessoais no website, nos contactos e na prestacao de servicos.",
+      "ogTitle": "Politica de Privacidade | Madeira Property Concierge",
+      "ogDescription": "Saiba como a Madeira Property Concierge recolhe, utiliza, armazena e protege dados pessoais no website, nos contactos e na prestacao de servicos.",
+      "ogImage": "/images/madeira/coastal-viewpoint.jpg",
       "canonical": "/pt/privacidade"
     }
   },

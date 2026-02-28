@@ -3,20 +3,20 @@
   "updatedAt": "2026-02-28T17:51:19.052Z",
   "seo": {
     "en": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
+      "title": "FAQ | Madeira Property Concierge",
+      "description": "Answers to common questions about remote ownership in Madeira, service tiers, AL compliance support, onboarding timelines, and monthly reporting.",
+      "ogTitle": "FAQ | Madeira Property Concierge",
+      "ogDescription": "Answers to common questions about remote ownership in Madeira, service tiers, AL compliance support, onboarding timelines, and monthly reporting.",
+      "ogImage": "/images/madeira/mountain-village.jpg",
       "canonical": "/en/faq"
     },
     "pt": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "canonical": ""
+      "title": "FAQ | Madeira Property Concierge",
+      "description": "Respostas as perguntas frequentes sobre propriedade a distancia na Madeira, niveis de servico, apoio de conformidade AL, onboarding e reporting mensal.",
+      "ogTitle": "FAQ | Madeira Property Concierge",
+      "ogDescription": "Respostas as perguntas frequentes sobre propriedade a distancia na Madeira, niveis de servico, apoio de conformidade AL, onboarding e reporting mensal.",
+      "ogImage": "/images/madeira/mountain-village.jpg",
+      "canonical": "/pt/perguntas-frequentes"
     }
   },
   "texts": [],

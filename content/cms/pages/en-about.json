@@ -3,20 +3,20 @@
   "updatedAt": "2026-02-28T17:51:19.049Z",
   "seo": {
     "en": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
+      "title": "About Lisa | Madeira Property Concierge",
+      "description": "Meet Lisa, founder of Madeira Property Concierge: your bilingual EN/PT bridge for trusted local execution, proactive communication, and accountable operations.",
+      "ogTitle": "About Lisa | Madeira Property Concierge",
+      "ogDescription": "Meet Lisa, founder of Madeira Property Concierge: your bilingual EN/PT bridge for trusted local execution, proactive communication, and accountable operations.",
+      "ogImage": "/images/about/lisa_1.webp",
       "canonical": "/en/about"
     },
     "pt": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "canonical": ""
+      "title": "Sobre a Lisa | Madeira Property Concierge",
+      "description": "Conheca a Lisa, fundadora da Madeira Property Concierge: ponte bilingue EN/PT para execucao local de confianca, comunicacao proativa e operacao responsavel.",
+      "ogTitle": "Sobre a Lisa | Madeira Property Concierge",
+      "ogDescription": "Conheca a Lisa, fundadora da Madeira Property Concierge: ponte bilingue EN/PT para execucao local de confianca, comunicacao proativa e operacao responsavel.",
+      "ogImage": "/images/about/lisa_1.webp",
+      "canonical": "/pt/sobre"
     }
   },
   "texts": [],

@@ -1,0 +1,89 @@
+<div id="cms-seo-editor" class="cms-hidden cms-panel cms-panel-xl" data-admin-allow>
+  <header class="cms-row cms-space-between" data-admin-allow>
+    <h3 class="cms-title">SEO Editor</h3>
+    <button id="cms-seo-close" class="cms-btn cms-btn-muted" type="button" data-admin-allow>Close</button>
+  </header>
+
+  <p class="cms-subtitle" data-admin-allow>
+    Manage search and social metadata for both locales. Leave fields empty to fall back to page defaults.
+  </p>
+
+  <form id="cms-seo-form" class="cms-form" data-admin-allow>
+    <div class="cms-locale-grid" data-admin-allow>
+      <section class="cms-section-card" data-admin-allow>
+        <h4 class="cms-title-small" data-admin-allow>English</h4>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>SEO title</span>
+          <input name="enTitle" type="text" data-admin-allow />
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>SEO description</span>
+          <textarea name="enDescription" rows="3" data-admin-allow></textarea>
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Open Graph title</span>
+          <input name="enOgTitle" type="text" data-admin-allow />
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Open Graph description</span>
+          <textarea name="enOgDescription" rows="3" data-admin-allow></textarea>
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Open Graph image URL</span>
+          <input name="enOgImage" type="text" data-admin-allow />
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Canonical URL</span>
+          <input name="enCanonical" type="text" data-admin-allow />
+        </label>
+      </section>
+
+      <section class="cms-section-card" data-admin-allow>
+        <h4 class="cms-title-small" data-admin-allow>Portuguese</h4>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>SEO title</span>
+          <input name="ptTitle" type="text" data-admin-allow />
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>SEO description</span>
+          <textarea name="ptDescription" rows="3" data-admin-allow></textarea>
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Open Graph title</span>
+          <input name="ptOgTitle" type="text" data-admin-allow />
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Open Graph description</span>
+          <textarea name="ptOgDescription" rows="3" data-admin-allow></textarea>
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Open Graph image URL</span>
+          <input name="ptOgImage" type="text" data-admin-allow />
+        </label>
+
+        <label class="cms-field" data-admin-allow>
+          <span data-admin-allow>Canonical URL</span>
+          <input name="ptCanonical" type="text" data-admin-allow />
+        </label>
+      </section>
+    </div>
+
+    <div class="cms-row cms-wrap" data-admin-allow>
+      <button id="cms-seo-fill-canonical" class="cms-btn cms-btn-muted" type="button" data-admin-allow>
+        Fill canonical with current path
+      </button>
+      <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Apply SEO changes</button>
+    </div>
+  </form>
+</div>

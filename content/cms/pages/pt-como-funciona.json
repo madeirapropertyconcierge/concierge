@@ -3,19 +3,19 @@
   "updatedAt": "2026-02-28T17:51:19.051Z",
   "seo": {
     "en": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "canonical": ""
+      "title": "How It Works | Madeira Property Concierge",
+      "description": "See our founder-led process from diagnostic call to monthly operations: property audit, systems setup, and SLA-driven support for Madeira owners abroad.",
+      "ogTitle": "How It Works | Madeira Property Concierge",
+      "ogDescription": "See our founder-led process from diagnostic call to monthly operations: property audit, systems setup, and SLA-driven support for Madeira owners abroad.",
+      "ogImage": "/images/madeira/green-ridges.jpg",
+      "canonical": "/en/how-it-works"
     },
     "pt": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
+      "title": "Como Funciona | Madeira Property Concierge",
+      "description": "Veja o processo liderado pela fundadora, da chamada de diagnostico ate a operacao mensal: auditoria do imovel, setup de sistemas e suporte por SLA.",
+      "ogTitle": "Como Funciona | Madeira Property Concierge",
+      "ogDescription": "Veja o processo liderado pela fundadora, da chamada de diagnostico ate a operacao mensal: auditoria do imovel, setup de sistemas e suporte por SLA.",
+      "ogImage": "/images/madeira/green-ridges.jpg",
       "canonical": "/pt/como-funciona"
     }
   },

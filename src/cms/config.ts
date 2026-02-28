@@ -1,4 +1,6 @@
 import { z } from 'zod';
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 const requiredString = z.string().min(1);
 
@@ -27,7 +29,74 @@ export interface GithubEnv {
 }
 
 function readFromNodeEnv(key: string): string | undefined {
-  return process.env[key];
+  const fromProcess = process.env[key];
+  const fromDotEnv = readFromDotEnvFiles()[key];
+
+  if (typeof fromProcess === 'string' && fromProcess.length > 0) {
+    if (key === 'ADMIN_PASSWORD_HASH' && !fromProcess.startsWith('scrypt$')) {
+      return fromDotEnv;
+    }
+
+    return fromProcess;
+  }
+
+  return fromDotEnv;
+}
+
+let dotEnvCache: Record<string, string> | null = null;
+
+function parseDotEnvContent(content: string): Record<string, string> {
+  const parsed: Record<string, string> = {};
+
+  for (const rawLine of content.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) {
+      continue;
+    }
+
+    const separatorIndex = line.indexOf('=');
+    if (separatorIndex <= 0) {
+      continue;
+    }
+
+    const key = line.slice(0, separatorIndex).trim();
+    let value = line.slice(separatorIndex + 1).trim();
+
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+
+    // Keep dotenv-style escaped dollar signs literal.
+    value = value.replace(/\\\$/g, '$');
+    parsed[key] = value;
+  }
+
+  return parsed;
+}
+
+function readFromDotEnvFiles(): Record<string, string> {
+  if (dotEnvCache) {
+    return dotEnvCache;
+  }
+
+  const merged: Record<string, string> = {};
+  const files = ['.env', '.env.local'];
+
+  for (const file of files) {
+    const absolutePath = resolve(process.cwd(), file);
+    if (!existsSync(absolutePath)) {
+      continue;
+    }
+
+    const content = readFileSync(absolutePath, 'utf-8');
+    Object.assign(merged, parseDotEnvContent(content));
+  }
+
+  dotEnvCache = merged;
+  return merged;
 }
 
 export function getAuthEnv(): AuthEnv {

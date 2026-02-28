@@ -1,0 +1,66 @@
+<div id="cms-image-editor" class="cms-hidden cms-panel" data-admin-allow>
+  <header class="cms-row cms-space-between" data-admin-allow>
+    <h3 class="cms-title">Image Details</h3>
+    <button id="cms-image-editor-close" class="cms-btn cms-btn-muted" type="button" data-admin-allow>Close</button>
+  </header>
+
+  <p id="cms-image-selected" class="cms-subtitle" data-admin-allow>
+    Click an image while edit mode is enabled to edit it here.
+  </p>
+
+  <form id="cms-image-form" class="cms-form" data-admin-allow>
+    <div class="cms-image-preview" data-admin-allow>
+      <img id="cms-image-preview" alt="Selected image preview" data-admin-allow />
+    </div>
+
+    <label class="cms-field" data-admin-allow>
+      <span data-admin-allow>Image URL</span>
+      <input name="src" type="text" data-admin-allow />
+    </label>
+
+    <div class="cms-grid-2" data-admin-allow>
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Alt text (EN)</span>
+        <input name="altEn" type="text" data-admin-allow />
+      </label>
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Alt text (PT)</span>
+        <input name="altPt" type="text" data-admin-allow />
+      </label>
+    </div>
+
+    <div class="cms-grid-2" data-admin-allow>
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Caption (EN)</span>
+        <input name="captionEn" type="text" data-admin-allow />
+      </label>
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Caption (PT)</span>
+        <input name="captionPt" type="text" data-admin-allow />
+      </label>
+    </div>
+
+    <div class="cms-grid-2" data-admin-allow>
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Attribution name</span>
+        <input name="attributionName" type="text" data-admin-allow />
+      </label>
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Attribution URL</span>
+        <input name="attributionUrl" type="text" data-admin-allow />
+      </label>
+    </div>
+
+    <label class="cms-field" data-admin-allow>
+      <span data-admin-allow>License URL</span>
+      <input name="licenseUrl" type="text" data-admin-allow />
+    </label>
+
+    <div class="cms-row cms-wrap" data-admin-allow>
+      <button id="cms-image-open-library" class="cms-btn cms-btn-muted" type="button" data-admin-allow>
+        Open image library
+      </button>
+      <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Apply image changes</button>
+    </div>
+  </form>
+</div>

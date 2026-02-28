@@ -3,19 +3,19 @@
   "updatedAt": "2026-02-28T17:51:19.049Z",
   "seo": {
     "en": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
-      "canonical": ""
+      "title": "Property Management Services | Madeira Property Concierge",
+      "description": "Explore our four-tier Madeira property service model: keyholding and home care, hosting essentials, full-service AL management, and white-glove add-ons.",
+      "ogTitle": "Property Management Services | Madeira Property Concierge",
+      "ogDescription": "Explore our four-tier Madeira property service model: keyholding and home care, hosting essentials, full-service AL management, and white-glove add-ons.",
+      "ogImage": "/images/madeira/coastal-viewpoint.jpg",
+      "canonical": "/en/services"
     },
     "pt": {
-      "title": "",
-      "description": "",
-      "ogTitle": "",
-      "ogDescription": "",
-      "ogImage": "",
+      "title": "Servicos de Gestao de Propriedades | Madeira Property Concierge",
+      "description": "Conheca o nosso modelo de 4 niveis para propriedades na Madeira: guarda de chaves e home care, hosting essentials, gestao AL full-service e white-glove.",
+      "ogTitle": "Servicos de Gestao de Propriedades | Madeira Property Concierge",
+      "ogDescription": "Conheca o nosso modelo de 4 niveis para propriedades na Madeira: guarda de chaves e home care, hosting essentials, gestao AL full-service e white-glove.",
+      "ogImage": "/images/madeira/coastal-viewpoint.jpg",
       "canonical": "/pt/servicos"
     }
   },

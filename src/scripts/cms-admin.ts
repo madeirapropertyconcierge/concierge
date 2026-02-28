@@ -1,5 +1,4 @@
 import { marked } from 'marked';
-import { discardDraft, loadDraft, saveDraft, type PageDraftState } from '../cms/editor-state';
 
 type Locale = 'en' | 'pt';
 
@@ -97,6 +96,7 @@ interface ContentResponse {
   mediaLibrary: CmsMediaLibrary;
   blogPosts: CmsBlogPost[];
   branchSha: string | null;
+  galleryItems?: CmsGalleryItem[];
   authenticated: boolean;
 }
 
@@ -112,6 +112,14 @@ interface SelectedImageTarget {
   id: string;
 }
 
+type GallerySource = 'library' | 'page' | 'blog' | 'seo' | 'visible';
+
+interface CmsGalleryItem extends CmsMediaItem {
+  source: GallerySource;
+  sourceLabels: string[];
+  libraryItemId?: string;
+}
+
 const root = document.querySelector<HTMLDivElement>('#cms-admin-root');
 if (!root) {
   throw new Error('CMS admin root not found');
@@ -120,6 +128,7 @@ if (!root) {
 const pageId = root.dataset.pageId ?? 'en-home';
 const locale = (root.dataset.locale ?? 'en') as Locale;
 const isBlogPage = root.dataset.isBlogPage === 'true';
+const isMediaPage = window.location.pathname === '/admin/images';
 
 const loginModal = document.querySelector<HTMLElement>('#cms-login-modal');
 const loginForm = document.querySelector<HTMLFormElement>('#cms-login-form');
@@ -130,20 +139,38 @@ const banner = document.querySelector<HTMLElement>('#cms-admin-banner');
 const modeLabel = document.querySelector<HTMLElement>('#cms-mode-label');
 const statusEl = document.querySelector<HTMLElement>('#cms-status');
 const fallbackWarning = document.querySelector<HTMLElement>('#cms-fallback-warning');
+const dirtyIndicator = document.querySelector<HTMLElement>('#cms-dirty-indicator');
 
 const toggleModeButton = document.querySelector<HTMLButtonElement>('#cms-toggle-mode');
-const saveDraftButton = document.querySelector<HTMLButtonElement>('#cms-save-draft');
-const discardDraftButton = document.querySelector<HTMLButtonElement>('#cms-discard-draft');
+const discardChangesButton = document.querySelector<HTMLButtonElement>('#cms-discard-changes');
 const editSeoButton = document.querySelector<HTMLButtonElement>('#cms-edit-seo');
-const publishButton = document.querySelector<HTMLButtonElement>('#cms-publish');
-const logoutButton = document.querySelector<HTMLButtonElement>('#cms-logout');
+const openImageEditorButton = document.querySelector<HTMLButtonElement>('#cms-open-image-editor');
 const openImageLibraryButton = document.querySelector<HTMLButtonElement>('#cms-open-image-library');
 const openBlogManagerButton = document.querySelector<HTMLButtonElement>('#cms-open-blog-manager');
+const publishButton = document.querySelector<HTMLButtonElement>('#cms-publish');
+const logoutButton = document.querySelector<HTMLButtonElement>('#cms-logout');
+
+const seoPanel = document.querySelector<HTMLElement>('#cms-seo-editor');
+const seoClose = document.querySelector<HTMLButtonElement>('#cms-seo-close');
+const seoFillCanonicalButton = document.querySelector<HTMLButtonElement>('#cms-seo-fill-canonical');
+const seoForm = document.querySelector<HTMLFormElement>('#cms-seo-form');
+
+const imageEditorPanel = document.querySelector<HTMLElement>('#cms-image-editor');
+const imageEditorClose = document.querySelector<HTMLButtonElement>('#cms-image-editor-close');
+const imageEditorOpenLibraryButton = document.querySelector<HTMLButtonElement>('#cms-image-open-library');
+const imageEditorSelected = document.querySelector<HTMLElement>('#cms-image-selected');
+const imageEditorPreview = document.querySelector<HTMLImageElement>('#cms-image-preview');
+const imageEditorForm = document.querySelector<HTMLFormElement>('#cms-image-form');
 
 const imageLibraryPanel = document.querySelector<HTMLElement>('#cms-image-library');
 const imageLibraryClose = document.querySelector<HTMLButtonElement>('#cms-image-library-close');
 const imageLibraryList = document.querySelector<HTMLElement>('#cms-image-library-list');
+const imageLibraryCount = document.querySelector<HTMLElement>('#cms-image-library-count');
+const imageLibrarySearch = document.querySelector<HTMLInputElement>('#cms-image-search');
 const imageUploadForm = document.querySelector<HTMLFormElement>('#cms-image-upload-form');
+const libraryEditor = document.querySelector<HTMLElement>('#cms-library-editor');
+const libraryEditorSource = document.querySelector<HTMLElement>('#cms-library-editor-source');
+const libraryEditorForm = document.querySelector<HTMLFormElement>('#cms-library-editor-form');
 
 const blogManagerPanel = document.querySelector<HTMLElement>('#cms-blog-manager');
 const blogManagerClose = document.querySelector<HTMLButtonElement>('#cms-blog-manager-close');
@@ -159,10 +186,17 @@ if (!isBlogPage && openBlogManagerButton) {
 
 let authenticated = false;
 let editMode = false;
+let hasUnsavedChanges = false;
+let suppressBeforeUnloadPrompt = false;
 let publishedState: WorkingState | null = null;
 let workingState: WorkingState | null = null;
+let globalGalleryItems: CmsGalleryItem[] = [];
 let selectedImageTarget: SelectedImageTarget | null = null;
+let selectedLibraryItemId: string | null = null;
 let activeEditableElement: HTMLElement | null = null;
+let bannerResizeObserver: ResizeObserver | null = null;
+
+const BANNER_OFFSET_CSS_VAR = '--cms-admin-banner-offset';
 
 const MARKDOWN_BLOCK_TAGS = new Set(['P', 'DIV', 'LI', 'BLOCKQUOTE']);
 const TEXT_TAGS = new Set([
@@ -170,6 +204,7 @@ const TEXT_TAGS = new Set([
   'SPAN',
   'DIV',
   'LI',
+  'BLOCKQUOTE',
   'H1',
   'H2',
   'H3',
@@ -188,20 +223,20 @@ function nowIso(): string {
   return new Date().toISOString();
 }
 
-function setStatus(message: string): void {
-  if (!statusEl) {
-    return;
-  }
-
-  statusEl.textContent = message;
-}
-
 function showElement(element: HTMLElement | null): void {
   element?.classList.remove('cms-hidden');
 }
 
 function hideElement(element: HTMLElement | null): void {
   element?.classList.add('cms-hidden');
+}
+
+function setStatus(message: string): void {
+  if (!statusEl) {
+    return;
+  }
+
+  statusEl.textContent = message;
 }
 
 function localeValue(value: LocaleText): string {
@@ -216,11 +251,7 @@ function setLocaleValue(value: LocaleText, nextValue: string): LocaleText {
 }
 
 function isAdminControl(element: Element | null): boolean {
-  if (!element) {
-    return false;
-  }
-
-  return Boolean(element.closest('[data-admin-allow]'));
+  return Boolean(element?.closest('[data-admin-allow]'));
 }
 
 function isTextCandidate(element: HTMLElement): boolean {
@@ -228,7 +259,11 @@ function isTextCandidate(element: HTMLElement): boolean {
     return false;
   }
 
-  if (element.closest('a,button,label,summary')) {
+  if (element.tagName === 'DIV' && element.childElementCount > 0) {
+    return false;
+  }
+
+  if (element.matches('a,button,label,summary')) {
     return false;
   }
 
@@ -289,15 +324,14 @@ function computeSelector(element: Element): string {
   let node: Element | null = element;
 
   while (node && node !== document.body) {
-    const tag = node.tagName.toLowerCase();
-    const currentTag = node.tagName;
-    const parentElement: Element | null = node.parentElement;
+    const parentElement = node.parentElement;
     if (!parentElement) {
       break;
     }
 
+    const tag = node.tagName.toLowerCase();
     const sameTagSiblings = Array.from(parentElement.children).filter(
-      (child: Element) => child.tagName === currentTag,
+      (child: Element) => child.tagName === node.tagName,
     );
     const index = sameTagSiblings.indexOf(node) + 1;
     parts.unshift(`${tag}:nth-of-type(${index})`);
@@ -359,6 +393,102 @@ function upsertImageField(field: CmsImageField): void {
   workingState.page.images.push(field);
 }
 
+function updateModeLabel(): void {
+  if (!modeLabel || !toggleModeButton) {
+    return;
+  }
+
+  modeLabel.textContent = editMode ? 'Edit' : 'View';
+  toggleModeButton.textContent = editMode ? 'Stop editing' : 'Edit content';
+}
+
+function updateDirtyIndicator(): void {
+  if (!dirtyIndicator) {
+    return;
+  }
+
+  dirtyIndicator.textContent = hasUnsavedChanges ? 'Unsaved changes' : 'Up to date';
+  dirtyIndicator.classList.toggle('cms-pill-dirty', hasUnsavedChanges);
+  dirtyIndicator.classList.toggle('cms-pill-neutral', !hasUnsavedChanges);
+}
+
+function updateActionAvailability(): void {
+  const canUseActions = authenticated;
+
+  if (toggleModeButton) {
+    toggleModeButton.disabled = !canUseActions;
+  }
+
+  if (publishButton) {
+    publishButton.disabled = !canUseActions || !hasUnsavedChanges;
+  }
+
+  if (discardChangesButton) {
+    discardChangesButton.disabled = !canUseActions || !hasUnsavedChanges;
+  }
+
+  if (editSeoButton) {
+    editSeoButton.disabled = !canUseActions;
+  }
+
+  if (openImageEditorButton) {
+    openImageEditorButton.disabled = !canUseActions;
+  }
+
+  if (openImageLibraryButton) {
+    openImageLibraryButton.disabled = !canUseActions;
+  }
+
+  if (openBlogManagerButton) {
+    openBlogManagerButton.disabled = !canUseActions;
+  }
+
+  if (logoutButton) {
+    logoutButton.disabled = !canUseActions;
+  }
+}
+
+function setDirty(nextValue: boolean): void {
+  hasUnsavedChanges = nextValue;
+  updateDirtyIndicator();
+  updateActionAvailability();
+}
+
+function markDirty(message: string): void {
+  setDirty(true);
+  setStatus(message);
+}
+
+function setPanelVisibility(panel: HTMLElement | null, open: boolean): void {
+  if (!panel) {
+    return;
+  }
+
+  if (open) {
+    panel.classList.remove('cms-hidden');
+    return;
+  }
+
+  panel.classList.add('cms-hidden');
+}
+
+function isPanelOpen(panel: HTMLElement | null): boolean {
+  if (!panel) {
+    return false;
+  }
+
+  return !panel.classList.contains('cms-hidden');
+}
+
+function closePanels(except?: HTMLElement | null): void {
+  const panels = [seoPanel, imageEditorPanel, imageLibraryPanel, blogManagerPanel];
+  for (const panel of panels) {
+    if (panel && panel !== except) {
+      panel.classList.add('cms-hidden');
+    }
+  }
+}
+
 function applyPageDocument(page: CmsPageDocument): void {
   for (const field of page.texts) {
     const element = document.querySelector<HTMLElement>(field.selector);
@@ -366,13 +496,13 @@ function applyPageDocument(page: CmsPageDocument): void {
       continue;
     }
 
+    const source = localeValue(field.value);
+    element.innerHTML = renderMarkdown(source, field.kind);
     element.dataset.cmsField = 'text';
     element.dataset.cmsId = field.id;
     element.dataset.cmsSelector = field.selector;
     element.dataset.cmsKind = field.kind;
-    const source = localeValue(field.value);
     element.dataset.cmsSource = source;
-    element.innerHTML = renderMarkdown(source, field.kind);
   }
 
   for (const field of page.links) {
@@ -381,13 +511,19 @@ function applyPageDocument(page: CmsPageDocument): void {
       continue;
     }
 
+    const isSimpleLinkLabelTarget = element.childElementCount === 0;
+
     if (element instanceof HTMLAnchorElement) {
       element.href = localeValue(field.href);
-      element.innerHTML = renderMarkdown(localeValue(field.label), 'inline');
+      if (isSimpleLinkLabelTarget) {
+        element.innerHTML = renderMarkdown(localeValue(field.label), 'inline');
+      }
     } else {
-      element.textContent = localeValue(field.label);
       const targetHref = localeValue(field.href);
       element.setAttribute('data-cms-href', targetHref);
+      if (isSimpleLinkLabelTarget) {
+        element.textContent = localeValue(field.label);
+      }
 
       if (element instanceof HTMLButtonElement && !element.closest('form')) {
         element.type = 'button';
@@ -420,6 +556,10 @@ function applyPageDocument(page: CmsPageDocument): void {
 }
 
 function updateFallbackWarning(page: CmsPageDocument): void {
+  if (!fallbackWarning) {
+    return;
+  }
+
   let fallbackCount = 0;
 
   if (locale === 'pt') {
@@ -442,10 +582,6 @@ function updateFallbackWarning(page: CmsPageDocument): void {
     }
   }
 
-  if (!fallbackWarning) {
-    return;
-  }
-
   if (fallbackCount > 0) {
     fallbackWarning.textContent = `PT fallback active (${fallbackCount})`;
     fallbackWarning.classList.remove('cms-hidden');
@@ -453,6 +589,13 @@ function updateFallbackWarning(page: CmsPageDocument): void {
   }
 
   fallbackWarning.classList.add('cms-hidden');
+}
+
+function setMetaContent(selector: string, content: string): void {
+  const element = document.querySelector<HTMLMetaElement>(selector);
+  if (element && content.trim()) {
+    element.content = content;
+  }
 }
 
 function updateSeoPreview(page: CmsPageDocument): void {
@@ -465,9 +608,14 @@ function updateSeoPreview(page: CmsPageDocument): void {
     document.title = seo.title;
   }
 
-  const descriptionMeta = document.querySelector<HTMLMetaElement>('meta[name="description"]');
-  if (descriptionMeta && seo.description.trim()) {
-    descriptionMeta.content = seo.description;
+  setMetaContent('meta[name="description"]', seo.description);
+  setMetaContent('meta[property="og:title"]', seo.ogTitle || seo.title);
+  setMetaContent('meta[property="og:description"]', seo.ogDescription || seo.description);
+  setMetaContent('meta[property="og:image"]', seo.ogImage);
+
+  const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (canonical && seo.canonical.trim()) {
+    canonical.href = seo.canonical;
   }
 }
 
@@ -479,120 +627,18 @@ function applyCurrentState(): void {
   applyPageDocument(workingState.page);
   updateFallbackWarning(workingState.page);
   updateSeoPreview(workingState.page);
-}
 
-function editSeo(): void {
-  if (!workingState) {
-    return;
+  if (isPanelOpen(seoPanel)) {
+    hydrateSeoForm();
   }
 
-  const seo = workingState.page.seo[locale];
-
-  const title = window.prompt(`SEO title (${locale.toUpperCase()})`, seo.title);
-  if (title === null) {
-    return;
+  if (isPanelOpen(imageEditorPanel)) {
+    hydrateImageEditorForm();
   }
 
-  const description = window.prompt(`SEO description (${locale.toUpperCase()})`, seo.description);
-  if (description === null) {
-    return;
+  if (isPanelOpen(imageLibraryPanel)) {
+    renderImageLibrary();
   }
-
-  const ogTitle = window.prompt(`OG title (${locale.toUpperCase()})`, seo.ogTitle) ?? '';
-  const ogDescription = window.prompt(`OG description (${locale.toUpperCase()})`, seo.ogDescription) ?? '';
-  const ogImage = window.prompt(`OG image URL (${locale.toUpperCase()})`, seo.ogImage) ?? '';
-  const canonical = window.prompt(`Canonical URL (${locale.toUpperCase()})`, seo.canonical) ?? '';
-
-  workingState.page.seo[locale] = {
-    ...seo,
-    title: title.trim(),
-    description: description.trim(),
-    ogTitle: ogTitle.trim(),
-    ogDescription: ogDescription.trim(),
-    ogImage: ogImage.trim(),
-    canonical: canonical.trim(),
-  };
-
-  applyCurrentState();
-  storeDraft();
-  setStatus('SEO updated in draft');
-}
-
-function storeDraft(): void {
-  if (!workingState) {
-    return;
-  }
-
-  const draft: PageDraftState = {
-    page: workingState.page,
-    blogPosts: workingState.blogPosts,
-    mediaLibrary: workingState.mediaLibrary,
-    baseSha: workingState.baseSha,
-    updatedAt: nowIso(),
-  };
-
-  saveDraft(pageId, draft);
-}
-
-async function fetchContent(): Promise<ContentResponse> {
-  const response = await fetch(`/api/admin/content?pageId=${encodeURIComponent(pageId)}`, {
-    credentials: 'include',
-    cache: 'no-store',
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to load CMS content');
-  }
-
-  return (await response.json()) as ContentResponse;
-}
-
-async function checkSession(): Promise<boolean> {
-  const response = await fetch('/api/admin/session', {
-    credentials: 'include',
-    cache: 'no-store',
-  });
-
-  if (!response.ok) {
-    return false;
-  }
-
-  const payload = (await response.json()) as { authenticated?: boolean };
-  return Boolean(payload.authenticated);
-}
-
-function hydrateStateFromResponse(response: ContentResponse): void {
-  const baseState: WorkingState = {
-    page: response.page,
-    mediaLibrary: response.mediaLibrary,
-    blogPosts: response.blogPosts,
-    baseSha: response.branchSha,
-  };
-
-  const savedDraft = loadDraft(pageId);
-  if (savedDraft) {
-    workingState = {
-      page: savedDraft.page,
-      mediaLibrary: savedDraft.mediaLibrary,
-      blogPosts: savedDraft.blogPosts,
-      baseSha: savedDraft.baseSha ?? response.branchSha,
-    };
-    setStatus('Loaded local draft');
-  } else {
-    workingState = deepClone(baseState);
-  }
-
-  publishedState = deepClone(baseState);
-  authenticated = response.authenticated;
-  applyCurrentState();
-  renderImageLibrary();
-  renderBlogSelect();
-}
-
-async function refreshContent(): Promise<void> {
-  const response = await fetchContent();
-  hydrateStateFromResponse(response);
-  setBannerVisibility();
 }
 
 function setBannerVisibility(): void {
@@ -603,11 +649,22 @@ function setBannerVisibility(): void {
   if (authenticated) {
     banner.classList.remove('cms-hidden');
     document.body.classList.add('cms-admin-offset');
+    syncBannerOffset();
     return;
   }
 
   banner.classList.add('cms-hidden');
   document.body.classList.remove('cms-admin-offset');
+  document.documentElement.style.removeProperty(BANNER_OFFSET_CSS_VAR);
+}
+
+function syncBannerOffset(): void {
+  if (!banner || !authenticated || banner.classList.contains('cms-hidden')) {
+    return;
+  }
+
+  const offsetPx = Math.ceil(banner.getBoundingClientRect().height + 10);
+  document.documentElement.style.setProperty(BANNER_OFFSET_CSS_VAR, `${offsetPx}px`);
 }
 
 function openLoginModal(): void {
@@ -630,52 +687,33 @@ async function login(password: string): Promise<boolean> {
     body: JSON.stringify({ password }),
   });
 
-  if (!response.ok) {
-    return false;
-  }
-
-  return true;
+  return response.ok;
 }
 
-async function logout(): Promise<void> {
-  await fetch('/api/admin/logout', {
-    method: 'POST',
-    credentials: 'include',
-  });
-
-  authenticated = false;
-  setBannerVisibility();
-  disableEditMode();
-  setStatus('Logged out');
-}
-
-function setModeLabel(): void {
-  if (!modeLabel || !toggleModeButton) {
+function finalizeActiveTextEdit(): void {
+  if (!activeEditableElement) {
     return;
   }
 
-  modeLabel.textContent = editMode ? 'Edit' : 'View';
-  toggleModeButton.textContent = editMode ? 'View' : 'Edit';
+  const element = activeEditableElement;
+  activeEditableElement = null;
+  element.removeAttribute('contenteditable');
+  element.removeAttribute('data-cms-editing');
+  completeTextEdit(element);
 }
 
 function enableEditMode(): void {
   editMode = true;
   document.body.classList.add('cms-navigate-locked');
-  setModeLabel();
-  setStatus('Edit mode enabled');
+  updateModeLabel();
+  setStatus('Edit mode enabled. Click text, links, or images to edit.');
 }
 
 function disableEditMode(): void {
   editMode = false;
+  finalizeActiveTextEdit();
   document.body.classList.remove('cms-navigate-locked');
-
-  if (activeEditableElement) {
-    activeEditableElement.removeAttribute('contenteditable');
-    activeEditableElement.removeAttribute('data-cms-editing');
-    activeEditableElement = null;
-  }
-
-  setModeLabel();
+  updateModeLabel();
 }
 
 function toggleEditMode(): void {
@@ -685,6 +723,7 @@ function toggleEditMode(): void {
 
   if (editMode) {
     disableEditMode();
+    setStatus('View mode enabled');
     return;
   }
 
@@ -699,17 +738,24 @@ function completeTextEdit(element: HTMLElement): void {
   const selector = computeSelector(element);
   const id = idForSelector('text', selector);
   const kind = MARKDOWN_BLOCK_TAGS.has(element.tagName) ? 'block' : 'inline';
-
   const existing = workingState.page.texts.find((field) => field.id === id);
+  const previousValue = existing ? localeValue(existing.value).trim() : (element.dataset.cmsSource ?? '').trim();
   const nextValue = (element.textContent ?? '').trim();
 
-  const value = existing ? setLocaleValue(existing.value, nextValue) : { en: '', pt: '', [locale]: nextValue };
+  if (!existing && nextValue === previousValue) {
+    element.innerHTML = renderMarkdown(nextValue, kind);
+    return;
+  }
+
+  const nextLocaleValue = existing
+    ? setLocaleValue(existing.value, nextValue)
+    : { en: '', pt: '', [locale]: nextValue };
 
   upsertTextField({
     id,
     selector,
     kind,
-    value,
+    value: nextLocaleValue,
   });
 
   element.innerHTML = renderMarkdown(nextValue, kind);
@@ -719,14 +765,14 @@ function completeTextEdit(element: HTMLElement): void {
   element.dataset.cmsKind = kind;
   element.dataset.cmsSource = nextValue;
 
-  storeDraft();
+  if (nextValue !== previousValue || !existing) {
+    markDirty('Text updated');
+  }
 }
 
 function beginTextEdit(element: HTMLElement): void {
   if (activeEditableElement && activeEditableElement !== element) {
-    completeTextEdit(activeEditableElement);
-    activeEditableElement.removeAttribute('contenteditable');
-    activeEditableElement.removeAttribute('data-cms-editing');
+    finalizeActiveTextEdit();
   }
 
   activeEditableElement = element;
@@ -750,7 +796,9 @@ function beginTextEdit(element: HTMLElement): void {
     element.removeAttribute('contenteditable');
     element.removeAttribute('data-cms-editing');
     completeTextEdit(element);
-    activeEditableElement = null;
+    if (activeEditableElement === element) {
+      activeEditableElement = null;
+    }
   };
 
   element.addEventListener('blur', handleBlur);
@@ -764,208 +812,950 @@ function editLink(element: HTMLElement): void {
   const selector = computeSelector(element);
   const id = idForSelector('link', selector);
   const existing = workingState.page.links.find((field) => field.id === id);
+  const isSimpleLinkLabelTarget = element.childElementCount === 0;
 
   const currentLabel = existing ? localeValue(existing.label) : element.textContent?.trim() ?? '';
-  const currentHref =
-    existing?.href[locale] ??
-    (element instanceof HTMLAnchorElement
+  const currentHref = existing?.href[locale]
+    ?? (element instanceof HTMLAnchorElement
       ? element.getAttribute('href') ?? ''
       : element.getAttribute('data-cms-href') ?? '');
 
-  const label = window.prompt('Button/link text', currentLabel);
-  if (label === null) {
-    return;
-  }
-
-  const href = window.prompt('Target URL', currentHref);
+  const href = window.prompt('Target URL (absolute https:// or /relative)', currentHref);
   if (href === null) {
     return;
   }
 
-  const nextField: CmsLinkField = {
+  let label = currentLabel;
+  if (isSimpleLinkLabelTarget) {
+    const promptedLabel = window.prompt('Link/Button label', currentLabel);
+    if (promptedLabel === null) {
+      return;
+    }
+    label = promptedLabel.trim();
+  }
+
+  const nextHref = href.trim();
+  const nextLabel = label.trim();
+  const nextLabelValue = isSimpleLinkLabelTarget
+    ? (existing ? setLocaleValue(existing.label, nextLabel) : { en: '', pt: '', [locale]: nextLabel })
+    : (existing?.label ?? { en: '', pt: '' });
+  const nextHrefValue = existing
+    ? setLocaleValue(existing.href, nextHref)
+    : { en: '', pt: '', [locale]: nextHref };
+
+  if (
+    existing &&
+    JSON.stringify(existing.label) === JSON.stringify(nextLabelValue) &&
+    JSON.stringify(existing.href) === JSON.stringify(nextHrefValue)
+  ) {
+    return;
+  }
+
+  upsertLinkField({
     id,
     selector,
-    label: existing ? setLocaleValue(existing.label, label) : { en: '', pt: '', [locale]: label },
-    href: existing ? setLocaleValue(existing.href, href) : { en: '', pt: '', [locale]: href },
-  };
+    label: nextLabelValue,
+    href: nextHrefValue,
+  });
 
-  upsertLinkField(nextField);
   applyCurrentState();
-  storeDraft();
-  setStatus('Link updated');
+  if (!isSimpleLinkLabelTarget) {
+    markDirty('Link URL updated. Text can be edited directly inside the card/button.');
+    return;
+  }
+  markDirty('Link updated');
 }
 
-function editImage(element: HTMLImageElement): void {
+function ensureImageField(target: SelectedImageTarget): CmsImageField | null {
+  if (!workingState) {
+    return null;
+  }
+
+  const existing = workingState.page.images.find((field) => field.id === target.id);
+  if (existing) {
+    return existing;
+  }
+
+  const element = document.querySelector<HTMLImageElement>(target.selector);
+  if (!element) {
+    return null;
+  }
+
+  const nextField: CmsImageField = {
+    id: target.id,
+    selector: target.selector,
+    src: element.currentSrc || element.src,
+    alt: { en: '', pt: '', [locale]: element.alt },
+    attributionName: '',
+    attributionUrl: '',
+    licenseUrl: '',
+  };
+
+  upsertImageField(nextField);
+  return nextField;
+}
+
+function setImageEditorField(name: string, value: string): void {
+  if (!imageEditorForm) {
+    return;
+  }
+
+  const field = imageEditorForm.elements.namedItem(name);
+  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+    field.value = value;
+  }
+}
+
+function getImageEditorField(name: string): string {
+  if (!imageEditorForm) {
+    return '';
+  }
+
+  const field = imageEditorForm.elements.namedItem(name);
+  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+    return field.value.trim();
+  }
+
+  return '';
+}
+
+function setImageEditorDisabled(disabled: boolean): void {
+  if (!imageEditorForm) {
+    return;
+  }
+
+  imageEditorForm.querySelectorAll('input,textarea,button[type="submit"]').forEach((node) => {
+    if (node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement || node instanceof HTMLButtonElement) {
+      node.disabled = disabled;
+    }
+  });
+}
+
+function hydrateImageEditorForm(): void {
+  if (!imageEditorForm) {
+    return;
+  }
+
+  if (!workingState || !selectedImageTarget) {
+    imageEditorSelected && (imageEditorSelected.textContent = 'Click an image while edit mode is enabled to edit it here.');
+    setImageEditorDisabled(true);
+    imageEditorForm.reset();
+    if (imageEditorPreview) {
+      imageEditorPreview.removeAttribute('src');
+      imageEditorPreview.alt = 'Selected image preview';
+    }
+    return;
+  }
+
+  const field = ensureImageField(selectedImageTarget);
+  if (!field) {
+    return;
+  }
+
+  setImageEditorDisabled(false);
+
+  imageEditorSelected && (imageEditorSelected.textContent = `Selected: ${field.selector}`);
+  setImageEditorField('src', field.src);
+  setImageEditorField('altEn', field.alt.en);
+  setImageEditorField('altPt', field.alt.pt);
+  setImageEditorField('captionEn', field.caption?.en ?? '');
+  setImageEditorField('captionPt', field.caption?.pt ?? '');
+  setImageEditorField('attributionName', field.attributionName);
+  setImageEditorField('attributionUrl', field.attributionUrl);
+  setImageEditorField('licenseUrl', field.licenseUrl);
+
+  if (imageEditorPreview) {
+    imageEditorPreview.src = field.src;
+    imageEditorPreview.alt = localeValue(field.alt);
+  }
+}
+
+function toggleImageEditor(open: boolean): void {
+  if (!imageEditorPanel) {
+    return;
+  }
+
+  if (open) {
+    closePanels(imageEditorPanel);
+    showElement(imageEditorPanel);
+    hydrateImageEditorForm();
+    return;
+  }
+
+  hideElement(imageEditorPanel);
+}
+
+function applyImageFormChanges(): void {
+  if (!workingState || !selectedImageTarget) {
+    setStatus('Select an image before editing image details.');
+    return;
+  }
+
+  const existing = ensureImageField(selectedImageTarget);
+  if (!existing) {
+    setStatus('Selected image could not be resolved.');
+    return;
+  }
+
+  const nextCaptionEn = getImageEditorField('captionEn');
+  const nextCaptionPt = getImageEditorField('captionPt');
+  const nextCaption = nextCaptionEn || nextCaptionPt
+    ? { en: nextCaptionEn, pt: nextCaptionPt }
+    : undefined;
+
+  const nextField: CmsImageField = {
+    id: selectedImageTarget.id,
+    selector: selectedImageTarget.selector,
+    src: getImageEditorField('src'),
+    alt: {
+      en: getImageEditorField('altEn'),
+      pt: getImageEditorField('altPt'),
+    },
+    attributionName: getImageEditorField('attributionName'),
+    attributionUrl: getImageEditorField('attributionUrl'),
+    licenseUrl: getImageEditorField('licenseUrl'),
+    caption: nextCaption,
+  };
+
+  const changed = JSON.stringify(existing) !== JSON.stringify(nextField);
+  if (!changed) {
+    setStatus('Image details unchanged');
+    return;
+  }
+
+  upsertImageField(nextField);
+  applyCurrentState();
+  hydrateImageEditorForm();
+  markDirty('Image details updated');
+}
+
+function selectImageForEditing(element: HTMLImageElement): void {
   if (!workingState) {
     return;
   }
 
   const selector = computeSelector(element);
-  const id = idForSelector('image', selector);
-  selectedImageTarget = { selector, id };
+  selectedImageTarget = {
+    selector,
+    id: idForSelector('image', selector),
+  };
 
-  const existing = workingState.page.images.find((field) => field.id === id);
-  const currentSrc = existing?.src ?? element.currentSrc ?? element.src;
-  const currentAlt = existing ? localeValue(existing.alt) : element.alt;
+  ensureImageField(selectedImageTarget);
+  toggleImageEditor(true);
+  setStatus('Image selected. Update details or choose one from the image library.');
+}
 
-  const src = window.prompt('Image URL', currentSrc);
-  if (src === null) {
+function findContextualImageCandidate(target: Element): HTMLImageElement | null {
+  if (target instanceof HTMLImageElement && target.closest('main')) {
+    return target;
+  }
+
+  let node: HTMLElement | null = target instanceof HTMLElement ? target : target.parentElement;
+  while (node && node !== document.body) {
+    if (!node.closest('main')) {
+      node = node.parentElement;
+      continue;
+    }
+
+    const images = Array.from(node.querySelectorAll('img')).filter(
+      (image) => !image.closest('[data-admin-allow]'),
+    );
+
+    if (images.length === 0) {
+      node = node.parentElement;
+      continue;
+    }
+
+    const absoluteImage = images.find((image) => {
+      const style = window.getComputedStyle(image);
+      return style.position === 'absolute' || image.classList.contains('absolute');
+    });
+
+    return absoluteImage ?? images[0];
+  }
+
+  return null;
+}
+
+function setSeoField(name: string, value: string): void {
+  if (!seoForm) {
     return;
   }
 
-  const alt = window.prompt('Image alt text', currentAlt);
-  if (alt === null) {
+  const field = seoForm.elements.namedItem(name);
+  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+    field.value = value;
+  }
+}
+
+function getSeoField(name: string): string {
+  if (!seoForm) {
+    return '';
+  }
+
+  const field = seoForm.elements.namedItem(name);
+  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+    return field.value.trim();
+  }
+
+  return '';
+}
+
+function hydrateSeoForm(): void {
+  if (!seoForm || !workingState) {
     return;
   }
 
-  const attributionName = window.prompt('Attribution name', existing?.attributionName ?? '') ?? '';
-  const attributionUrl = window.prompt('Attribution URL', existing?.attributionUrl ?? '') ?? '';
-  const licenseUrl = window.prompt('License URL', existing?.licenseUrl ?? '') ?? '';
+  const seoEn = workingState.page.seo.en;
+  const seoPt = workingState.page.seo.pt;
+
+  setSeoField('enTitle', seoEn.title);
+  setSeoField('enDescription', seoEn.description);
+  setSeoField('enOgTitle', seoEn.ogTitle);
+  setSeoField('enOgDescription', seoEn.ogDescription);
+  setSeoField('enOgImage', seoEn.ogImage);
+  setSeoField('enCanonical', seoEn.canonical);
+
+  setSeoField('ptTitle', seoPt.title);
+  setSeoField('ptDescription', seoPt.description);
+  setSeoField('ptOgTitle', seoPt.ogTitle);
+  setSeoField('ptOgDescription', seoPt.ogDescription);
+  setSeoField('ptOgImage', seoPt.ogImage);
+  setSeoField('ptCanonical', seoPt.canonical);
+}
+
+function toggleSeoPanel(open: boolean): void {
+  if (!seoPanel) {
+    return;
+  }
+
+  if (open) {
+    closePanels(seoPanel);
+    showElement(seoPanel);
+    hydrateSeoForm();
+    return;
+  }
+
+  hideElement(seoPanel);
+}
+
+function applySeoFormChanges(): void {
+  if (!workingState) {
+    return;
+  }
+
+  const current = workingState.page.seo;
+
+  const nextSeo: Record<Locale, CmsSeoLocale> = {
+    en: {
+      title: getSeoField('enTitle'),
+      description: getSeoField('enDescription'),
+      ogTitle: getSeoField('enOgTitle'),
+      ogDescription: getSeoField('enOgDescription'),
+      ogImage: getSeoField('enOgImage'),
+      canonical: getSeoField('enCanonical'),
+    },
+    pt: {
+      title: getSeoField('ptTitle'),
+      description: getSeoField('ptDescription'),
+      ogTitle: getSeoField('ptOgTitle'),
+      ogDescription: getSeoField('ptOgDescription'),
+      ogImage: getSeoField('ptOgImage'),
+      canonical: getSeoField('ptCanonical'),
+    },
+  };
+
+  if (JSON.stringify(current) === JSON.stringify(nextSeo)) {
+    setStatus('SEO unchanged');
+    return;
+  }
+
+  workingState.page.seo = nextSeo;
+  applyCurrentState();
+  markDirty('SEO updated');
+}
+
+function fillSeoCanonicalFromCurrentPath(): void {
+  const path = window.location.pathname;
+
+  if (!path) {
+    return;
+  }
+
+  if (!getSeoField('enCanonical')) {
+    setSeoField('enCanonical', path);
+  }
+
+  if (!getSeoField('ptCanonical')) {
+    setSeoField('ptCanonical', path);
+  }
+
+  setStatus('Canonical fields filled where empty');
+}
+
+function setLibraryEditorField(name: string, value: string): void {
+  if (!libraryEditorForm) {
+    return;
+  }
+
+  const field = libraryEditorForm.elements.namedItem(name);
+  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+    field.value = value;
+  }
+}
+
+function getLibraryEditorField(name: string): string {
+  if (!libraryEditorForm) {
+    return '';
+  }
+
+  const field = libraryEditorForm.elements.namedItem(name);
+  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
+    return field.value.trim();
+  }
+
+  return '';
+}
+
+function findSelectedLibraryItem(): CmsMediaItem | null {
+  if (!workingState || !selectedLibraryItemId) {
+    return null;
+  }
+
+  return workingState.mediaLibrary.items.find((item) => item.id === selectedLibraryItemId) ?? null;
+}
+
+function hydrateLibraryEditor(): void {
+  if (!libraryEditor || !libraryEditorForm) {
+    return;
+  }
+
+  const item = findSelectedLibraryItem();
+  if (!item) {
+    hideElement(libraryEditor);
+    return;
+  }
+
+  showElement(libraryEditor);
+  if (libraryEditorSource) {
+    libraryEditorSource.textContent = item.src;
+  }
+
+  setLibraryEditorField('altEn', item.alt.en);
+  setLibraryEditorField('altPt', item.alt.pt);
+  setLibraryEditorField('captionEn', item.caption?.en ?? '');
+  setLibraryEditorField('captionPt', item.caption?.pt ?? '');
+  setLibraryEditorField('attributionName', item.attributionName);
+  setLibraryEditorField('attributionUrl', item.attributionUrl);
+  setLibraryEditorField('licenseUrl', item.licenseUrl);
+}
+
+function applyLibraryMetadataChanges(): void {
+  if (!workingState || !selectedLibraryItemId) {
+    return;
+  }
+
+  const index = workingState.mediaLibrary.items.findIndex((item) => item.id === selectedLibraryItemId);
+  if (index < 0) {
+    return;
+  }
+
+  const currentItem = workingState.mediaLibrary.items[index];
+  const nextCaptionEn = getLibraryEditorField('captionEn');
+  const nextCaptionPt = getLibraryEditorField('captionPt');
+
+  const nextItem: CmsMediaItem = {
+    ...currentItem,
+    alt: {
+      en: getLibraryEditorField('altEn'),
+      pt: getLibraryEditorField('altPt'),
+    },
+    caption: nextCaptionEn || nextCaptionPt
+      ? {
+          en: nextCaptionEn,
+          pt: nextCaptionPt,
+        }
+      : undefined,
+    attributionName: getLibraryEditorField('attributionName'),
+    attributionUrl: getLibraryEditorField('attributionUrl'),
+    licenseUrl: getLibraryEditorField('licenseUrl'),
+  };
+
+  if (JSON.stringify(currentItem) === JSON.stringify(nextItem)) {
+    setStatus('Library metadata unchanged');
+    return;
+  }
+
+  workingState.mediaLibrary.items[index] = nextItem;
+  workingState.mediaLibrary.updatedAt = nowIso();
+  renderImageLibrary();
+  markDirty('Library metadata updated');
+}
+
+function normalizeImageSrc(src: string): string {
+  const trimmed = src.trim();
+  if (!trimmed || trimmed.startsWith('data:') || trimmed.startsWith('blob:')) {
+    return '';
+  }
+
+  try {
+    const resolved = new URL(trimmed, window.location.origin);
+    if (resolved.origin === window.location.origin) {
+      return `${resolved.pathname}${resolved.search}`;
+    }
+
+    return resolved.toString();
+  } catch {
+    return trimmed;
+  }
+}
+
+function mergeLocaleText(base: LocaleText, incoming: LocaleText): LocaleText {
+  return {
+    en: base.en.trim() || incoming.en.trim(),
+    pt: base.pt.trim() || incoming.pt.trim(),
+  };
+}
+
+function mergeCaption(base: LocaleText | undefined, incoming: LocaleText | undefined): LocaleText | undefined {
+  if (!base && !incoming) {
+    return undefined;
+  }
+
+  if (!base) {
+    return incoming;
+  }
+
+  if (!incoming) {
+    return base;
+  }
+
+  return mergeLocaleText(base, incoming);
+}
+
+const GALLERY_SOURCE_PRIORITY: Record<GallerySource, number> = {
+  library: 0,
+  page: 1,
+  blog: 2,
+  seo: 3,
+  visible: 4,
+};
+
+function addGalleryCandidate(
+  map: Map<string, CmsGalleryItem>,
+  candidate: CmsGalleryItem,
+): void {
+  const key = normalizeImageSrc(candidate.src);
+  if (!key) {
+    return;
+  }
+
+  const nextCandidate: CmsGalleryItem = {
+    ...candidate,
+    src: key,
+    sourceLabels: [...candidate.sourceLabels],
+  };
+
+  const existing = map.get(key);
+  if (!existing) {
+    map.set(key, nextCandidate);
+    return;
+  }
+
+  existing.sourceLabels = Array.from(new Set([...existing.sourceLabels, ...nextCandidate.sourceLabels]));
+
+  if (nextCandidate.libraryItemId) {
+    existing.libraryItemId = nextCandidate.libraryItemId;
+    existing.source = 'library';
+    existing.alt = deepClone(nextCandidate.alt);
+    existing.caption = nextCandidate.caption ? deepClone(nextCandidate.caption) : undefined;
+    existing.attributionName = nextCandidate.attributionName;
+    existing.attributionUrl = nextCandidate.attributionUrl;
+    existing.licenseUrl = nextCandidate.licenseUrl;
+    return;
+  }
+
+  if (GALLERY_SOURCE_PRIORITY[nextCandidate.source] < GALLERY_SOURCE_PRIORITY[existing.source]) {
+    existing.source = nextCandidate.source;
+  }
+
+  existing.alt = mergeLocaleText(existing.alt, nextCandidate.alt);
+  existing.caption = mergeCaption(existing.caption, nextCandidate.caption);
+  existing.attributionName = existing.attributionName.trim() || nextCandidate.attributionName.trim();
+  existing.attributionUrl = existing.attributionUrl.trim() || nextCandidate.attributionUrl.trim();
+  existing.licenseUrl = existing.licenseUrl.trim() || nextCandidate.licenseUrl.trim();
+}
+
+function collectGalleryItems(): CmsGalleryItem[] {
+  const map = new Map<string, CmsGalleryItem>();
+
+  for (const item of globalGalleryItems) {
+    addGalleryCandidate(map, deepClone(item));
+  }
+
+  if (workingState) {
+    for (const item of workingState.mediaLibrary.items) {
+      addGalleryCandidate(map, {
+        ...deepClone(item),
+        source: 'library',
+        sourceLabels: ['Library'],
+        libraryItemId: item.id,
+      });
+    }
+
+    for (const image of workingState.page.images) {
+      addGalleryCandidate(map, {
+        id: `page:${image.id}`,
+        src: image.src,
+        alt: deepClone(image.alt),
+        attributionName: image.attributionName,
+        attributionUrl: image.attributionUrl,
+        licenseUrl: image.licenseUrl,
+        caption: image.caption ? deepClone(image.caption) : undefined,
+        source: 'page',
+        sourceLabels: [`Page content: ${pageId}`],
+      });
+    }
+
+    for (const post of workingState.blogPosts) {
+      if (!post.coverImage.trim()) {
+        continue;
+      }
+
+      addGalleryCandidate(map, {
+        id: `blog:${post.id}`,
+        src: post.coverImage,
+        alt: {
+          en: post.locales.en.coverAlt,
+          pt: post.locales.pt.coverAlt,
+        },
+        attributionName: '',
+        attributionUrl: '',
+        licenseUrl: '',
+        source: 'blog',
+        sourceLabels: [`Blog: ${post.slug}`],
+      });
+    }
+
+    for (const localeKey of ['en', 'pt'] as const) {
+      const seo = workingState.page.seo[localeKey];
+      if (!seo.ogImage.trim()) {
+        continue;
+      }
+
+      addGalleryCandidate(map, {
+        id: `seo:${localeKey}:${pageId}`,
+        src: seo.ogImage,
+        alt: {
+          en: workingState.page.seo.en.ogTitle || workingState.page.seo.en.title,
+          pt: workingState.page.seo.pt.ogTitle || workingState.page.seo.pt.title,
+        },
+        attributionName: '',
+        attributionUrl: '',
+        licenseUrl: '',
+        source: 'seo',
+        sourceLabels: [`SEO ${localeKey.toUpperCase()}: ${pageId}`],
+      });
+    }
+  }
+
+  const visibleImages = document.querySelectorAll<HTMLImageElement>('img');
+  for (const image of visibleImages) {
+    if (image.closest('[data-admin-allow]')) {
+      continue;
+    }
+
+    const src = image.currentSrc || image.src;
+    if (!src.trim()) {
+      continue;
+    }
+
+    addGalleryCandidate(map, {
+      id: `visible:${computeSelector(image)}`,
+      src,
+      alt: {
+        en: image.alt,
+        pt: image.alt,
+      },
+      attributionName: '',
+      attributionUrl: '',
+      licenseUrl: '',
+      source: 'visible',
+      sourceLabels: ['Visible on current page'],
+    });
+  }
+
+  return Array.from(map.values()).sort((a, b) => {
+    const rankDiff = GALLERY_SOURCE_PRIORITY[a.source] - GALLERY_SOURCE_PRIORITY[b.source];
+    if (rankDiff !== 0) {
+      return rankDiff;
+    }
+
+    return a.src.localeCompare(b.src);
+  });
+}
+
+function filteredLibraryItems(): CmsGalleryItem[] {
+  const items = collectGalleryItems();
+  const query = imageLibrarySearch?.value.trim().toLowerCase() ?? '';
+
+  if (!query) {
+    return items;
+  }
+
+  return items.filter((item) => {
+    const haystack = [
+      item.src,
+      item.alt.en,
+      item.alt.pt,
+      item.caption?.en ?? '',
+      item.caption?.pt ?? '',
+      item.attributionName,
+      item.attributionUrl,
+      item.licenseUrl,
+      item.source,
+      ...item.sourceLabels,
+    ]
+      .join(' ')
+      .toLowerCase();
+
+    return haystack.includes(query);
+  });
+}
+
+function addGalleryItemToLibrary(item: CmsGalleryItem): CmsMediaItem | null {
+  if (!workingState) {
+    return null;
+  }
+
+  const normalizedTarget = normalizeImageSrc(item.src);
+  const existing = workingState.mediaLibrary.items.find(
+    (libraryItem) => normalizeImageSrc(libraryItem.src) === normalizedTarget,
+  );
+
+  if (existing) {
+    return existing;
+  }
+
+  const nextItem: CmsMediaItem = {
+    id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+      ? crypto.randomUUID()
+      : `media-${Date.now()}`,
+    src: normalizedTarget,
+    alt: deepClone(item.alt),
+    attributionName: item.attributionName,
+    attributionUrl: item.attributionUrl,
+    licenseUrl: item.licenseUrl,
+    caption: item.caption ? deepClone(item.caption) : undefined,
+  };
+
+  workingState.mediaLibrary.items.unshift(nextItem);
+  workingState.mediaLibrary.updatedAt = nowIso();
+  markDirty('Image added to library');
+  return nextItem;
+}
+
+function createLibraryItemFromGallery(item: CmsGalleryItem): CmsMediaItem {
+  return {
+    id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+      ? crypto.randomUUID()
+      : `media-${Date.now()}`,
+    src: normalizeImageSrc(item.src),
+    alt: deepClone(item.alt),
+    attributionName: item.attributionName,
+    attributionUrl: item.attributionUrl,
+    licenseUrl: item.licenseUrl,
+    caption: item.caption ? deepClone(item.caption) : undefined,
+  };
+}
+
+function ensureAllGalleryItemsInLibrary(): number {
+  if (!workingState) {
+    return 0;
+  }
+
+  const normalizedToLibraryId = new Map<string, string>();
+  for (const item of workingState.mediaLibrary.items) {
+    const normalized = normalizeImageSrc(item.src);
+    if (normalized) {
+      normalizedToLibraryId.set(normalized, item.id);
+    }
+  }
+
+  const allGalleryItems = collectGalleryItems();
+  let addedCount = 0;
+
+  for (const item of allGalleryItems) {
+    const normalized = normalizeImageSrc(item.src);
+    if (!normalized || normalizedToLibraryId.has(normalized)) {
+      continue;
+    }
+
+    const nextItem = createLibraryItemFromGallery(item);
+    workingState.mediaLibrary.items.unshift(nextItem);
+    normalizedToLibraryId.set(normalized, nextItem.id);
+    addedCount += 1;
+  }
+
+  if (addedCount > 0) {
+    workingState.mediaLibrary.updatedAt = nowIso();
+  }
+
+  return addedCount;
+}
+
+function openGalleryItemEditor(item: CmsGalleryItem): void {
+  let libraryId = item.libraryItemId;
+  if (!libraryId) {
+    const next = addGalleryItemToLibrary(item);
+    if (!next) {
+      return;
+    }
+    libraryId = next.id;
+  }
+
+  selectedLibraryItemId = libraryId;
+  renderImageLibrary();
+  hydrateLibraryEditor();
+  setStatus('Editing image metadata');
+}
+
+function applyGalleryImageToSelected(item: CmsGalleryItem): void {
+  if (!workingState || !selectedImageTarget) {
+    setStatus('Select an image on the page first.');
+    toggleImageEditor(true);
+    return;
+  }
 
   const nextField: CmsImageField = {
-    id,
-    selector,
-    src,
-    alt: existing ? setLocaleValue(existing.alt, alt) : { en: '', pt: '', [locale]: alt },
-    attributionName,
-    attributionUrl,
-    licenseUrl,
-    caption: existing?.caption,
+    id: selectedImageTarget.id,
+    selector: selectedImageTarget.selector,
+    src: item.src,
+    alt: deepClone(item.alt),
+    attributionName: item.attributionName,
+    attributionUrl: item.attributionUrl,
+    licenseUrl: item.licenseUrl,
+    caption: item.caption ? deepClone(item.caption) : undefined,
   };
 
   upsertImageField(nextField);
   applyCurrentState();
-  storeDraft();
-  setStatus('Image updated');
+  hydrateImageEditorForm();
+  markDirty('Gallery image applied to selected page image');
 }
 
-function handleEditClick(event: MouseEvent): void {
-  if (!editMode) {
+function removeImageFromLibrary(item: CmsGalleryItem): void {
+  if (!workingState || !item.libraryItemId) {
     return;
   }
 
-  const target = event.target instanceof Element ? event.target : null;
-  if (!target || isAdminControl(target)) {
+  const confirmed = window.confirm(
+    'Delete this image from the library? If it is still used on pages/posts, it can reappear in the gallery.',
+  );
+  if (!confirmed) {
     return;
   }
 
-  const image = target.closest('img');
-  if (image instanceof HTMLImageElement && image.closest('main')) {
-    event.preventDefault();
-    event.stopPropagation();
-    editImage(image);
-    return;
+  workingState.mediaLibrary.items = workingState.mediaLibrary.items.filter(
+    (libraryItem) => libraryItem.id !== item.libraryItemId,
+  );
+  workingState.mediaLibrary.updatedAt = nowIso();
+  globalGalleryItems = globalGalleryItems.filter((galleryItem) => galleryItem.libraryItemId !== item.libraryItemId);
+
+  if (selectedLibraryItemId === item.libraryItemId) {
+    selectedLibraryItemId = null;
   }
 
-  const clickable = target.closest('a,button');
-  if (clickable instanceof HTMLElement && clickable.closest('main')) {
-    event.preventDefault();
-    event.stopPropagation();
-    editLink(clickable);
-    return;
-  }
-
-  const textElement = target.closest<HTMLElement>('main *');
-  if (!textElement || !isTextCandidate(textElement)) {
-    return;
-  }
-
-  event.preventDefault();
-  event.stopPropagation();
-  beginTextEdit(textElement);
-}
-
-function lockNavigation(event: MouseEvent): void {
-  if (!editMode) {
-    return;
-  }
-
-  const target = event.target instanceof Element ? event.target : null;
-  if (!target || isAdminControl(target)) {
-    return;
-  }
-
-  if (target.closest('a,button,[role="button"]')) {
-    event.preventDefault();
-  }
-}
-
-function lockFormSubmit(event: SubmitEvent): void {
-  if (!editMode) {
-    return;
-  }
-
-  const target = event.target instanceof Element ? event.target : null;
-  if (!target || isAdminControl(target)) {
-    return;
-  }
-
-  event.preventDefault();
+  renderImageLibrary();
+  hydrateLibraryEditor();
+  markDirty('Image removed from library');
 }
 
 function renderImageLibrary(): void {
-  if (!imageLibraryList || !workingState) {
+  if (!imageLibraryList || !imageLibraryCount) {
     return;
   }
 
   imageLibraryList.innerHTML = '';
+  hideElement(libraryEditor);
 
-  const pageImages: Array<CmsMediaItem & { isPageImage?: boolean }> = workingState.page.images.map((item) => ({
-    ...item,
-    id: `page:${item.id}`,
-    isPageImage: true,
-  }));
-  const allItems: Array<CmsMediaItem & { isPageImage?: boolean }> = [
-    ...pageImages,
-    ...workingState.mediaLibrary.items,
-  ];
+  const items = filteredLibraryItems();
+  imageLibraryCount.textContent = `${items.length} image${items.length === 1 ? '' : 's'} in gallery`;
 
-  for (const item of allItems) {
+  if (items.length === 0) {
+    const empty = document.createElement('p');
+    empty.className = 'cms-subtitle';
+    empty.textContent = 'No images match your filter.';
+    imageLibraryList.append(empty);
+    return;
+  }
+
+  for (const item of items) {
     const card = document.createElement('article');
     card.className = 'cms-library-item';
+    const isSelectedLibraryItem = Boolean(item.libraryItemId && item.libraryItemId === selectedLibraryItemId);
+    if (isSelectedLibraryItem) {
+      card.classList.add('cms-library-item-selected');
+    }
+    card.addEventListener('click', (event) => {
+      const eventTarget = event.target instanceof Element ? event.target : null;
+      if (eventTarget?.closest('button')) {
+        return;
+      }
+      openGalleryItemEditor(item);
+    });
 
     const image = document.createElement('img');
     image.src = item.src;
     image.alt = localeValue(item.alt);
 
-    const label = document.createElement('p');
-    label.className = 'cms-subtitle';
-    label.textContent = item.isPageImage ? `Page: ${item.src}` : item.src;
+    const path = document.createElement('p');
+    path.className = 'cms-library-path';
+    path.textContent = item.src;
+
+    const alt = document.createElement('p');
+    alt.className = 'cms-library-meta';
+    alt.textContent = `ALT ${locale.toUpperCase()}: ${localeValue(item.alt) || '—'}`;
+
+    const source = document.createElement('p');
+    source.className = 'cms-library-meta';
+    source.textContent = `Source: ${item.sourceLabels.join(' • ')}`;
+
+    const actions = document.createElement('div');
+    actions.className = 'cms-library-actions';
 
     const useButton = document.createElement('button');
-    useButton.className = 'cms-btn cms-btn-primary';
     useButton.type = 'button';
-    useButton.textContent = 'Use';
+    useButton.className = 'cms-btn cms-btn-primary';
+    useButton.textContent = 'Use on selected page image';
+    useButton.disabled = !selectedImageTarget;
     useButton.addEventListener('click', () => {
-      if (!selectedImageTarget || !workingState) {
-        setStatus('Select an image on the page first');
-        return;
-      }
-
-      const selector = selectedImageTarget.selector;
-      const id = selectedImageTarget.id;
-
-      const existing = workingState.page.images.find((entry) => entry.id === id);
-      const nextField: CmsImageField = {
-        id,
-        selector,
-        src: item.src,
-        alt: existing ? setLocaleValue(existing.alt, localeValue(item.alt)) : item.alt,
-        attributionName: item.attributionName,
-        attributionUrl: item.attributionUrl,
-        licenseUrl: item.licenseUrl,
-        caption: item.caption,
-      };
-
-      upsertImageField(nextField);
-      applyCurrentState();
-      storeDraft();
-      setStatus('Applied library image');
+      applyGalleryImageToSelected(item);
     });
 
-    card.append(image, label, useButton);
+    const editButton = document.createElement('button');
+    editButton.type = 'button';
+    editButton.className = 'cms-btn cms-btn-muted';
+    editButton.textContent = 'Edit metadata';
+    editButton.addEventListener('click', () => {
+      openGalleryItemEditor(item);
+    });
+
+    const deleteButton = document.createElement('button');
+    deleteButton.type = 'button';
+    deleteButton.className = 'cms-btn cms-btn-danger';
+    deleteButton.textContent = 'Delete image';
+    deleteButton.disabled = !item.libraryItemId;
+    deleteButton.addEventListener('click', () => {
+      removeImageFromLibrary(item);
+    });
+
+    actions.append(useButton, editButton, deleteButton);
+    card.append(image, path, alt, source, actions);
     imageLibraryList.append(card);
   }
+
+  hydrateLibraryEditor();
 }
 
 function toggleImageLibrary(open: boolean): void {
@@ -974,57 +1764,13 @@ function toggleImageLibrary(open: boolean): void {
   }
 
   if (open) {
-    imageLibraryPanel.classList.remove('cms-hidden');
+    closePanels(imageLibraryPanel);
+    showElement(imageLibraryPanel);
     renderImageLibrary();
     return;
   }
 
-  imageLibraryPanel.classList.add('cms-hidden');
-}
-
-function ensureBlogPostSelectValue(): string | null {
-  if (!blogSelect || !workingState || workingState.blogPosts.length === 0) {
-    return null;
-  }
-
-  if (!blogSelect.value) {
-    blogSelect.value = workingState.blogPosts[0].id;
-  }
-
-  return blogSelect.value;
-}
-
-function findSelectedBlogPost(): CmsBlogPost | null {
-  if (!blogSelect || !workingState) {
-    return null;
-  }
-
-  const selectedId = ensureBlogPostSelectValue();
-  if (!selectedId) {
-    return null;
-  }
-
-  return workingState.blogPosts.find((post) => post.id === selectedId) ?? null;
-}
-
-function renderBlogSelect(): void {
-  if (!blogSelect || !workingState) {
-    return;
-  }
-
-  blogSelect.innerHTML = '';
-
-  for (const post of workingState.blogPosts) {
-    const option = document.createElement('option');
-    option.value = post.id;
-    option.textContent = `${post.slug} (${post.status})`;
-    blogSelect.append(option);
-  }
-
-  if (workingState.blogPosts.length > 0) {
-    blogSelect.value = workingState.blogPosts[0].id;
-    hydrateBlogForm();
-  }
+  hideElement(imageLibraryPanel);
 }
 
 function setBlogField(name: string, value: string): void {
@@ -1051,9 +1797,18 @@ function getBlogField(name: string): string {
   return '';
 }
 
+function findSelectedBlogPost(): CmsBlogPost | null {
+  if (!workingState || !blogSelect || !blogSelect.value) {
+    return null;
+  }
+
+  return workingState.blogPosts.find((post) => post.id === blogSelect.value) ?? null;
+}
+
 function hydrateBlogForm(): void {
   const post = findSelectedBlogPost();
   if (!post) {
+    blogForm?.reset();
     return;
   }
 
@@ -1089,6 +1844,31 @@ function hydrateBlogForm(): void {
   setBlogField('canonicalPt', post.seoByLocale.pt.canonical);
 }
 
+function renderBlogSelect(preferredId?: string): void {
+  if (!workingState || !blogSelect) {
+    return;
+  }
+
+  const previous = preferredId ?? blogSelect.value;
+  blogSelect.innerHTML = '';
+
+  for (const post of workingState.blogPosts) {
+    const option = document.createElement('option');
+    option.value = post.id;
+    option.textContent = `${post.slug} (${post.status})`;
+    blogSelect.append(option);
+  }
+
+  const hasPrevious = previous && workingState.blogPosts.some((post) => post.id === previous);
+  if (hasPrevious) {
+    blogSelect.value = previous;
+  } else if (workingState.blogPosts[0]) {
+    blogSelect.value = workingState.blogPosts[0].id;
+  }
+
+  hydrateBlogForm();
+}
+
 function upsertBlogPost(post: CmsBlogPost): void {
   if (!workingState) {
     return;
@@ -1100,7 +1880,7 @@ function upsertBlogPost(post: CmsBlogPost): void {
     return;
   }
 
-  workingState.blogPosts.push(post);
+  workingState.blogPosts.unshift(post);
 }
 
 function createEmptyBlogPost(): CmsBlogPost {
@@ -1139,7 +1919,7 @@ function createEmptyBlogPost(): CmsBlogPost {
   };
 }
 
-function saveBlogFormToDraft(): void {
+function applyBlogFormChanges(): void {
   const selected = findSelectedBlogPost();
   if (!selected) {
     return;
@@ -1197,15 +1977,14 @@ function saveBlogFormToDraft(): void {
     },
   };
 
-  upsertBlogPost(nextPost);
-  storeDraft();
-  renderBlogSelect();
-
-  if (blogSelect) {
-    blogSelect.value = nextPost.id;
+  if (JSON.stringify(selected) === JSON.stringify(nextPost)) {
+    setStatus('Post unchanged');
+    return;
   }
 
-  setStatus('Saved blog post to draft');
+  upsertBlogPost(nextPost);
+  renderBlogSelect(nextPost.id);
+  markDirty('Blog post updated');
 }
 
 function toggleBlogManager(open: boolean): void {
@@ -1214,74 +1993,264 @@ function toggleBlogManager(open: boolean): void {
   }
 
   if (open) {
-    blogManagerPanel.classList.remove('cms-hidden');
+    closePanels(blogManagerPanel);
+    showElement(blogManagerPanel);
     renderBlogSelect();
     return;
   }
 
-  blogManagerPanel.classList.add('cms-hidden');
+  hideElement(blogManagerPanel);
 }
 
-async function publishDraft(): Promise<void> {
+async function fetchContent(): Promise<ContentResponse> {
+  const response = await fetch(`/api/admin/content?pageId=${encodeURIComponent(pageId)}`, {
+    credentials: 'include',
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to load CMS content');
+  }
+
+  return (await response.json()) as ContentResponse;
+}
+
+async function checkSession(): Promise<boolean> {
+  const response = await fetch('/api/admin/session', {
+    credentials: 'include',
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    return false;
+  }
+
+  const payload = (await response.json()) as { authenticated?: boolean };
+  return Boolean(payload.authenticated);
+}
+
+function hydrateStateFromResponse(response: ContentResponse): void {
+  const baseState: WorkingState = {
+    page: response.page,
+    mediaLibrary: response.mediaLibrary,
+    blogPosts: response.blogPosts,
+    baseSha: response.branchSha,
+  };
+
+  publishedState = deepClone(baseState);
+  workingState = deepClone(baseState);
+  authenticated = response.authenticated;
+  globalGalleryItems = deepClone(response.galleryItems ?? []);
+  selectedImageTarget = null;
+  selectedLibraryItemId = null;
+  const syncedLibraryItems = ensureAllGalleryItemsInLibrary();
+
+  applyCurrentState();
+  renderImageLibrary();
+  renderBlogSelect();
+  hydrateSeoForm();
+  hydrateImageEditorForm();
+  if (syncedLibraryItems > 0) {
+    setDirty(true);
+    setStatus(`Added ${syncedLibraryItems} missing images to library. Publish to save.`);
+    return;
+  }
+
+  setDirty(false);
+}
+
+async function refreshContent(): Promise<void> {
+  const response = await fetchContent();
+  hydrateStateFromResponse(response);
+  setBannerVisibility();
+  updateActionAvailability();
+}
+
+async function publishChanges(): Promise<void> {
   if (!workingState) {
     return;
   }
 
-  setStatus('Publishing...');
+  finalizeActiveTextEdit();
+  setStatus('Publishing changes...');
+  suppressBeforeUnloadPrompt = true;
 
-  const response = await fetch('/api/admin/publish', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      pages: [workingState.page],
-      blogPosts: workingState.blogPosts,
-      mediaLibrary: workingState.mediaLibrary,
-      baseSha: workingState.baseSha,
-    }),
-  });
+  try {
+    const response = await fetch('/api/admin/publish', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        pages: [workingState.page],
+        blogPosts: workingState.blogPosts,
+        mediaLibrary: workingState.mediaLibrary,
+        baseSha: workingState.baseSha,
+      }),
+    });
 
-  const payload = (await response.json()) as { commitSha?: string; error?: string };
+    const payload = (await response.json()) as { commitSha?: string; error?: string };
 
-  if (!response.ok) {
-    setStatus(payload.error ?? 'Publish failed');
-    return;
+    if (!response.ok) {
+      setStatus(payload.error ?? 'Publish failed');
+      return;
+    }
+
+    setStatus(`Published ${payload.commitSha ?? ''}`.trim());
+    await refreshContent();
+  } finally {
+    suppressBeforeUnloadPrompt = false;
   }
-
-  discardDraft(pageId);
-  setStatus(`Published ${payload.commitSha ?? ''}`.trim());
-  await refreshContent();
 }
 
 async function uploadImage(formData: FormData): Promise<void> {
-  const response = await fetch('/api/admin/upload-image', {
+  suppressBeforeUnloadPrompt = true;
+  try {
+    const response = await fetch('/api/admin/upload-image', {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+    });
+
+    const payload = (await response.json()) as {
+      ok?: boolean;
+      item?: CmsMediaItem;
+      error?: string;
+      commitSha?: string;
+    };
+
+    if (!response.ok || !payload.item || !workingState) {
+      setStatus(payload.error ?? 'Image upload failed');
+      return;
+    }
+
+    workingState.mediaLibrary.items.unshift(payload.item);
+    workingState.mediaLibrary.updatedAt = nowIso();
+    selectedLibraryItemId = payload.item.id;
+
+    if (payload.commitSha) {
+      workingState.baseSha = payload.commitSha;
+      if (publishedState) {
+        publishedState.mediaLibrary = deepClone(workingState.mediaLibrary);
+        publishedState.baseSha = payload.commitSha;
+      }
+      setStatus('Image uploaded and saved to library');
+    } else {
+      markDirty('Image uploaded. Publish to persist library updates.');
+    }
+
+    renderImageLibrary();
+    hydrateLibraryEditor();
+  } finally {
+    suppressBeforeUnloadPrompt = false;
+  }
+}
+
+async function logout(): Promise<void> {
+  await fetch('/api/admin/logout', {
     method: 'POST',
-    body: formData,
     credentials: 'include',
   });
 
-  const payload = (await response.json()) as {
-    ok?: boolean;
-    item?: CmsMediaItem;
-    error?: string;
-    commitSha?: string;
-  };
+  authenticated = false;
+  disableEditMode();
+  closePanels();
+  setBannerVisibility();
+  setDirty(false);
+  updateActionAvailability();
+  setStatus('Logged out');
+}
 
-  if (!response.ok || !payload.item || !workingState) {
-    setStatus(payload.error ?? 'Image upload failed');
+function discardChanges(): void {
+  if (!publishedState) {
     return;
   }
 
-  workingState.mediaLibrary.items.unshift(payload.item);
-  workingState.mediaLibrary.updatedAt = nowIso();
-  if (payload.commitSha) {
-    workingState.baseSha = payload.commitSha;
-  }
-  storeDraft();
+  finalizeActiveTextEdit();
+  workingState = deepClone(publishedState);
+  selectedImageTarget = null;
+  selectedLibraryItemId = null;
+  applyCurrentState();
   renderImageLibrary();
-  setStatus('Image uploaded');
+  renderBlogSelect();
+  hydrateSeoForm();
+  hydrateImageEditorForm();
+  setDirty(false);
+  setStatus('All unpublished changes discarded');
+}
+
+function handleEditClick(event: MouseEvent): void {
+  if (!editMode) {
+    return;
+  }
+
+  const target = event.target instanceof Element ? event.target : null;
+  if (!target || isAdminControl(target)) {
+    return;
+  }
+
+  const image = target.closest('img');
+  if (image instanceof HTMLImageElement && image.closest('main')) {
+    event.preventDefault();
+    event.stopPropagation();
+    selectImageForEditing(image);
+    return;
+  }
+
+  if (isPanelOpen(imageEditorPanel)) {
+    const contextualImage = findContextualImageCandidate(target);
+    if (contextualImage) {
+      event.preventDefault();
+      event.stopPropagation();
+      selectImageForEditing(contextualImage);
+      return;
+    }
+  }
+
+  const textElement = target.closest<HTMLElement>('main *');
+  if (textElement && isTextCandidate(textElement)) {
+    event.preventDefault();
+    event.stopPropagation();
+    beginTextEdit(textElement);
+    return;
+  }
+
+  const clickable = target.closest('a,button');
+  if (clickable instanceof HTMLElement && clickable.closest('main')) {
+    event.preventDefault();
+    event.stopPropagation();
+    editLink(clickable);
+    return;
+  }
+}
+
+function lockNavigation(event: MouseEvent): void {
+  if (!editMode) {
+    return;
+  }
+
+  const target = event.target instanceof Element ? event.target : null;
+  if (!target || isAdminControl(target)) {
+    return;
+  }
+
+  if (target.closest('a,button,[role="button"]')) {
+    event.preventDefault();
+  }
+}
+
+function lockFormSubmit(event: SubmitEvent): void {
+  if (!editMode) {
+    return;
+  }
+
+  const target = event.target instanceof Element ? event.target : null;
+  if (!target || isAdminControl(target)) {
+    return;
+  }
+
+  event.preventDefault();
 }
 
 function bindAuthUI(): void {
@@ -1321,8 +2290,13 @@ function bindAuthUI(): void {
     authenticated = true;
     closeLoginModal();
     setBannerVisibility();
+    updateActionAvailability();
     setStatus('Logged in');
     await refreshContent();
+
+    if (isMediaPage) {
+      toggleImageLibrary(true);
+    }
   });
 }
 
@@ -1331,42 +2305,79 @@ function bindBannerUI(): void {
     toggleEditMode();
   });
 
-  saveDraftButton?.addEventListener('click', () => {
-    storeDraft();
-    setStatus('Draft saved locally');
-  });
-
-  discardDraftButton?.addEventListener('click', () => {
-    if (!publishedState) {
+  discardChangesButton?.addEventListener('click', () => {
+    if (!hasUnsavedChanges) {
+      setStatus('Nothing to discard');
       return;
     }
 
-    discardDraft(pageId);
-    workingState = deepClone(publishedState);
-    applyCurrentState();
-    setStatus('Draft discarded');
+    const confirmed = window.confirm('Discard all unpublished changes?');
+    if (!confirmed) {
+      return;
+    }
+
+    discardChanges();
   });
 
   editSeoButton?.addEventListener('click', () => {
-    editSeo();
+    const open = !isPanelOpen(seoPanel);
+    toggleSeoPanel(open);
+  });
+
+  openImageEditorButton?.addEventListener('click', () => {
+    const open = !isPanelOpen(imageEditorPanel);
+    toggleImageEditor(open);
+    if (open && !selectedImageTarget) {
+      setStatus('Click an image in edit mode to load it into the editor.');
+    }
+  });
+
+  openImageLibraryButton?.addEventListener('click', () => {
+    const open = !isPanelOpen(imageLibraryPanel);
+    toggleImageLibrary(open);
+  });
+
+  openBlogManagerButton?.addEventListener('click', () => {
+    const open = !isPanelOpen(blogManagerPanel);
+    toggleBlogManager(open);
   });
 
   publishButton?.addEventListener('click', async () => {
-    await publishDraft();
+    await publishChanges();
   });
 
   logoutButton?.addEventListener('click', async () => {
     await logout();
   });
+}
 
-  openImageLibraryButton?.addEventListener('click', () => {
-    const open = imageLibraryPanel?.classList.contains('cms-hidden') ?? true;
-    toggleImageLibrary(open);
+function bindSeoUI(): void {
+  seoClose?.addEventListener('click', () => {
+    toggleSeoPanel(false);
   });
 
-  openBlogManagerButton?.addEventListener('click', () => {
-    const open = blogManagerPanel?.classList.contains('cms-hidden') ?? true;
-    toggleBlogManager(open);
+  seoFillCanonicalButton?.addEventListener('click', () => {
+    fillSeoCanonicalFromCurrentPath();
+  });
+
+  seoForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    applySeoFormChanges();
+  });
+}
+
+function bindImageEditorUI(): void {
+  imageEditorClose?.addEventListener('click', () => {
+    toggleImageEditor(false);
+  });
+
+  imageEditorOpenLibraryButton?.addEventListener('click', () => {
+    toggleImageLibrary(true);
+  });
+
+  imageEditorForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    applyImageFormChanges();
   });
 }
 
@@ -1375,11 +2386,20 @@ function bindImageLibraryUI(): void {
     toggleImageLibrary(false);
   });
 
+  imageLibrarySearch?.addEventListener('input', () => {
+    renderImageLibrary();
+  });
+
   imageUploadForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
     const data = new FormData(imageUploadForm);
     await uploadImage(data);
     imageUploadForm.reset();
+  });
+
+  libraryEditorForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    applyLibraryMetadataChanges();
   });
 }
 
@@ -1394,27 +2414,22 @@ function bindBlogManagerUI(): void {
 
   blogForm?.addEventListener('submit', (event) => {
     event.preventDefault();
-    saveBlogFormToDraft();
+    applyBlogFormChanges();
   });
 
-  blogNewButton?.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (!workingState || !blogSelect) {
+  blogNewButton?.addEventListener('click', () => {
+    if (!workingState) {
       return;
     }
 
     const post = createEmptyBlogPost();
     workingState.blogPosts.unshift(post);
-    renderBlogSelect();
-    blogSelect.value = post.id;
-    hydrateBlogForm();
-    storeDraft();
-    setStatus('Created new draft post');
+    renderBlogSelect(post.id);
+    markDirty('Created new post');
   });
 
-  blogDuplicateButton?.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (!workingState || !blogSelect) {
+  blogDuplicateButton?.addEventListener('click', () => {
+    if (!workingState) {
       return;
     }
 
@@ -1430,16 +2445,12 @@ function bindBlogManagerUI(): void {
     clone.updatedAt = nowIso();
 
     workingState.blogPosts.unshift(clone);
-    renderBlogSelect();
-    blogSelect.value = clone.id;
-    hydrateBlogForm();
-    storeDraft();
-    setStatus('Duplicated post to draft');
+    renderBlogSelect(clone.id);
+    markDirty('Post duplicated');
   });
 
-  blogDeleteButton?.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (!workingState || !blogSelect) {
+  blogDeleteButton?.addEventListener('click', () => {
+    if (!workingState) {
       return;
     }
 
@@ -1448,39 +2459,70 @@ function bindBlogManagerUI(): void {
       return;
     }
 
-    const shouldDelete = window.confirm(`Delete post "${selected.slug}" from draft list?`);
+    const shouldDelete = window.confirm(`Delete post \"${selected.slug}\"?`);
     if (!shouldDelete) {
       return;
     }
 
     workingState.blogPosts = workingState.blogPosts.filter((post) => post.id !== selected.id);
     renderBlogSelect();
-    storeDraft();
-    setStatus('Deleted post from draft');
+    markDirty('Post deleted');
+  });
+}
+
+function bindUnloadGuard(): void {
+  window.addEventListener('beforeunload', (event) => {
+    if (!hasUnsavedChanges || suppressBeforeUnloadPrompt) {
+      return;
+    }
+
+    event.preventDefault();
+    event.returnValue = '';
   });
 }
 
 async function boot(): Promise<void> {
   bindAuthUI();
   bindBannerUI();
+  bindSeoUI();
+  bindImageEditorUI();
   bindImageLibraryUI();
   bindBlogManagerUI();
+  bindUnloadGuard();
+
+  if (banner && typeof ResizeObserver === 'function') {
+    bannerResizeObserver = new ResizeObserver(() => {
+      syncBannerOffset();
+    });
+
+    bannerResizeObserver.observe(banner);
+  }
 
   document.addEventListener('click', lockNavigation, true);
   document.addEventListener('submit', lockFormSubmit, true);
   document.addEventListener('click', handleEditClick, true);
 
   authenticated = await checkSession();
+
   if (authenticated) {
     const content = await fetchContent();
     hydrateStateFromResponse(content);
+
+    if (isMediaPage) {
+      toggleImageLibrary(true);
+    }
   }
 
   setBannerVisibility();
-  setModeLabel();
+  updateModeLabel();
+  updateDirtyIndicator();
+  updateActionAvailability();
 
   if (!authenticated) {
     setStatus('Public view');
+    if (isMediaPage) {
+      openLoginModal();
+    }
   }
 }
 
