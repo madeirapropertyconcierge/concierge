@@ -3,10 +3,13 @@ import '../styles/global.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import AdminShell from '../components/cms/AdminShell.astro';
 import { SITE } from '../lib/constants';
 import { t } from '../i18n/utils';
 import type { Locale } from '../i18n/utils';
 import { getAlternateRoute, routeMap } from '../i18n/routes';
+import { getPageIdFromPath } from '../cms/page-id';
+import { loadPageDocument } from '../cms/content-loader';
 
 interface Props {
   title?: string;
@@ -37,17 +40,30 @@ const {
 } = Astro.props;
 
 const normalizedTitle = title.trim();
-const pageTitle =
-  normalizedTitle === SITE.name || normalizedTitle.includes(SITE.name)
-    ? normalizedTitle
-    : `${normalizedTitle} | ${SITE.name}`;
 const alternateLocale = lang === 'en' ? 'pt' : 'en';
 const currentPath = Astro.url.pathname;
 const enPath = lang === 'en' ? currentPath : getAlternateRoute(currentPath, 'en');
 const ptPath = lang === 'pt' ? currentPath : getAlternateRoute(currentPath, 'pt');
-const resolvedCanonicalUrl = canonicalUrl ?? `${SITE.url}${Astro.url.pathname}`;
-const resolvedOgImage = ogImage.startsWith('http') ? ogImage : `${SITE.url}${ogImage}`;
-const resolvedTwitterImage = twitterImage.startsWith('http') ? twitterImage : `${SITE.url}${twitterImage}`;
+const pageId = getPageIdFromPath(currentPath);
+const cmsPage = await loadPageDocument(pageId);
+const cmsSeo = cmsPage.seo[lang];
+
+const effectiveBaseTitle = cmsSeo.title.trim() || normalizedTitle;
+const pageTitle =
+  effectiveBaseTitle === SITE.name || effectiveBaseTitle.includes(SITE.name)
+    ? effectiveBaseTitle
+    : `${effectiveBaseTitle} | ${SITE.name}`;
+const effectiveDescription = cmsSeo.description.trim() || description;
+const effectiveCanonical = cmsSeo.canonical.trim() || canonicalUrl || `${SITE.url}${Astro.url.pathname}`;
+const resolvedCanonicalUrl = effectiveCanonical.startsWith('http')
+  ? effectiveCanonical
+  : `${SITE.url}${effectiveCanonical.startsWith('/') ? effectiveCanonical : `/${effectiveCanonical}`}`;
+const ogSourceImage = cmsSeo.ogImage.trim() || ogImage;
+const resolvedOgImage = ogSourceImage.startsWith('http') ? ogSourceImage : `${SITE.url}${ogSourceImage}`;
+const resolvedTwitterImage = ogSourceImage.startsWith('http') ? ogSourceImage : `${SITE.url}${ogSourceImage}`;
+const effectiveOgTitle = cmsSeo.ogTitle.trim() || pageTitle;
+const effectiveOgDescription = cmsSeo.ogDescription.trim() || effectiveDescription;
+const isBlogPage = currentPath.includes('/blog');
 
 const globalJsonLd: Array<Record<string, unknown>> = [
   {
@@ -81,7 +97,7 @@ const combinedJsonLd = [...globalJsonLd, ...pageJsonLd];
 
     <!-- SEO -->
     <title>{pageTitle}</title>
-    <meta name="description" content={description} />
+    <meta name="description" content={effectiveDescription} />
     <meta name="author" content={SITE.name} />
     <meta name="theme-color" content="#10202b" />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -91,8 +107,8 @@ const combinedJsonLd = [...globalJsonLd, ...pageJsonLd];
     <!-- Open Graph -->
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
-    <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={effectiveOgTitle} />
+    <meta property="og:description" content={effectiveOgDescription} />
     <meta property="og:image" content={resolvedOgImage} />
     <meta property="og:url" content={resolvedCanonicalUrl} />
     <meta property="og:locale" content={lang === 'pt' ? 'pt_PT' : 'en_US'} />
@@ -102,8 +118,8 @@ const combinedJsonLd = [...globalJsonLd, ...pageJsonLd];
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={effectiveOgTitle} />
+    <meta name="twitter:description" content={effectiveOgDescription} />
     <meta name="twitter:image" content={resolvedTwitterImage} />
 
     <!-- Favicon -->
@@ -119,6 +135,7 @@ const combinedJsonLd = [...globalJsonLd, ...pageJsonLd];
     ))}
   </head>
   <body class="min-h-screen flex flex-col bg-cream text-charcoal antialiased">
+    <AdminShell pageId={pageId} locale={lang} isBlogPage={isBlogPage} />
     <Header lang={lang} />
     <main class="flex-1">
       <slot />

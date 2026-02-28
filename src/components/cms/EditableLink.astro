@@ -1,0 +1,23 @@
+---
+import { renderInlineMarkdown } from '../../cms/markdown';
+
+interface Props {
+  id: string;
+  selector: string;
+  href: string;
+  label: string;
+  class?: string;
+}
+
+const { id, selector, href, label } = Astro.props;
+const className = Astro.props.class;
+---
+
+<a
+  href={href}
+  class={className}
+  data-cms-field="link"
+  data-cms-id={id}
+  data-cms-selector={selector}
+  set:html={renderInlineMarkdown(label)}
+/>

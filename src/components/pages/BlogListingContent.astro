@@ -15,7 +15,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const posts = getLocalizedBlogPosts(lang);
+const posts = await getLocalizedBlogPosts(lang);
 const [featuredPost, ...archivePosts] = posts;
 
 const copy =

@@ -228,6 +228,6 @@ const pt = {
     description: "A página que procura não existe ou foi movida.",
     cta: "Ir para o Início",
   },
-} as const satisfies typeof en;
+} as const;
 
 export default pt;

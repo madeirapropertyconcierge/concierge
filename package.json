@@ -2,15 +2,32 @@
   "name": "astro-init",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "build:vercel": "bunx vercel build",
     "preview": "astro preview",
-    "astro": "astro"
+    "deploy:preview": "bunx vercel deploy --yes",
+    "deploy:prod": "bunx vercel deploy --prod --yes",
+    "astro": "astro",
+    "cms:hash-password": "bun run scripts/hash-admin-password.ts",
+    "test": "bun test"
   },
   "dependencies": {
+    "@astrojs/vercel": "^9.0.4",
     "@tailwindcss/vite": "^4.2.1",
+    "@types/sanitize-html": "^2.16.0",
     "astro": "^5.17.1",
-    "tailwindcss": "^4.2.1"
+    "cheerio": "^1.2.0",
+    "marked": "^17.0.3",
+    "sanitize-html": "^2.17.1",
+    "tailwindcss": "^4.2.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "bun-types": "^1.3.10"
   }
 }

@@ -1,0 +1,28 @@
+<div
+  id="cms-login-modal"
+  class="cms-hidden cms-fixed cms-inset-0 cms-z-max cms-bg-slate-900/70"
+  data-admin-allow
+>
+  <div class="cms-flex cms-min-h-full cms-items-center cms-justify-center cms-p-4" data-admin-allow>
+    <form id="cms-login-form" class="cms-card cms-w-full cms-max-w-sm cms-space-y-4" data-admin-allow>
+      <div>
+        <h2 class="cms-title">Admin Login</h2>
+        <p class="cms-subtitle">Enter your shared admin password.</p>
+      </div>
+
+      <label class="cms-field" data-admin-allow>
+        <span>Password</span>
+        <input type="password" name="password" autocomplete="current-password" required data-admin-allow />
+      </label>
+
+      <p id="cms-login-error" class="cms-error cms-hidden" data-admin-allow>Invalid password</p>
+
+      <div class="cms-row" data-admin-allow>
+        <button type="button" class="cms-btn cms-btn-muted" id="cms-login-cancel" data-admin-allow>
+          Cancel
+        </button>
+        <button type="submit" class="cms-btn cms-btn-primary" data-admin-allow>Login</button>
+      </div>
+    </form>
+  </div>
+</div>

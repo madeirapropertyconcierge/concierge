@@ -1,0 +1,18 @@
+<div id="cms-image-library" class="cms-hidden cms-panel" data-admin-allow>
+  <header class="cms-row cms-space-between" data-admin-allow>
+    <h3 class="cms-title">Image Library</h3>
+    <button id="cms-image-library-close" class="cms-btn cms-btn-muted" data-admin-allow>Close</button>
+  </header>
+
+  <form id="cms-image-upload-form" class="cms-space-y-2" data-admin-allow>
+    <input type="file" name="file" accept="image/*" required data-admin-allow />
+    <input type="text" name="altEn" placeholder="Alt text (EN)" data-admin-allow />
+    <input type="text" name="altPt" placeholder="Alt text (PT)" data-admin-allow />
+    <input type="text" name="attributionName" placeholder="Attribution name" data-admin-allow />
+    <input type="url" name="attributionUrl" placeholder="Attribution URL" data-admin-allow />
+    <input type="url" name="licenseUrl" placeholder="License URL" data-admin-allow />
+    <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Upload</button>
+  </form>
+
+  <div id="cms-image-library-list" class="cms-library-grid" data-admin-allow></div>
+</div>

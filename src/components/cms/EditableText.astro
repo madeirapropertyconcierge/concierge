@@ -1,0 +1,23 @@
+---
+import { renderBlockMarkdown, renderInlineMarkdown } from '../../cms/markdown';
+
+interface Props {
+  id: string;
+  selector: string;
+  kind: 'inline' | 'block';
+  value: string;
+  as?: string;
+}
+
+const { id, selector, kind, value, as = 'span' } = Astro.props;
+const Tag = as as keyof HTMLElementTagNameMap;
+const html = kind === 'block' ? renderBlockMarkdown(value) : renderInlineMarkdown(value);
+---
+
+<Tag
+  data-cms-field="text"
+  data-cms-id={id}
+  data-cms-selector={selector}
+  data-cms-kind={kind}
+  set:html={html}
+/>

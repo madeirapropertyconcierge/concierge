@@ -134,6 +134,14 @@ const footerCopy =
         </p>
       </div>
       <div class="flex flex-wrap gap-6">
+        <a
+          href="#"
+          class="transition-colors hover:text-white"
+          data-cms-open-login
+          data-admin-allow
+        >
+          Admin
+        </a>
         <a href={routes.privacy} class="transition-colors hover:text-white">{t(lang, 'footer.privacy')}</a>
         <a href={routes.terms} class="transition-colors hover:text-white">{t(lang, 'footer.terms')}</a>
         <a href={SITE.legal.complaintsBookUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white">

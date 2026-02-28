@@ -1,0 +1,51 @@
+<div id="cms-blog-manager" class="cms-hidden cms-panel" data-admin-allow>
+  <header class="cms-row cms-space-between" data-admin-allow>
+    <h3 class="cms-title">Blog Manager</h3>
+    <button id="cms-blog-manager-close" class="cms-btn cms-btn-muted" data-admin-allow>Close</button>
+  </header>
+
+  <div class="cms-row cms-gap-2" data-admin-allow>
+    <select id="cms-blog-select" data-admin-allow></select>
+    <button id="cms-blog-new" class="cms-btn cms-btn-primary" data-admin-allow>New</button>
+    <button id="cms-blog-duplicate" class="cms-btn cms-btn-muted" data-admin-allow>Duplicate</button>
+    <button id="cms-blog-delete" class="cms-btn cms-btn-muted" data-admin-allow>Delete</button>
+  </div>
+
+  <form id="cms-blog-form" class="cms-blog-form" data-admin-allow>
+    <input name="slug" placeholder="slug" required data-admin-allow />
+    <select name="status" data-admin-allow>
+      <option value="draft">draft</option>
+      <option value="published">published</option>
+    </select>
+    <input name="publishedAt" placeholder="YYYY-MM-DD" data-admin-allow />
+    <input name="readingMinutes" type="number" min="1" step="1" placeholder="Reading minutes" data-admin-allow />
+    <input name="coverImage" placeholder="Cover image URL" data-admin-allow />
+    <input name="tags" placeholder="tag1,tag2" data-admin-allow />
+
+    <input name="titleEn" placeholder="Title EN" data-admin-allow />
+    <textarea name="excerptEn" rows="2" placeholder="Excerpt EN" data-admin-allow></textarea>
+    <textarea name="bodyEn" rows="8" placeholder="Body EN (markdown)" data-admin-allow></textarea>
+    <input name="coverAltEn" placeholder="Cover alt EN" data-admin-allow />
+
+    <input name="titlePt" placeholder="Title PT" data-admin-allow />
+    <textarea name="excerptPt" rows="2" placeholder="Excerpt PT" data-admin-allow></textarea>
+    <textarea name="bodyPt" rows="8" placeholder="Body PT (markdown)" data-admin-allow></textarea>
+    <input name="coverAltPt" placeholder="Cover alt PT" data-admin-allow />
+
+    <input name="seoTitleEn" placeholder="SEO title EN" data-admin-allow />
+    <textarea name="seoDescEn" rows="2" placeholder="SEO description EN" data-admin-allow></textarea>
+    <input name="ogTitleEn" placeholder="OG title EN" data-admin-allow />
+    <textarea name="ogDescEn" rows="2" placeholder="OG description EN" data-admin-allow></textarea>
+    <input name="ogImageEn" placeholder="OG image EN" data-admin-allow />
+    <input name="canonicalEn" placeholder="Canonical EN" data-admin-allow />
+
+    <input name="seoTitlePt" placeholder="SEO title PT" data-admin-allow />
+    <textarea name="seoDescPt" rows="2" placeholder="SEO description PT" data-admin-allow></textarea>
+    <input name="ogTitlePt" placeholder="OG title PT" data-admin-allow />
+    <textarea name="ogDescPt" rows="2" placeholder="OG description PT" data-admin-allow></textarea>
+    <input name="ogImagePt" placeholder="OG image PT" data-admin-allow />
+    <input name="canonicalPt" placeholder="Canonical PT" data-admin-allow />
+
+    <button type="submit" class="cms-btn cms-btn-success" data-admin-allow>Save Post To Draft</button>
+  </form>
+</div>

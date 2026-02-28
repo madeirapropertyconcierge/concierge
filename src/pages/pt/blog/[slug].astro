@@ -1,16 +1,13 @@
 ---
 import BlogPostContent from '../../../components/pages/BlogPostContent.astro';
-import { getLocalizedBlogPosts } from '../../../lib/blogData';
-
-export function getStaticPaths() {
-  return getLocalizedBlogPosts('pt').map((post) => ({
-    params: { slug: post.slug },
-    props: post,
-  }));
-}
-
-const post = Astro.props;
+import { getLocalizedBlogPostBySlug } from '../../../lib/blogData';
 const lang = 'pt';
+const slug = Astro.params.slug ?? '';
+const post = slug ? await getLocalizedBlogPostBySlug(slug, lang) : null;
+
+if (!post) {
+  return Astro.redirect('/pt/blog');
+}
 ---
 
 <BlogPostContent lang={lang} {...post} />

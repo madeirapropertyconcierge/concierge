@@ -1,0 +1,23 @@
+---
+interface Props {
+  id: string;
+  selector: string;
+  src: string;
+  alt: string;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { id, selector, src, alt, loading = 'lazy' } = Astro.props;
+const className = Astro.props.class;
+---
+
+<img
+  src={src}
+  alt={alt}
+  class={className}
+  loading={loading}
+  data-cms-field="image"
+  data-cms-id={id}
+  data-cms-selector={selector}
+/>
