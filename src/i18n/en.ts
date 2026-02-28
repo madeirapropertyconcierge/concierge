@@ -22,7 +22,7 @@ const en = {
 
   testimonials: {
     title: "What Our Clients Say",
-    subtitle: "Trusted by property owners from across the globe.",
+    subtitle: "Hear from property owners we work with.",
   },
 
   // Footer
@@ -44,8 +44,8 @@ const en = {
     metaTitle: "Property Management Services | Madeira Property Concierge",
     metaDescription: "Four-tier Madeira service model: Tier A Keyholding + Home Care, Tier B Hosting Essentials, Tier C Full-Service AL Management, and Tier D White-Glove add-ons.",
     hero: {
-      title: "Property Management, Reimagined",
-      subtitle: "Every service designed with care, delivered with precision, and tailored to your property's unique needs.",
+      title: "Property Management That Actually Works",
+      subtitle: "Each service is built around your property and how you want it run.",
     },
   },
 
@@ -53,10 +53,10 @@ const en = {
   about: {
     title: "About Lisa",
     metaTitle: "About Lisa | Madeira Property Concierge",
-    metaDescription: "Meet Lisa — UX Director, bilingual EN/PT bridge, and founder of Madeira Property Concierge with Madeiran roots and 3+ years living on-island.",
+    metaDescription: "Meet Lisa, founder of Madeira Property Concierge. UX background, bilingual EN/PT, Madeiran roots, and 3+ years living on-island.",
     hero: {
-      title: "The Person Behind the Promise",
-      subtitle: "Not a faceless agency. A real person with real investment in your success.",
+      title: "Who You're Working With",
+      subtitle: "One person runs this. You'll always know who's responsible.",
     },
     story: {
       title: "My Story",
@@ -68,24 +68,24 @@ const en = {
       title: "Why I'm Different",
       bilingual: {
         title: "Truly Bilingual",
-        description: "Native-level English and Portuguese. I don't just translate — I navigate cultural nuances that prevent costly misunderstandings.",
+        description: "Native-level English and Portuguese. I handle the cultural gaps that cause expensive misunderstandings between owners and local vendors.",
       },
       design: {
         title: "Design-Thinking Approach",
-        description: "15 years of UX taught me to obsess over details, streamline processes, and put the client experience first — always.",
+        description: "15 years of UX work means I notice what breaks before it becomes a problem, and I build processes that actually hold up.",
       },
       personal: {
         title: "Personally Invested",
         description: "I live in Madeira and raise my daughter here. My reputation is local, visible, and tied directly to your results.",
       },
       network: {
-        title: "Authentic Madeiran Network",
-        description: "Built through family roots and local relationships. You get vetted vendors with standards, SLAs, and documentation — not trial and error.",
+        title: "Local Madeiran Network",
+        description: "Family roots and years of local relationships. You get vetted vendors with clear standards and documentation, not guesswork.",
       },
     },
     promise: {
       title: "My Promise",
-      text: "I treat every property as if it were my own. I communicate proactively, solve problems before they escalate, and never cut corners. If something goes wrong, you'll hear it from me first — with a solution already in hand.",
+      text: "I treat every property as if it were my own. I'll flag problems before they grow and I won't cut corners. If something goes wrong, you hear it from me first, with a fix already underway.",
     },
   },
 
@@ -95,8 +95,8 @@ const en = {
     metaTitle: "How It Works | Madeira Property Concierge",
     metaDescription: "Founder-led onboarding and operations for Madeira properties: diagnostic call, property audit, setup, and monthly management with clear SLAs.",
     hero: {
-      title: "Simple, Transparent, Effective",
-      subtitle: "From first call to fully managed — here's exactly what to expect.",
+      title: "Straightforward from Start to Finish",
+      subtitle: "From first call to fully managed, here's what to expect.",
     },
     steps: {
       step1: {
@@ -124,8 +124,8 @@ const en = {
     metaTitle: "Pricing | Madeira Property Concierge",
     metaDescription: "Transparent tiered pricing: €100-€250/month home care, 15%-18% hosting essentials, 20%-25% full-service management, and €50-€150/stay white-glove add-ons.",
     hero: {
-      title: "Transparent Pricing, Real Value",
-      subtitle: "No hidden fees. No surprise charges. Choose the tier that fits your needs.",
+      title: "Clear Pricing, No Surprises",
+      subtitle: "No hidden fees. Pick the tier that matches what you need.",
     },
     popular: "Most Popular",
     perMonth: "/month",
@@ -196,7 +196,7 @@ const en = {
   blog: {
     title: "Blog",
     metaTitle: "Blog | Madeira Property Concierge",
-    metaDescription: "Expert insights on Madeira property management, AL licensing, investment tips, and island living.",
+    metaDescription: "Practical articles on Madeira property management, AL licensing, investment, and island living.",
     readMore: "Read More",
     publishedOn: "Published on",
     backToBlog: "← Back to Blog",
