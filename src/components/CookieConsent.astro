@@ -1,0 +1,65 @@
+---
+interface Props {
+  lang: string;
+  labels: {
+    message: string;
+    accept: string;
+    decline: string;
+    learnMore: string;
+  };
+  privacyUrl: string;
+}
+
+const { labels, privacyUrl } = Astro.props;
+---
+
+<div class="fixed bottom-0 left-0 right-0 z-50 hidden p-4 sm:p-6" data-cookie-consent>
+  <div class="mx-auto flex max-w-4xl flex-col items-start gap-4 rounded-2xl border border-white/20 bg-charcoal/95 p-4 text-white shadow-2xl backdrop-blur sm:flex-row sm:items-center sm:p-6">
+    <div class="flex-1">
+      <p class="text-sm leading-relaxed text-white/82">
+        {labels.message}
+        {' '}
+        <a href={privacyUrl} class="text-golden-sand underline transition-colors hover:text-white">
+          {labels.learnMore}
+        </a>
+      </p>
+    </div>
+
+    <div class="flex flex-shrink-0 gap-3">
+      <button
+        type="button"
+        class="rounded-lg border border-white/20 px-4 py-2 text-sm font-medium text-white/75 transition-colors hover:border-white/45 hover:text-white"
+        data-cookie-decline
+      >
+        {labels.decline}
+      </button>
+      <button
+        type="button"
+        class="rounded-lg bg-forest-green px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-forest-green-dark"
+        data-cookie-accept
+      >
+        {labels.accept}
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  const consentKey = 'cookie-consent';
+  const container = document.querySelector('[data-cookie-consent]');
+
+  if (container && !localStorage.getItem(consentKey)) {
+    container.classList.remove('hidden');
+  }
+
+  const acceptButton = container?.querySelector('[data-cookie-accept]');
+  const declineButton = container?.querySelector('[data-cookie-decline]');
+
+  const closeBanner = (value) => {
+    localStorage.setItem(consentKey, value);
+    container?.classList.add('hidden');
+  };
+
+  acceptButton?.addEventListener('click', () => closeBanner('accepted'));
+  declineButton?.addEventListener('click', () => closeBanner('declined'));
+</script>

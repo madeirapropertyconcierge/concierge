@@ -1,0 +1,75 @@
+---
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  navItems: NavItem[];
+  ctaLabel: string;
+  ctaHref: string;
+}
+
+const { navItems, ctaLabel, ctaHref } = Astro.props;
+---
+
+<details class="mobile-nav xl:hidden" data-mobile-nav>
+  <summary class="mobile-nav-toggle" aria-label="Open menu">
+    <span class="mobile-nav-icon" aria-hidden="true"></span>
+  </summary>
+
+  <button class="mobile-nav-backdrop" type="button" data-close-nav aria-label="Close menu"></button>
+
+  <div class="mobile-nav-panel" role="dialog" aria-label="Mobile navigation">
+    <div class="mb-4 flex items-center justify-between">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-charcoal/55">Navigation</p>
+      <button
+        type="button"
+        class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-charcoal/15 text-charcoal transition-colors hover:bg-charcoal hover:text-white"
+        data-close-nav
+        aria-label="Close menu"
+      >
+        ✕
+      </button>
+    </div>
+
+    <nav class="flex flex-col gap-1" aria-label="Mobile navigation links">
+      {navItems.map((item) => (
+        <a href={item.href} class="mobile-nav-link" data-nav-link>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <a href={ctaHref} class="mt-5 inline-flex w-full items-center justify-center rounded-full bg-charcoal px-5 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-ocean-blue" data-nav-link>
+      {ctaLabel}
+    </a>
+  </div>
+</details>
+
+<script is:inline>
+  const navs = document.querySelectorAll('[data-mobile-nav]');
+
+  navs.forEach((nav) => {
+    const closeButtons = nav.querySelectorAll('[data-close-nav]');
+    const links = nav.querySelectorAll('[data-nav-link]');
+
+    closeButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        nav.removeAttribute('open');
+      });
+    });
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.removeAttribute('open');
+      });
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        nav.removeAttribute('open');
+      }
+    });
+  });
+</script>

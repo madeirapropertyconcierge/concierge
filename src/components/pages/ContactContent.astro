@@ -1,0 +1,157 @@
+---
+import VisualPageLayout from './VisualPageLayout.astro';
+import ContactForm from '../ContactForm.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { t } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import { SITE, FORMSPREE_ENDPOINT } from '../../lib/constants';
+import type { Locale } from '../../i18n/utils';
+import { breadcrumbJsonLd, absoluteUrl } from '../../lib/seo';
+import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+
+const formLabels = {
+  name: t(lang, 'contact.form.name'),
+  email: t(lang, 'contact.form.email'),
+  phone: t(lang, 'contact.form.phone'),
+  propertyType: t(lang, 'contact.form.propertyType'),
+  propertyTypes: {
+    apartment: t(lang, 'contact.form.propertyTypes.apartment'),
+    villa: t(lang, 'contact.form.propertyTypes.villa'),
+    commercial: t(lang, 'contact.form.propertyTypes.commercial'),
+    land: t(lang, 'contact.form.propertyTypes.land'),
+    other: t(lang, 'contact.form.propertyTypes.other'),
+  },
+  service: t(lang, 'contact.form.service'),
+  serviceOptions: {
+    essentials: t(lang, 'contact.form.serviceOptions.essentials'),
+    professional: t(lang, 'contact.form.serviceOptions.professional'),
+    premium: t(lang, 'contact.form.serviceOptions.premium'),
+    project: t(lang, 'contact.form.serviceOptions.project'),
+    notSure: t(lang, 'contact.form.serviceOptions.notSure'),
+  },
+  message: t(lang, 'contact.form.message'),
+  submit: t(lang, 'contact.form.submit'),
+  sending: t(lang, 'contact.form.sending'),
+  success: t(lang, 'contact.form.success'),
+  error: t(lang, 'contact.form.error'),
+};
+
+const copy =
+  lang === 'pt'
+    ? {
+        heroEyebrow: 'Consultoria Privada',
+        heroTitle: 'Vamos criar um plano concreto para o seu imóvel.',
+        heroSubtitle:
+          'Partilhe contexto, objetivos e desafios. Regressamos com um framework de execução claro e local.',
+        sideTitle: 'Contacto Direto',
+        sideBody:
+          'Se preferir, pode falar diretamente por email ou WhatsApp. Respondemos normalmente em menos de 24 horas úteis.',
+        sidePhotoAlt: 'Lisa e a filha no carro',
+        hours: 'Seg–Sáb, 09:00–18:00 WET',
+        formNotice:
+          'Ao enviar este formulário confirma que leu a Política de Privacidade. Utilizamos os dados apenas para responder ao pedido e preparar proposta de serviço.',
+      }
+    : {
+        heroEyebrow: 'Private Consultation',
+        heroTitle: 'Let’s map a concrete operating plan for your property.',
+        heroSubtitle:
+          'Share your context, goals, and constraints. We come back with a clear, local execution framework.',
+        sideTitle: 'Direct Contact',
+        sideBody:
+          'If you prefer, reach out directly by email or WhatsApp. Typical response time is under 24 business hours.',
+        sidePhotoAlt: 'Lisa and her daughter in the car',
+        hours: 'Mon–Sat, 09:00–18:00 WET',
+        formNotice:
+          'By submitting this form, you confirm that you read the Privacy Policy. We use your data only to respond to your enquiry and prepare a service proposal.',
+      };
+
+const pageSchema = [
+  breadcrumbJsonLd([
+    { name: 'Home', url: routes.home },
+    { name: t(lang, 'nav.contact'), url: routes.contact },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: t(lang, 'contact.metaTitle'),
+    url: absoluteUrl(routes.contact),
+  },
+];
+---
+
+<VisualPageLayout
+  lang={lang}
+  title={t(lang, 'contact.metaTitle')}
+  description={t(lang, 'contact.metaDescription')}
+  heroEyebrow={copy.heroEyebrow}
+  heroTitle={copy.heroTitle}
+  heroSubtitle={copy.heroSubtitle}
+  heroImage={pexelsMadeiraImages.oceanfrontBench.src}
+  heroAlt={pexelsMadeiraImages.oceanfrontBench.alt}
+  heroPrimaryCta={{ label: t(lang, 'common.bookConsultation'), href: '#contact-form' }}
+  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  jsonLd={pageSchema}
+>
+  <section id="contact-form" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <div class="grid gap-8 lg:grid-cols-[1.06fr_0.94fr]">
+      <div class="premium-panel p-6 sm:p-8 lg:p-10">
+        <ContactForm lang={lang} formspreeEndpoint={FORMSPREE_ENDPOINT} labels={formLabels} />
+        <p class="mt-4 text-xs leading-relaxed text-charcoal/62">
+          {copy.formNotice}
+          {' '}
+          <a href={routes.privacy} class="font-semibold text-ocean-blue transition-colors hover:text-charcoal">
+            {lang === 'pt' ? 'Política de Privacidade' : 'Privacy Policy'}
+          </a>
+          .
+        </p>
+      </div>
+
+      <div class="space-y-5">
+        <article class="media-card reveal min-h-[15rem]">
+          <img
+            src="/images/about/lisa_1.webp"
+            alt={copy.sidePhotoAlt}
+            class="h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div class="media-card-caption">Owner Support</div>
+        </article>
+
+        <article class="premium-panel p-6 sm:p-7">
+          <p class="eyebrow">{copy.sideTitle}</p>
+          <p class="mt-3 text-sm leading-relaxed text-charcoal/72 sm:text-base">{copy.sideBody}</p>
+
+          <div class="mt-6 space-y-3 text-sm text-charcoal/80 sm:text-base">
+            <a href={`mailto:${SITE.email}`} class="flex items-center gap-2 transition-colors hover:text-ocean-blue">
+              <span class="step-index !px-2 !py-1">@</span>
+              <span>{SITE.email}</span>
+            </a>
+            <a href={`tel:${SITE.phone.replace(/\s/g, '')}`} class="flex items-center gap-2 transition-colors hover:text-ocean-blue">
+              <span class="step-index !px-2 !py-1">Tel</span>
+              <span>{SITE.phone}</span>
+            </a>
+            <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 transition-colors hover:text-ocean-blue">
+              <span class="step-index !px-2 !py-1">WA</span>
+              <span>WhatsApp</span>
+            </a>
+            <p class="flex items-center gap-2">
+              <span class="step-index !px-2 !py-1">Loc</span>
+              <span>{SITE.address}</span>
+            </p>
+          </div>
+
+          <p class="mt-5 text-xs uppercase tracking-[0.14em] text-charcoal/50">{copy.hours}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</VisualPageLayout>
+
+<WhatsAppButton lang={lang} />

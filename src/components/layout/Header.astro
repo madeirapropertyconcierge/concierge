@@ -1,0 +1,69 @@
+---
+import { t } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import { getAlternateRoute } from '../../i18n/routes';
+import type { Locale } from '../../i18n/utils';
+import MobileNav from './MobileNav.astro';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+const currentPath = Astro.url.pathname;
+const alternatePath = getAlternateRoute(currentPath, lang === 'en' ? 'pt' : 'en');
+
+const navItems = [
+  { label: t(lang, 'nav.services'), href: routes.services },
+  { label: t(lang, 'nav.about'), href: routes.about },
+  { label: t(lang, 'nav.howItWorks'), href: routes.howItWorks },
+  { label: t(lang, 'nav.pricing'), href: routes.pricing },
+  { label: t(lang, 'nav.blog'), href: routes.blog },
+  { label: t(lang, 'nav.contact'), href: routes.contact },
+];
+---
+
+<header class="sticky top-3 z-50 px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-7xl">
+    <div class="header-shell">
+      <a href={routes.home} class="flex flex-col leading-none">
+        <span class="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-ocean-blue">Madeira</span>
+        <span class="font-serif text-xl tracking-tight text-charcoal sm:text-2xl">Property Concierge</span>
+      </a>
+
+      <nav class="hidden xl:flex items-center gap-1" aria-label="Main navigation">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'nav-pill',
+              currentPath === item.href || currentPath.startsWith(`${item.href}/`) ? 'nav-pill-active' : '',
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a
+          href={alternatePath}
+          class="inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-charcoal/15 bg-white/70 px-3 text-xs font-semibold uppercase tracking-[0.08em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
+          aria-label={lang === 'en' ? 'Mudar para Português' : 'Switch to English'}
+        >
+          {t(lang, 'nav.languageToggle')}
+        </a>
+
+        <a
+          href={routes.contact}
+          class="hidden md:inline-flex items-center justify-center rounded-full bg-charcoal px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-ocean-blue"
+        >
+          {t(lang, 'nav.cta')}
+        </a>
+
+        <MobileNav navItems={navItems} ctaLabel={t(lang, 'nav.cta')} ctaHref={routes.contact} />
+      </div>
+    </div>
+  </div>
+</header>

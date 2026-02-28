@@ -1,0 +1,290 @@
+---
+import VisualPageLayout from './VisualPageLayout.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { t } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import type { Locale } from '../../i18n/utils';
+import { breadcrumbJsonLd } from '../../lib/seo';
+import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+
+const copy =
+  lang === 'pt'
+    ? {
+        heroEyebrow: 'Preços Claros',
+        heroTitle: 'Modelos transparentes para diferentes estilos de propriedade.',
+        heroSubtitle:
+          'Sem surpresas, sem comissões escondidas. Seleciona o nível de serviço e acompanha exatamente o que está incluído.',
+        perMonth: '/mês',
+        customQuote: 'Orçamento personalizado',
+        mostPopular: 'Mais escolhido',
+        tiers: [
+          {
+            title: 'Essentials',
+            price: '150',
+            highlight: false,
+            audience: 'Supervisão contínua para proprietários com operação estável.',
+            features: ['Inspeções mensais com registo visual', 'Coordenação de manutenção essencial', 'Monitorização administrativa e utilidades'],
+          },
+          {
+            title: 'Professional',
+            price: '300',
+            highlight: true,
+            audience: 'Gestão diária para imóveis com hóspedes frequentes.',
+            features: ['Tudo no Essentials', 'Operação de hóspedes e check-ins', 'Coordenação de limpeza e suporte diário'],
+          },
+          {
+            title: 'Premium',
+            price: '500',
+            highlight: false,
+            audience: 'Delegação estratégica para proteção total do ativo.',
+            features: ['Tudo no Professional', 'Supervisão estratégica dedicada', 'Resposta prioritária e concierge'],
+          },
+          {
+            title: 'Project-Based',
+            price: null,
+            highlight: false,
+            audience: 'Projetos de setup, licenciamento ou renovação por escopo fechado.',
+            features: ['Licenciamento AL', 'Gestão de obra e setup', 'Projetos one-off com escopo fechado'],
+          },
+        ],
+        transparencyTitle: 'Incluído em todos os planos',
+        transparencyItems: ['Comunicação direta e objetiva', 'Registo claro de decisões e ações', 'Rede local de fornecedores validados'],
+        ctaTitle: 'Queremos recomendar-lhe apenas o que realmente precisa.',
+        ctaBody: 'Partilhe os objetivos do imóvel e recebe um plano de serviço e custos alinhado ao seu contexto.',
+        ctaPrimary: 'Marcar Consulta',
+        ctaProject: 'Definir Escopo',
+      }
+    : {
+        heroEyebrow: 'Clear Pricing',
+        heroTitle: 'Transparent operating models for different ownership profiles.',
+        heroSubtitle:
+          'No hidden commissions, no pricing surprises. Pick the service tier and see exactly what is included.',
+        perMonth: '/month',
+        customQuote: 'Custom Quote',
+        mostPopular: 'Most Chosen',
+        tiers: [
+          {
+            title: 'Essentials',
+            price: '150',
+            highlight: false,
+            audience: 'Consistent oversight for owners with stable operations.',
+            features: ['Monthly inspections with visual reporting', 'Essential maintenance coordination', 'Administrative and utility oversight'],
+          },
+          {
+            title: 'Professional',
+            price: '300',
+            highlight: true,
+            audience: 'Daily management for active short-term rental operations.',
+            features: ['Everything in Essentials', 'Guest operations and check-ins', 'Cleaning coordination and daily support'],
+          },
+          {
+            title: 'Premium',
+            price: '500',
+            highlight: false,
+            audience: 'Strategic delegation for owners who need full coverage.',
+            features: ['Everything in Professional', 'Dedicated strategic oversight', 'Priority response and concierge support'],
+          },
+          {
+            title: 'Project-Based',
+            price: null,
+            highlight: false,
+            audience: 'Scoped setup, licensing, or renovation delivery projects.',
+            features: ['AL licensing support', 'Renovation and setup management', 'One-off scoped delivery projects'],
+          },
+        ],
+        transparencyTitle: 'Included across every plan',
+        transparencyItems: ['Direct, concise communication', 'Clear decision and action tracking', 'Curated local vendor network'],
+        ctaTitle: 'We only recommend the service depth you actually need.',
+        ctaBody: 'Share your ownership goals and receive a tailored service/cost framework for your property.',
+        ctaPrimary: 'Book Consultation',
+        ctaProject: 'Scope The Project',
+      };
+
+const pageSchema = [
+  breadcrumbJsonLd([
+    { name: 'Home', url: routes.home },
+    { name: t(lang, 'nav.pricing'), url: routes.pricing },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'OfferCatalog',
+    name: `${t(lang, 'nav.pricing')} | Madeira Property Concierge`,
+    itemListElement: copy.tiers.map((tier, index) => ({
+      '@type': 'Offer',
+      position: index + 1,
+      name: tier.title,
+      price: tier.price,
+      priceCurrency: tier.price ? 'EUR' : undefined,
+    })),
+  },
+];
+---
+
+<VisualPageLayout
+  lang={lang}
+  title={t(lang, 'pricing.metaTitle')}
+  description={t(lang, 'pricing.metaDescription')}
+  heroEyebrow={copy.heroEyebrow}
+  heroTitle={copy.heroTitle}
+  heroSubtitle={copy.heroSubtitle}
+  heroImage={pexelsMadeiraImages.treeFramedValleyTown.src}
+  heroAlt={pexelsMadeiraImages.treeFramedValleyTown.alt}
+  heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
+  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  jsonLd={pageSchema}
+>
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <div class="pricing-grid grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      {copy.tiers.map((tier, index) => (
+        <article
+          class:list={[
+            'pricing-card premium-panel reveal flex h-full flex-col p-6 sm:p-7',
+            tier.highlight ? 'pricing-card-featured' : '',
+            index > 0 ? 'reveal-delay-1' : '',
+          ]}
+        >
+          <div class="pricing-badge-slot">
+            {tier.highlight ? (
+              <p class="eyebrow w-fit !border-ocean-blue/30 !bg-ocean-blue/12 !text-ocean-blue">{copy.mostPopular}</p>
+            ) : (
+              <span aria-hidden="true" class="pricing-badge-placeholder"></span>
+            )}
+          </div>
+
+          <header class="mt-3 min-h-[6.5rem]">
+            <h2 class="text-3xl text-charcoal">{tier.title}</h2>
+            <p class="mt-2 text-sm leading-relaxed text-charcoal/66">{tier.audience}</p>
+          </header>
+
+          <div class="pricing-price mt-5">
+            {tier.price ? (
+              <div class="flex items-end gap-1">
+                <p class="text-5xl text-charcoal">€{tier.price}</p>
+                <p class="pb-1 text-sm text-charcoal/65">{copy.perMonth}</p>
+              </div>
+            ) : (
+              <p class="pricing-quote text-3xl text-charcoal">{copy.customQuote}</p>
+            )}
+          </div>
+
+          <ul class="mt-6 grid flex-1 gap-3 text-sm text-charcoal/72">
+            {tier.features.map((feature) => (
+              <li class="flex items-start gap-2.5">
+                <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ocean-blue"></span>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <a href={routes.contact} class="mt-8 inline-flex w-full items-center justify-center rounded-full bg-charcoal px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-ocean-blue">
+            {tier.price ? copy.ctaPrimary : copy.ctaProject}
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+    <div class="premium-panel p-6 sm:p-8">
+      <p class="eyebrow">{copy.transparencyTitle}</p>
+      <div class="mt-5 grid gap-3 sm:grid-cols-3">
+        {copy.transparencyItems.map((item) => (
+          <article class="step-card pricing-shared-card flex items-center gap-3">
+            <span aria-hidden="true" class="h-2 w-2 flex-shrink-0 rounded-full bg-ocean-blue"></span>
+            <p class="text-sm leading-relaxed text-charcoal/75">{item}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+    <img
+      src={pexelsMadeiraImages.machicoFireFestival.src}
+      alt={pexelsMadeiraImages.machicoFireFestival.alt}
+      class="absolute inset-0 -z-20 h-full w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
+
+    <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
+      <h2 class="text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.ctaTitle}</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{copy.ctaBody}</p>
+      <a href={routes.contact} class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{copy.ctaPrimary}</a>
+    </div>
+  </section>
+</VisualPageLayout>
+
+<WhatsAppButton lang={lang} />
+
+<style>
+  .pricing-grid {
+    grid-auto-rows: 1fr;
+  }
+
+  .pricing-card {
+    min-height: 33.5rem;
+    transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 62px rgba(16, 32, 43, 0.17);
+  }
+
+  .pricing-card-featured {
+    border-color: rgba(42, 95, 125, 0.32);
+    box-shadow: 0 30px 68px rgba(42, 95, 125, 0.2);
+  }
+
+  .pricing-badge-slot {
+    min-height: 2.15rem;
+  }
+
+  .pricing-badge-placeholder {
+    display: block;
+    height: 2.15rem;
+  }
+
+  .pricing-price {
+    display: flex;
+    min-height: 5.3rem;
+    align-items: flex-end;
+  }
+
+  .pricing-quote {
+    line-height: 1.2;
+  }
+
+  .pricing-shared-card {
+    min-height: 6.25rem;
+  }
+
+  @media (max-width: 767px) {
+    .pricing-card,
+    .pricing-shared-card {
+      min-height: 0;
+    }
+
+    .pricing-card:hover {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pricing-card {
+      transition: none;
+    }
+
+    .pricing-card:hover {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+import { t } from '../../i18n/utils';
+import type { Locale } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+---
+
+<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
+  <!-- Background with overlay -->
+  <img
+    src={pexelsMadeiraImages.coastSunsetAerial.src}
+    alt={pexelsMadeiraImages.coastSunsetAerial.alt}
+    class="absolute inset-0 h-full w-full object-cover"
+    loading="eager"
+  />
+  <div class="absolute inset-0 bg-gradient-to-r from-charcoal/70 via-charcoal/50 to-charcoal/30"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center lg:text-left">
+    <div class="max-w-2xl lg:max-w-3xl">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl text-white leading-tight">
+        {t(lang, 'hero.title')}
+      </h1>
+      <p class="mt-6 text-lg sm:text-xl text-white/80 leading-relaxed max-w-2xl">
+        {t(lang, 'hero.subtitle')}
+      </p>
+
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+        <a
+          href={routes.contact}
+          class="inline-flex items-center justify-center px-8 py-4 bg-forest-green text-white font-semibold rounded-lg hover:bg-forest-green-dark transition-colors text-lg"
+        >
+          {t(lang, 'hero.cta')}
+        </a>
+        <a
+          href={routes.services}
+          class="inline-flex items-center justify-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/20 hover:bg-white/20 transition-colors text-lg"
+        >
+          {t(lang, 'hero.secondaryCta')}
+        </a>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="mt-10 flex flex-wrap gap-4 justify-center lg:justify-start">
+        <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm">
+          <svg class="w-4 h-4 text-golden-sand" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+          {t(lang, 'hero.trustBadge1')}
+        </span>
+        <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm">
+          <svg class="w-4 h-4 text-golden-sand" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+          {t(lang, 'hero.trustBadge2')}
+        </span>
+        <span class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-white/90 text-sm">
+          <svg class="w-4 h-4 text-golden-sand" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
+          {t(lang, 'hero.trustBadge3')}
+        </span>
+      </div>
+    </div>
+  </div>
+</section>

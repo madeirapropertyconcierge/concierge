@@ -1,0 +1,147 @@
+---
+import VisualPageLayout from './VisualPageLayout.astro';
+import BlogCard from '../blog/BlogCard.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { t } from '../../i18n/utils';
+import type { Locale } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import { getLocalizedBlogPosts } from '../../lib/blogData';
+import { breadcrumbJsonLd, absoluteUrl } from '../../lib/seo';
+import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+const posts = getLocalizedBlogPosts(lang);
+const [featuredPost, ...archivePosts] = posts;
+
+const copy =
+  lang === 'pt'
+    ? {
+        heroEyebrow: 'Insights',
+        heroTitle: 'Insights para investidores que querem controlo operacional.',
+        heroSubtitle:
+          'Análises práticas sobre rentabilidade, regulamentação e execução local no mercado imobiliário da Madeira.',
+        featuredLabel: 'Artigo em Destaque',
+        archiveTitle: 'Arquivo de Estratégia',
+        archiveSubtitle: 'Modelos operacionais, risco regulatório e execução no terreno.',
+        postsLabel: 'artigos',
+      }
+    : {
+        heroEyebrow: 'Insights',
+        heroTitle: 'Insights for investors who value operational control.',
+        heroSubtitle:
+          'Practical analysis on yield, regulation, and local execution in Madeira real estate.',
+        featuredLabel: 'Featured Analysis',
+        archiveTitle: 'Strategy Archive',
+        archiveSubtitle: 'Operating models, regulatory risk, and on-the-ground execution.',
+        postsLabel: 'posts',
+      };
+
+const pageSchema = [
+  breadcrumbJsonLd([
+    { name: 'Home', url: routes.home },
+    { name: t(lang, 'nav.blog'), url: routes.blog },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: t(lang, 'blog.title'),
+    description: t(lang, 'blog.metaDescription'),
+    url: absoluteUrl(routes.blog),
+    blogPost: posts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      datePublished: post.publishedAt,
+      dateModified: post.updatedAt ?? post.publishedAt,
+      url: absoluteUrl(`${routes.blog}/${post.slug}`),
+    })),
+  },
+];
+---
+
+<VisualPageLayout
+  lang={lang}
+  title={t(lang, 'blog.metaTitle')}
+  description={t(lang, 'blog.metaDescription')}
+  heroEyebrow={copy.heroEyebrow}
+  heroTitle={copy.heroTitle}
+  heroSubtitle={copy.heroSubtitle}
+  heroImage={pexelsMadeiraImages.mountainRiverValley.src}
+  heroAlt={pexelsMadeiraImages.mountainRiverValley.alt}
+  heroPrimaryCta={{ label: t(lang, 'nav.contact'), href: routes.contact }}
+  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  jsonLd={pageSchema}
+>
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    {featuredPost && (
+      <article class="reveal">
+        <a
+          href={`/${lang}/blog/${featuredPost.slug}`}
+          class="group grid overflow-hidden rounded-[1.7rem] border border-charcoal/12 bg-white/85 shadow-[0_26px_60px_rgba(16,32,43,0.14)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_34px_70px_rgba(16,32,43,0.18)] md:grid-cols-[1.25fr_1fr]"
+        >
+          <div class="relative min-h-[17rem] overflow-hidden">
+            <img
+              src={featuredPost.coverImage}
+              alt={featuredPost.coverAlt}
+              class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="eager"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent"></div>
+          </div>
+
+          <div class="flex flex-col justify-between p-6 sm:p-8">
+            <div>
+              <p class="inline-flex rounded-full border border-charcoal/16 bg-cream/70 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-charcoal/70">
+                {copy.featuredLabel}
+              </p>
+              <h2 class="mt-4 text-3xl leading-tight text-charcoal transition-colors group-hover:text-ocean-blue sm:text-[2.1rem]">
+                {featuredPost.title}
+              </h2>
+              <p class="mt-4 text-sm leading-relaxed text-charcoal/75 sm:text-base">{featuredPost.excerpt}</p>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.11em] text-charcoal/60">
+              <span>{new Date(featuredPost.publishedAt).toLocaleDateString(lang === 'pt' ? 'pt-PT' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+              <span aria-hidden>•</span>
+              <span>{featuredPost.readingMinutes} min</span>
+              <span class="text-ocean-blue">{t(lang, 'blog.readMore')} →</span>
+            </div>
+          </div>
+        </a>
+      </article>
+    )}
+
+    <div class="mt-10 flex flex-col gap-4 border-b border-charcoal/12 pb-5 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <h3 class="text-2xl text-charcoal sm:text-3xl">{copy.archiveTitle}</h3>
+        <p class="mt-2 text-sm leading-relaxed text-charcoal/70 sm:text-base">{copy.archiveSubtitle}</p>
+      </div>
+      <p class="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-charcoal/55">
+        {posts.length} {copy.postsLabel}
+      </p>
+    </div>
+
+    <div class="mt-7 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {archivePosts.map((post, index) => (
+        <div class:list={[index > 1 ? 'reveal-delay-1 reveal' : 'reveal']}>
+          <BlogCard
+            title={post.title}
+            excerpt={post.excerpt}
+            slug={post.slug}
+            publishedAt={post.publishedAt}
+            image={post.coverImage}
+            imageAlt={post.coverAlt}
+            readingMinutes={post.readingMinutes}
+            lang={lang}
+          />
+        </div>
+      ))}
+    </div>
+  </section>
+</VisualPageLayout>
+
+<WhatsAppButton lang={lang} />

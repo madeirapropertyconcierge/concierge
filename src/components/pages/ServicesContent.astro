@@ -1,0 +1,222 @@
+---
+import VisualPageLayout from './VisualPageLayout.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { t } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import type { Locale } from '../../i18n/utils';
+import { breadcrumbJsonLd, serviceListJsonLd } from '../../lib/seo';
+import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+
+const copy =
+  lang === 'pt'
+    ? {
+        heroEyebrow: 'Oferta Premium',
+        heroTitle: 'Serviços concebidos para proteger e valorizar o seu ativo.',
+        heroSubtitle:
+          'Da gestão essencial à operação completa de alojamento, escolhe o nível de envolvimento e nós executamos na ilha.',
+        introEyebrow: 'Níveis de Serviço',
+        introTitle: 'Uma estrutura clara, com execução visual e operacional de alto nível.',
+        introBody:
+          'Cada plano foi desenhado para reduzir fricção, antecipar riscos e manter a propriedade sempre pronta para uso pessoal ou rentabilização.',
+        tiers: [
+          {
+            title: 'Essentials',
+            price: 'Desde €150/mês',
+            image: pexelsMadeiraImages.hillsideHomes.src,
+            audience: 'Para proprietários que querem tranquilidade durante ausências.',
+            bullets: ['Inspeções regulares com registo fotográfico', 'Coordenação de manutenção base', 'Monitorização de utilidades e correio'],
+          },
+          {
+            title: 'Professional',
+            price: 'Desde €300/mês',
+            image: pexelsMadeiraImages.coastalVillageAerial.src,
+            audience: 'Para imóveis em exploração de curta duração.',
+            bullets: ['Gestão de hóspedes e check-ins', 'Coordenação de limpezas e reposição', 'Otimização operacional contínua'],
+          },
+          {
+            title: 'Premium',
+            price: 'Desde €500/mês',
+            image: pexelsMadeiraImages.santanaCottageGarden.src,
+            audience: 'Para quem pretende máxima qualidade e acompanhamento próximo.',
+            bullets: ['Supervisão estratégica dedicada', 'Prioridade em incidentes e fornecedores', 'Experiência de concierge para proprietário e hóspedes'],
+          },
+          {
+            title: 'Project-Based',
+            price: 'Orçamento personalizado',
+            image: pexelsMadeiraImages.santanaHouseFacade.src,
+            audience: 'Para setups, licenciamento AL e intervenções pontuais.',
+            bullets: ['Gestão de obras e fornecedores', 'Licenciamento e conformidade', 'Preparação de imóvel para lançamento'],
+          },
+        ],
+        addOnsTitle: 'Add-ons flexíveis',
+        addOnsSubtitle: 'Serviços complementares que ativamos quando fizer sentido para o seu imóvel.',
+        addOns: [
+          { title: 'Transfer de aeroporto', price: 'Desde €35' },
+          { title: 'Welcome setup', price: 'Desde €45' },
+          { title: 'Deep clean sazonal', price: 'Desde €120' },
+          { title: 'Coordenação de jardim/piscina', price: 'Desde €80/mês' },
+        ],
+        ctaTitle: 'Queremos desenhar o plano certo para o seu imóvel.',
+        ctaBody: 'Na consulta inicial alinhamos objetivos, riscos e nível de serviço ideal para a sua operação.',
+        ctaPrimary: 'Marcar Consulta',
+        ctaSecondary: 'Ver Preços',
+      }
+    : {
+        heroEyebrow: 'Premium Service Stack',
+        heroTitle: 'Services engineered to protect and grow your asset.',
+        heroSubtitle:
+          'From essential property oversight to fully managed rental operations, choose your involvement level and we execute on-island.',
+        introEyebrow: 'Service Tiers',
+        introTitle: 'One clear framework, delivered with premium visual and operational standards.',
+        introBody:
+          'Every tier is designed to reduce owner friction, anticipate risk, and keep the property launch-ready for personal use or revenue.',
+        tiers: [
+          {
+            title: 'Essentials',
+            price: 'From €150/month',
+            image: pexelsMadeiraImages.hillsideHomes.src,
+            audience: 'For owners who want confidence while away.',
+            bullets: ['Scheduled inspections with photo records', 'Basic maintenance coordination', 'Utilities and mail monitoring'],
+          },
+          {
+            title: 'Professional',
+            price: 'From €300/month',
+            image: pexelsMadeiraImages.coastalVillageAerial.src,
+            audience: 'For active short-stay rental properties.',
+            bullets: ['Guest operations and check-ins', 'Cleaning and replenishment coordination', 'Continuous operational optimization'],
+          },
+          {
+            title: 'Premium',
+            price: 'From €500/month',
+            image: pexelsMadeiraImages.santanaCottageGarden.src,
+            audience: 'For owners expecting maximum quality and white-glove support.',
+            bullets: ['Dedicated strategic oversight', 'Priority incident/vendor handling', 'Concierge-grade owner and guest experience'],
+          },
+          {
+            title: 'Project-Based',
+            price: 'Custom quote',
+            image: pexelsMadeiraImages.santanaHouseFacade.src,
+            audience: 'For launches, AL licensing, and one-off transformation projects.',
+            bullets: ['Renovation/vendor orchestration', 'Licensing and compliance setup', 'Launch readiness for newly acquired properties'],
+          },
+        ],
+        addOnsTitle: 'Flexible add-ons',
+        addOnsSubtitle: 'Supplementary services we activate when they are truly useful for your property.',
+        addOns: [
+          { title: 'Airport transfer coordination', price: 'From €35' },
+          { title: 'Welcome setup curation', price: 'From €45' },
+          { title: 'Seasonal deep clean', price: 'From €120' },
+          { title: 'Garden/pool coordination', price: 'From €80/mo' },
+        ],
+        ctaTitle: 'Let’s map the right service architecture for your property.',
+        ctaBody: 'In the first consultation, we align on goals, risk profile, and the service level that fits your operation.',
+        ctaPrimary: 'Book Consultation',
+        ctaSecondary: 'View Pricing',
+      };
+
+const pageSchema = [
+  breadcrumbJsonLd([
+    { name: 'Home', url: routes.home },
+    { name: t(lang, 'nav.services'), url: routes.services },
+  ]),
+  serviceListJsonLd(
+    `${t(lang, 'nav.services')} | Madeira Property Concierge`,
+    t(lang, 'services.metaDescription'),
+    routes.services,
+    copy.tiers.map((tier) => tier.title),
+  ),
+];
+---
+
+<VisualPageLayout
+  lang={lang}
+  title={t(lang, 'services.metaTitle')}
+  description={t(lang, 'services.metaDescription')}
+  heroEyebrow={copy.heroEyebrow}
+  heroTitle={copy.heroTitle}
+  heroSubtitle={copy.heroSubtitle}
+  heroImage={pexelsMadeiraImages.mercadoMural.src}
+  heroAlt={pexelsMadeiraImages.mercadoMural.alt}
+  heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
+  heroSecondaryCta={{ label: copy.ctaSecondary, href: routes.pricing }}
+  jsonLd={pageSchema}
+>
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <div class="mb-10 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div class="max-w-3xl">
+        <p class="eyebrow">{copy.introEyebrow}</p>
+        <h2 class="mt-3 text-4xl leading-[1.05] text-charcoal sm:text-5xl">{copy.introTitle}</h2>
+        <p class="mt-4 max-w-2xl text-sm leading-relaxed text-charcoal/72 sm:text-base">{copy.introBody}</p>
+      </div>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      {copy.tiers.map((tier, index) => (
+        <article class:list={['service-tile reveal aspect-[16/10]', index > 0 ? 'reveal-delay-1' : '']}>
+          <img src={tier.image} alt={tier.title} class="h-full w-full object-cover" loading="lazy" />
+          <div class="service-overlay">
+            <p class="eyebrow w-fit !border-white/30 !bg-white/10 !text-white/84">{tier.price}</p>
+            <h3 class="text-3xl text-white">{tier.title}</h3>
+            <p class="text-sm text-white/82">{tier.audience}</p>
+            <ul class="space-y-1 text-sm text-white/84">
+              {tier.bullets.map((bullet) => (
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-golden-sand"></span>
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+    <div class="premium-panel p-6 sm:p-8 lg:p-10">
+      <div class="mb-6">
+        <p class="eyebrow">{copy.addOnsTitle}</p>
+        <p class="mt-3 max-w-2xl text-sm leading-relaxed text-charcoal/72 sm:text-base">{copy.addOnsSubtitle}</p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {copy.addOns.map((item) => (
+          <div class="step-card">
+            <p class="text-xs uppercase tracking-[0.12em] text-charcoal/55">Add-on</p>
+            <h3 class="mt-2 text-xl text-charcoal">{item.title}</h3>
+            <p class="mt-2 text-sm font-semibold text-ocean-blue">{item.price}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+    <img
+      src={pexelsMadeiraImages.cliffsPeninsula.src}
+      alt={pexelsMadeiraImages.cliffsPeninsula.alt}
+      class="absolute inset-0 -z-20 h-full w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
+
+    <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
+      <h2 class="text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.ctaTitle}</h2>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{copy.ctaBody}</p>
+
+      <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href={routes.contact} class="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{copy.ctaPrimary}</a>
+        <a href={routes.pricing} class="inline-flex items-center justify-center rounded-full border border-white/35 bg-white/8 px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white backdrop-blur transition-colors hover:bg-white/20">{copy.ctaSecondary}</a>
+      </div>
+    </div>
+  </section>
+</VisualPageLayout>
+
+<WhatsAppButton lang={lang} />

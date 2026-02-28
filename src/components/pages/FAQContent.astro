@@ -1,0 +1,216 @@
+---
+import VisualPageLayout from './VisualPageLayout.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { t } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import type { Locale } from '../../i18n/utils';
+import { breadcrumbJsonLd } from '../../lib/seo';
+import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+
+interface Props {
+  lang: Locale;
+}
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+
+const faqCategories: Array<{ title: string; items: FAQItem[] }> =
+  lang === 'pt'
+    ? [
+        {
+          title: 'Início',
+          items: [
+            {
+              question: 'Como começar?',
+              answer:
+                'Marque uma consulta inicial de 30 minutos. Avaliamos objetivos, estado do imóvel e sugerimos o nível de serviço ideal.',
+            },
+            {
+              question: 'Preciso de estar na Madeira para integrar o serviço?',
+              answer:
+                'Não. A maior parte dos clientes integra remotamente com videochamada, levantamento no local e documentação digital.',
+            },
+            {
+              question: 'Em que zonas trabalham?',
+              answer:
+                'Atuamos em toda a ilha, com foco operacional em Funchal, Calheta, Ponta do Sol, Câmara de Lobos e arredores.',
+            },
+          ],
+        },
+        {
+          title: 'Serviço & Operação',
+          items: [
+            {
+              question: 'Posso mudar de plano mais tarde?',
+              answer: 'Sim. Pode ajustar entre níveis consoante a fase do imóvel e o volume operacional.',
+            },
+            {
+              question: 'Como lidam com emergências?',
+              answer:
+                'Temos protocolo de resposta prioritária, ativação de fornecedores e comunicação imediata ao proprietário.',
+            },
+            {
+              question: 'Com que frequência recebo atualizações?',
+              answer:
+                'Recebe relatórios mensais e comunicações intermédias sempre que existir ação crítica ou decisão relevante.',
+            },
+          ],
+        },
+        {
+          title: 'Legal & Conformidade',
+          items: [
+            {
+              question: 'Ajudam com AL?',
+              answer:
+                'Sim. Fazemos enquadramento, documentação e coordenação necessária para licenciamento e manutenção de conformidade.',
+            },
+            {
+              question: 'Incluem apoio fiscal?',
+              answer:
+                'Fornecemos documentação operacional e articulamos com parceiros fiscais, mas não substituímos aconselhamento fiscal formal.',
+            },
+          ],
+        },
+      ]
+    : [
+        {
+          title: 'Getting Started',
+          items: [
+            {
+              question: 'How do I begin?',
+              answer:
+                'Book a 30-minute diagnostic call. We review your goals, property status, and recommend the right service depth.',
+            },
+            {
+              question: 'Do I need to be in Madeira to onboard?',
+              answer:
+                'No. Most owners onboard remotely via video, with on-site assessment and digital documentation.',
+            },
+            {
+              question: 'What areas do you cover?',
+              answer:
+                'We operate across Madeira, with dense operational coverage in Funchal, Calheta, Ponta do Sol, Câmara de Lobos, and nearby zones.',
+            },
+          ],
+        },
+        {
+          title: 'Service & Operations',
+          items: [
+            {
+              question: 'Can I switch plans later?',
+              answer:
+                'Yes. Service tiers can evolve with your ownership stage and rental complexity.',
+            },
+            {
+              question: 'How do you handle emergencies?',
+              answer:
+                'We follow a priority response protocol with rapid vendor activation and immediate owner communication.',
+            },
+            {
+              question: 'How often do I receive updates?',
+              answer:
+                'You receive monthly reporting plus interim updates whenever a critical action or decision is required.',
+            },
+          ],
+        },
+        {
+          title: 'Legal & Compliance',
+          items: [
+            {
+              question: 'Do you support AL licensing?',
+              answer:
+                'Yes. We coordinate fit analysis, documentation workflow, and on-island compliance steps for AL readiness.',
+            },
+            {
+              question: 'Do you provide tax advisory?',
+              answer:
+                'We provide operational documentation and coordinate with trusted tax partners, but we do not replace formal tax advice.',
+            },
+          ],
+        },
+      ];
+
+const faqItemsFlat = faqCategories.flatMap((category) => category.items);
+
+const pageSchema = [
+  breadcrumbJsonLd([
+    { name: 'Home', url: routes.home },
+    { name: t(lang, 'nav.faq'), url: routes.faq },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItemsFlat.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  },
+];
+
+const closingCopy =
+  lang === 'pt'
+    ? {
+        title: 'Tem uma questão específica sobre o seu imóvel?',
+        body: 'Falamos consigo e desenhamos um plano realista para o seu caso.',
+        cta: 'Marcar Consulta',
+      }
+    : {
+        title: 'Have a property-specific question?',
+        body: 'Let’s discuss your case and map a realistic operating plan.',
+        cta: 'Book Consultation',
+      };
+---
+
+<VisualPageLayout
+  lang={lang}
+  title={t(lang, 'faq.metaTitle')}
+  description={t(lang, 'faq.metaDescription')}
+  heroEyebrow="FAQ"
+  heroTitle={lang === 'pt' ? 'Respostas diretas para decisões sem fricção.' : 'Clear answers for frictionless ownership decisions.'}
+  heroSubtitle={lang === 'pt' ? 'Questões frequentes sobre integração, operação, conformidade e suporte contínuo na Madeira.' : 'Frequently asked questions about onboarding, operations, compliance, and ongoing support on Madeira.'}
+  heroImage={pexelsMadeiraImages.fruitMarketStalls.src}
+  heroAlt={pexelsMadeiraImages.fruitMarketStalls.alt}
+  heroPrimaryCta={{ label: closingCopy.cta, href: routes.contact }}
+  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  jsonLd={pageSchema}
+>
+  <section class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <div class="space-y-8">
+      {faqCategories.map((category, catIndex) => (
+        <div class="premium-panel p-5 sm:p-7">
+          <h2 class="text-3xl text-charcoal">{category.title}</h2>
+          <div class="mt-4 space-y-3">
+            {category.items.map((item, itemIndex) => (
+              <details class="group rounded-2xl border border-charcoal/10 bg-white/75 p-4" open={catIndex === 0 && itemIndex === 0}>
+                <summary class="cursor-pointer list-none pr-8 text-sm font-semibold text-charcoal sm:text-base">{item.question}</summary>
+                <p class="mt-3 text-sm leading-relaxed text-charcoal/72 sm:text-base">{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+    <img src={pexelsMadeiraImages.machicoFireFestival.src} alt={pexelsMadeiraImages.machicoFireFestival.alt} class="absolute inset-0 -z-20 h-full w-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
+
+    <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
+      <h2 class="text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{closingCopy.title}</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{closingCopy.body}</p>
+      <a href={routes.contact} class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{closingCopy.cta}</a>
+    </div>
+  </section>
+</VisualPageLayout>
+
+<WhatsAppButton lang={lang} />

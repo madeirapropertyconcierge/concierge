@@ -1,0 +1,250 @@
+---
+import VisualPageLayout from './VisualPageLayout.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { t } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import type { Locale } from '../../i18n/utils';
+import { breadcrumbJsonLd } from '../../lib/seo';
+import { PEXELS_LICENSE_URL, pexelsMadeiraAttribution, pexelsMadeiraImages } from '../../lib/pexelsImages';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+
+const differentiators = ['bilingual', 'design', 'personal', 'network'] as const;
+
+const iconByKey: Record<(typeof differentiators)[number], string> = {
+  bilingual: '🌍',
+  design: '✦',
+  personal: '❤',
+  network: '⚑',
+};
+
+const copy =
+  lang === 'pt'
+    ? {
+        heroEyebrow: 'Fundadora & Visão',
+        heroTitle: 'Uma abordagem boutique, humana e meticulosa à gestão imobiliária.',
+        heroSubtitle:
+          'A Madeira é casa, não apenas mercado. Cada propriedade é tratada com responsabilidade local e padrões internacionais.',
+        storyEyebrow: 'A História',
+        whyEyebrow: 'Porque é Diferente',
+        quoteEyebrow: 'Compromisso',
+        ctaTitle: 'Pronto para uma gestão com atenção real ao detalhe?',
+        ctaBody: 'Falamos sobre o seu contexto e desenhamos um plano de execução adaptado ao seu imóvel.',
+        ctaPrimary: 'Marcar Consulta',
+        familyPhotoAlt: 'Lisa e a sua filha',
+        storyStats: [
+          {
+            value: '15 anos',
+            label: 'A liderar equipas de UX antes de iniciar este capítulo na Madeira.',
+          },
+          {
+            value: 'EN / PT',
+            label: 'Comunicação bilingue para proteger o seu imóvel sem ruído.',
+          },
+          {
+            value: 'Boutique',
+            label: 'Serviço pessoal, com acompanhamento próximo e responsável.',
+          },
+        ],
+      }
+    : {
+        heroEyebrow: 'Founder & Vision',
+        heroTitle: 'A boutique, human, detail-obsessed approach to property operations.',
+        heroSubtitle:
+          'Madeira is home, not just market. Every property is handled with local accountability and global standards.',
+        storyEyebrow: 'The Story',
+        whyEyebrow: 'Why It Feels Different',
+        quoteEyebrow: 'The Commitment',
+        ctaTitle: 'Ready for management with real attention to detail?',
+        ctaBody: 'We align on your ownership context and map an execution framework tailored to your property.',
+        ctaPrimary: 'Book Consultation',
+        familyPhotoAlt: 'Lisa with her daughter',
+        storyStats: [
+          {
+            value: '15 years',
+            label: 'Leading UX teams before beginning this chapter in Madeira.',
+          },
+          {
+            value: 'EN / PT',
+            label: 'Bilingual communication to protect your property without friction.',
+          },
+          {
+            value: 'Boutique',
+            label: 'Hands-on service with accountable day-to-day oversight.',
+          },
+        ],
+      };
+
+const pageSchema = [
+  breadcrumbJsonLd([
+    { name: 'Home', url: routes.home },
+    { name: t(lang, 'nav.about'), url: routes.about },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Lisa',
+    jobTitle: lang === 'pt' ? 'Fundadora' : 'Founder',
+    worksFor: {
+      '@type': 'Organization',
+      name: 'Madeira Property Concierge',
+    },
+    description: t(lang, 'about.hero.subtitle'),
+  },
+];
+
+const attributionHeading = lang === 'pt' ? 'Atribuição de imagens' : 'Image attribution';
+const attributionSubheading =
+  lang === 'pt'
+    ? 'Todas as imagens externas usadas no site são da Pexels.'
+    : 'All external images used across the site are sourced from Pexels.';
+const photoPrefix = lang === 'pt' ? 'Foto de' : 'Photo by';
+const attributionNudge =
+  lang === 'pt'
+    ? 'Mini-galeria de créditos: cada imagem abre a fonte original.'
+    : 'Credit gallery: each thumbnail opens the original source.';
+const attributionGallery = pexelsMadeiraAttribution.map((image) => ({
+  ...image,
+  thumbnailSrc: image.src.replace('w=2000', 'w=120&h=90&fit=crop'),
+}));
+---
+
+<VisualPageLayout
+  lang={lang}
+  title={t(lang, 'about.metaTitle')}
+  description={t(lang, 'about.metaDescription')}
+  heroEyebrow={copy.heroEyebrow}
+  heroTitle={copy.heroTitle}
+  heroSubtitle={copy.heroSubtitle}
+  heroImage={pexelsMadeiraImages.oceanfrontBench.src}
+  heroAlt={pexelsMadeiraImages.oceanfrontBench.alt}
+  heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
+  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  jsonLd={pageSchema}
+>
+  <section class="relative isolate overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+    <div class="pointer-events-none absolute inset-x-0 top-8 -z-10 h-72 bg-[radial-gradient(circle_at_16%_20%,rgba(42,95,125,0.24),transparent_58%)]"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-80 bg-[radial-gradient(circle_at_82%_84%,rgba(201,120,88,0.2),transparent_56%)]"></div>
+
+    <div class="mx-auto max-w-7xl">
+      <div class="relative overflow-hidden rounded-[2rem] border border-charcoal/10 bg-white/74 p-4 shadow-[0_24px_74px_rgba(10,22,32,0.16)] backdrop-blur sm:p-6 lg:p-8">
+        <div class="grid gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center">
+          <div class="relative reveal min-w-0">
+            <article class="overflow-hidden rounded-[1.35rem] border border-white/60 bg-white shadow-[0_24px_56px_rgba(5,13,20,0.24)]">
+              <img src="/images/about/lisa_2.webp" alt={copy.familyPhotoAlt} class="h-auto w-full object-cover" loading="lazy" />
+            </article>
+          </div>
+
+          <div class="reveal reveal-delay-1 min-w-0 lg:pr-3">
+            <p class="eyebrow">{copy.storyEyebrow}</p>
+            <h2 class="mt-3 text-4xl leading-[1.04] text-charcoal sm:text-5xl">{t(lang, 'about.story.title')}</h2>
+            <div class="mt-6 space-y-4 text-sm leading-relaxed text-charcoal/76 sm:text-base">
+              <p class="text-charcoal/86">{t(lang, 'about.story.p1')}</p>
+              <p>{t(lang, 'about.story.p2')}</p>
+              <p>{t(lang, 'about.story.p3')}</p>
+            </div>
+
+            <div class="mt-7 grid gap-3 sm:grid-cols-3">
+              {copy.storyStats.map((item, index) => (
+                <article class:list={['rounded-2xl border border-charcoal/10 bg-cream/72 px-4 py-3', index > 0 ? 'reveal reveal-delay-1' : 'reveal']}>
+                  <p class="text-[0.66rem] font-bold uppercase tracking-[0.14em] text-ocean-blue">{item.value}</p>
+                  <p class="mt-1 text-xs leading-relaxed text-charcoal/72">{item.label}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 lg:px-8 lg:pb-24 lg:pt-24">
+    <div class="premium-panel p-6 sm:p-8 lg:p-10">
+      <p class="eyebrow">{copy.whyEyebrow}</p>
+      <h2 class="mt-3 text-4xl leading-[1.05] text-charcoal sm:text-5xl">{t(lang, 'about.whyDifferent.title')}</h2>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2">
+        {differentiators.map((key, index) => (
+          <article class:list={['step-card reveal', index > 0 ? 'reveal-delay-1' : '']}>
+            <p class="text-xl">{iconByKey[key]}</p>
+            <h3 class="mt-2 text-2xl text-charcoal">{t(lang, `about.whyDifferent.${key}.title`)}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-charcoal/72">{t(lang, `about.whyDifferent.${key}.description`)}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="relative isolate overflow-hidden px-4 sm:px-6 lg:px-8">
+    <img
+      src={pexelsMadeiraImages.cliffsPeninsula.src}
+      alt={pexelsMadeiraImages.cliffsPeninsula.alt}
+      class="absolute inset-0 -z-20 h-full w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
+
+    <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
+      <p class="eyebrow !border-white/35 !bg-white/10 !text-white/80">{copy.quoteEyebrow}</p>
+      <blockquote class="mt-4 text-balance text-2xl leading-relaxed text-white/94 sm:text-3xl">
+        “{t(lang, 'about.promise.text')}”
+      </blockquote>
+
+      <h2 class="mt-8 text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.ctaTitle}</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{copy.ctaBody}</p>
+      <a href={routes.contact} class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{copy.ctaPrimary}</a>
+    </div>
+  </section>
+
+  <section id="image-attribution" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
+    <div class="premium-panel p-6 sm:p-8 lg:p-10">
+      <h2 class="text-charcoal">{attributionHeading}</h2>
+      <p class="mt-2 text-sm leading-relaxed text-charcoal/72">{attributionSubheading}</p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <a
+          href={PEXELS_LICENSE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center rounded-full border border-forest-green/28 bg-forest-green/10 px-3 py-1 text-xs font-semibold tracking-[0.04em] text-forest-green transition-colors hover:bg-forest-green hover:text-white"
+        >
+          Pexels License
+        </a>
+        <p class="text-xs leading-relaxed text-charcoal/62">{attributionNudge}</p>
+      </div>
+
+      <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        {attributionGallery.map((image) => (
+          <li>
+            <a
+              href={image.photoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group block rounded-xl border border-charcoal/10 bg-white/72 p-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-forest-green/40 hover:bg-white hover:shadow-[0_10px_24px_rgba(16,32,43,0.10)]"
+            >
+              <img
+                src={image.thumbnailSrc}
+                alt={image.alt}
+                width="96"
+                height="72"
+                loading="lazy"
+                class="h-12 w-full rounded-md object-cover ring-1 ring-black/6"
+              />
+              <span class="mt-1.5 block text-[0.62rem] leading-snug text-charcoal/74">
+                {photoPrefix} {image.photographer}
+              </span>
+              <span class="sr-only">{image.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</VisualPageLayout>
+
+<WhatsAppButton lang={lang} />

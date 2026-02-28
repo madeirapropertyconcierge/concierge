@@ -1,0 +1,182 @@
+---
+interface Props {
+  lang: string;
+  formspreeEndpoint: string;
+  labels: {
+    name: string;
+    email: string;
+    phone: string;
+    propertyType: string;
+    propertyTypes: Record<string, string>;
+    service: string;
+    serviceOptions: Record<string, string>;
+    message: string;
+    submit: string;
+    sending: string;
+    success: string;
+    error: string;
+  };
+}
+
+const { lang, formspreeEndpoint, labels } = Astro.props;
+---
+
+<form action={formspreeEndpoint} method="POST" class="space-y-5" data-contact-form>
+  <div>
+    <label for="name" class="mb-1.5 block text-sm font-medium text-charcoal">
+      {labels.name} *
+    </label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      autocomplete="name"
+      class="w-full rounded-xl border border-charcoal/12 bg-white/85 px-4 py-3 text-charcoal placeholder:text-charcoal/40 focus:border-ocean-blue focus:outline-none focus:ring-2 focus:ring-ocean-blue/20"
+    />
+  </div>
+
+  <div>
+    <label for="email" class="mb-1.5 block text-sm font-medium text-charcoal">
+      {labels.email} *
+    </label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      autocomplete="email"
+      class="w-full rounded-xl border border-charcoal/12 bg-white/85 px-4 py-3 text-charcoal placeholder:text-charcoal/40 focus:border-ocean-blue focus:outline-none focus:ring-2 focus:ring-ocean-blue/20"
+    />
+  </div>
+
+  <div>
+    <label for="phone" class="mb-1.5 block text-sm font-medium text-charcoal">
+      {labels.phone}
+    </label>
+    <input
+      type="tel"
+      id="phone"
+      name="phone"
+      autocomplete="tel"
+      class="w-full rounded-xl border border-charcoal/12 bg-white/85 px-4 py-3 text-charcoal placeholder:text-charcoal/40 focus:border-ocean-blue focus:outline-none focus:ring-2 focus:ring-ocean-blue/20"
+    />
+  </div>
+
+  <div>
+    <label for="propertyType" class="mb-1.5 block text-sm font-medium text-charcoal">
+      {labels.propertyType}
+    </label>
+    <select
+      id="propertyType"
+      name="propertyType"
+      class="w-full rounded-xl border border-charcoal/12 bg-white/85 px-4 py-3 text-charcoal focus:border-ocean-blue focus:outline-none focus:ring-2 focus:ring-ocean-blue/20"
+    >
+      <option value="">--</option>
+      {Object.entries(labels.propertyTypes).map(([value, label]) => (
+        <option value={value}>{label}</option>
+      ))}
+    </select>
+  </div>
+
+  <div>
+    <label for="service" class="mb-1.5 block text-sm font-medium text-charcoal">
+      {labels.service}
+    </label>
+    <select
+      id="service"
+      name="service"
+      class="w-full rounded-xl border border-charcoal/12 bg-white/85 px-4 py-3 text-charcoal focus:border-ocean-blue focus:outline-none focus:ring-2 focus:ring-ocean-blue/20"
+    >
+      <option value="">--</option>
+      {Object.entries(labels.serviceOptions).map(([value, label]) => (
+        <option value={value}>{label}</option>
+      ))}
+    </select>
+  </div>
+
+  <div>
+    <label for="message" class="mb-1.5 block text-sm font-medium text-charcoal">
+      {labels.message} *
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows={5}
+      autocomplete="off"
+      class="w-full resize-y rounded-xl border border-charcoal/12 bg-white/85 px-4 py-3 text-charcoal placeholder:text-charcoal/40 focus:border-ocean-blue focus:outline-none focus:ring-2 focus:ring-ocean-blue/20"
+    ></textarea>
+  </div>
+
+  <input type="hidden" name="language" value={lang} />
+
+  <p class="hidden text-sm text-red-600" data-form-error>{labels.error}</p>
+  <p class="hidden rounded-xl border border-ocean-blue/25 bg-ocean-blue/8 px-4 py-3 text-sm text-ocean-blue" data-form-success>
+    {labels.success}
+  </p>
+
+  <button
+    type="submit"
+    class="inline-flex w-full items-center justify-center rounded-full bg-charcoal px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-ocean-blue disabled:cursor-not-allowed disabled:opacity-70"
+    data-submit-button
+    data-submit-default={labels.submit}
+    data-submit-loading={labels.sending}
+  >
+    {labels.submit}
+  </button>
+</form>
+
+<script is:inline>
+  const forms = document.querySelectorAll('[data-contact-form]');
+
+  forms.forEach((form) => {
+    if (!(form instanceof HTMLFormElement)) {
+      return;
+    }
+
+    const submitButton = form.querySelector('[data-submit-button]');
+    const errorEl = form.querySelector('[data-form-error]');
+    const successEl = form.querySelector('[data-form-success]');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (!(submitButton instanceof HTMLButtonElement)) {
+        form.submit();
+        return;
+      }
+
+      const defaultText = submitButton.dataset.submitDefault ?? submitButton.textContent ?? 'Submit';
+      const loadingText = submitButton.dataset.submitLoading ?? 'Sending...';
+
+      submitButton.disabled = true;
+      submitButton.textContent = loadingText;
+      errorEl?.classList.add('hidden');
+      successEl?.classList.add('hidden');
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            Accept: 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Request failed');
+        }
+
+        form.reset();
+        successEl?.classList.remove('hidden');
+      } catch {
+        errorEl?.classList.remove('hidden');
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultText;
+      }
+    });
+  });
+</script>

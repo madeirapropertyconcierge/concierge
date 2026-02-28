@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import type { Locale } from '../../i18n/utils';
+
+interface Props {
+  lang: Locale;
+  title: string;
+  description: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImage: string;
+  heroAlt: string;
+  heroEyebrow?: string;
+  heroPrimaryCta?: { label: string; href: string };
+  heroSecondaryCta?: { label: string; href: string };
+  ogImage?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+  ogType?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+
+const {
+  lang,
+  title,
+  description,
+  heroTitle,
+  heroSubtitle,
+  heroImage,
+  heroAlt,
+  heroEyebrow,
+  heroPrimaryCta,
+  heroSecondaryCta,
+  ogImage = heroImage,
+  canonicalUrl,
+  noindex = false,
+  ogType = 'website',
+  publishedTime,
+  modifiedTime,
+  jsonLd,
+} = Astro.props;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  lang={lang}
+  ogImage={ogImage}
+  canonicalUrl={canonicalUrl}
+  noindex={noindex}
+  ogType={ogType}
+  publishedTime={publishedTime}
+  modifiedTime={modifiedTime}
+  jsonLd={jsonLd}
+>
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_12%_8%,rgba(247,180,94,0.14),transparent_40%),radial-gradient(circle_at_87%_18%,rgba(42,95,125,0.14),transparent_36%),linear-gradient(180deg,#f6f4ef_0%,#edf1f3_68%,#f6f4ef_100%)]"></div>
+
+    <section class="relative isolate overflow-hidden px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-20 lg:pt-10">
+      <img
+        src={heroImage}
+        alt={heroAlt}
+        class="absolute inset-0 -z-20 h-full w-full object-cover"
+        loading="eager"
+      />
+      <div class="absolute inset-0 -z-10 bg-[linear-gradient(110deg,rgba(8,21,30,0.83)_0%,rgba(8,21,30,0.62)_47%,rgba(8,21,30,0.82)_100%)]"></div>
+      <div class="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-cream to-transparent"></div>
+
+      <div class="mx-auto max-w-7xl py-14 lg:py-16">
+        <div class="reveal max-w-3xl text-white">
+          {heroEyebrow && <p class="eyebrow !border-white/30 !bg-white/12 !text-white/84">{heroEyebrow}</p>}
+          <h1 class="mt-4 text-balance text-5xl leading-[1.05] text-white sm:text-6xl lg:text-7xl">
+            {heroTitle}
+          </h1>
+          <p class="mt-5 max-w-2xl text-base leading-relaxed text-white/82 sm:text-lg">
+            {heroSubtitle}
+          </p>
+
+          {(heroPrimaryCta || heroSecondaryCta) && (
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              {heroPrimaryCta && (
+                <a
+                  href={heroPrimaryCta.href}
+                  class="inline-flex items-center justify-center rounded-full bg-golden-sand px-7 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(247,180,94,0.35)]"
+                >
+                  {heroPrimaryCta.label}
+                </a>
+              )}
+              {heroSecondaryCta && (
+                <a
+                  href={heroSecondaryCta.href}
+                  class="inline-flex items-center justify-center rounded-full border border-white/35 bg-white/10 px-7 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white backdrop-blur transition-colors hover:bg-white/20"
+                >
+                  {heroSecondaryCta.label}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <slot />
+  </div>
+</BaseLayout>

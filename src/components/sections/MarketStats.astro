@@ -1,0 +1,37 @@
+---
+import { t } from '../../i18n/utils';
+import type { Locale } from '../../i18n/utils';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+
+const stats = ['tourism', 'growth', 'occupancy', 'yield'] as const;
+---
+
+<section class="py-16 lg:py-24 bg-forest-green">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
+      <h2 class="text-white">{t(lang, 'marketStats.title')}</h2>
+      <p class="mt-4 text-lg text-white/70">{t(lang, 'marketStats.subtitle')}</p>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      {stats.map((stat) => (
+        <div class="text-center p-6 rounded-xl bg-white/10 backdrop-blur-sm">
+          <p class="text-4xl lg:text-5xl font-serif text-golden-sand">
+            {t(lang, `marketStats.stats.${stat}.value`)}
+          </p>
+          <p class="mt-2 text-white font-semibold">
+            {t(lang, `marketStats.stats.${stat}.label`)}
+          </p>
+          <p class="mt-1 text-xs text-white/50">
+            {t(lang, `marketStats.stats.${stat}.source`)}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

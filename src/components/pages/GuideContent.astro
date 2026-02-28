@@ -1,0 +1,206 @@
+---
+import VisualPageLayout from './VisualPageLayout.astro';
+import WhatsAppButton from '../WhatsAppButton.astro';
+import { t } from '../../i18n/utils';
+import { routeMap } from '../../i18n/routes';
+import type { Locale } from '../../i18n/utils';
+import { breadcrumbJsonLd } from '../../lib/seo';
+import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const routes = routeMap[lang];
+
+const copy =
+  lang === 'pt'
+    ? {
+        heroEyebrow: 'Guia AL',
+        heroTitle: 'Guia prático para licenciamento AL na Madeira.',
+        heroSubtitle:
+          'Resumo objetivo dos requisitos, sequência de passos e erros comuns que atrasam processos.',
+        sections: {
+          overview: {
+            title: 'O que é AL e quando precisa',
+            body: 'Alojamento Local é o enquadramento legal para alojamento de curta duração. Se recebe hóspedes por períodos curtos, precisa de registo AL ativo.',
+          },
+          checklist: {
+            title: 'Checklist base de preparação',
+            items: ['Documentação do imóvel e titularidade', 'Equipamento de segurança e sinalização', 'Seguro adequado à atividade', 'Configuração fiscal e faturação'],
+          },
+          process: {
+            title: 'Sequência recomendada',
+            steps: ['Diagnóstico de conformidade', 'Preparação documental', 'Submissão e articulação municipal', 'Inspeção e validação final'],
+          },
+          pitfalls: {
+            title: 'Erros frequentes',
+            items: ['Iniciar operação antes do registo', 'Documentação incompleta', 'Ignorar obrigações fiscais recorrentes', 'Falta de rotina de compliance após aprovação'],
+          },
+        },
+        costTitle: 'Janela de custo e prazo (estimativa)',
+        costItems: [
+          { label: 'Prazos médios', value: '4–8 semanas' },
+          { label: 'Setup base', value: '€950–€2.900' },
+          { label: 'Risco principal', value: 'Atrasos por documentação' },
+        ],
+        ctaTitle: 'Se quiser, tratamos do processo AL do início ao fim.',
+        ctaBody: 'Coordenamos documentação, conformidade, fornecedores e comunicação institucional.',
+        ctaPrimary: 'Falar com Especialista',
+      }
+    : {
+        heroEyebrow: 'AL Guide',
+        heroTitle: 'A practical AL licensing guide for Madeira.',
+        heroSubtitle:
+          'A concise overview of requirements, process sequence, and the mistakes that most often delay approvals.',
+        sections: {
+          overview: {
+            title: 'What AL is and when you need it',
+            body: 'Alojamento Local is the legal framework for short-stay rentals. If you host guests for short periods, you need an active AL registration.',
+          },
+          checklist: {
+            title: 'Core preparation checklist',
+            items: ['Property and ownership documentation', 'Safety equipment and mandatory signage', 'Insurance aligned with rental activity', 'Tax setup and invoicing workflow'],
+          },
+          process: {
+            title: 'Recommended process sequence',
+            steps: ['Compliance diagnostic', 'Documentation assembly', 'Municipal submission and coordination', 'Inspection and final validation'],
+          },
+          pitfalls: {
+            title: 'Common pitfalls',
+            items: ['Operating before registration is confirmed', 'Submitting incomplete documentation', 'Missing recurring tax obligations', 'No compliance routine after approval'],
+          },
+        },
+        costTitle: 'Estimated cost/timeline window',
+        costItems: [
+          { label: 'Typical timeline', value: '4–8 weeks' },
+          { label: 'Baseline setup', value: '€950–€2,900' },
+          { label: 'Primary risk', value: 'Documentation-driven delays' },
+        ],
+        ctaTitle: 'If you prefer, we can run the AL path end-to-end.',
+        ctaBody: 'We coordinate documents, compliance, vendors, and institutional communication for you.',
+        ctaPrimary: 'Talk to an AL Specialist',
+      };
+
+const pageSchema = [
+  breadcrumbJsonLd([
+    { name: 'Home', url: routes.home },
+    { name: t(lang, 'nav.guide'), url: routes.guide },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: t(lang, 'guide.title'),
+    description: t(lang, 'guide.metaDescription'),
+    step: copy.sections.process.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step,
+      text: step,
+    })),
+  },
+];
+---
+
+<VisualPageLayout
+  lang={lang}
+  title={t(lang, 'guide.metaTitle')}
+  description={t(lang, 'guide.metaDescription')}
+  heroEyebrow={copy.heroEyebrow}
+  heroTitle={copy.heroTitle}
+  heroSubtitle={copy.heroSubtitle}
+  heroImage={pexelsMadeiraImages.villageRuggedMountains.src}
+  heroAlt={pexelsMadeiraImages.villageRuggedMountains.alt}
+  heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
+  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  jsonLd={pageSchema}
+>
+  <section class="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:py-20">
+    <article class="premium-panel p-6 sm:p-8">
+      <p class="eyebrow">Overview</p>
+      <h2 class="mt-3 text-3xl text-charcoal sm:text-4xl">{copy.sections.overview.title}</h2>
+      <p class="mt-4 text-sm leading-relaxed text-charcoal/75 sm:text-base">{copy.sections.overview.body}</p>
+
+      <div class="mt-6 grid gap-3 sm:grid-cols-2">
+        {copy.costItems.map((item) => (
+          <div class="step-card">
+            <p class="text-xs uppercase tracking-[0.12em] text-charcoal/55">{item.label}</p>
+            <p class="mt-2 text-xl text-charcoal">{item.value}</p>
+          </div>
+        ))}
+      </div>
+    </article>
+
+    <article class="media-card reveal min-h-[22rem]">
+      <img
+        src={pexelsMadeiraImages.mercadoMural.src}
+        alt={pexelsMadeiraImages.mercadoMural.alt}
+        class="h-full w-full object-cover"
+        loading="lazy"
+      />
+      <div class="media-card-caption">AL Compliance Readiness</div>
+    </article>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+    <div class="grid gap-6 md:grid-cols-3">
+      <article class="step-card">
+        <p class="eyebrow !text-[0.58rem]">Checklist</p>
+        <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.checklist.title}</h3>
+        <ul class="mt-3 space-y-2 text-sm text-charcoal/72">
+          {copy.sections.checklist.items.map((item) => (
+            <li class="flex items-start gap-2">
+              <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ocean-blue"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+
+      <article class="step-card">
+        <p class="eyebrow !text-[0.58rem]">Process</p>
+        <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.process.title}</h3>
+        <ol class="mt-3 space-y-2 text-sm text-charcoal/72">
+          {copy.sections.process.steps.map((item, index) => (
+            <li class="flex items-start gap-2">
+              <span class="step-index !px-2 !py-1">{index + 1}</span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ol>
+      </article>
+
+      <article class="step-card">
+        <p class="eyebrow !text-[0.58rem]">Risks</p>
+        <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.pitfalls.title}</h3>
+        <ul class="mt-3 space-y-2 text-sm text-charcoal/72">
+          {copy.sections.pitfalls.items.map((item) => (
+            <li class="flex items-start gap-2">
+              <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-terracotta"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+    <img
+      src={pexelsMadeiraImages.saoVicenteCoast.src}
+      alt={pexelsMadeiraImages.saoVicenteCoast.alt}
+      class="absolute inset-0 -z-20 h-full w-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
+
+    <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
+      <h2 class="text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.ctaTitle}</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{copy.ctaBody}</p>
+      <a href={routes.contact} class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{copy.ctaPrimary}</a>
+    </div>
+  </section>
+</VisualPageLayout>
+
+<WhatsAppButton lang={lang} />
