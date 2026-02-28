@@ -19,7 +19,17 @@
       "canonical": ""
     }
   },
-  "texts": [],
+  "texts": [
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > div:nth-of-type(2) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "L. C.",
+        "pt": ""
+      }
+    }
+  ],
   "links": [],
   "images": []
 }
