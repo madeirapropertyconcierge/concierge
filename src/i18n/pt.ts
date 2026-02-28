@@ -124,7 +124,7 @@ const pt = {
   pricing: {
     title: "Preços",
     metaTitle: "Preços | Madeira Property Concierge",
-    metaDescription: "Preços transparentes por nível: €100-€250/mês em home care, 15%-18% em hosting, 20%-25% em full-service e €50-€150/estadia em white-glove.",
+    metaDescription: "Preços mensais transparentes: €150 no Tier A, €300 no Tier B, €500 no Tier C, mais projetos complementares sob orçamento.",
     hero: {
       title: "Preços Claros, Sem Surpresas",
       subtitle: "Sem taxas ocultas. Escolha o nível que se adequa ao que precisa.",

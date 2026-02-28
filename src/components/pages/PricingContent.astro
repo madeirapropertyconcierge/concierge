@@ -54,7 +54,6 @@ const pageSchema = [
         <PricingTierCard
           tier={tier}
           index={index}
-          mostPopularLabel={copy.mostPopular}
           customQuoteLabel={copy.customQuote}
           primaryCtaLabel={copy.ctaPrimary}
           projectCtaLabel={copy.ctaProject}
@@ -110,26 +109,6 @@ const pageSchema = [
   .pricing-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 30px 62px rgba(16, 32, 43, 0.17);
-  }
-
-  .pricing-card-featured {
-    border-color: rgba(42, 95, 125, 0.32);
-    box-shadow: 0 30px 68px rgba(42, 95, 125, 0.2);
-  }
-
-  .pricing-badge-slot {
-    min-height: 2.15rem;
-  }
-
-  .pricing-badge-placeholder {
-    display: block;
-    height: 2.15rem;
-  }
-
-  .pricing-price {
-    display: flex;
-    min-height: 5.3rem;
-    align-items: flex-end;
   }
 
   .pricing-quote {

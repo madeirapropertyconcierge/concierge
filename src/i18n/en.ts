@@ -122,7 +122,7 @@ const en = {
   pricing: {
     title: "Pricing",
     metaTitle: "Pricing | Madeira Property Concierge",
-    metaDescription: "Transparent tiered pricing: €100-€250/month home care, 15%-18% hosting essentials, 20%-25% full-service management, and €50-€150/stay white-glove add-ons.",
+    metaDescription: "Transparent monthly pricing: €150 Tier A, €300 Tier B, €500 Tier C, plus custom-quoted project add-ons.",
     hero: {
       title: "Clear Pricing, No Surprises",
       subtitle: "No hidden fees. Pick the tier that matches what you need.",
