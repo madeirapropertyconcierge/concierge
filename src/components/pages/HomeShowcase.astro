@@ -1,5 +1,6 @@
 ---
 import WhatsAppButton from '../WhatsAppButton.astro';
+import Testimonials from '../sections/Testimonials.astro';
 import type { Locale } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import { homepageContent } from '../../lib/homepageContent';
@@ -150,6 +151,8 @@ const copy = homepageContent[lang];
       </div>
     </div>
   </section>
+
+  <Testimonials lang={lang} />
 
   <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <img

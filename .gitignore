@@ -22,4 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+
+business_plan.docx
 .tmp/*

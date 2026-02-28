@@ -2,7 +2,7 @@ const pt: Record<string, any> = {
   // Site-wide
   site: {
     title: "Madeira Property Concierge",
-    description: "Serviços premium de gestão de propriedades e concierge na Ilha da Madeira. Apoio bilingue, abordagem de design thinking e experiência local de confiança.",
+    description: "Hosting boutique e cuidado de propriedade na Madeira para proprietários no estrangeiro que querem tranquilidade. Suporte bilingue EN/PT e execução liderada pela fundadora.",
   },
 
   // Navigation
@@ -16,7 +16,7 @@ const pt: Record<string, any> = {
     contact: "Contacto",
     faq: "FAQ",
     guide: "Guia AL",
-    cta: "Consulta Gratuita",
+    cta: "Marcar Chamada de Diagnóstico",
     languageToggle: "EN",
   },
 
@@ -113,7 +113,7 @@ const pt: Record<string, any> = {
 
   // Footer
   footer: {
-    description: "Serviços premium de gestão de propriedades e concierge na Ilha da Madeira, Portugal.",
+    description: "Hosting boutique e cuidado de propriedade na Madeira para proprietários no estrangeiro que procuram um parceiro local de confiança.",
     services: "Serviços",
     company: "Empresa",
     legal: "Legal",
@@ -128,7 +128,7 @@ const pt: Record<string, any> = {
   services: {
     title: "Os Nossos Serviços",
     metaTitle: "Serviços de Gestão de Propriedades | Madeira Property Concierge",
-    metaDescription: "Gestão completa de propriedades, serviços de hóspedes, licenciamento AL e apoio concierge na Ilha da Madeira.",
+    metaDescription: "Modelo de 4 níveis: Tier A Guarda de Chaves + Home Care, Tier B Hosting Essentials, Tier C Gestão AL Full-Service e Tier D White-Glove.",
     hero: {
       title: "Gestão de Propriedades, Reinventada",
       subtitle: "Cada serviço desenhado com cuidado, entregue com precisão e adaptado às necessidades únicas da sua propriedade.",
@@ -139,16 +139,16 @@ const pt: Record<string, any> = {
   about: {
     title: "Sobre a Lisa",
     metaTitle: "Sobre a Lisa | Madeira Property Concierge",
-    metaDescription: "Conheça a Lisa — Diretora de UX canadiana-portuguesa tornada concierge de propriedades na Madeira.",
+    metaDescription: "Conheça a Lisa — Diretora de UX, ponte bilingue EN/PT e fundadora da Madeira Property Concierge com raízes madeirenses e 3+ anos na ilha.",
     hero: {
       title: "A Pessoa Por Trás da Promessa",
       subtitle: "Não uma agência sem rosto. Uma pessoa real com investimento real no seu sucesso.",
     },
     story: {
       title: "A Minha História",
-      p1: "Sou a Lisa — nascida no Canadá, Portuguesa de herança e Madeirense por escolha. Depois de 15 anos a liderar equipas de design UX em empresas de tecnologia de topo, tomei a decisão corajosa de deixar o mundo corporativo, fazer as malas com a minha filha e recomeçar na ilha que a minha família chamou de lar durante gerações.",
-      p2: "O que começou como uma jornada pessoal — navegar compras de propriedades, renovações e o mundo bizantino da burocracia portuguesa — tornou-se uma revelação. Descobri que os proprietários internacionais na Madeira enfrentavam os mesmos desafios que eu tinha enfrentado, mas sem as competências linguísticas, conexões locais ou mentalidade de design thinking para os resolver eficientemente.",
-      p3: "Por isso criei o serviço que gostaria que tivesse existido: um concierge de propriedades que combina gestão profissional com investimento pessoal, comunicação clara com fluência cultural, e processos sistemáticos com genuíno calor humano.",
+      p1: "Sou a Lisa. Os meus pais são da Madeira, e grande parte da minha família continua aqui. Emigraram para o Canadá, onde nasci e cresci, e mais tarde construí a minha carreira em Londres a liderar equipas de UX.",
+      p2: "Depois de a minha filha nascer, senti um forte chamamento às nossas raízes e voltei para a Madeira. A viver na ilha, construí uma rede local de confiança e continuei a ver o mesmo padrão para quem vive fora: falhas de comunicação, qualidade irregular e custos inesperados.",
+      p3: "Já fazia a gestão de duas propriedades da minha família na Madeira e percebi que era o momento certo para expandir esse modelo de confiança. Foi por isso que fundei a Madeira Property Concierge: um serviço boutique, liderado pela fundadora, com níveis claros, relatórios claros e um único ponto de responsabilidade. Não a maior operação da Madeira, mas aquela em que pode realmente confiar.",
     },
     whyDifferent: {
       title: "Porque Sou Diferente",
@@ -162,11 +162,11 @@ const pt: Record<string, any> = {
       },
       personal: {
         title: "Pessoalmente Investida",
-        description: "Tenho propriedade na Madeira. Vivo aqui. A minha reputação é o meu sustento. O seu sucesso é o meu sucesso.",
+        description: "Vivo na Madeira e crio aqui a minha filha. A minha reputação é local, visível e diretamente ligada aos seus resultados.",
       },
       network: {
-        title: "Rede Curada",
-        description: "Anos a testar empreiteiros, fornecedores e prestadores de serviços significa que recebe a minha rede verificada — sem tentativa e erro.",
+        title: "Rede Madeirense Autêntica",
+        description: "Construída através de raízes familiares e relações locais. Recebe fornecedores validados com padrões, SLAs e documentação.",
       },
     },
     promise: {
@@ -179,27 +179,27 @@ const pt: Record<string, any> = {
   howItWorks: {
     title: "Como Funciona",
     metaTitle: "Como Funciona | Madeira Property Concierge",
-    metaDescription: "O nosso processo simples de 4 passos para integrar a sua propriedade na Madeira.",
+    metaDescription: "Integração e operação lideradas pela fundadora: chamada de diagnóstico, auditoria do imóvel, setup e gestão mensal com SLAs claros.",
     hero: {
       title: "Simples, Transparente, Eficaz",
       subtitle: "Da primeira chamada à gestão completa — eis exatamente o que esperar.",
     },
     steps: {
       step1: {
-        title: "Consulta Gratuita",
-        description: "Começamos com uma videochamada de 30 minutos para entender a sua propriedade, objetivos e desafios. Sem compromisso, sem pressão.",
+        title: "Chamada de Diagnóstico",
+        description: "Começamos com uma chamada de 30 minutos para mapear objetivos, risco e modelo operacional do imóvel.",
       },
       step2: {
-        title: "Proposta Personalizada",
-        description: "Em 48 horas, receberá um plano de serviço à medida com preços transparentes e âmbito de trabalho claro.",
+        title: "Auditoria de Imóvel e Risco",
+        description: "Avaliamos condição do imóvel, lacunas de conformidade, estrutura de fornecedores e adequação do Tier A/B/C/D.",
       },
       step3: {
-        title: "Integração",
-        description: "Realizamos uma avaliação completa da propriedade, configuramos sistemas, conhecemos os seus contactos existentes e estabelecemos protocolos de comunicação.",
+        title: "Setup de Sistemas",
+        description: "Ativamos fluxos operacionais, templates de comunicação, padrões de fornecedores e rotinas de reporte.",
       },
       step4: {
-        title: "Gestão Contínua",
-        description: "Relatórios mensais, manutenção proativa, comunicação responsiva e otimização contínua do desempenho da sua propriedade.",
+        title: "Operação Mensal",
+        description: "Recebe relatório mensal, log de manutenção e suporte por SLA com um único ponto de contacto responsável.",
       },
     },
   },
@@ -208,7 +208,7 @@ const pt: Record<string, any> = {
   pricing: {
     title: "Preços",
     metaTitle: "Preços | Madeira Property Concierge",
-    metaDescription: "Preços transparentes para gestão de propriedades na Madeira. Essenciais desde €150/mês, Profissional desde €300/mês, Premium desde €500/mês.",
+    metaDescription: "Preços transparentes por nível: €100-€250/mês em home care, 15%-18% em hosting, 20%-25% em full-service e €50-€150/estadia em white-glove.",
     hero: {
       title: "Preços Transparentes, Valor Real",
       subtitle: "Sem taxas ocultas. Sem surpresas. Escolha o nível que se adequa às suas necessidades.",
@@ -223,14 +223,14 @@ const pt: Record<string, any> = {
   faq: {
     title: "Perguntas Frequentes",
     metaTitle: "FAQ | Madeira Property Concierge",
-    metaDescription: "Perguntas comuns sobre gestão de propriedades na Madeira, licenciamento AL, preços e serviços.",
+    metaDescription: "Perguntas frequentes sobre propriedade à distância na Madeira, níveis de serviço, apoio de conformidade AL, SLAs e integração.",
   },
 
   // Contact page
   contact: {
     title: "Contacte-nos",
     metaTitle: "Contacto | Madeira Property Concierge",
-    metaDescription: "Entre em contacto para uma consulta gratuita de gestão de propriedades.",
+    metaDescription: "Marque uma chamada de diagnóstico para o seu imóvel na Madeira. Apoiamos proprietários no estrangeiro com operação bilingue EN/PT e execução local.",
     hero: {
       title: "Vamos Falar Sobre a Sua Propriedade",
       subtitle: "Marque uma consulta gratuita de 30 minutos ou envie-nos uma mensagem. Respondemos normalmente em 24 horas.",
@@ -249,10 +249,10 @@ const pt: Record<string, any> = {
       },
       service: "Serviço de Interesse",
       serviceOptions: {
-        essentials: "Pacote Essenciais",
-        professional: "Pacote Profissional",
-        premium: "Pacote Premium",
-        project: "Serviço Por Projeto",
+        essentials: "Tier A - Guarda de Chaves + Home Care",
+        professional: "Tier B - Hosting Essentials",
+        premium: "Tier C - Gestão Full-Service",
+        project: "Tier D / Projetos Complementares",
         notSure: "Ainda Não Tenho a Certeza",
       },
       message: "Conte-nos sobre a sua propriedade e necessidades",
@@ -292,7 +292,7 @@ const pt: Record<string, any> = {
   common: {
     learnMore: "Saber Mais",
     getStarted: "Começar",
-    bookConsultation: "Marcar Consulta Gratuita",
+    bookConsultation: "Marcar Chamada de Diagnóstico",
     viewServices: "Ver Serviços",
     readMore: "Ler Mais",
     backToTop: "Voltar ao topo",

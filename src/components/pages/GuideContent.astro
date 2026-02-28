@@ -18,68 +18,82 @@ const copy =
   lang === 'pt'
     ? {
         heroEyebrow: 'Guia AL',
-        heroTitle: 'Guia prático para licenciamento AL na Madeira.',
+        heroTitle: 'Guia prático de conformidade AL para proprietários internacionais.',
         heroSubtitle:
-          'Resumo objetivo dos requisitos, sequência de passos e erros comuns que atrasam processos.',
+          'Resumo objetivo de requisitos, sequência operacional e riscos comuns em licenciamento e operação AL.',
+        sectionLabels: {
+          overview: 'Visão Geral',
+          checklist: 'Checklist',
+          process: 'Processo',
+          risks: 'Riscos',
+        },
         sections: {
           overview: {
-            title: 'O que é AL e quando precisa',
-            body: 'Alojamento Local é o enquadramento legal para alojamento de curta duração. Se recebe hóspedes por períodos curtos, precisa de registo AL ativo.',
+            title: 'O que este guia cobre',
+            body: 'Este conteúdo é informativo e não substitui aconselhamento legal/fiscal. Se recebe hóspedes em curta duração, precisa de registo AL ativo e de rotina de compliance contínua.',
           },
           checklist: {
             title: 'Checklist base de preparação',
-            items: ['Documentação do imóvel e titularidade', 'Equipamento de segurança e sinalização', 'Seguro adequado à atividade', 'Configuração fiscal e faturação'],
+            items: ['Documentação do imóvel, titularidade e autorização de operação', 'Seguro de responsabilidade civil ativo para atividade AL', 'Equipamentos de segurança e sinalização obrigatória', 'Fluxo de proteção de dados (GDPR), faturação e reporting'],
           },
           process: {
             title: 'Sequência recomendada',
-            steps: ['Diagnóstico de conformidade', 'Preparação documental', 'Submissão e articulação municipal', 'Inspeção e validação final'],
+            steps: ['Diagnóstico de conformidade e definição do modelo operacional', 'Preparação documental e articulação com TOC/advogado', 'Submissão, coordenação municipal e configuração de SIBA/RNAL', 'Validação final, checklist de abertura e rotina de compliance'],
           },
           pitfalls: {
             title: 'Erros frequentes',
-            items: ['Iniciar operação antes do registo', 'Documentação incompleta', 'Ignorar obrigações fiscais recorrentes', 'Falta de rotina de compliance após aprovação'],
+            items: ['Iniciar operação antes de confirmação formal do registo', 'Documentação incompleta ou inconsistências com dados do imóvel', 'Falhas em seguro obrigatório, SIBA ou rotinas de reporte', 'Tratar conformidade como evento único e não como processo contínuo'],
           },
         },
-        costTitle: 'Janela de custo e prazo (estimativa)',
+        mediaCaption: 'Prontidão de Conformidade AL',
+        costTitle: 'Janela de planeamento (estimativa)',
         costItems: [
           { label: 'Prazos médios', value: '4–8 semanas' },
-          { label: 'Setup base', value: '€950–€2.900' },
-          { label: 'Risco principal', value: 'Atrasos por documentação' },
+          { label: 'Registo negócio/intermediação', value: '€500–€1.000' },
+          { label: 'Ponto crítico', value: 'Atrasos por documentação e validações' },
         ],
-        ctaTitle: 'Se quiser, tratamos do processo AL do início ao fim.',
-        ctaBody: 'Coordenamos documentação, conformidade, fornecedores e comunicação institucional.',
-        ctaPrimary: 'Falar com Especialista',
+        ctaTitle: 'Se preferir, coordenamos o caminho AL de ponta a ponta.',
+        ctaBody: 'Apoiamos documentação, parceiros locais e execução de conformidade operacional no terreno.',
+        ctaPrimary: 'Falar com Especialista AL',
       }
     : {
         heroEyebrow: 'AL Guide',
-        heroTitle: 'A practical AL licensing guide for Madeira.',
+        heroTitle: 'A practical AL compliance guide for overseas owners.',
         heroSubtitle:
-          'A concise overview of requirements, process sequence, and the mistakes that most often delay approvals.',
+          'A concise view of requirements, operational sequence, and the risks that most often delay approvals.',
+        sectionLabels: {
+          overview: 'Overview',
+          checklist: 'Checklist',
+          process: 'Process',
+          risks: 'Risks',
+        },
         sections: {
           overview: {
-            title: 'What AL is and when you need it',
-            body: 'Alojamento Local is the legal framework for short-stay rentals. If you host guests for short periods, you need an active AL registration.',
+            title: 'What this guide covers',
+            body: 'This content is informational and not legal/tax advice. If you host short stays, you need an active AL registration plus an ongoing compliance routine.',
           },
           checklist: {
             title: 'Core preparation checklist',
-            items: ['Property and ownership documentation', 'Safety equipment and mandatory signage', 'Insurance aligned with rental activity', 'Tax setup and invoicing workflow'],
+            items: ['Property ownership documents and operation authorization', 'Active liability insurance suitable for AL activity', 'Safety equipment and mandatory signage', 'GDPR-safe data handling, invoicing, and reporting workflow'],
           },
           process: {
             title: 'Recommended process sequence',
-            steps: ['Compliance diagnostic', 'Documentation assembly', 'Municipal submission and coordination', 'Inspection and final validation'],
+            steps: ['Compliance diagnostic and operating model definition', 'Documentation assembly with TOC/legal coordination', 'Submission, municipal coordination, and SIBA/RNAL setup', 'Final validation, opening checklist, and ongoing compliance routine'],
           },
           pitfalls: {
             title: 'Common pitfalls',
-            items: ['Operating before registration is confirmed', 'Submitting incomplete documentation', 'Missing recurring tax obligations', 'No compliance routine after approval'],
+            items: ['Operating before formal registration is confirmed', 'Incomplete paperwork or mismatched property data', 'Missing insurance, SIBA reporting, or recurring obligations', 'Treating compliance as one-off instead of ongoing'],
           },
         },
-        costTitle: 'Estimated cost/timeline window',
+        mediaCaption: 'AL Compliance Readiness',
+        costTitle: 'Indicative planning window',
         costItems: [
           { label: 'Typical timeline', value: '4–8 weeks' },
-          { label: 'Baseline setup', value: '€950–€2,900' },
-          { label: 'Primary risk', value: 'Documentation-driven delays' },
+          { label: 'Business/intermediary registration', value: '€500–€1,000' },
+          { label: 'Primary risk', value: 'Documentation and approval delays' },
         ],
-        ctaTitle: 'If you prefer, we can run the AL path end-to-end.',
-        ctaBody: 'We coordinate documents, compliance, vendors, and institutional communication for you.',
+        ctaTitle: 'If you prefer, we coordinate the AL path end-to-end.',
+        ctaBody: 'We support documents, trusted local partners, and operational compliance execution on-island.',
         ctaPrimary: 'Talk to an AL Specialist',
       };
 
@@ -118,10 +132,11 @@ const pageSchema = [
 >
   <section class="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:py-20">
     <article class="premium-panel p-6 sm:p-8">
-      <p class="eyebrow">Overview</p>
+      <p class="eyebrow">{copy.sectionLabels.overview}</p>
       <h2 class="mt-3 text-3xl text-charcoal sm:text-4xl">{copy.sections.overview.title}</h2>
       <p class="mt-4 text-sm leading-relaxed text-charcoal/75 sm:text-base">{copy.sections.overview.body}</p>
 
+      <p class="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-charcoal/55">{copy.costTitle}</p>
       <div class="mt-6 grid gap-3 sm:grid-cols-2">
         {copy.costItems.map((item) => (
           <div class="step-card">
@@ -139,14 +154,14 @@ const pageSchema = [
         class="h-full w-full object-cover"
         loading="lazy"
       />
-      <div class="media-card-caption">AL Compliance Readiness</div>
+      <div class="media-card-caption">{copy.mediaCaption}</div>
     </article>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <div class="grid gap-6 md:grid-cols-3">
       <article class="step-card">
-        <p class="eyebrow !text-[0.58rem]">Checklist</p>
+        <p class="eyebrow !text-[0.58rem]">{copy.sectionLabels.checklist}</p>
         <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.checklist.title}</h3>
         <ul class="mt-3 space-y-2 text-sm text-charcoal/72">
           {copy.sections.checklist.items.map((item) => (
@@ -159,7 +174,7 @@ const pageSchema = [
       </article>
 
       <article class="step-card">
-        <p class="eyebrow !text-[0.58rem]">Process</p>
+        <p class="eyebrow !text-[0.58rem]">{copy.sectionLabels.process}</p>
         <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.process.title}</h3>
         <ol class="mt-3 space-y-2 text-sm text-charcoal/72">
           {copy.sections.process.steps.map((item, index) => (
@@ -172,7 +187,7 @@ const pageSchema = [
       </article>
 
       <article class="step-card">
-        <p class="eyebrow !text-[0.58rem]">Risks</p>
+        <p class="eyebrow !text-[0.58rem]">{copy.sectionLabels.risks}</p>
         <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.pitfalls.title}</h3>
         <ul class="mt-3 space-y-2 text-sm text-charcoal/72">
           {copy.sections.pitfalls.items.map((item) => (

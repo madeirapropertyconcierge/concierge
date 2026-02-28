@@ -17,94 +17,106 @@ const routes = routeMap[lang];
 const copy =
   lang === 'pt'
     ? {
-        heroEyebrow: 'Preços Claros',
-        heroTitle: 'Modelos transparentes para diferentes estilos de propriedade.',
+        heroEyebrow: 'Modelo Transparente',
+        heroTitle: 'Preços alinhados com a operação real do seu imóvel.',
         heroSubtitle:
-          'Sem surpresas, sem comissões escondidas. Seleciona o nível de serviço e acompanha exatamente o que está incluído.',
-        perMonth: '/mês',
-        customQuote: 'Orçamento personalizado',
-        mostPopular: 'Mais escolhido',
+          'Retainer para home care, comissão para operação AL e add-ons por estadia ou projeto. Sem taxas escondidas.',
+        customQuote: 'Orçamento por escopo',
+        mostPopular: 'Mais Escolhido',
         tiers: [
           {
-            title: 'Essentials',
-            price: '150',
+            title: 'Tier A - Guarda de Chaves + Home Care',
+            price: '€100-€250/mês',
             highlight: false,
-            audience: 'Supervisão contínua para proprietários com operação estável.',
-            features: ['Inspeções mensais com registo visual', 'Coordenação de manutenção essencial', 'Monitorização administrativa e utilidades'],
+            audience: 'Para segunda habitação e proprietários part-time.',
+            features: ['Visitas regulares com fotos, ventilação, humidade e fugas', 'Monitorização de correio, utilidades e estado geral do imóvel', 'Preparação para tempestades e inspeção pós-evento'],
           },
           {
-            title: 'Professional',
-            price: '300',
+            title: 'Tier B - Hosting Essentials',
+            price: '15%-18% da receita bruta',
+            highlight: false,
+            audience: 'Para quem gere reservas, mas delega operações no terreno.',
+            features: ['Mensagens e triagem de hóspedes + gestão de check-ins/check-outs', 'Coordenação de limpezas, lavandaria e reposição entre estadias', 'Escalação de incidentes e suporte durante a estadia'],
+          },
+          {
+            title: 'Tier C - Gestão Full-Service',
+            price: '20%-25% da receita bruta',
             highlight: true,
-            audience: 'Gestão diária para imóveis com hóspedes frequentes.',
-            features: ['Tudo no Essentials', 'Operação de hóspedes e check-ins', 'Coordenação de limpeza e suporte diário'],
+            audience: 'Para proprietários que querem delegação completa.',
+            features: ['Gestão de anúncios, calendário e pricing dinâmico', 'Coordenação de manutenção com controlo de fornecedores', 'Relatório mensal com receita, despesas e log operacional'],
           },
           {
-            title: 'Premium',
-            price: '500',
+            title: 'Tier D - Premium / White-Glove (Fase 2)',
+            price: '€50-€150 por estadia',
             highlight: false,
-            audience: 'Delegação estratégica para proteção total do ativo.',
-            features: ['Tudo no Professional', 'Supervisão estratégica dedicada', 'Resposta prioritária e concierge'],
+            audience: 'Camada premium de hospitalidade e concierge.',
+            features: ['Welcome pack curado, pré-stock e personalização da estadia', 'Reservas e experiências locais com parceiros validados', 'SLA acelerado: resposta a emergência em 15 minutos'],
           },
           {
-            title: 'Project-Based',
+            title: 'Projetos Complementares',
             price: null,
             highlight: false,
-            audience: 'Projetos de setup, licenciamento ou renovação por escopo fechado.',
-            features: ['Licenciamento AL', 'Gestão de obra e setup', 'Projetos one-off com escopo fechado'],
+            audience: 'Para setup, transformação e valorização pontual.',
+            features: ['Styling interior e fotografia profissional', 'Coordenação de renovação e fornecedores', 'Manual de casa UX + setup de smart lock/noise monitor'],
           },
         ],
-        transparencyTitle: 'Incluído em todos os planos',
-        transparencyItems: ['Comunicação direta e objetiva', 'Registo claro de decisões e ações', 'Rede local de fornecedores validados'],
-        ctaTitle: 'Queremos recomendar-lhe apenas o que realmente precisa.',
-        ctaBody: 'Partilhe os objetivos do imóvel e recebe um plano de serviço e custos alinhado ao seu contexto.',
-        ctaPrimary: 'Marcar Consulta',
-        ctaProject: 'Definir Escopo',
+        transparencyTitle: 'Padrões operacionais incluídos',
+        transparencyItems: ['Checklist de limpeza de 56 pontos com verificação fotográfica', 'Resposta ao proprietário em até 4 horas úteis', 'Emergências de hóspedes em até 30 minutos (15 min no Tier C/D)', 'Regra \"sem faturas surpresa\" com fotos antes/depois'],
+        ctaTitle: 'Recomendamos o nível certo para o seu contexto, não o mais caro.',
+        ctaBody: 'Partilhe objetivos e estágio do imóvel para receber uma proposta prática e transparente.',
+        ctaPrimary: 'Marcar Chamada de Diagnóstico',
+        ctaProject: 'Definir Projeto',
       }
     : {
-        heroEyebrow: 'Clear Pricing',
-        heroTitle: 'Transparent operating models for different ownership profiles.',
+        heroEyebrow: 'Transparent Model',
+        heroTitle: 'Pricing aligned with how your property is actually operated.',
         heroSubtitle:
-          'No hidden commissions, no pricing surprises. Pick the service tier and see exactly what is included.',
-        perMonth: '/month',
-        customQuote: 'Custom Quote',
+          'Retainer for home care, commission for AL operations, plus per-stay or project-based add-ons. No hidden fees.',
+        customQuote: 'Scoped Quote',
         mostPopular: 'Most Chosen',
         tiers: [
           {
-            title: 'Essentials',
-            price: '150',
+            title: 'Tier A - Keyholding + Home Care',
+            price: '€100-€250/month',
             highlight: false,
-            audience: 'Consistent oversight for owners with stable operations.',
-            features: ['Monthly inspections with visual reporting', 'Essential maintenance coordination', 'Administrative and utility oversight'],
+            audience: 'For second homes and part-time rental owners.',
+            features: ['Scheduled visits with photos, humidity, leak, and ventilation checks', 'Mail, utility, and general condition monitoring', 'Storm prep and post-storm inspections'],
           },
           {
-            title: 'Professional',
-            price: '300',
+            title: 'Tier B - Hosting Essentials',
+            price: '15%-18% of gross rental income',
+            highlight: false,
+            audience: 'For owners who self-manage bookings but need local operations.',
+            features: ['Guest messaging/screening plus check-ins/check-outs', 'Turnover cleaning, laundry, and restocking coordination', 'Issue escalation and support during guest stays'],
+          },
+          {
+            title: 'Tier C - Full-Service Management',
+            price: '20%-25% of gross rental income',
             highlight: true,
-            audience: 'Daily management for active short-term rental operations.',
-            features: ['Everything in Essentials', 'Guest operations and check-ins', 'Cleaning coordination and daily support'],
+            audience: 'For owners who want end-to-end delegation.',
+            features: ['Listing, calendar, and dynamic pricing management', 'Maintenance coordination with vendor quality control', 'Monthly owner report with revenue, costs, and maintenance log'],
           },
           {
-            title: 'Premium',
-            price: '500',
+            title: 'Tier D - Premium / White-Glove (Phase 2)',
+            price: '€50-€150 per stay',
             highlight: false,
-            audience: 'Strategic delegation for owners who need full coverage.',
-            features: ['Everything in Professional', 'Dedicated strategic oversight', 'Priority response and concierge support'],
+            audience: 'Premium hospitality and concierge add-on layer.',
+            features: ['Curated welcome packs, pre-stocking, and personalized stays', 'Restaurant/experience coordination with vetted partners', 'Faster SLA: 15-minute emergency response target'],
           },
           {
-            title: 'Project-Based',
+            title: 'Project-Based Add-ons',
             price: null,
             highlight: false,
-            audience: 'Scoped setup, licensing, or renovation delivery projects.',
-            features: ['AL licensing support', 'Renovation and setup management', 'One-off scoped delivery projects'],
+            audience: 'For setup, transformation, and one-off asset upgrades.',
+            features: ['Interior styling and professional listing photography', 'Renovation/vendor project coordination', 'UX house manual plus smart lock/noise setup'],
           },
         ],
-        transparencyTitle: 'Included across every plan',
-        transparencyItems: ['Direct, concise communication', 'Clear decision and action tracking', 'Curated local vendor network'],
-        ctaTitle: 'We only recommend the service depth you actually need.',
-        ctaBody: 'Share your ownership goals and receive a tailored service/cost framework for your property.',
-        ctaPrimary: 'Book Consultation',
-        ctaProject: 'Scope The Project',
+        transparencyTitle: 'Operational standards included',
+        transparencyItems: ['56-point turnover cleaning checklist with photo verification', 'Owner response target within 4 business hours', 'Guest emergency response within 30 minutes (15 mins on Tier C/D)', 'No-surprise invoice rule with before/after maintenance photos'],
+        ctaTitle: 'We recommend what fits your context, not the biggest package.',
+        ctaBody: 'Share your goals and property stage to receive a practical, transparent scope.',
+        ctaPrimary: 'Book Diagnostic Call',
+        ctaProject: 'Scope Add-on Project',
       };
 
 const pageSchema = [
@@ -120,8 +132,6 @@ const pageSchema = [
       '@type': 'Offer',
       position: index + 1,
       name: tier.title,
-      price: tier.price,
-      priceCurrency: tier.price ? 'EUR' : undefined,
     })),
   },
 ];
@@ -165,10 +175,7 @@ const pageSchema = [
 
           <div class="pricing-price mt-5">
             {tier.price ? (
-              <div class="flex items-end gap-1">
-                <p class="text-5xl text-charcoal">€{tier.price}</p>
-                <p class="pb-1 text-sm text-charcoal/65">{copy.perMonth}</p>
-              </div>
+              <p class="text-3xl leading-tight text-charcoal sm:text-4xl">{tier.price}</p>
             ) : (
               <p class="pricing-quote text-3xl text-charcoal">{copy.customQuote}</p>
             )}

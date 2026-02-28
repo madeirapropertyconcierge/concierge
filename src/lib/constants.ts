@@ -1,6 +1,6 @@
 export const SITE = {
   name: "Madeira Property Concierge",
-  tagline: "Your Trusted Property Partner on Madeira Island",
+  tagline: "Boutique hosting and property care for overseas owners who want peace of mind",
   url: "https://madeirapropertyconcierge.com",
   email: "hello@madeirapropertyconcierge.com",
   phone: "+351 XXX XXX XXX",

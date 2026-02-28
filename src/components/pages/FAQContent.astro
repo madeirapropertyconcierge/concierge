@@ -23,41 +23,42 @@ const faqCategories: Array<{ title: string; items: FAQItem[] }> =
   lang === 'pt'
     ? [
         {
-          title: 'Início',
+          title: 'Público & Enquadramento',
           items: [
             {
-              question: 'Como começar?',
+              question: 'Para quem é este serviço?',
               answer:
-                'Marque uma consulta inicial de 30 minutos. Avaliamos objetivos, estado do imóvel e sugerimos o nível de serviço ideal.',
+                'Focamo-nos em proprietários no estrangeiro com 1-3 imóveis na Madeira que querem tranquilidade, proteção do ativo e operação local fiável.',
             },
             {
-              question: 'Preciso de estar na Madeira para integrar o serviço?',
+              question: 'Trabalham com imóveis que não estão sempre em aluguer?',
               answer:
-                'Não. A maior parte dos clientes integra remotamente com videochamada, levantamento no local e documentação digital.',
+                'Sim. O Tier A (Guarda de Chaves + Home Care) foi desenhado para segunda habitação e imóveis com ocupação parcial, mesmo sem reservas contínuas.',
             },
             {
-              question: 'Em que zonas trabalham?',
+              question: 'Em que zonas da Madeira atuam?',
               answer:
-                'Atuamos em toda a ilha, com foco operacional em Funchal, Calheta, Ponta do Sol, Câmara de Lobos e arredores.',
+                'Atuamos em toda a ilha, com operação forte no Funchal e expansão ativa para a costa oeste (Calheta, Ponta do Sol e Ribeira Brava).',
             },
           ],
         },
         {
-          title: 'Serviço & Operação',
+          title: 'Níveis & Operação',
           items: [
             {
-              question: 'Posso mudar de plano mais tarde?',
-              answer: 'Sim. Pode ajustar entre níveis consoante a fase do imóvel e o volume operacional.',
+              question: 'Como funcionam os níveis e preços?',
+              answer:
+                'Tier A: €100-€250/mês. Tier B: 15%-18% da receita bruta. Tier C: 20%-25% da receita bruta. Tier D (white-glove): €50-€150 por estadia. Também existem projetos complementares por escopo.',
             },
             {
-              question: 'Como lidam com emergências?',
+              question: 'Quais são os SLAs de resposta?',
               answer:
-                'Temos protocolo de resposta prioritária, ativação de fornecedores e comunicação imediata ao proprietário.',
+                'Objetivo de resposta ao proprietário em até 4 horas úteis. Emergências de hóspedes até 30 minutos, e até 15 minutos nos níveis Tier C/D.',
             },
             {
-              question: 'Com que frequência recebo atualizações?',
+              question: 'Como garantem qualidade na limpeza e turnover?',
               answer:
-                'Recebe relatórios mensais e comunicações intermédias sempre que existir ação crítica ou decisão relevante.',
+                'Usamos checklist de 56 pontos com verificação fotográfica antes de cada chegada. Nenhum imóvel entra em estadia sem validação visual.',
             },
           ],
         },
@@ -65,56 +66,56 @@ const faqCategories: Array<{ title: string; items: FAQItem[] }> =
           title: 'Legal & Conformidade',
           items: [
             {
-              question: 'Ajudam com AL?',
+              question: 'Ajudam com AL, SIBA e RNAL?',
               answer:
-                'Sim. Fazemos enquadramento, documentação e coordenação necessária para licenciamento e manutenção de conformidade.',
+                'Sim. Apoiamos o caminho de licenciamento AL e a coordenação operacional de conformidade, incluindo reporte de hóspedes via SIBA e gestão de dados RNAL.',
             },
             {
-              question: 'Incluem apoio fiscal?',
+              question: 'Prestam aconselhamento legal ou fiscal?',
               answer:
-                'Fornecemos documentação operacional e articulamos com parceiros fiscais, mas não substituímos aconselhamento fiscal formal.',
+                'Fornecemos documentação operacional e articulamos com TOC/advogados parceiros, mas não substituímos aconselhamento legal ou fiscal formal.',
             },
           ],
         },
       ]
     : [
         {
-          title: 'Getting Started',
+          title: 'Fit & Scope',
           items: [
             {
-              question: 'How do I begin?',
+              question: 'Who is this service for?',
               answer:
-                'Book a 30-minute diagnostic call. We review your goals, property status, and recommend the right service depth.',
+                'We focus on overseas owners with 1-3 Madeira properties who want peace of mind, asset protection, and reliable local execution.',
             },
             {
-              question: 'Do I need to be in Madeira to onboard?',
+              question: 'Do you handle homes that are not rented full-time?',
               answer:
-                'No. Most owners onboard remotely via video, with on-site assessment and digital documentation.',
+                'Yes. Tier A (Keyholding + Home Care) is designed for second homes and part-time rentals, even without continuous bookings.',
             },
             {
-              question: 'What areas do you cover?',
+              question: 'What areas of Madeira do you cover?',
               answer:
-                'We operate across Madeira, with dense operational coverage in Funchal, Calheta, Ponta do Sol, Câmara de Lobos, and nearby zones.',
+                'We operate island-wide, with strong Funchal coverage and active expansion into the west coast (Calheta, Ponta do Sol, and Ribeira Brava).',
             },
           ],
         },
         {
-          title: 'Service & Operations',
+          title: 'Tiers & Operations',
           items: [
             {
-              question: 'Can I switch plans later?',
+              question: 'How do your tiers and pricing work?',
               answer:
-                'Yes. Service tiers can evolve with your ownership stage and rental complexity.',
+                'Tier A: €100-€250/month. Tier B: 15%-18% of gross rental income. Tier C: 20%-25% of gross rental income. Tier D (white-glove): €50-€150 per stay. We also run scoped add-on projects.',
             },
             {
-              question: 'How do you handle emergencies?',
+              question: 'What response SLAs do you commit to?',
               answer:
-                'We follow a priority response protocol with rapid vendor activation and immediate owner communication.',
+                'Owner response target is within 4 business hours. Guest emergencies are handled within 30 minutes, or 15 minutes on Tier C/D.',
             },
             {
-              question: 'How often do I receive updates?',
+              question: 'How do you control turnover quality?',
               answer:
-                'You receive monthly reporting plus interim updates whenever a critical action or decision is required.',
+                'We use a 56-point cleaning checklist with photo verification before each arrival. No guest check-in happens without visual QA.',
             },
           ],
         },
@@ -122,14 +123,14 @@ const faqCategories: Array<{ title: string; items: FAQItem[] }> =
           title: 'Legal & Compliance',
           items: [
             {
-              question: 'Do you support AL licensing?',
+              question: 'Do you support AL, SIBA, and RNAL workflows?',
               answer:
-                'Yes. We coordinate fit analysis, documentation workflow, and on-island compliance steps for AL readiness.',
+                'Yes. We support AL licensing workflows plus operational compliance coordination, including SIBA guest reporting and RNAL data handling.',
             },
             {
-              question: 'Do you provide tax advisory?',
+              question: 'Do you provide legal or tax advice?',
               answer:
-                'We provide operational documentation and coordinate with trusted tax partners, but we do not replace formal tax advice.',
+                'We provide operational documentation and coordinate with trusted TOC/legal partners, but we do not replace formal legal or tax advice.',
             },
           ],
         },
@@ -160,13 +161,13 @@ const closingCopy =
   lang === 'pt'
     ? {
         title: 'Tem uma questão específica sobre o seu imóvel?',
-        body: 'Falamos consigo e desenhamos um plano realista para o seu caso.',
-        cta: 'Marcar Consulta',
+        body: 'Falamos consigo e recomendamos o nível certo para o seu contexto atual.',
+        cta: 'Marcar Chamada de Diagnóstico',
       }
     : {
         title: 'Have a property-specific question?',
-        body: 'Let’s discuss your case and map a realistic operating plan.',
-        cta: 'Book Consultation',
+        body: 'Let\'s review your context and recommend the right tier for your current stage.',
+        cta: 'Book Diagnostic Call',
       };
 ---
 
@@ -175,8 +176,8 @@ const closingCopy =
   title={t(lang, 'faq.metaTitle')}
   description={t(lang, 'faq.metaDescription')}
   heroEyebrow="FAQ"
-  heroTitle={lang === 'pt' ? 'Respostas diretas para decisões sem fricção.' : 'Clear answers for frictionless ownership decisions.'}
-  heroSubtitle={lang === 'pt' ? 'Questões frequentes sobre integração, operação, conformidade e suporte contínuo na Madeira.' : 'Frequently asked questions about onboarding, operations, compliance, and ongoing support on Madeira.'}
+  heroTitle={lang === 'pt' ? 'Respostas claras para proprietários no estrangeiro.' : 'Clear answers for overseas owners.'}
+  heroSubtitle={lang === 'pt' ? 'Questões frequentes sobre níveis de serviço, SLAs, conformidade AL e operação contínua na Madeira.' : 'Common questions on service tiers, SLAs, AL compliance support, and ongoing operations in Madeira.'}
   heroImage={pexelsMadeiraImages.fruitMarketStalls.src}
   heroAlt={pexelsMadeiraImages.fruitMarketStalls.alt}
   heroPrimaryCta={{ label: closingCopy.cta, href: routes.contact }}

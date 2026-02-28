@@ -2,7 +2,7 @@ const en = {
   // Site-wide
   site: {
     title: "Madeira Property Concierge",
-    description: "Premium property management and concierge services on Madeira Island. Bilingual support, design-thinking approach, and trusted local expertise.",
+    description: "Boutique hosting and property care in Madeira for overseas owners who want peace of mind. Bilingual EN/PT support and founder-led execution.",
   },
 
   // Navigation
@@ -16,7 +16,7 @@ const en = {
     contact: "Contact",
     faq: "FAQ",
     guide: "AL Guide",
-    cta: "Get a Free Consultation",
+    cta: "Book Diagnostic Call",
     languageToggle: "PT",
   },
 
@@ -113,7 +113,7 @@ const en = {
 
   // Footer
   footer: {
-    description: "Premium property management and concierge services on Madeira Island, Portugal.",
+    description: "Boutique hosting and property care on Madeira for overseas owners who want a trusted local partner.",
     services: "Services",
     company: "Company",
     legal: "Legal",
@@ -128,7 +128,7 @@ const en = {
   services: {
     title: "Our Services",
     metaTitle: "Property Management Services | Madeira Property Concierge",
-    metaDescription: "Comprehensive property management, guest services, AL licensing, and concierge support on Madeira Island. Choose from Essentials, Professional, Premium, or Project-Based tiers.",
+    metaDescription: "Four-tier Madeira service model: Tier A Keyholding + Home Care, Tier B Hosting Essentials, Tier C Full-Service AL Management, and Tier D White-Glove add-ons.",
     hero: {
       title: "Property Management, Reimagined",
       subtitle: "Every service designed with care, delivered with precision, and tailored to your property's unique needs.",
@@ -139,16 +139,16 @@ const en = {
   about: {
     title: "About Lisa",
     metaTitle: "About Lisa | Madeira Property Concierge",
-    metaDescription: "Meet Lisa — Canadian-Portuguese UX Director turned Madeira property concierge. Learn about her unique background, design-thinking approach, and personal commitment to every client.",
+    metaDescription: "Meet Lisa — UX Director, bilingual EN/PT bridge, and founder of Madeira Property Concierge with Madeiran roots and 3+ years living on-island.",
     hero: {
       title: "The Person Behind the Promise",
       subtitle: "Not a faceless agency. A real person with real investment in your success.",
     },
     story: {
       title: "My Story",
-      p1: "I'm Lisa — Canadian-born, Portuguese by heritage, and Madeiran by choice. After 15 years leading UX design teams at top tech companies, I made the bold decision to leave the corporate world, pack up my life with my daughter, and start fresh on the island my family called home for generations.",
-      p2: "What started as a personal journey — navigating property purchases, renovations, and the Byzantine world of Portuguese bureaucracy — became a revelation. I discovered that international property owners on Madeira were struggling with the same challenges I had faced, but without the language skills, local connections, or design-thinking mindset to solve them efficiently.",
-      p3: "So I built the service I wished had existed: a property concierge that combines professional management with personal investment, clear communication with cultural fluency, and systematic processes with genuine warmth.",
+      p1: "I'm Lisa. My parents are from Madeira, and much of my family is still here. They emigrated to Canada, where I was born and raised, and later I built my career in London leading UX teams.",
+      p2: "After my daughter was born, I felt a strong pull back to our roots and moved to Madeira. Living on-island, I built a trusted local network and kept seeing the same pattern for overseas owners: communication gaps, uneven quality, and costly surprises.",
+      p3: "I was already managing two family properties in Madeira, and I knew it was the right time to expand that trusted model. That is why I founded Madeira Property Concierge: a boutique, founder-led service with clear tiers, clear reporting, and one accountable point of contact. Not the biggest operation in Madeira — the one you can truly rely on.",
     },
     whyDifferent: {
       title: "Why I'm Different",
@@ -162,11 +162,11 @@ const en = {
       },
       personal: {
         title: "Personally Invested",
-        description: "I own property on Madeira. I live here. My reputation is my livelihood. Your success is my success.",
+        description: "I live in Madeira and raise my daughter here. My reputation is local, visible, and tied directly to your results.",
       },
       network: {
-        title: "Curated Network",
-        description: "Years of testing contractors, vendors, and service providers means you get my vetted network — no trial and error.",
+        title: "Authentic Madeiran Network",
+        description: "Built through family roots and local relationships. You get vetted vendors with standards, SLAs, and documentation — not trial and error.",
       },
     },
     promise: {
@@ -179,27 +179,27 @@ const en = {
   howItWorks: {
     title: "How It Works",
     metaTitle: "How It Works | Madeira Property Concierge",
-    metaDescription: "Our simple 4-step process for onboarding your Madeira property. From consultation to ongoing management, see exactly what to expect.",
+    metaDescription: "Founder-led onboarding and operations for Madeira properties: diagnostic call, property audit, setup, and monthly management with clear SLAs.",
     hero: {
       title: "Simple, Transparent, Effective",
       subtitle: "From first call to fully managed — here's exactly what to expect.",
     },
     steps: {
       step1: {
-        title: "Free Consultation",
-        description: "We start with a 30-minute video call to understand your property, goals, and challenges. No commitment, no pressure.",
+        title: "Diagnostic Call",
+        description: "We start with a 30-minute call to map your property goals, risk profile, and operating model.",
       },
       step2: {
-        title: "Custom Proposal",
-        description: "Within 48 hours, you'll receive a tailored service plan with transparent pricing and a clear scope of work.",
+        title: "Property & Risk Audit",
+        description: "We assess property condition, compliance gaps, vendor setup, and service-tier fit (Tier A/B/C/D).",
       },
       step3: {
-        title: "Onboarding",
-        description: "We conduct a thorough property assessment, set up systems, meet your existing contacts, and establish communication protocols.",
+        title: "Systems Setup",
+        description: "We activate workflows, communication templates, vendor standards, and guest/owner reporting routines.",
       },
       step4: {
-        title: "Ongoing Management",
-        description: "Monthly reports, proactive maintenance, responsive communication, and continuous optimization of your property's performance.",
+        title: "Monthly Operations",
+        description: "You receive monthly reporting, maintenance logs, and SLA-driven support with one clear point of contact.",
       },
     },
   },
@@ -208,7 +208,7 @@ const en = {
   pricing: {
     title: "Pricing",
     metaTitle: "Pricing | Madeira Property Concierge",
-    metaDescription: "Transparent pricing for Madeira property management. Essentials from €150/mo, Professional from €300/mo, Premium from €500/mo, plus project-based services.",
+    metaDescription: "Transparent tiered pricing: €100-€250/month home care, 15%-18% hosting essentials, 20%-25% full-service management, and €50-€150/stay white-glove add-ons.",
     hero: {
       title: "Transparent Pricing, Real Value",
       subtitle: "No hidden fees. No surprise charges. Choose the tier that fits your needs.",
@@ -223,14 +223,14 @@ const en = {
   faq: {
     title: "Frequently Asked Questions",
     metaTitle: "FAQ | Madeira Property Concierge",
-    metaDescription: "Common questions about Madeira property management, AL licensing, pricing, and our services. Get answers before your free consultation.",
+    metaDescription: "Common questions about remote ownership in Madeira, service tiers, AL compliance support, response SLAs, and onboarding.",
   },
 
   // Contact page
   contact: {
     title: "Contact Us",
     metaTitle: "Contact | Madeira Property Concierge",
-    metaDescription: "Get in touch for a free property management consultation. Email, phone, WhatsApp, or book a video call.",
+    metaDescription: "Book a diagnostic call for your Madeira property. We support overseas owners with bilingual EN/PT operations, compliance, and local execution.",
     hero: {
       title: "Let's Talk About Your Property",
       subtitle: "Book a free 30-minute consultation or send us a message. We typically respond within 24 hours.",
@@ -249,10 +249,10 @@ const en = {
       },
       service: "Service Interest",
       serviceOptions: {
-        essentials: "Essentials Package",
-        professional: "Professional Package",
-        premium: "Premium Package",
-        project: "Project-Based Service",
+        essentials: "Tier A - Keyholding + Home Care",
+        professional: "Tier B - Hosting Essentials",
+        premium: "Tier C - Full-Service Management",
+        project: "Tier D / Project Add-ons",
         notSure: "Not Sure Yet",
       },
       message: "Tell us about your property and needs",
@@ -292,7 +292,7 @@ const en = {
   common: {
     learnMore: "Learn More",
     getStarted: "Get Started",
-    bookConsultation: "Book a Free Consultation",
+    bookConsultation: "Book Diagnostic Call",
     viewServices: "View Services",
     readMore: "Read More",
     backToTop: "Back to top",
