@@ -76,7 +76,7 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       },
       {
         image: pexelsMadeiraImages.villageAerialShadow.src,
-        alt: 'Aerial village nestled in Madeira mountains',
+        alt: 'Aerial view of a village in Madeira mountains',
         caption: 'West Coast Expansion Coverage',
       },
     ],
@@ -183,7 +183,7 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       },
       {
         image: pexelsMadeiraImages.villageAerialShadow.src,
-        alt: 'Aldeia encaixada nas montanhas da Madeira',
+        alt: 'Vista aérea de uma aldeia nas montanhas da Madeira',
         caption: 'Cobertura em Expansão na Costa Oeste',
       },
     ],

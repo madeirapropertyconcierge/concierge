@@ -64,7 +64,7 @@ const pt = {
       title: "A Minha História",
       p1: "Sou a Lisa. Os meus pais são da Madeira, e grande parte da minha família continua aqui. Emigraram para o Canadá, onde nasci e cresci, e mais tarde construí a minha carreira em Londres a liderar equipas de UX.",
       p2: "Depois de a minha filha nascer, senti um forte chamamento às nossas raízes e voltei para a Madeira. A viver na ilha, construí uma rede local de confiança e continuei a ver o mesmo padrão para quem vive fora: falhas de comunicação, qualidade irregular e custos inesperados.",
-      p3: "Já fazia a gestão de duas propriedades da minha família na Madeira e percebi que era o momento certo para expandir esse modelo de confiança. Foi por isso que fundei a Madeira Property Concierge: um serviço boutique, liderado pela fundadora, com níveis claros, relatórios claros e um único ponto de responsabilidade. Não a maior operação da Madeira, mas aquela em que pode realmente confiar.",
+      p3: "Já fazia a gestão de duas propriedades da família na Madeira e percebi que era o momento certo para expandir. Foi por isso que fundei a Madeira Property Concierge: um serviço pequeno, liderado pela fundadora, com níveis claros, relatórios claros e uma pessoa a quem pode pedir responsabilidades.",
     },
     whyDifferent: {
       title: "Porque Sou Diferente",
