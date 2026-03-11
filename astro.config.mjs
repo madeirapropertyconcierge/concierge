@@ -6,6 +6,9 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   output: 'server',
   adapter: vercel(),
+  image: {
+    remotePatterns: [],
+  },
   i18n: {
     locales: ['en', 'pt'],
     defaultLocale: 'en',
