@@ -357,9 +357,19 @@
 }
 
 .cms-library-actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.35rem;
+  align-items: stretch;
+}
+
+.cms-library-actions .cms-btn {
+  width: 100%;
+  min-width: 0;
+}
+
+.cms-library-actions .cms-btn:first-child {
+  grid-column: 1 / -1;
 }
 
 [data-cms-editing='true'] {

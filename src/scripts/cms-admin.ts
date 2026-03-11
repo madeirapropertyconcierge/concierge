@@ -205,6 +205,7 @@ let selectedImageTarget: SelectedImageTarget | null = null;
 let selectedLibraryItemId: string | null = null;
 let activeEditableElement: HTMLElement | null = null;
 let bannerResizeObserver: ResizeObserver | null = null;
+const pendingAdminImagePreviewUrls = new Map<string, string>();
 
 const BANNER_OFFSET_CSS_VAR = '--cms-admin-banner-offset';
 const LOGOUT_MARKER_STORAGE_KEY = 'cms-admin-force-logout';
@@ -232,6 +233,37 @@ function deepClone<T>(value: T): T {
 
 function nowIso(): string {
   return new Date().toISOString();
+}
+
+function setPendingAdminImagePreview(src: string, file: File): void {
+  const existing = pendingAdminImagePreviewUrls.get(src);
+  if (existing) {
+    URL.revokeObjectURL(existing);
+  }
+
+  pendingAdminImagePreviewUrls.set(src, URL.createObjectURL(file));
+}
+
+function clearPendingAdminImagePreview(src: string): void {
+  const existing = pendingAdminImagePreviewUrls.get(src);
+  if (!existing) {
+    return;
+  }
+
+  URL.revokeObjectURL(existing);
+  pendingAdminImagePreviewUrls.delete(src);
+}
+
+function clearAllPendingAdminImagePreviews(): void {
+  for (const previewUrl of pendingAdminImagePreviewUrls.values()) {
+    URL.revokeObjectURL(previewUrl);
+  }
+
+  pendingAdminImagePreviewUrls.clear();
+}
+
+function resolveAdminImageSrc(src: string): string {
+  return pendingAdminImagePreviewUrls.get(src) ?? src;
 }
 
 interface ApiErrorPayload {
@@ -581,11 +613,12 @@ function applyPageDocument(page: CmsPageDocument): void {
       continue;
     }
 
-    element.src = field.src;
+    element.src = resolveAdminImageSrc(field.src);
     element.alt = localeValue(field.alt);
     element.dataset.cmsField = 'image';
     element.dataset.cmsId = field.id;
     element.dataset.cmsSelector = field.selector;
+    element.dataset.cmsSourceSrc = field.src;
   }
 }
 
@@ -920,7 +953,7 @@ function ensureImageField(target: SelectedImageTarget): CmsImageField | null {
   const nextField = normalizeImageField({
     id: target.id,
     selector: target.selector,
-    src: element.currentSrc || element.src,
+    src: element.dataset.cmsSourceSrc || element.currentSrc || element.src,
     alt: { en: '', pt: '', [locale]: element.alt },
     attributionName: '',
     attributionUrl: '',
@@ -1005,7 +1038,7 @@ function hydrateImageEditorForm(): void {
   setImageEditorField('licenseUrl', field.licenseUrl);
 
   if (imageEditorPreview) {
-    imageEditorPreview.src = field.src;
+    imageEditorPreview.src = resolveAdminImageSrc(field.src);
     imageEditorPreview.alt = localeValue(field.alt);
   }
 }
@@ -1826,6 +1859,7 @@ function removeImageFromLibrary(item: CmsGalleryItem): void {
   );
   workingState.mediaLibrary.updatedAt = nowIso();
   globalGalleryItems = globalGalleryItems.filter((galleryItem) => galleryItem.libraryItemId !== item.libraryItemId);
+  clearPendingAdminImagePreview(item.src);
 
   if (selectedLibraryItemId === item.libraryItemId) {
     selectedLibraryItemId = null;
@@ -1871,8 +1905,9 @@ function renderImageLibrary(): void {
     });
 
     const image = document.createElement('img');
-    image.src = item.src;
+    image.src = resolveAdminImageSrc(item.src);
     image.alt = localeValue(item.alt);
+    image.loading = 'lazy';
 
     const path = document.createElement('p');
     path.className = 'cms-library-path';
@@ -2285,6 +2320,7 @@ async function publishChanges(): Promise<void> {
 }
 
 async function uploadImage(formData: FormData): Promise<void> {
+  const uploadedFile = formData.get('file');
   suppressBeforeUnloadPrompt = true;
   try {
     const response = await fetch('/api/admin/upload-image', {
@@ -2304,6 +2340,10 @@ async function uploadImage(formData: FormData): Promise<void> {
       return;
     }
 
+    if (uploadedFile instanceof File && uploadedFile.size > 0) {
+      setPendingAdminImagePreview(payload.item.src, uploadedFile);
+    }
+
     workingState.mediaLibrary.items.unshift(payload.item);
     workingState.mediaLibrary.updatedAt = nowIso();
     selectedLibraryItemId = payload.item.id;
@@ -2314,9 +2354,9 @@ async function uploadImage(formData: FormData): Promise<void> {
         publishedState.mediaLibrary = deepClone(workingState.mediaLibrary);
         publishedState.baseSha = payload.commitSha;
       }
-      setStatus('Image uploaded and saved to library');
+      setStatus('Image uploaded. Preview uses the local file until Vercel finishes deploying it.');
     } else {
-      markDirty('Image uploaded. Publish to persist library updates.');
+      markDirty('Image uploaded. Preview uses the local file until you publish the update.');
     }
 
     renderImageLibrary();
@@ -2670,6 +2710,10 @@ function bindUnloadGuard(): void {
     event.preventDefault();
     event.returnValue = '';
   });
+
+  window.addEventListener('pagehide', () => {
+    clearAllPendingAdminImagePreviews();
+  }, { once: true });
 }
 
 async function boot(): Promise<void> {
