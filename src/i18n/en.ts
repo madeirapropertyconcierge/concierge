@@ -42,7 +42,7 @@ const en = {
   services: {
     title: "Our Services",
     metaTitle: "Property Management Services | Madeira Property Concierge",
-    metaDescription: "Four-tier Madeira service model: Tier A Keyholding + Home Care, Tier B Hosting Essentials, Tier C Full-Service AL Management, and Tier D White-Glove add-ons.",
+    metaDescription: "Madeira service tiers for overseas owners: Essential Care, Standard Care, Premium Concierge, Bespoke support, and optional add-ons.",
     hero: {
       title: "Property Management That Actually Works",
       subtitle: "Each service is built around your property and how you want it run.",

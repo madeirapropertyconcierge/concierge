@@ -17,38 +17,38 @@ const routes = routeMap[lang];
 const differentiators = ['bilingual', 'design', 'personal', 'network'] as const;
 
 const iconByKey: Record<(typeof differentiators)[number], string> = {
-  bilingual: '🌍',
-  design: '✦',
-  personal: '❤',
-  network: '⚑',
+  bilingual: 'ðŸŒ',
+  design: 'âœ¦',
+  personal: 'â¤',
+  network: 'âš‘',
 };
 
 const copy =
   lang === 'pt'
     ? {
-        heroEyebrow: 'Fundadora & Visão',
-        heroTitle: 'Uma pessoa gere tudo. Vai saber sempre quem é responsável.',
+        heroEyebrow: 'Fundadora & VisÃ£o',
+        heroTitle: 'Uma pessoa gere tudo. Vai saber sempre quem Ã© responsÃ¡vel.',
         heroSubtitle:
-          'Experiência em UX, bilingue EN/PT, raízes madeirenses. Sou o seu ponto de contacto local para não ter de gerir à distância.',
-        storyEyebrow: 'A História',
-        whyEyebrow: 'Porque é Diferente',
+          'ExperiÃªncia em UX, bilingue EN/PT, raÃ­zes madeirenses. Sou o seu ponto de contacto local para nÃ£o ter de gerir Ã  distÃ¢ncia.',
+        storyEyebrow: 'A HistÃ³ria',
+        whyEyebrow: 'Porque Ã© Diferente',
         quoteEyebrow: 'Compromisso',
-        ctaTitle: 'Quer saber exatamente o que se passa com o seu imóvel?',
-        ctaBody: 'Olhamos para a sua situação e montamos um plano de cuidado, hosting ou conformidade.',
-        ctaPrimary: 'Marcar Chamada de Diagnóstico',
+        ctaTitle: 'Quer saber exatamente o que se passa com o seu imÃ³vel?',
+        ctaBody: 'Olhamos para a sua situaÃ§Ã£o e montamos um plano de cuidado, hosting ou conformidade.',
+        ctaPrimary: 'Marcar Chamada de DiagnÃ³stico',
         familyPhotoAlt: 'Lisa e a sua filha',
         storyStats: [
           {
             value: '15 anos',
-            label: 'A liderar equipas de UX e a desenhar operações centradas no utilizador.',
+            label: 'A liderar equipas de UX e a desenhar operaÃ§Ãµes centradas no utilizador.',
           },
           {
             value: '3+ anos',
-            label: 'A viver na Madeira e a construir rede local de fornecedores de confiança.',
+            label: 'A viver na Madeira e a construir rede local de fornecedores de confianÃ§a.',
           },
           {
             value: 'EN/PT',
-            label: 'Bilingue nativa, nascida canadiana-madeirense. Faz a ponte entre proprietários e equipas locais.',
+            label: 'Bilingue nativa, nascida canadiana-madeirense. Faz a ponte entre proprietÃ¡rios e equipas locais.',
           },
         ],
       }
@@ -98,15 +98,15 @@ const pageSchema = [
   },
 ];
 
-const attributionHeading = lang === 'pt' ? 'Atribuição de imagens' : 'Image attribution';
+const attributionHeading = lang === 'pt' ? 'AtribuiÃ§Ã£o de imagens' : 'Image attribution';
 const attributionSubheading =
   lang === 'pt'
-    ? 'Todas as imagens externas usadas no site são da Pexels.'
+    ? 'Todas as imagens externas usadas no site sÃ£o da Pexels.'
     : 'All external images used across the site are sourced from Pexels.';
 const photoPrefix = lang === 'pt' ? 'Foto de' : 'Photo by';
 const attributionNudge =
   lang === 'pt'
-    ? 'Mini-galeria de créditos: cada imagem abre a fonte original.'
+    ? 'Mini-galeria de crÃ©ditos: cada imagem abre a fonte original.'
     : 'Credit gallery: each thumbnail opens the original source.';
 const attributionGallery = pexelsMadeiraAttribution.map((image) => ({
   ...image,
@@ -136,7 +136,7 @@ const attributionGallery = pexelsMadeiraAttribution.map((image) => ({
         <div class="grid gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center">
           <div class="relative reveal min-w-0">
             <article class="overflow-hidden rounded-[1.35rem] border border-white/60 bg-white shadow-[0_24px_56px_rgba(5,13,20,0.24)]">
-              <img src="/images/about/lisa_2.webp" alt={copy.familyPhotoAlt} class="h-auto w-full object-cover" loading="lazy" />
+              <img src="/images/about/lisa-and-marley.jpg" alt={copy.familyPhotoAlt} class="h-auto w-full object-cover" loading="lazy" />
             </article>
           </div>
 
@@ -192,7 +192,7 @@ const attributionGallery = pexelsMadeiraAttribution.map((image) => ({
     <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
       <p class="eyebrow !border-white/35 !bg-white/10 !text-white/80">{copy.quoteEyebrow}</p>
       <blockquote class="mt-4 text-balance text-2xl leading-relaxed text-white/94 sm:text-3xl">
-        “{t(lang, 'about.promise.text')}”
+        â€œ{t(lang, 'about.promise.text')}â€
       </blockquote>
 
       <h2 class="mt-8 text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.ctaTitle}</h2>

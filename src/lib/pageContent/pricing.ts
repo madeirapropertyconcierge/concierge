@@ -9,6 +9,8 @@ export interface PricingTier {
   } | null;
   audience: string;
   features: string[];
+  idealFor?: string;
+  showQuoteLabel?: boolean;
 }
 
 export interface PricingPageContent {
@@ -16,6 +18,8 @@ export interface PricingPageContent {
   heroTitle: string;
   heroSubtitle: string;
   customQuote: string;
+  includesLabel: string;
+  idealForLabel: string;
   tiers: PricingTier[];
   transparencyTitle: string;
   transparencyItems: string[];
@@ -32,58 +36,105 @@ const pricingPageContent = {
     heroSubtitle:
       'Planos mensais fixos para operação contínua e add-ons por projeto. Sem taxas escondidas.',
     customQuote: 'Orçamento por escopo',
+    includesLabel: 'Inclui',
+    idealForLabel: 'Ideal para',
     tiers: [
       {
         tierLabel: 'Tier A',
-        title: 'Guarda de Chaves + Home Care',
+        title: 'Pacote de Cuidados Essenciais',
         price: {
-          amount: '€150',
+          amount: '€95',
           unit: '/mês',
         },
-        audience: 'Para segunda habitação e proprietários part-time.',
+        audience:
+          'Pensado para proprietários no estrangeiro que querem tranquilidade, sabendo que a sua propriedade está a ser verificada e mantida na sua ausência.',
         features: [
-          'Visitas regulares com fotos, ventilação, humidade e fugas',
-          'Monitorização de correio, utilidades e estado geral do imóvel',
-          'Preparação para tempestades e inspeção pós-evento',
+          'Inspeção mensal ao interior e exterior da propriedade',
+          'Ventilação e circulação de água para prevenir problemas',
+          'Verificação visual de fugas, humidade, pragas ou danos causados pelo tempo',
+          'Relatório fotográfico enviado após cada visita',
+          'Contacto de emergência e coordenação caso surja algum problema',
         ],
+        idealFor:
+          'Casas que ficam vazias durante longos períodos e cujos proprietários visitam uma ou duas vezes por ano.',
       },
       {
         tierLabel: 'Tier B',
-        title: 'Hosting Essentials',
+        title: 'Pacote de Cuidados Standard',
         price: {
-          amount: '€300',
+          amount: '€180',
           unit: '/mês',
         },
-        audience: 'Para quem gere reservas, mas delega operações no terreno.',
+        audience:
+          'A nossa opção mais popular, oferecendo monitorização reforçada e coordenação local para proprietários que vivem no estrangeiro.',
         features: [
-          'Mensagens e triagem de hóspedes + gestão de check-ins/check-outs',
-          'Coordenação de limpezas, lavandaria e reposição entre estadias',
-          'Escalação de incidentes e suporte durante a estadia',
+          'Tudo incluído no pacote Essencial, mais:',
+          'Inspeções à propriedade duas vezes por mês',
+          'Guarda segura de chaves',
+          'Coordenação com profissionais e prestadores de serviços locais de confiança',
+          'Verificações em caso de tempestade e condições meteorológicas adversas quando necessário',
+          'Apoio ao acesso de hóspedes (entrega de chaves, ligar/desligar utilidades)',
+          'Resposta prioritária para situações urgentes',
         ],
+        idealFor:
+          'Proprietários de segunda habitação e famílias com visitantes ocasionais.',
       },
       {
         tierLabel: 'Tier C',
-        title: 'Gestão Full-Service',
+        title: 'Pacote Concierge Premium',
         price: {
-          amount: '€500',
+          amount: '€295',
           unit: '/mês',
         },
-        audience: 'Para proprietários que querem delegação completa.',
+        audience:
+          'Um serviço totalmente gerido para proprietários internacionais que procuram total tranquilidade.',
         features: [
-          'Gestão de anúncios, calendário e pricing dinâmico',
-          'Coordenação de manutenção com controlo de fornecedores',
-          'Relatório mensal com receita, despesas e log operacional',
+          'Tudo incluído no pacote Standard, mais:',
+          'Verificações da propriedade sob pedido',
+          'Preparação da casa antes da sua chegada',
+          'Inspeções após a sua partida da ilha',
+          'Gestão de utilidades (água, gás, eletricidade)',
+          'Apoio na navegação de serviços locais e burocracia',
+          'Atualizações detalhadas e relatórios fotográficos',
+        ],
+        idealFor:
+          'Propriedades de elevado valor, visitantes frequentes, ou proprietários que querem uma solução sem preocupações e sem intervenção direta.',
+      },
+      {
+        tierLabel: 'Serviços à medida',
+        title: 'Serviços Concierge Personalizados Desde',
+        price: {
+          amount: '€35',
+          unit: '/hora',
+        },
+        audience:
+          'Apoio flexível e sob pedido para situações que exigem uma pessoa de confiança no terreno.',
+        features: [
+          'Exemplos incluem:',
+          'Chamadas de emergência',
+          'Aguardar reparações, inspeções ou entregas',
+          'Coordenação de limpezas',
+          'Inventário e verificações de estado',
+          'Entregas de mobiliário ou eletrodomésticos',
+          'Tarefas locais e apoio administrativo',
+          'Assistência em renovações ou setup',
+          'Retainers mensais personalizados disponíveis para apoio contínuo.',
         ],
       },
       {
-        tierLabel: 'Projetos',
-        title: 'Projetos Complementares',
+        tierLabel: 'Add-ons',
+        title: 'Add-ons Opcionais',
         price: null,
-        audience: 'Para setup, transformação e valorização pontual.',
+        showQuoteLabel: false,
+        audience: 'Serviços extra disponíveis conforme necessário.',
         features: [
-          'Styling interior e fotografia profissional',
-          'Coordenação de renovação e fornecedores',
-          'Manual de casa UX + setup de smart lock/noise monitor',
+          'Visitas adicionais à propriedade: €30 por visita',
+          'Inspeção de tempestade (fora do pacote): €40',
+          'Preparação de boas-vindas para hóspedes (limpeza e essenciais): desde €75',
+          'Relatório anual ou de inspeção pré-compra: desde €150',
+          'Coordenação de entrega de chaves: €25',
+          'Styling interior e fotografia profissional (orçamento por escopo)',
+          'Coordenação de renovação e fornecedores (orçamento por escopo)',
         ],
       },
     ],
@@ -105,58 +156,105 @@ const pricingPageContent = {
     heroSubtitle:
       'Fixed monthly plans for ongoing operations plus project-based add-ons. No hidden fees.',
     customQuote: 'Scoped Quote',
+    includesLabel: 'Includes',
+    idealForLabel: 'Ideal for',
     tiers: [
       {
         tierLabel: 'Tier A',
-        title: 'Keyholding + Home Care',
+        title: 'Essential Care Package',
         price: {
-          amount: '€150',
+          amount: '€95',
           unit: '/month',
         },
-        audience: 'For second homes and part-time rental owners.',
+        audience:
+          'Designed for overseas owners who want peace of mind knowing their property is being checked and maintained in their absence.',
         features: [
-          'Scheduled visits with photos, humidity, leak, and ventilation checks',
-          'Mail, utility, and general condition monitoring',
-          'Storm prep and post-storm inspections',
+          'Monthly interior and exterior property inspection',
+          'Ventilation and water run-through to prevent issues',
+          'Visual checks for leaks, damp, pests, or weather damage',
+          'Photo report sent after each visit',
+          'Emergency contact and coordination if an issue arises',
         ],
+        idealFor:
+          'Homes that are vacant for extended periods and owners visiting once or twice per year.',
       },
       {
         tierLabel: 'Tier B',
-        title: 'Hosting Essentials',
+        title: 'Standard Care Package',
         price: {
-          amount: '€300',
+          amount: '€180',
           unit: '/month',
         },
-        audience: 'For owners who self-manage bookings but need local operations.',
+        audience:
+          'Our most popular option, offering enhanced monitoring and local coordination for owners living abroad.',
         features: [
-          'Guest messaging/screening plus check-ins/check-outs',
-          'Turnover cleaning, laundry, and restocking coordination',
-          'Issue escalation and support during guest stays',
+          'Includes everything in the Essential package, plus:',
+          'Bi-monthly property inspections',
+          'Secure key holding',
+          'Coordination with trusted local trades and service providers',
+          'Storm and adverse weather checks when required',
+          'Guest access support (key handover, utilities on/off)',
+          'Priority response for urgent situations',
         ],
+        idealFor:
+          'Second-home owners and families with occasional visitors.',
       },
       {
         tierLabel: 'Tier C',
-        title: 'Full-Service Management',
+        title: 'Premium Concierge Package',
         price: {
-          amount: '€500',
+          amount: '€295',
           unit: '/month',
         },
-        audience: 'For owners who want end-to-end delegation.',
+        audience:
+          'A fully managed service for international owners seeking complete peace of mind.',
         features: [
-          'Listing, calendar, and dynamic pricing management',
-          'Maintenance coordination with vendor quality control',
-          'Monthly owner report with revenue, costs, and maintenance log',
+          'Includes everything in the Standard package, plus:',
+          'On-demand property checks',
+          'Pre-arrival home prep before your visit',
+          'Post-departure inspections after you leave the island',
+          'Utility management (water, gas, electricity)',
+          'Assistance navigating local services and bureaucracy',
+          'Detailed updates & photo reporting',
+        ],
+        idealFor:
+          'High-value properties, frequent visitors, or owners who want a hands-off, worry-free solution.',
+      },
+      {
+        tierLabel: 'Bespoke',
+        title: 'Bespoke Concierge Services From',
+        price: {
+          amount: '€35',
+          unit: '/hour',
+        },
+        audience:
+          'Flexible, on-demand support for situations that require a trusted person on the ground.',
+        features: [
+          'Examples include:',
+          'Emergency call-outs',
+          'Waiting for repairs, inspections, or deliveries',
+          'Cleaning coordination',
+          'Inventory and condition checks',
+          'Furniture or appliance deliveries',
+          'Local errands and administrative support',
+          'Renovation or setup assistance',
+          'Custom monthly retainers are available for ongoing support.',
         ],
       },
       {
         tierLabel: 'Add-ons',
-        title: 'Project-Based Add-ons',
+        title: 'Optional Add-Ons',
         price: null,
-        audience: 'For setup, transformation, and one-off asset upgrades.',
+        showQuoteLabel: false,
+        audience: 'Additional support available as needed.',
         features: [
-          'Interior styling and professional listing photography',
-          'Renovation/vendor project coordination',
-          'UX house manual plus smart lock/noise setup',
+          'Additional property visits: €30 per visit',
+          'Storm inspection (outside package): €40',
+          'Guest welcome preparation (cleaning & essentials): from €75',
+          'Annual or pre-purchase inspection report: from €150',
+          'Key handover coordination: €25',
+          'Interior styling and professional listing photography (scoped quote)',
+          'Renovation/vendor project coordination (scoped quote)',
         ],
       },
     ],

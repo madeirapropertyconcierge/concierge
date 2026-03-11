@@ -44,7 +44,7 @@ const pt = {
   services: {
     title: "Os Nossos Serviços",
     metaTitle: "Serviços de Gestão de Propriedades | Madeira Property Concierge",
-    metaDescription: "Modelo de 4 níveis: Tier A Guarda de Chaves + Home Care, Tier B Hosting Essentials, Tier C Gestão AL Full-Service e Tier D White-Glove.",
+    metaDescription: "Níveis de serviço na Madeira para proprietários no estrangeiro: Cuidados Essenciais, Cuidados Standard, Concierge Premium, apoio personalizado e add-ons opcionais.",
     hero: {
       title: "Gestão de Propriedades Que Funciona",
       subtitle: "Cada serviço é pensado para o seu imóvel e para a forma como quer geri-lo.",

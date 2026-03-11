@@ -8,6 +8,8 @@ interface Props {
   primaryCtaLabel: string;
   projectCtaLabel: string;
   contactHref: string;
+  includesLabel: string;
+  idealForLabel: string;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
   primaryCtaLabel,
   projectCtaLabel,
   contactHref,
+  includesLabel,
+  idealForLabel,
 } = Astro.props;
 ---
 
@@ -32,7 +36,12 @@ const {
     <p class="mt-2 text-sm leading-relaxed text-charcoal/66">{tier.audience}</p>
   </header>
 
-  <div class="mt-3 flex min-h-[5.8rem] items-start">
+  <div
+    class:list={[
+      'mt-3 flex items-start',
+      tier.price || tier.showQuoteLabel !== false ? 'min-h-[5.8rem]' : 'min-h-0',
+    ]}
+  >
     {tier.price ? (
       <div class="flex flex-col gap-1">
         <p class="text-3xl leading-tight text-charcoal sm:text-4xl">{tier.price.amount}</p>
@@ -40,20 +49,45 @@ const {
       </div>
     ) : (
       <div class="flex flex-col gap-1">
-        <p class="pricing-quote text-3xl text-charcoal">{customQuoteLabel}</p>
-        <p aria-hidden="true" class="invisible text-sm font-medium uppercase tracking-[0.06em]">&nbsp;</p>
+        {tier.showQuoteLabel !== false && (
+          <p class="pricing-quote text-3xl text-charcoal">{customQuoteLabel}</p>
+        )}
+        <p
+          aria-hidden="true"
+          class:list={[
+            'text-sm font-medium uppercase tracking-[0.06em]',
+            tier.showQuoteLabel !== false ? 'invisible' : 'hidden',
+          ]}
+        >
+          &nbsp;
+        </p>
       </div>
     )}
   </div>
 
-  <ul class="mt-6 grid flex-1 gap-3 text-sm text-charcoal/72">
-    {tier.features.map((feature) => (
-      <li class="flex items-start gap-2.5">
-        <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ocean-blue"></span>
-        <span>{feature}</span>
-      </li>
-    ))}
-  </ul>
+  <div
+    class:list={[
+      'flex flex-1 flex-col',
+      tier.price || tier.showQuoteLabel !== false ? 'mt-6' : 'mt-2',
+    ]}
+  >
+    <p class="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ocean-blue/85">{includesLabel}</p>
+    <ul class="mt-3 grid gap-3 text-sm text-charcoal/72">
+      {tier.features.map((feature) => (
+        <li class="flex items-start gap-2.5">
+          <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ocean-blue"></span>
+          <span>{feature}</span>
+        </li>
+      ))}
+    </ul>
+
+    {tier.idealFor && (
+      <div class="mt-6 border-t border-charcoal/10 pt-5">
+        <p class="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ocean-blue/85">{idealForLabel}</p>
+        <p class="mt-2 text-sm leading-relaxed text-charcoal/72">{tier.idealFor}</p>
+      </div>
+    )}
+  </div>
 
   <a
     href={contactHref}
