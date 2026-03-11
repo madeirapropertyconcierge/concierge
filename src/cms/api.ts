@@ -19,6 +19,76 @@ export class ApiError extends Error {
   }
 }
 
+const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+
+function firstHeaderValue(value: string | null): string | null {
+  if (!value) {
+    return null;
+  }
+
+  const normalized = value.split(',')[0]?.trim();
+  return normalized || null;
+}
+
+function collectExpectedOrigins(context: Pick<APIContext, 'request' | 'url'>): Set<string> {
+  const hosts = new Set<string>();
+  const protocols = new Set<string>();
+
+  const forwardedHost = firstHeaderValue(context.request.headers.get('x-forwarded-host'));
+  const host = firstHeaderValue(context.request.headers.get('host'));
+  const forwardedProto = firstHeaderValue(context.request.headers.get('x-forwarded-proto'));
+  const urlProtocol = context.url.protocol.replace(/:$/, '');
+
+  if (forwardedHost) {
+    hosts.add(forwardedHost);
+  }
+
+  if (host) {
+    hosts.add(host);
+  }
+
+  if (context.url.host) {
+    hosts.add(context.url.host);
+  }
+
+  if (forwardedProto) {
+    protocols.add(forwardedProto);
+  }
+
+  if (urlProtocol) {
+    protocols.add(urlProtocol);
+  }
+
+  const origins = new Set<string>();
+  for (const protocol of protocols) {
+    for (const currentHost of hosts) {
+      origins.add(`${protocol}://${currentHost}`);
+    }
+  }
+
+  if (context.url.origin) {
+    origins.add(context.url.origin);
+  }
+
+  return origins;
+}
+
+export function assertSameOrigin(context: Pick<APIContext, 'request' | 'url'>): void {
+  if (SAFE_METHODS.has(context.request.method.toUpperCase())) {
+    return;
+  }
+
+  const origin = firstHeaderValue(context.request.headers.get('origin'));
+  if (!origin) {
+    throw new ApiError(403, 'Cross-site request blocked');
+  }
+
+  const expectedOrigins = collectExpectedOrigins(context);
+  if (!expectedOrigins.has(origin)) {
+    throw new ApiError(403, 'Cross-site request blocked');
+  }
+}
+
 export function jsonResponse(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,

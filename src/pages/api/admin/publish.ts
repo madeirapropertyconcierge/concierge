@@ -3,6 +3,7 @@ import { z } from 'zod';
 import {
   ApiError,
   assertAdminSession,
+  assertSameOrigin,
   errorResponse,
   jsonResponse,
 } from '../../../cms/api';
@@ -107,6 +108,7 @@ function toJsonFile(path: string, payload: unknown): PublishFile {
 
 export const POST: APIRoute = async (context) => {
   try {
+    assertSameOrigin(context);
     assertAdminSession(context);
 
     const payload = normalizePublishRequest(

@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
-import { errorResponse, jsonResponse } from '../../../cms/api';
+import { assertSameOrigin, errorResponse, jsonResponse } from '../../../cms/api';
 import { createSessionToken, setSessionCookie, verifyPassword } from '../../../cms/auth';
 import { getAuthEnv } from '../../../cms/config';
 
@@ -58,6 +58,8 @@ function clearFailedAttempts(clientKey: string): void {
 
 export const POST: APIRoute = async ({ request, cookies }) => {
   try {
+    assertSameOrigin({ request, url: new URL(request.url) });
+
     const clientKey = getClientKey(request);
     if (isRateLimited(clientKey)) {
       return jsonResponse({ error: 'Too many attempts. Try again later.' }, 429);

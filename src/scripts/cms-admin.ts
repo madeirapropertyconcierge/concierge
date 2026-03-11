@@ -234,6 +234,23 @@ function nowIso(): string {
   return new Date().toISOString();
 }
 
+interface ApiErrorPayload {
+  error?: string;
+}
+
+async function readApiPayload<T>(response: Response): Promise<T & ApiErrorPayload> {
+  const contentType = response.headers.get('content-type') ?? '';
+
+  if (contentType.includes('application/json')) {
+    return (await response.json()) as T & ApiErrorPayload;
+  }
+
+  const text = (await response.text()).trim();
+  return {
+    ...(text ? { error: text } : {}),
+  } as T & ApiErrorPayload;
+}
+
 function showElement(element: HTMLElement | null): void {
   element?.classList.remove('cms-hidden');
 }
@@ -261,7 +278,7 @@ function normalizeTextInput(value: string): string {
 function setLocaleValue(value: LocaleText, nextValue: string): LocaleText {
   return {
     ...value,
-    [locale]: normalizeCmsText(nextValue),
+    [locale]: nextValue,
   };
 }
 
@@ -1784,7 +1801,16 @@ function applyGalleryImageToSelected(item: CmsGalleryItem): void {
 }
 
 function removeImageFromLibrary(item: CmsGalleryItem): void {
-  if (!workingState || !item.libraryItemId) {
+  if (!workingState) {
+    return;
+  }
+
+  if (!item.libraryItemId) {
+    const externalSources = item.sourceLabels.filter((label) => label !== 'Library');
+    const sourceMessage = externalSources.length > 0
+      ? externalSources.join(' • ')
+      : 'page, blog, or SEO content';
+    setStatus(`This image is not stored in the library. It is still referenced by ${sourceMessage}.`);
     return;
   }
 
@@ -1882,9 +1908,11 @@ function renderImageLibrary(): void {
 
     const deleteButton = document.createElement('button');
     deleteButton.type = 'button';
-    deleteButton.className = 'cms-btn cms-btn-danger';
-    deleteButton.textContent = 'Delete image';
-    deleteButton.disabled = !item.libraryItemId;
+    deleteButton.className = item.libraryItemId ? 'cms-btn cms-btn-danger' : 'cms-btn cms-btn-muted';
+    deleteButton.textContent = item.libraryItemId ? 'Delete from library' : "Why can't I delete this?";
+    deleteButton.title = item.libraryItemId
+      ? 'Remove this image from the library metadata'
+      : 'This image is referenced by page, blog, or SEO content instead of the library';
     deleteButton.addEventListener('click', () => {
       removeImageFromLibrary(item);
     });
@@ -2153,10 +2181,11 @@ async function fetchContent(): Promise<ContentResponse> {
   });
 
   if (!response.ok) {
-    throw new Error('Failed to load CMS content');
+    const payload = await readApiPayload<ContentResponse>(response);
+    throw new Error(payload.error ?? 'Failed to load CMS content');
   }
 
-  return (await response.json()) as ContentResponse;
+  return await readApiPayload<ContentResponse>(response);
 }
 
 async function checkSession(): Promise<boolean> {
@@ -2169,7 +2198,7 @@ async function checkSession(): Promise<boolean> {
     return false;
   }
 
-  const payload = (await response.json()) as { authenticated?: boolean };
+  const payload = await readApiPayload<{ authenticated?: boolean }>(response);
   return Boolean(payload.authenticated);
 }
 
@@ -2241,7 +2270,7 @@ async function publishChanges(): Promise<void> {
       }),
     });
 
-    const payload = (await response.json()) as { commitSha?: string; error?: string };
+    const payload = await readApiPayload<{ commitSha?: string }>(response);
 
     if (!response.ok) {
       setStatus(payload.error ?? 'Publish failed');
@@ -2264,12 +2293,11 @@ async function uploadImage(formData: FormData): Promise<void> {
       credentials: 'include',
     });
 
-    const payload = (await response.json()) as {
+    const payload = await readApiPayload<{
       ok?: boolean;
       item?: CmsMediaItem;
-      error?: string;
       commitSha?: string;
-    };
+    }>(response);
 
     if (!response.ok || !payload.item || !workingState) {
       setStatus(payload.error ?? 'Image upload failed');

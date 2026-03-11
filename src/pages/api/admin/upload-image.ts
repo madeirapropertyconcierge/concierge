@@ -4,6 +4,7 @@ import { resolve, extname } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import {
   assertAdminSession,
+  assertSameOrigin,
   errorResponse,
   jsonResponse,
 } from '../../../cms/api';
@@ -37,6 +38,7 @@ function detectExtension(fileName: string, mimeType: string): string {
 
 export const POST: APIRoute = async (context) => {
   try {
+    assertSameOrigin(context);
     assertAdminSession(context);
 
     const form = await context.request.formData();
