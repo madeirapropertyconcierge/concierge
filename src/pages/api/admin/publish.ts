@@ -18,6 +18,7 @@ import {
   PublishConflictError,
   type PublishFile,
 } from '../../../cms/github-publisher';
+import { normalizePublishRequest } from '../../../cms/content-normalization';
 import { cmsPublishRequestSchema, type CmsBlogPost } from '../../../cms/schema';
 
 function isValidCmsUrl(value: string): boolean {
@@ -108,7 +109,9 @@ export const POST: APIRoute = async (context) => {
   try {
     assertAdminSession(context);
 
-    const payload = cmsPublishRequestSchema.parse(await context.request.json());
+    const payload = normalizePublishRequest(
+      cmsPublishRequestSchema.parse(await context.request.json()),
+    );
 
     validateBlogPosts(payload.blogPosts);
 

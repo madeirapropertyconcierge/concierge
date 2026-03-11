@@ -1,4 +1,14 @@
 import { marked } from 'marked';
+import {
+  normalizeBlogPost,
+  normalizeImageField,
+  normalizeLinkField,
+  normalizeMediaItem,
+  normalizeMediaLibrary,
+  normalizePageDocument,
+  normalizeTextField,
+} from '../cms/content-normalization';
+import { normalizeCmsText } from '../cms/text-normalization';
 
 type Locale = 'en' | 'pt';
 
@@ -244,10 +254,14 @@ function localeValue(value: LocaleText): string {
   return value[locale] || value.en || '';
 }
 
+function normalizeTextInput(value: string): string {
+  return normalizeCmsText(value.trim());
+}
+
 function setLocaleValue(value: LocaleText, nextValue: string): LocaleText {
   return {
     ...value,
-    [locale]: nextValue,
+    [locale]: normalizeCmsText(nextValue),
   };
 }
 
@@ -325,16 +339,15 @@ function computeSelector(element: Element): string {
   let node: Element | null = element;
 
   while (node && node !== document.body) {
-    const parentElement = node.parentElement;
+    const currentNode: Element = node;
+    const parentElement: HTMLElement | null = currentNode.parentElement;
     if (!parentElement) {
       break;
     }
 
-    const tag = node.tagName.toLowerCase();
-    const sameTagSiblings = Array.from(parentElement.children).filter(
-      (child: Element) => child.tagName === node.tagName,
-    );
-    const index = sameTagSiblings.indexOf(node) + 1;
+    const tag = currentNode.tagName.toLowerCase();
+    const sameTagSiblings = Array.from(parentElement.children) as Element[];
+    const index = sameTagSiblings.filter((child) => child.tagName === currentNode.tagName).indexOf(currentNode) + 1;
     parts.unshift(`${tag}:nth-of-type(${index})`);
 
     if (parentElement.matches('main')) {
@@ -357,13 +370,14 @@ function upsertTextField(field: CmsTextField): void {
     return;
   }
 
+  const normalizedField = normalizeTextField(field);
   const index = workingState.page.texts.findIndex((entry) => entry.id === field.id);
   if (index >= 0) {
-    workingState.page.texts[index] = field;
+    workingState.page.texts[index] = normalizedField;
     return;
   }
 
-  workingState.page.texts.push(field);
+  workingState.page.texts.push(normalizedField);
 }
 
 function upsertLinkField(field: CmsLinkField): void {
@@ -371,13 +385,14 @@ function upsertLinkField(field: CmsLinkField): void {
     return;
   }
 
+  const normalizedField = normalizeLinkField(field);
   const index = workingState.page.links.findIndex((entry) => entry.id === field.id);
   if (index >= 0) {
-    workingState.page.links[index] = field;
+    workingState.page.links[index] = normalizedField;
     return;
   }
 
-  workingState.page.links.push(field);
+  workingState.page.links.push(normalizedField);
 }
 
 function upsertImageField(field: CmsImageField): void {
@@ -385,13 +400,14 @@ function upsertImageField(field: CmsImageField): void {
     return;
   }
 
+  const normalizedField = normalizeImageField(field);
   const index = workingState.page.images.findIndex((entry) => entry.id === field.id);
   if (index >= 0) {
-    workingState.page.images[index] = field;
+    workingState.page.images[index] = normalizedField;
     return;
   }
 
-  workingState.page.images.push(field);
+  workingState.page.images.push(normalizedField);
 }
 
 function updateModeLabel(): void {
@@ -740,8 +756,10 @@ function completeTextEdit(element: HTMLElement): void {
   const id = idForSelector('text', selector);
   const kind = MARKDOWN_BLOCK_TAGS.has(element.tagName) ? 'block' : 'inline';
   const existing = workingState.page.texts.find((field) => field.id === id);
-  const previousValue = existing ? localeValue(existing.value).trim() : (element.dataset.cmsSource ?? '').trim();
-  const nextValue = (element.textContent ?? '').trim();
+  const previousValue = existing
+    ? localeValue(existing.value).trim()
+    : normalizeTextInput(element.dataset.cmsSource ?? '');
+  const nextValue = normalizeTextInput(element.textContent ?? '');
 
   if (!existing && nextValue === previousValue) {
     element.innerHTML = renderMarkdown(nextValue, kind);
@@ -777,7 +795,7 @@ function beginTextEdit(element: HTMLElement): void {
   }
 
   activeEditableElement = element;
-  const source = element.dataset.cmsSource ?? element.textContent ?? '';
+  const source = normalizeCmsText(element.dataset.cmsSource ?? element.textContent ?? '');
   element.textContent = source;
   element.setAttribute('contenteditable', 'true');
   element.setAttribute('data-cms-editing', 'true');
@@ -815,7 +833,7 @@ function editLink(element: HTMLElement): void {
   const existing = workingState.page.links.find((field) => field.id === id);
   const isSimpleLinkLabelTarget = element.childElementCount === 0;
 
-  const currentLabel = existing ? localeValue(existing.label) : element.textContent?.trim() ?? '';
+  const currentLabel = existing ? localeValue(existing.label) : normalizeTextInput(element.textContent ?? '');
   const currentHref = existing?.href[locale]
     ?? (element instanceof HTMLAnchorElement
       ? element.getAttribute('href') ?? ''
@@ -832,11 +850,11 @@ function editLink(element: HTMLElement): void {
     if (promptedLabel === null) {
       return;
     }
-    label = promptedLabel.trim();
+    label = normalizeTextInput(promptedLabel);
   }
 
   const nextHref = href.trim();
-  const nextLabel = label.trim();
+  const nextLabel = normalizeTextInput(label);
   const nextLabelValue = isSimpleLinkLabelTarget
     ? (existing ? setLocaleValue(existing.label, nextLabel) : { en: '', pt: '', [locale]: nextLabel })
     : (existing?.label ?? { en: '', pt: '' });
@@ -882,7 +900,7 @@ function ensureImageField(target: SelectedImageTarget): CmsImageField | null {
     return null;
   }
 
-  const nextField: CmsImageField = {
+  const nextField = normalizeImageField({
     id: target.id,
     selector: target.selector,
     src: element.currentSrc || element.src,
@@ -890,7 +908,7 @@ function ensureImageField(target: SelectedImageTarget): CmsImageField | null {
     attributionName: '',
     attributionUrl: '',
     licenseUrl: '',
-  };
+  });
 
   upsertImageField(nextField);
   return nextField;
@@ -918,6 +936,10 @@ function getImageEditorField(name: string): string {
   }
 
   return '';
+}
+
+function getImageEditorTextField(name: string): string {
+  return normalizeCmsText(getImageEditorField(name));
 }
 
 function setImageEditorDisabled(disabled: boolean): void {
@@ -998,25 +1020,25 @@ function applyImageFormChanges(): void {
     return;
   }
 
-  const nextCaptionEn = getImageEditorField('captionEn');
-  const nextCaptionPt = getImageEditorField('captionPt');
+  const nextCaptionEn = getImageEditorTextField('captionEn');
+  const nextCaptionPt = getImageEditorTextField('captionPt');
   const nextCaption = nextCaptionEn || nextCaptionPt
     ? { en: nextCaptionEn, pt: nextCaptionPt }
     : undefined;
 
-  const nextField: CmsImageField = {
+  const nextField = normalizeImageField({
     id: selectedImageTarget.id,
     selector: selectedImageTarget.selector,
     src: getImageEditorField('src'),
     alt: {
-      en: getImageEditorField('altEn'),
-      pt: getImageEditorField('altPt'),
+      en: getImageEditorTextField('altEn'),
+      pt: getImageEditorTextField('altPt'),
     },
-    attributionName: getImageEditorField('attributionName'),
+    attributionName: getImageEditorTextField('attributionName'),
     attributionUrl: getImageEditorField('attributionUrl'),
     licenseUrl: getImageEditorField('licenseUrl'),
     caption: nextCaption,
-  };
+  });
 
   const changed = JSON.stringify(existing) !== JSON.stringify(nextField);
   if (!changed) {
@@ -1102,6 +1124,10 @@ function getSeoField(name: string): string {
   return '';
 }
 
+function getSeoTextField(name: string): string {
+  return normalizeCmsText(getSeoField(name));
+}
+
 function hydrateSeoForm(): void {
   if (!seoForm || !workingState) {
     return;
@@ -1149,18 +1175,18 @@ function applySeoFormChanges(): void {
 
   const nextSeo: Record<Locale, CmsSeoLocale> = {
     en: {
-      title: getSeoField('enTitle'),
-      description: getSeoField('enDescription'),
-      ogTitle: getSeoField('enOgTitle'),
-      ogDescription: getSeoField('enOgDescription'),
+      title: getSeoTextField('enTitle'),
+      description: getSeoTextField('enDescription'),
+      ogTitle: getSeoTextField('enOgTitle'),
+      ogDescription: getSeoTextField('enOgDescription'),
       ogImage: getSeoField('enOgImage'),
       canonical: getSeoField('enCanonical'),
     },
     pt: {
-      title: getSeoField('ptTitle'),
-      description: getSeoField('ptDescription'),
-      ogTitle: getSeoField('ptOgTitle'),
-      ogDescription: getSeoField('ptOgDescription'),
+      title: getSeoTextField('ptTitle'),
+      description: getSeoTextField('ptDescription'),
+      ogTitle: getSeoTextField('ptOgTitle'),
+      ogDescription: getSeoTextField('ptOgDescription'),
       ogImage: getSeoField('ptOgImage'),
       canonical: getSeoField('ptCanonical'),
     },
@@ -1216,6 +1242,10 @@ function getLibraryEditorField(name: string): string {
   }
 
   return '';
+}
+
+function getLibraryEditorTextField(name: string): string {
+  return normalizeCmsText(getLibraryEditorField(name));
 }
 
 function hasForcedLogoutMarker(): boolean {
@@ -1286,14 +1316,14 @@ function applyLibraryMetadataChanges(): void {
   }
 
   const currentItem = workingState.mediaLibrary.items[index];
-  const nextCaptionEn = getLibraryEditorField('captionEn');
-  const nextCaptionPt = getLibraryEditorField('captionPt');
+  const nextCaptionEn = getLibraryEditorTextField('captionEn');
+  const nextCaptionPt = getLibraryEditorTextField('captionPt');
 
-  const nextItem: CmsMediaItem = {
+  const nextItem = normalizeMediaItem({
     ...currentItem,
     alt: {
-      en: getLibraryEditorField('altEn'),
-      pt: getLibraryEditorField('altPt'),
+      en: getLibraryEditorTextField('altEn'),
+      pt: getLibraryEditorTextField('altPt'),
     },
     caption: nextCaptionEn || nextCaptionPt
       ? {
@@ -1301,10 +1331,10 @@ function applyLibraryMetadataChanges(): void {
           pt: nextCaptionPt,
         }
       : undefined,
-    attributionName: getLibraryEditorField('attributionName'),
+    attributionName: getLibraryEditorTextField('attributionName'),
     attributionUrl: getLibraryEditorField('attributionUrl'),
     licenseUrl: getLibraryEditorField('licenseUrl'),
-  };
+  });
 
   if (JSON.stringify(currentItem) === JSON.stringify(nextItem)) {
     setStatus('Library metadata unchanged');
@@ -1906,6 +1936,10 @@ function getBlogField(name: string): string {
   return '';
 }
 
+function getBlogTextField(name: string): string {
+  return normalizeCmsText(getBlogField(name));
+}
+
 function findSelectedBlogPost(): CmsBlogPost | null {
   if (!workingState || !blogSelect || !blogSelect.value) {
     return null;
@@ -1983,13 +2017,14 @@ function upsertBlogPost(post: CmsBlogPost): void {
     return;
   }
 
+  const normalizedPost = normalizeBlogPost(post);
   const index = workingState.blogPosts.findIndex((entry) => entry.id === post.id);
   if (index >= 0) {
-    workingState.blogPosts[index] = post;
+    workingState.blogPosts[index] = normalizedPost;
     return;
   }
 
-  workingState.blogPosts.unshift(post);
+  workingState.blogPosts.unshift(normalizedPost);
 }
 
 function createEmptyBlogPost(): CmsBlogPost {
@@ -2040,7 +2075,7 @@ function applyBlogFormChanges(): void {
     ? readingMinutesParsed
     : selected.readingMinutes;
 
-  const nextPost: CmsBlogPost = {
+  const nextPost = normalizeBlogPost({
     ...selected,
     slug: getBlogField('slug'),
     status: (getBlogField('status') as 'draft' | 'published') || 'draft',
@@ -2050,41 +2085,41 @@ function applyBlogFormChanges(): void {
     updatedAt: nowIso(),
     tags: getBlogField('tags')
       .split(',')
-      .map((tag) => tag.trim())
+      .map((tag) => normalizeCmsText(tag).trim())
       .filter(Boolean),
     locales: {
       en: {
-        title: getBlogField('titleEn'),
-        excerpt: getBlogField('excerptEn'),
-        body: getBlogField('bodyEn'),
-        coverAlt: getBlogField('coverAltEn'),
+        title: getBlogTextField('titleEn'),
+        excerpt: getBlogTextField('excerptEn'),
+        body: getBlogTextField('bodyEn'),
+        coverAlt: getBlogTextField('coverAltEn'),
       },
       pt: {
-        title: getBlogField('titlePt'),
-        excerpt: getBlogField('excerptPt'),
-        body: getBlogField('bodyPt'),
-        coverAlt: getBlogField('coverAltPt'),
+        title: getBlogTextField('titlePt'),
+        excerpt: getBlogTextField('excerptPt'),
+        body: getBlogTextField('bodyPt'),
+        coverAlt: getBlogTextField('coverAltPt'),
       },
     },
     seoByLocale: {
       en: {
-        title: getBlogField('seoTitleEn'),
-        description: getBlogField('seoDescEn'),
-        ogTitle: getBlogField('ogTitleEn'),
-        ogDescription: getBlogField('ogDescEn'),
+        title: getBlogTextField('seoTitleEn'),
+        description: getBlogTextField('seoDescEn'),
+        ogTitle: getBlogTextField('ogTitleEn'),
+        ogDescription: getBlogTextField('ogDescEn'),
         ogImage: getBlogField('ogImageEn'),
         canonical: getBlogField('canonicalEn'),
       },
       pt: {
-        title: getBlogField('seoTitlePt'),
-        description: getBlogField('seoDescPt'),
-        ogTitle: getBlogField('ogTitlePt'),
-        ogDescription: getBlogField('ogDescPt'),
+        title: getBlogTextField('seoTitlePt'),
+        description: getBlogTextField('seoDescPt'),
+        ogTitle: getBlogTextField('ogTitlePt'),
+        ogDescription: getBlogTextField('ogDescPt'),
         ogImage: getBlogField('ogImagePt'),
         canonical: getBlogField('canonicalPt'),
       },
     },
-  };
+  });
 
   if (JSON.stringify(selected) === JSON.stringify(nextPost)) {
     setStatus('Post unchanged');
@@ -2140,9 +2175,9 @@ async function checkSession(): Promise<boolean> {
 
 function hydrateStateFromResponse(response: ContentResponse): void {
   const baseState: WorkingState = {
-    page: response.page,
-    mediaLibrary: response.mediaLibrary,
-    blogPosts: response.blogPosts,
+    page: normalizePageDocument(response.page),
+    mediaLibrary: normalizeMediaLibrary(response.mediaLibrary),
+    blogPosts: response.blogPosts.map(normalizeBlogPost),
     baseSha: response.branchSha,
   };
 

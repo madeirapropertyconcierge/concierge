@@ -46,6 +46,10 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
 
   const headers = new Headers(response.headers);
   headers.delete('content-length');
+  const transformedContentType = headers.get('content-type');
+  if (transformedContentType && !/charset=/i.test(transformedContentType)) {
+    headers.set('content-type', `${transformedContentType}; charset=utf-8`);
+  }
 
   return new Response(transformedHtml, {
     status: response.status,

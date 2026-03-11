@@ -1,3 +1,5 @@
+export {};
+
 const result = await Bun.build({
   entrypoints: ['./src/scripts/cms-admin.ts'],
   outdir: './public',
@@ -5,7 +7,6 @@ const result = await Bun.build({
   target: 'browser',
   format: 'esm',
   minify: false,
-  write: true,
 });
 
 if (!result.success) {
