@@ -1,35 +1,4 @@
 {
-  "updatedAt": "2026-03-13T15:04:10.278Z",
-  "items": [
-    {
-      "id": "787c08f2-edfd-4c56-8a60-eebfe448d2d1",
-      "src": "/images/library/1773414250234-img-1407.jpg",
-      "alt": {
-        "en": "",
-        "pt": ""
-      },
-      "attributionName": "",
-      "attributionUrl": "",
-      "licenseUrl": "",
-      "caption": {
-        "en": "",
-        "pt": ""
-      }
-    },
-    {
-      "id": "726fd9cf-b1d5-4715-b87d-120092bf30ea",
-      "src": "/images/library/1773414152581-img-1407.jpg",
-      "alt": {
-        "en": "",
-        "pt": ""
-      },
-      "attributionName": "",
-      "attributionUrl": "",
-      "licenseUrl": "",
-      "caption": {
-        "en": "",
-        "pt": ""
-      }
-    }
-  ]
+  "updatedAt": "2026-03-13T15:08:07.152Z",
+  "items": []
 }
