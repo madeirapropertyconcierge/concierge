@@ -295,6 +295,7 @@
   }
 
   .service-tile {
+    display: block;
     position: relative;
     overflow: hidden;
     min-height: 18rem;
@@ -313,6 +314,8 @@
   }
 
   .service-tile img {
+    position: absolute;
+    inset: 0;
     transition: transform 500ms ease;
   }
 
