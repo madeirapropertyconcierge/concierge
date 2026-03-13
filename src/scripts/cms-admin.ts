@@ -1692,7 +1692,6 @@ function addGalleryItemToLibrary(item: CmsGalleryItem): CmsMediaItem | null {
 
 interface LibraryCleanupResult {
   duplicatesRemoved: number;
-  unusedRemoved: number;
 }
 
 function collectActiveImageKeys(): Set<string> {
@@ -1748,21 +1747,17 @@ function pruneLibraryToActiveReferences(): LibraryCleanupResult {
   if (!workingState) {
     return {
       duplicatesRemoved: 0,
-      unusedRemoved: 0,
     };
   }
 
-  const activeKeys = collectActiveImageKeys();
   const seen = new Set<string>();
   const nextItems: CmsMediaItem[] = [];
   let duplicatesRemoved = 0;
-  let unusedRemoved = 0;
 
   for (const item of workingState.mediaLibrary.items) {
     const dedupKey = imageDedupKey(item.src);
     const normalizedSrc = normalizeImageSrc(item.src);
-    if (!dedupKey || !normalizedSrc || !activeKeys.has(dedupKey)) {
-      unusedRemoved += 1;
+    if (!dedupKey || !normalizedSrc) {
       continue;
     }
 
@@ -1778,7 +1773,7 @@ function pruneLibraryToActiveReferences(): LibraryCleanupResult {
     });
   }
 
-  if (duplicatesRemoved > 0 || unusedRemoved > 0) {
+  if (duplicatesRemoved > 0) {
     const nextIds = new Set(nextItems.map((item) => item.id));
     if (selectedLibraryItemId && !nextIds.has(selectedLibraryItemId)) {
       selectedLibraryItemId = null;
@@ -1789,7 +1784,6 @@ function pruneLibraryToActiveReferences(): LibraryCleanupResult {
 
   return {
     duplicatesRemoved,
-    unusedRemoved,
   };
 }
 
@@ -2764,3 +2758,4 @@ async function boot(): Promise<void> {
 }
 
 void boot();
+
