@@ -61,6 +61,58 @@
       "attributionName": "",
       "attributionUrl": "",
       "licenseUrl": ""
+    },
+    {
+      "id": "image:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(2) > img:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(2) > img:nth-of-type(1)",
+      "src": "/images/madeira/sailboat-cliffs.jpg",
+      "alt": {
+        "en": "Contact | Madeira Property Concierge",
+        "pt": "Contact | Madeira Property Concierge"
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
+    },
+    {
+      "id": "image:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(3) > img:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(3) > img:nth-of-type(1)",
+      "src": "/images/madeira/funchal-bay.jpg",
+      "alt": {
+        "en": "Madeira Property Concierge | Boutique Hosting and Property Care",
+        "pt": "Madeira Property Concierge | Boutique Hosting and Property Care"
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
+    },
+    {
+      "id": "image:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(1) > img:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(1) > img:nth-of-type(1)",
+      "src": "/images/madeira/coastal-viewpoint.jpg",
+      "alt": {
+        "en": "Blog | Madeira Property Concierge",
+        "pt": "Blog | Madeira Property Concierge"
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
+    },
+    {
+      "id": "image:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(2) > img:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(2) > img:nth-of-type(1)",
+      "src": "/images/library/1773415852020-img-0202.jpg",
+      "alt": {
+        "en": "",
+        "pt": ""
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": "",
+      "caption": {
+        "en": "",
+        "pt": ""
+      }
     }
   ]
 }
