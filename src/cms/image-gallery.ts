@@ -1,18 +1,34 @@
-import {
-  listBlogPosts,
-  listPageDocuments,
-  loadMediaLibrary,
-} from './content-loader';
-import type { CmsMediaItem } from './schema';
+import { listBlogPosts, listPageDocuments } from './content-loader';
+import { listPublicImagePaths } from './public-images';
 
 type LocaleText = { en: string; pt: string };
 
-export type GallerySource = 'library' | 'page' | 'blog' | 'seo' | 'visible';
+export type GallerySource = 'public' | 'page' | 'blog' | 'seo';
 
-export interface CmsGalleryImage extends CmsMediaItem {
+export interface CmsGalleryImage {
+  id: string;
+  src: string;
+  alt: LocaleText;
+  attributionName: string;
+  attributionUrl: string;
+  licenseUrl: string;
+  caption?: LocaleText;
   source: GallerySource;
   sourceLabels: string[];
-  libraryItemId?: string;
+}
+
+const GALLERY_SOURCE_PRIORITY: Record<GallerySource, number> = {
+  public: 0,
+  page: 1,
+  blog: 2,
+  seo: 3,
+};
+
+function emptyLocaleText(): LocaleText {
+  return {
+    en: '',
+    pt: '',
+  };
 }
 
 function normalizeImageSrc(src: string): string {
@@ -84,18 +100,7 @@ function mergeCaption(base: LocaleText | undefined, incoming: LocaleText | undef
   return mergeLocaleText(base, incoming);
 }
 
-const GALLERY_SOURCE_PRIORITY: Record<GallerySource, number> = {
-  library: 0,
-  page: 1,
-  blog: 2,
-  seo: 3,
-  visible: 4,
-};
-
-function addGalleryCandidate(
-  map: Map<string, CmsGalleryImage>,
-  candidate: CmsGalleryImage,
-): void {
+function addGalleryCandidate(map: Map<string, CmsGalleryImage>, candidate: CmsGalleryImage): void {
   const key = imageDedupKey(candidate.src);
   const normalizedSrc = normalizeImageSrc(candidate.src);
   if (!key || !normalizedSrc) {
@@ -116,18 +121,6 @@ function addGalleryCandidate(
 
   existing.sourceLabels = Array.from(new Set([...existing.sourceLabels, ...nextCandidate.sourceLabels]));
 
-  if (nextCandidate.libraryItemId) {
-    existing.libraryItemId = nextCandidate.libraryItemId;
-    existing.source = 'library';
-    existing.src = nextCandidate.src;
-    existing.alt = nextCandidate.alt;
-    existing.caption = nextCandidate.caption;
-    existing.attributionName = nextCandidate.attributionName;
-    existing.attributionUrl = nextCandidate.attributionUrl;
-    existing.licenseUrl = nextCandidate.licenseUrl;
-    return;
-  }
-
   if (GALLERY_SOURCE_PRIORITY[nextCandidate.source] < GALLERY_SOURCE_PRIORITY[existing.source]) {
     existing.source = nextCandidate.source;
     existing.src = nextCandidate.src;
@@ -141,20 +134,24 @@ function addGalleryCandidate(
 }
 
 export async function collectSiteGalleryImages(): Promise<CmsGalleryImage[]> {
-  const [mediaLibrary, pages, blogPosts] = await Promise.all([
-    loadMediaLibrary(),
+  const [publicImages, pages, blogPosts] = await Promise.all([
+    listPublicImagePaths(),
     listPageDocuments(),
     listBlogPosts(),
   ]);
 
   const map = new Map<string, CmsGalleryImage>();
 
-  for (const item of mediaLibrary.items) {
+  for (const src of publicImages) {
     addGalleryCandidate(map, {
-      ...item,
-      source: 'library',
-      sourceLabels: ['Library'],
-      libraryItemId: item.id,
+      id: `public:${src}`,
+      src,
+      alt: emptyLocaleText(),
+      attributionName: '',
+      attributionUrl: '',
+      licenseUrl: '',
+      source: 'public',
+      sourceLabels: ['Public folder'],
     });
   }
 
@@ -228,5 +225,12 @@ export async function collectSiteGalleryImages(): Promise<CmsGalleryImage[]> {
     }
   }
 
-  return Array.from(map.values()).sort((a, b) => a.src.localeCompare(b.src));
+  return Array.from(map.values()).sort((a, b) => {
+    const rankDiff = GALLERY_SOURCE_PRIORITY[a.source] - GALLERY_SOURCE_PRIORITY[b.source];
+    if (rankDiff !== 0) {
+      return rankDiff;
+    }
+
+    return a.src.localeCompare(b.src);
+  });
 }

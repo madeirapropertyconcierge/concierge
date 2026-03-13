@@ -8,13 +8,32 @@
     Click an image while edit mode is enabled to edit it here.
   </p>
 
+  <form id="cms-image-replace-upload-form" class="cms-form cms-section-card" data-admin-allow>
+    <h4 class="cms-title-small" data-admin-allow>Replace Image</h4>
+    <p class="cms-subtitle" data-admin-allow>
+      Fastest path: upload a new file here or choose an existing one from the gallery.
+    </p>
+
+    <label class="cms-field" data-admin-allow>
+      <span data-admin-allow>New file</span>
+      <input type="file" name="file" accept="image/*" required data-admin-allow />
+    </label>
+
+    <div class="cms-row cms-wrap" data-admin-allow>
+      <button id="cms-image-open-library" class="cms-btn cms-btn-muted" type="button" data-admin-allow>
+        Choose from gallery
+      </button>
+      <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Upload and replace</button>
+    </div>
+  </form>
+
   <form id="cms-image-form" class="cms-form" data-admin-allow>
     <div class="cms-image-preview" data-admin-allow>
       <img id="cms-image-preview" alt="Selected image preview" data-admin-allow />
     </div>
 
     <label class="cms-field" data-admin-allow>
-      <span data-admin-allow>Image URL</span>
+      <span data-admin-allow>Image path or URL</span>
       <input name="src" type="text" data-admin-allow />
     </label>
 
@@ -56,11 +75,6 @@
       <input name="licenseUrl" type="text" data-admin-allow />
     </label>
 
-    <div class="cms-row cms-wrap" data-admin-allow>
-      <button id="cms-image-open-library" class="cms-btn cms-btn-muted" type="button" data-admin-allow>
-        Open image library
-      </button>
-      <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Apply image changes</button>
-    </div>
+    <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Save image details</button>
   </form>
 </div>

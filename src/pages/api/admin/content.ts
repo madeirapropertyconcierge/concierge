@@ -3,7 +3,6 @@ import { errorResponse, jsonResponse } from '../../../cms/api';
 import { getPageIdFromPath, normalizePageId } from '../../../cms/page-id';
 import {
   listBlogPosts,
-  loadMediaLibrary,
   loadPageDocument,
 } from '../../../cms/content-loader';
 import { collectSiteGalleryImages } from '../../../cms/image-gallery';
@@ -41,9 +40,8 @@ function isAuthenticated(token: string | null): boolean {
 export const GET: APIRoute = async ({ url, cookies }) => {
   try {
     const pageId = resolvePageId(url);
-    const [page, mediaLibrary, allBlogPosts] = await Promise.all([
+    const [page, allBlogPosts] = await Promise.all([
       loadPageDocument(pageId),
-      loadMediaLibrary(),
       listBlogPosts(),
     ]);
 
@@ -64,7 +62,6 @@ export const GET: APIRoute = async ({ url, cookies }) => {
 
     return jsonResponse({
       page,
-      mediaLibrary,
       blogPosts,
       branchSha,
       galleryItems,

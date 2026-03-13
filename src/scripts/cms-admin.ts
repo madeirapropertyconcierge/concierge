@@ -3,8 +3,6 @@ import {
   normalizeBlogPost,
   normalizeImageField,
   normalizeLinkField,
-  normalizeMediaItem,
-  normalizeMediaLibrary,
   normalizePageDocument,
   normalizeTextField,
 } from '../cms/content-normalization';
@@ -57,21 +55,6 @@ interface CmsPageDocument {
   images: CmsImageField[];
 }
 
-interface CmsMediaItem {
-  id: string;
-  src: string;
-  alt: LocaleText;
-  attributionName: string;
-  attributionUrl: string;
-  licenseUrl: string;
-  caption?: LocaleText;
-}
-
-interface CmsMediaLibrary {
-  updatedAt: string;
-  items: CmsMediaItem[];
-}
-
 interface CmsBlogLocale {
   title: string;
   excerpt: string;
@@ -103,7 +86,6 @@ interface CmsBlogPost {
 
 interface ContentResponse {
   page: CmsPageDocument;
-  mediaLibrary: CmsMediaLibrary;
   blogPosts: CmsBlogPost[];
   branchSha: string | null;
   galleryItems?: CmsGalleryItem[];
@@ -112,7 +94,6 @@ interface ContentResponse {
 
 interface WorkingState {
   page: CmsPageDocument;
-  mediaLibrary: CmsMediaLibrary;
   blogPosts: CmsBlogPost[];
   baseSha: string | null;
 }
@@ -122,12 +103,18 @@ interface SelectedImageTarget {
   id: string;
 }
 
-type GallerySource = 'library' | 'page' | 'blog' | 'seo' | 'visible';
+type GallerySource = 'public' | 'page' | 'blog' | 'seo';
 
-interface CmsGalleryItem extends CmsMediaItem {
+interface CmsGalleryItem {
+  id: string;
+  src: string;
+  alt: LocaleText;
+  attributionName: string;
+  attributionUrl: string;
+  licenseUrl: string;
+  caption?: LocaleText;
   source: GallerySource;
   sourceLabels: string[];
-  libraryItemId?: string;
 }
 
 const root = document.querySelector<HTMLDivElement>('#cms-admin-root');
@@ -170,6 +157,7 @@ const imageEditorClose = document.querySelector<HTMLButtonElement>('#cms-image-e
 const imageEditorOpenLibraryButton = document.querySelector<HTMLButtonElement>('#cms-image-open-library');
 const imageEditorSelected = document.querySelector<HTMLElement>('#cms-image-selected');
 const imageEditorPreview = document.querySelector<HTMLImageElement>('#cms-image-preview');
+const imageReplaceUploadForm = document.querySelector<HTMLFormElement>('#cms-image-replace-upload-form');
 const imageEditorForm = document.querySelector<HTMLFormElement>('#cms-image-form');
 
 const imageLibraryPanel = document.querySelector<HTMLElement>('#cms-image-library');
@@ -178,9 +166,6 @@ const imageLibraryList = document.querySelector<HTMLElement>('#cms-image-library
 const imageLibraryCount = document.querySelector<HTMLElement>('#cms-image-library-count');
 const imageLibrarySearch = document.querySelector<HTMLInputElement>('#cms-image-search');
 const imageUploadForm = document.querySelector<HTMLFormElement>('#cms-image-upload-form');
-const libraryEditor = document.querySelector<HTMLElement>('#cms-library-editor');
-const libraryEditorSource = document.querySelector<HTMLElement>('#cms-library-editor-source');
-const libraryEditorForm = document.querySelector<HTMLFormElement>('#cms-library-editor-form');
 
 const blogManagerPanel = document.querySelector<HTMLElement>('#cms-blog-manager');
 const blogManagerClose = document.querySelector<HTMLButtonElement>('#cms-blog-manager-close');
@@ -202,7 +187,6 @@ let publishedState: WorkingState | null = null;
 let workingState: WorkingState | null = null;
 let globalGalleryItems: CmsGalleryItem[] = [];
 let selectedImageTarget: SelectedImageTarget | null = null;
-let selectedLibraryItemId: string | null = null;
 let activeEditableElement: HTMLElement | null = null;
 let bannerResizeObserver: ResizeObserver | null = null;
 const pendingAdminImagePreviewUrls = new Map<string, string>();
@@ -242,16 +226,6 @@ function setPendingAdminImagePreview(src: string, file: File): void {
   }
 
   pendingAdminImagePreviewUrls.set(src, URL.createObjectURL(file));
-}
-
-function clearPendingAdminImagePreview(src: string): void {
-  const existing = pendingAdminImagePreviewUrls.get(src);
-  if (!existing) {
-    return;
-  }
-
-  URL.revokeObjectURL(existing);
-  pendingAdminImagePreviewUrls.delete(src);
 }
 
 function clearAllPendingAdminImagePreviews(): void {
@@ -992,13 +966,18 @@ function getImageEditorTextField(name: string): string {
   return normalizeCmsText(getImageEditorField(name));
 }
 
-function setImageEditorDisabled(disabled: boolean): void {
-  if (!imageEditorForm) {
+function setFormDisabled(form: HTMLFormElement | null, disabled: boolean): void {
+  if (!form) {
     return;
   }
 
-  imageEditorForm.querySelectorAll('input,textarea,button[type="submit"]').forEach((node) => {
-    if (node instanceof HTMLInputElement || node instanceof HTMLTextAreaElement || node instanceof HTMLButtonElement) {
+  form.querySelectorAll('input,textarea,select,button').forEach((node) => {
+    if (
+      node instanceof HTMLInputElement ||
+      node instanceof HTMLTextAreaElement ||
+      node instanceof HTMLSelectElement ||
+      node instanceof HTMLButtonElement
+    ) {
       node.disabled = disabled;
     }
   });
@@ -1011,7 +990,9 @@ function hydrateImageEditorForm(): void {
 
   if (!workingState || !selectedImageTarget) {
     imageEditorSelected && (imageEditorSelected.textContent = 'Click an image while edit mode is enabled to edit it here.');
-    setImageEditorDisabled(true);
+    setFormDisabled(imageReplaceUploadForm, true);
+    setFormDisabled(imageEditorForm, true);
+    imageReplaceUploadForm?.reset();
     imageEditorForm.reset();
     if (imageEditorPreview) {
       imageEditorPreview.removeAttribute('src');
@@ -1025,7 +1006,8 @@ function hydrateImageEditorForm(): void {
     return;
   }
 
-  setImageEditorDisabled(false);
+  setFormDisabled(imageReplaceUploadForm, false);
+  setFormDisabled(imageEditorForm, false);
 
   imageEditorSelected && (imageEditorSelected.textContent = `Selected: ${field.selector}`);
   setImageEditorField('src', field.src);
@@ -1115,7 +1097,7 @@ function selectImageForEditing(element: HTMLImageElement): void {
 
   ensureImageField(selectedImageTarget);
   toggleImageEditor(true);
-  setStatus('Image selected. Update details or choose one from the image library.');
+  setStatus('Image selected. Upload a replacement here or choose one from the image gallery.');
 }
 
 function findContextualImageCandidate(target: Element): HTMLImageElement | null {
@@ -1270,34 +1252,6 @@ function fillSeoCanonicalFromCurrentPath(): void {
   setStatus('Canonical fields filled where empty');
 }
 
-function setLibraryEditorField(name: string, value: string): void {
-  if (!libraryEditorForm) {
-    return;
-  }
-
-  const field = libraryEditorForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
-    field.value = value;
-  }
-}
-
-function getLibraryEditorField(name: string): string {
-  if (!libraryEditorForm) {
-    return '';
-  }
-
-  const field = libraryEditorForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
-    return field.value.trim();
-  }
-
-  return '';
-}
-
-function getLibraryEditorTextField(name: string): string {
-  return normalizeCmsText(getLibraryEditorField(name));
-}
-
 function hasForcedLogoutMarker(): boolean {
   try {
     return window.sessionStorage.getItem(LOGOUT_MARKER_STORAGE_KEY) === '1';
@@ -1320,81 +1274,6 @@ function clearForcedLogoutMarker(): void {
   } catch {
     // Ignore storage failures in privacy-restricted contexts.
   }
-}
-
-function findSelectedLibraryItem(): CmsMediaItem | null {
-  if (!workingState || !selectedLibraryItemId) {
-    return null;
-  }
-
-  return workingState.mediaLibrary.items.find((item) => item.id === selectedLibraryItemId) ?? null;
-}
-
-function hydrateLibraryEditor(): void {
-  if (!libraryEditor || !libraryEditorForm) {
-    return;
-  }
-
-  const item = findSelectedLibraryItem();
-  if (!item) {
-    hideElement(libraryEditor);
-    return;
-  }
-
-  showElement(libraryEditor);
-  if (libraryEditorSource) {
-    libraryEditorSource.textContent = item.src;
-  }
-
-  setLibraryEditorField('altEn', item.alt.en);
-  setLibraryEditorField('altPt', item.alt.pt);
-  setLibraryEditorField('captionEn', item.caption?.en ?? '');
-  setLibraryEditorField('captionPt', item.caption?.pt ?? '');
-  setLibraryEditorField('attributionName', item.attributionName);
-  setLibraryEditorField('attributionUrl', item.attributionUrl);
-  setLibraryEditorField('licenseUrl', item.licenseUrl);
-}
-
-function applyLibraryMetadataChanges(): void {
-  if (!workingState || !selectedLibraryItemId) {
-    return;
-  }
-
-  const index = workingState.mediaLibrary.items.findIndex((item) => item.id === selectedLibraryItemId);
-  if (index < 0) {
-    return;
-  }
-
-  const currentItem = workingState.mediaLibrary.items[index];
-  const nextCaptionEn = getLibraryEditorTextField('captionEn');
-  const nextCaptionPt = getLibraryEditorTextField('captionPt');
-
-  const nextItem = normalizeMediaItem({
-    ...currentItem,
-    alt: {
-      en: getLibraryEditorTextField('altEn'),
-      pt: getLibraryEditorTextField('altPt'),
-    },
-    caption: nextCaptionEn || nextCaptionPt
-      ? {
-          en: nextCaptionEn,
-          pt: nextCaptionPt,
-        }
-      : undefined,
-    attributionName: getLibraryEditorTextField('attributionName'),
-    attributionUrl: getLibraryEditorField('attributionUrl'),
-    licenseUrl: getLibraryEditorField('licenseUrl'),
-  });
-
-  if (JSON.stringify(currentItem) === JSON.stringify(nextItem)) {
-    setStatus('Library metadata unchanged');
-    return;
-  }
-
-  workingState.mediaLibrary.items[index] = nextItem;
-  workingState.mediaLibrary.updatedAt = nowIso();
-  renderImageLibrary();
-  markDirty('Library metadata updated');
 }
 
 function normalizeImageSrc(src: string): string {
@@ -1461,11 +1340,10 @@ function mergeCaption(base: LocaleText | undefined, incoming: LocaleText | undef
 }
 
 const GALLERY_SOURCE_PRIORITY: Record<GallerySource, number> = {
-  library: 0,
+  public: 0,
   page: 1,
   blog: 2,
   seo: 3,
-  visible: 4,
 };
 
 function addGalleryCandidate(
@@ -1492,18 +1370,6 @@ function addGalleryCandidate(
 
   existing.sourceLabels = Array.from(new Set([...existing.sourceLabels, ...nextCandidate.sourceLabels]));
 
-  if (nextCandidate.libraryItemId) {
-    existing.libraryItemId = nextCandidate.libraryItemId;
-    existing.source = 'library';
-    existing.src = nextCandidate.src;
-    existing.alt = deepClone(nextCandidate.alt);
-    existing.caption = nextCandidate.caption ? deepClone(nextCandidate.caption) : undefined;
-    existing.attributionName = nextCandidate.attributionName;
-    existing.attributionUrl = nextCandidate.attributionUrl;
-    existing.licenseUrl = nextCandidate.licenseUrl;
-    return;
-  }
-
   if (GALLERY_SOURCE_PRIORITY[nextCandidate.source] < GALLERY_SOURCE_PRIORITY[existing.source]) {
     existing.source = nextCandidate.source;
     existing.src = nextCandidate.src;
@@ -1524,15 +1390,6 @@ function collectGalleryItems(): CmsGalleryItem[] {
   }
 
   if (workingState) {
-    for (const item of workingState.mediaLibrary.items) {
-      addGalleryCandidate(map, {
-        ...deepClone(item),
-        source: 'library',
-        sourceLabels: ['Library'],
-        libraryItemId: item.id,
-      });
-    }
-
     for (const image of workingState.page.images) {
       addGalleryCandidate(map, {
         id: `page:${image.id}`,
@@ -1589,32 +1446,6 @@ function collectGalleryItems(): CmsGalleryItem[] {
     }
   }
 
-  const visibleImages = document.querySelectorAll<HTMLImageElement>('img');
-  for (const image of visibleImages) {
-    if (image.closest('[data-admin-allow]')) {
-      continue;
-    }
-
-    const src = image.currentSrc || image.src;
-    if (!src.trim()) {
-      continue;
-    }
-
-    addGalleryCandidate(map, {
-      id: `visible:${computeSelector(image)}`,
-      src,
-      alt: {
-        en: image.alt,
-        pt: image.alt,
-      },
-      attributionName: '',
-      attributionUrl: '',
-      licenseUrl: '',
-      source: 'visible',
-      sourceLabels: ['Visible on current page'],
-    });
-  }
-
   return Array.from(map.values()).sort((a, b) => {
     const rankDiff = GALLERY_SOURCE_PRIORITY[a.source] - GALLERY_SOURCE_PRIORITY[b.source];
     if (rankDiff !== 0) {
@@ -1653,215 +1484,92 @@ function filteredLibraryItems(): CmsGalleryItem[] {
   });
 }
 
-function addGalleryItemToLibrary(item: CmsGalleryItem): CmsMediaItem | null {
-  if (!workingState) {
-    return null;
-  }
-
-  const normalizedTarget = normalizeImageSrc(item.src);
-  const dedupKey = imageDedupKey(item.src);
-  if (!normalizedTarget || !dedupKey) {
-    return null;
-  }
-
-  const existing = workingState.mediaLibrary.items.find(
-    (libraryItem) => imageDedupKey(libraryItem.src) === dedupKey,
-  );
-
-  if (existing) {
-    return existing;
-  }
-
-  const nextItem: CmsMediaItem = {
-    id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
-      ? crypto.randomUUID()
-      : `media-${Date.now()}`,
-    src: normalizedTarget,
-    alt: deepClone(item.alt),
-    attributionName: item.attributionName,
-    attributionUrl: item.attributionUrl,
-    licenseUrl: item.licenseUrl,
-    caption: item.caption ? deepClone(item.caption) : undefined,
-  };
-
-  workingState.mediaLibrary.items.unshift(nextItem);
-  workingState.mediaLibrary.updatedAt = nowIso();
-  markDirty('Image added to library');
-  return nextItem;
-}
-
-interface LibraryCleanupResult {
-  duplicatesRemoved: number;
-}
-
-function collectActiveImageKeys(): Set<string> {
-  const keys = new Set<string>();
-
-  for (const item of globalGalleryItems) {
-    if (item.source === 'library') {
-      continue;
-    }
-
-    const key = imageDedupKey(item.src);
-    if (key) {
-      keys.add(key);
-    }
-  }
-
-  if (!workingState) {
-    return keys;
-  }
-
-  for (const image of workingState.page.images) {
-    const key = imageDedupKey(image.src);
-    if (key) {
-      keys.add(key);
-    }
-  }
-
-  for (const localeKey of ['en', 'pt'] as const) {
-    const key = imageDedupKey(workingState.page.seo[localeKey].ogImage);
-    if (key) {
-      keys.add(key);
-    }
-  }
-
-  for (const post of workingState.blogPosts) {
-    const coverKey = imageDedupKey(post.coverImage);
-    if (coverKey) {
-      keys.add(coverKey);
-    }
-
-    for (const localeKey of ['en', 'pt'] as const) {
-      const seoKey = imageDedupKey(post.seoByLocale[localeKey].ogImage);
-      if (seoKey) {
-        keys.add(seoKey);
-      }
-    }
-  }
-
-  return keys;
-}
-
-function pruneLibraryToActiveReferences(): LibraryCleanupResult {
-  if (!workingState) {
-    return {
-      duplicatesRemoved: 0,
-    };
-  }
-
-  const seen = new Set<string>();
-  const nextItems: CmsMediaItem[] = [];
-  let duplicatesRemoved = 0;
-
-  for (const item of workingState.mediaLibrary.items) {
-    const dedupKey = imageDedupKey(item.src);
-    const normalizedSrc = normalizeImageSrc(item.src);
-    if (!dedupKey || !normalizedSrc) {
-      continue;
-    }
-
-    if (seen.has(dedupKey)) {
-      duplicatesRemoved += 1;
-      continue;
-    }
-
-    seen.add(dedupKey);
-    nextItems.push({
-      ...item,
-      src: normalizedSrc,
-    });
-  }
-
-  if (duplicatesRemoved > 0) {
-    const nextIds = new Set(nextItems.map((item) => item.id));
-    if (selectedLibraryItemId && !nextIds.has(selectedLibraryItemId)) {
-      selectedLibraryItemId = null;
-    }
-    workingState.mediaLibrary.items = nextItems;
-    workingState.mediaLibrary.updatedAt = nowIso();
-  }
-
+function createPublicGalleryItem(src: string): CmsGalleryItem {
   return {
-    duplicatesRemoved,
+    id: `public:${src}`,
+    src,
+    alt: {
+      en: '',
+      pt: '',
+    },
+    attributionName: '',
+    attributionUrl: '',
+    licenseUrl: '',
+    source: 'public',
+    sourceLabels: ['Public folder'],
   };
 }
 
-function openGalleryItemEditor(item: CmsGalleryItem): void {
-  let libraryId = item.libraryItemId;
-  if (!libraryId) {
-    const next = addGalleryItemToLibrary(item);
-    if (!next) {
-      return;
-    }
-    libraryId = next.id;
-  }
-
-  selectedLibraryItemId = libraryId;
-  renderImageLibrary();
-  hydrateLibraryEditor();
-  setStatus('Editing image metadata');
-}
-
-function applyGalleryImageToSelected(item: CmsGalleryItem): void {
-  if (!workingState || !selectedImageTarget) {
-    setStatus('Select an image on the page first.');
-    toggleImageEditor(true);
+function upsertGalleryItem(item: CmsGalleryItem): void {
+  const key = imageDedupKey(item.src);
+  if (!key) {
     return;
   }
 
-  const nextField: CmsImageField = {
-    id: selectedImageTarget.id,
-    selector: selectedImageTarget.selector,
-    src: item.src,
-    alt: deepClone(item.alt),
-    attributionName: item.attributionName,
-    attributionUrl: item.attributionUrl,
-    licenseUrl: item.licenseUrl,
-    caption: item.caption ? deepClone(item.caption) : undefined,
-  };
+  globalGalleryItems = [
+    item,
+    ...globalGalleryItems.filter((existingItem) => imageDedupKey(existingItem.src) !== key),
+  ];
+}
+
+function replaceSelectedImage(options: {
+  src: string;
+  alt?: LocaleText;
+  attributionName?: string;
+  attributionUrl?: string;
+  licenseUrl?: string;
+  caption?: LocaleText;
+}): boolean {
+  if (!workingState || !selectedImageTarget) {
+    setStatus('Select an image on the page first.');
+    toggleImageEditor(true);
+    return false;
+  }
+
+  const existing = ensureImageField(selectedImageTarget);
+  if (!existing) {
+    setStatus('Selected image could not be resolved.');
+    return false;
+  }
+
+  const nextField = normalizeImageField({
+    ...existing,
+    src: options.src,
+    alt: options.alt ? deepClone(options.alt) : deepClone(existing.alt),
+    attributionName: options.attributionName ?? existing.attributionName,
+    attributionUrl: options.attributionUrl ?? existing.attributionUrl,
+    licenseUrl: options.licenseUrl ?? existing.licenseUrl,
+    caption: options.caption ? deepClone(options.caption) : existing.caption ? deepClone(existing.caption) : undefined,
+  });
+
+  if (JSON.stringify(existing) === JSON.stringify(nextField)) {
+    return false;
+  }
 
   upsertImageField(nextField);
   applyCurrentState();
   hydrateImageEditorForm();
-  markDirty('Gallery image applied to selected page image');
+  toggleImageLibrary(false);
+  toggleImageEditor(true);
+  return true;
 }
 
-function removeImageFromLibrary(item: CmsGalleryItem): void {
-  if (!workingState) {
+function applyGalleryImageToSelected(item: CmsGalleryItem): void {
+  const changed = replaceSelectedImage({
+    src: item.src,
+    alt: item.alt,
+    attributionName: item.attributionName,
+    attributionUrl: item.attributionUrl,
+    licenseUrl: item.licenseUrl,
+    caption: item.caption,
+  });
+
+  if (!changed) {
+    setStatus('Selected image already uses this asset.');
     return;
   }
 
-  if (!item.libraryItemId) {
-    const externalSources = item.sourceLabels.filter((label) => label !== 'Library');
-    const sourceMessage = externalSources.length > 0
-      ? externalSources.join(' • ')
-      : 'page, blog, or SEO content';
-    setStatus(`This image is not stored in the library. It is still referenced by ${sourceMessage}.`);
-    return;
-  }
-
-  const confirmed = window.confirm(
-    'Delete this image from the library? If it is still used on pages/posts, it can reappear in the gallery.',
-  );
-  if (!confirmed) {
-    return;
-  }
-
-  workingState.mediaLibrary.items = workingState.mediaLibrary.items.filter(
-    (libraryItem) => libraryItem.id !== item.libraryItemId,
-  );
-  workingState.mediaLibrary.updatedAt = nowIso();
-  globalGalleryItems = globalGalleryItems.filter((galleryItem) => galleryItem.libraryItemId !== item.libraryItemId);
-  clearPendingAdminImagePreview(item.src);
-
-  if (selectedLibraryItemId === item.libraryItemId) {
-    selectedLibraryItemId = null;
-  }
-
-  renderImageLibrary();
-  hydrateLibraryEditor();
-  markDirty('Image removed from library');
+  markDirty('Selected image replaced from gallery');
 }
 
 function renderImageLibrary(): void {
@@ -1870,7 +1578,6 @@ function renderImageLibrary(): void {
   }
 
   imageLibraryList.innerHTML = '';
-  hideElement(libraryEditor);
 
   const items = filteredLibraryItems();
   imageLibraryCount.textContent = `${items.length} image${items.length === 1 ? '' : 's'} in gallery`;
@@ -1886,16 +1593,13 @@ function renderImageLibrary(): void {
   for (const item of items) {
     const card = document.createElement('article');
     card.className = 'cms-library-item';
-    const isSelectedLibraryItem = Boolean(item.libraryItemId && item.libraryItemId === selectedLibraryItemId);
-    if (isSelectedLibraryItem) {
-      card.classList.add('cms-library-item-selected');
-    }
     card.addEventListener('click', (event) => {
       const eventTarget = event.target instanceof Element ? event.target : null;
       if (eventTarget?.closest('button')) {
         return;
       }
-      openGalleryItemEditor(item);
+
+      applyGalleryImageToSelected(item);
     });
 
     const image = document.createElement('img');
@@ -1921,37 +1625,16 @@ function renderImageLibrary(): void {
     const useButton = document.createElement('button');
     useButton.type = 'button';
     useButton.className = 'cms-btn cms-btn-primary';
-    useButton.textContent = 'Use on selected page image';
+    useButton.textContent = 'Replace selected image';
     useButton.disabled = !selectedImageTarget;
     useButton.addEventListener('click', () => {
       applyGalleryImageToSelected(item);
     });
 
-    const editButton = document.createElement('button');
-    editButton.type = 'button';
-    editButton.className = 'cms-btn cms-btn-muted';
-    editButton.textContent = 'Edit metadata';
-    editButton.addEventListener('click', () => {
-      openGalleryItemEditor(item);
-    });
-
-    const deleteButton = document.createElement('button');
-    deleteButton.type = 'button';
-    deleteButton.className = item.libraryItemId ? 'cms-btn cms-btn-danger' : 'cms-btn cms-btn-muted';
-    deleteButton.textContent = item.libraryItemId ? 'Delete from library' : "Why can't I delete this?";
-    deleteButton.title = item.libraryItemId
-      ? 'Remove this image from the library metadata'
-      : 'This image is referenced by page, blog, or SEO content instead of the library';
-    deleteButton.addEventListener('click', () => {
-      removeImageFromLibrary(item);
-    });
-
-    actions.append(useButton, editButton, deleteButton);
+    actions.append(useButton);
     card.append(image, path, alt, source, actions);
     imageLibraryList.append(card);
   }
-
-  hydrateLibraryEditor();
 }
 
 function toggleImageLibrary(open: boolean): void {
@@ -2234,7 +1917,6 @@ async function checkSession(): Promise<boolean> {
 function hydrateStateFromResponse(response: ContentResponse): void {
   const baseState: WorkingState = {
     page: normalizePageDocument(response.page),
-    mediaLibrary: normalizeMediaLibrary(response.mediaLibrary),
     blogPosts: response.blogPosts.map(normalizeBlogPost),
     baseSha: response.branchSha,
   };
@@ -2244,27 +1926,12 @@ function hydrateStateFromResponse(response: ContentResponse): void {
   authenticated = response.authenticated;
   globalGalleryItems = deepClone(response.galleryItems ?? []);
   selectedImageTarget = null;
-  selectedLibraryItemId = null;
-  const cleanup = pruneLibraryToActiveReferences();
 
   applyCurrentState();
   renderImageLibrary();
   renderBlogSelect();
   hydrateSeoForm();
   hydrateImageEditorForm();
-  if (cleanup.duplicatesRemoved > 0 || cleanup.unusedRemoved > 0) {
-    const removedParts: string[] = [];
-    if (cleanup.duplicatesRemoved > 0) {
-      removedParts.push(`${cleanup.duplicatesRemoved} duplicate image${cleanup.duplicatesRemoved === 1 ? '' : 's'}`);
-    }
-    if (cleanup.unusedRemoved > 0) {
-      removedParts.push(`${cleanup.unusedRemoved} unlinked image${cleanup.unusedRemoved === 1 ? '' : 's'}`);
-    }
-    setDirty(true);
-    setStatus(`Cleaned media library: removed ${removedParts.join(' and ')}. Publish to save.`);
-    return;
-  }
-
   setDirty(false);
 }
 
@@ -2294,7 +1961,6 @@ async function publishChanges(): Promise<void> {
       body: JSON.stringify({
         pages: [workingState.page],
         blogPosts: workingState.blogPosts,
-        mediaLibrary: workingState.mediaLibrary,
         baseSha: workingState.baseSha,
       }),
     });
@@ -2313,7 +1979,12 @@ async function publishChanges(): Promise<void> {
   }
 }
 
-async function uploadImage(formData: FormData): Promise<void> {
+async function uploadImage(
+  formData: FormData,
+  options: {
+    applyToSelected?: boolean;
+  } = {},
+): Promise<void> {
   const uploadedFile = formData.get('file');
   suppressBeforeUnloadPrompt = true;
   try {
@@ -2325,36 +1996,44 @@ async function uploadImage(formData: FormData): Promise<void> {
 
     const payload = await readApiPayload<{
       ok?: boolean;
-      item?: CmsMediaItem;
+      src?: string;
       commitSha?: string;
     }>(response);
 
-    if (!response.ok || !payload.item || !workingState) {
+    if (!response.ok || !payload.src || !workingState) {
       setStatus(payload.error ?? 'Image upload failed');
       return;
     }
 
     if (uploadedFile instanceof File && uploadedFile.size > 0) {
-      setPendingAdminImagePreview(payload.item.src, uploadedFile);
+      setPendingAdminImagePreview(payload.src, uploadedFile);
     }
 
-    workingState.mediaLibrary.items.unshift(payload.item);
-    workingState.mediaLibrary.updatedAt = nowIso();
-    selectedLibraryItemId = payload.item.id;
+    upsertGalleryItem(createPublicGalleryItem(payload.src));
 
     if (payload.commitSha) {
       workingState.baseSha = payload.commitSha;
       if (publishedState) {
-        publishedState.mediaLibrary = deepClone(workingState.mediaLibrary);
         publishedState.baseSha = payload.commitSha;
       }
-      setStatus('Image uploaded. Preview uses the local file until Vercel finishes deploying it.');
-    } else {
-      markDirty('Image uploaded. Preview uses the local file until you publish the update.');
+    }
+
+    if (options.applyToSelected) {
+      const replaced = replaceSelectedImage({ src: payload.src });
+      if (!replaced) {
+        setStatus('Image uploaded. Choose a selected page image before replacing it.');
+        renderImageLibrary();
+        return;
+      }
+
+      setDirty(true);
+      renderImageLibrary();
+      setStatus('Image uploaded and applied. Publish to save the page reference.');
+      return;
     }
 
     renderImageLibrary();
-    hydrateLibraryEditor();
+    setStatus('Image uploaded. It is ready in the gallery and preview uses the local file until deploy finishes.');
   } finally {
     suppressBeforeUnloadPrompt = false;
   }
@@ -2394,7 +2073,6 @@ function discardChanges(): void {
   finalizeActiveTextEdit();
   workingState = deepClone(publishedState);
   selectedImageTarget = null;
-  selectedLibraryItemId = null;
   applyCurrentState();
   renderImageLibrary();
   renderBlogSelect();
@@ -2600,6 +2278,13 @@ function bindImageEditorUI(): void {
     toggleImageLibrary(true);
   });
 
+  imageReplaceUploadForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const data = new FormData(imageReplaceUploadForm);
+    await uploadImage(data, { applyToSelected: true });
+    imageReplaceUploadForm.reset();
+  });
+
   imageEditorForm?.addEventListener('submit', (event) => {
     event.preventDefault();
     applyImageFormChanges();
@@ -2620,11 +2305,6 @@ function bindImageLibraryUI(): void {
     const data = new FormData(imageUploadForm);
     await uploadImage(data);
     imageUploadForm.reset();
-  });
-
-  libraryEditorForm?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    applyLibraryMetadataChanges();
   });
 }
 
@@ -2758,4 +2438,3 @@ async function boot(): Promise<void> {
 }
 
 void boot();
-

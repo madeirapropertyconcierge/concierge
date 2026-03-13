@@ -1,6 +1,6 @@
 <div id="cms-image-library" class="cms-hidden cms-panel cms-panel-xl" data-admin-allow>
   <header class="cms-row cms-space-between" data-admin-allow>
-    <h3 class="cms-title">Image Library</h3>
+    <h3 class="cms-title">Image Gallery</h3>
     <button id="cms-image-library-close" class="cms-btn cms-btn-muted" type="button" data-admin-allow>Close</button>
   </header>
 
@@ -9,109 +9,23 @@
     <p id="cms-image-library-count" class="cms-subtitle" data-admin-allow></p>
   </div>
   <p class="cms-subtitle" data-admin-allow>
-    Click any image card to edit metadata. The gallery includes images used across the whole site.
+    The gallery scans the `public/` folder and also shows images referenced by page, blog, and SEO content.
   </p>
   <p class="cms-subtitle" data-admin-allow>
-    Only cards tagged with "Library" in the source list can be deleted here. Page, blog, and SEO images must be
-    removed from that source first.
-  </p>
-  <p class="cms-subtitle" data-admin-allow>
-    To replace an image on the page: open “Image details”, click the image area on the page (for hero backgrounds click anywhere in that section), then click “Use on selected page image”.
+    To replace an image on the page: click it in edit mode, then either use a gallery card here or upload directly in “Image details”.
   </p>
 
   <div id="cms-image-library-list" class="cms-library-grid" data-admin-allow></div>
 
-  <section id="cms-library-editor" class="cms-section-card cms-hidden" data-admin-allow>
-    <h4 class="cms-title-small" data-admin-allow>Image Metadata</h4>
-    <p id="cms-library-editor-source" class="cms-subtitle" data-admin-allow></p>
-
-    <form id="cms-library-editor-form" class="cms-form" data-admin-allow>
-      <div class="cms-grid-2" data-admin-allow>
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Alt text (EN)</span>
-          <input name="altEn" type="text" data-admin-allow />
-        </label>
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Alt text (PT)</span>
-          <input name="altPt" type="text" data-admin-allow />
-        </label>
-      </div>
-
-      <div class="cms-grid-2" data-admin-allow>
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Caption (EN)</span>
-          <input name="captionEn" type="text" data-admin-allow />
-        </label>
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Caption (PT)</span>
-          <input name="captionPt" type="text" data-admin-allow />
-        </label>
-      </div>
-
-      <div class="cms-grid-2" data-admin-allow>
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Attribution name</span>
-          <input name="attributionName" type="text" data-admin-allow />
-        </label>
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Attribution URL</span>
-          <input name="attributionUrl" type="text" data-admin-allow />
-        </label>
-      </div>
-
-      <label class="cms-field" data-admin-allow>
-        <span data-admin-allow>License URL</span>
-        <input name="licenseUrl" type="text" data-admin-allow />
-      </label>
-
-      <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Apply metadata</button>
-    </form>
-  </section>
-
   <form id="cms-image-upload-form" class="cms-form cms-section-card" data-admin-allow>
     <h4 class="cms-title-small" data-admin-allow>Upload New Image</h4>
+    <p class="cms-subtitle" data-admin-allow>
+      This adds a file to `public/images/library/`. For a direct replacement, use the upload form inside “Image details”.
+    </p>
 
     <label class="cms-field" data-admin-allow>
       <span data-admin-allow>File</span>
       <input type="file" name="file" accept="image/*" required data-admin-allow />
-    </label>
-
-    <div class="cms-grid-2" data-admin-allow>
-      <label class="cms-field" data-admin-allow>
-        <span data-admin-allow>Alt text (EN)</span>
-        <input type="text" name="altEn" data-admin-allow />
-      </label>
-      <label class="cms-field" data-admin-allow>
-        <span data-admin-allow>Alt text (PT)</span>
-        <input type="text" name="altPt" data-admin-allow />
-      </label>
-    </div>
-
-    <div class="cms-grid-2" data-admin-allow>
-      <label class="cms-field" data-admin-allow>
-        <span data-admin-allow>Caption (EN)</span>
-        <input type="text" name="captionEn" data-admin-allow />
-      </label>
-      <label class="cms-field" data-admin-allow>
-        <span data-admin-allow>Caption (PT)</span>
-        <input type="text" name="captionPt" data-admin-allow />
-      </label>
-    </div>
-
-    <div class="cms-grid-2" data-admin-allow>
-      <label class="cms-field" data-admin-allow>
-        <span data-admin-allow>Attribution name</span>
-        <input type="text" name="attributionName" data-admin-allow />
-      </label>
-      <label class="cms-field" data-admin-allow>
-        <span data-admin-allow>Attribution URL</span>
-        <input type="text" name="attributionUrl" data-admin-allow />
-      </label>
-    </div>
-
-    <label class="cms-field" data-admin-allow>
-      <span data-admin-allow>License URL</span>
-      <input type="text" name="licenseUrl" data-admin-allow />
     </label>
 
     <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Upload image</button>

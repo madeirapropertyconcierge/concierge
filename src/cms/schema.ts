@@ -90,25 +90,9 @@ export const cmsBlogPostSchema = z.object({
   }),
 });
 
-export const cmsMediaItemSchema = z.object({
-  id: z.string().min(1),
-  src: z.string().min(1),
-  alt: localeTextSchema,
-  attributionName: z.string().default(''),
-  attributionUrl: z.string().default(''),
-  licenseUrl: z.string().default(''),
-  caption: localeTextSchema.optional(),
-});
-
-export const cmsMediaLibrarySchema = z.object({
-  updatedAt: z.string(),
-  items: z.array(cmsMediaItemSchema),
-});
-
 export const cmsPublishRequestSchema = z.object({
   pages: z.array(cmsPageDocumentSchema),
   blogPosts: z.array(cmsBlogPostSchema),
-  mediaLibrary: cmsMediaLibrarySchema,
   baseSha: z.string().optional(),
 });
 
@@ -117,6 +101,4 @@ export type CmsLinkField = z.infer<typeof cmsLinkFieldSchema>;
 export type CmsImageField = z.infer<typeof cmsImageFieldSchema>;
 export type CmsPageDocument = z.infer<typeof cmsPageDocumentSchema>;
 export type CmsBlogPost = z.infer<typeof cmsBlogPostSchema>;
-export type CmsMediaItem = z.infer<typeof cmsMediaItemSchema>;
-export type CmsMediaLibrary = z.infer<typeof cmsMediaLibrarySchema>;
 export type CmsPublishRequest = z.infer<typeof cmsPublishRequestSchema>;

@@ -10,7 +10,6 @@ import {
 import {
   listBlogPosts,
   replaceBlogPosts,
-  saveMediaLibrary,
   savePageDocument,
 } from '../../../cms/content-loader';
 import { getGithubEnv } from '../../../cms/config';
@@ -144,8 +143,6 @@ export const POST: APIRoute = async (context) => {
       files.push(toJsonFile(`content/cms/blog/posts/${post.id}.json`, post));
     }
 
-    files.push(toJsonFile('content/cms/media/library.json', payload.mediaLibrary));
-
     const existingPosts = await listBlogPosts();
     const incomingIds = new Set(payload.blogPosts.map((post) => post.id));
     for (const existingPost of existingPosts) {
@@ -169,7 +166,6 @@ export const POST: APIRoute = async (context) => {
 
     try {
       await replaceBlogPosts(payload.blogPosts);
-      await saveMediaLibrary(payload.mediaLibrary);
     } catch {
       // Ignore read-only filesystem failures in serverless runtime.
     }

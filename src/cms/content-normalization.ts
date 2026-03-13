@@ -3,8 +3,6 @@ import type {
   CmsBlogPost,
   CmsImageField,
   CmsLinkField,
-  CmsMediaItem,
-  CmsMediaLibrary,
   CmsPageDocument,
   CmsPublishRequest,
   CmsTextField,
@@ -60,24 +58,6 @@ export function normalizeImageField(field: CmsImageField): CmsImageField {
   };
 }
 
-export function normalizeMediaItem(item: CmsMediaItem): CmsMediaItem {
-  return {
-    ...item,
-    alt: normalizeLocaleText(item.alt),
-    attributionName: normalizeCmsText(item.attributionName),
-    attributionUrl: item.attributionUrl.trim(),
-    licenseUrl: item.licenseUrl.trim(),
-    caption: item.caption ? normalizeLocaleText(item.caption) : undefined,
-  };
-}
-
-export function normalizeMediaLibrary(library: CmsMediaLibrary): CmsMediaLibrary {
-  return {
-    ...library,
-    items: library.items.map(normalizeMediaItem),
-  };
-}
-
 export function normalizeBlogPost(post: CmsBlogPost): CmsBlogPost {
   return {
     ...post,
@@ -123,6 +103,5 @@ export function normalizePublishRequest(payload: CmsPublishRequest): CmsPublishR
     ...payload,
     pages: payload.pages.map(normalizePageDocument),
     blogPosts: payload.blogPosts.map(normalizeBlogPost),
-    mediaLibrary: normalizeMediaLibrary(payload.mediaLibrary),
   };
 }

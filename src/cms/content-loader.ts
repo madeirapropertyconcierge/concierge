@@ -2,17 +2,14 @@ import { promises as fs } from 'node:fs';
 import { resolve, dirname, basename } from 'node:path';
 import {
   cmsBlogPostSchema,
-  cmsMediaLibrarySchema,
   cmsPageDocumentSchema,
   type CmsBlogPost,
-  type CmsMediaLibrary,
   type CmsPageDocument,
 } from './schema';
 
 const CMS_ROOT = resolve(process.cwd(), 'content/cms');
 const PAGE_DIR = resolve(CMS_ROOT, 'pages');
 const BLOG_DIR = resolve(CMS_ROOT, 'blog/posts');
-const MEDIA_LIBRARY_FILE = resolve(CMS_ROOT, 'media/library.json');
 
 function defaultSeoLocale(canonical = '') {
   return {
@@ -74,7 +71,6 @@ export async function ensureCmsDirectories(): Promise<void> {
   await Promise.all([
     ensureDirectory(PAGE_DIR),
     ensureDirectory(BLOG_DIR),
-    ensureDirectory(dirname(MEDIA_LIBRARY_FILE)),
   ]);
 }
 
@@ -118,29 +114,6 @@ export async function listPageDocuments(): Promise<CmsPageDocument[]> {
   );
 
   return documents.filter((doc): doc is CmsPageDocument => Boolean(doc));
-}
-
-export async function loadMediaLibrary(): Promise<CmsMediaLibrary> {
-  await ensureCmsDirectories();
-  const raw = await readJsonFile<unknown>(MEDIA_LIBRARY_FILE);
-
-  if (!raw) {
-    return {
-      updatedAt: new Date().toISOString(),
-      items: [],
-    };
-  }
-
-  return cmsMediaLibrarySchema.parse(raw);
-}
-
-export async function saveMediaLibrary(library: CmsMediaLibrary): Promise<void> {
-  await ensureCmsDirectories();
-  const parsed = cmsMediaLibrarySchema.parse({
-    ...library,
-    updatedAt: new Date().toISOString(),
-  });
-  await writeJsonFile(MEDIA_LIBRARY_FILE, parsed);
 }
 
 export async function listBlogPosts(): Promise<CmsBlogPost[]> {
@@ -230,13 +203,6 @@ export async function listCmsFilesForPublish(): Promise<
   await addDirectory(PAGE_DIR, 'content/cms/pages');
   await addDirectory(BLOG_DIR, 'content/cms/blog/posts');
 
-  const mediaContent = await fs.readFile(MEDIA_LIBRARY_FILE, 'utf-8');
-  files.push({
-    path: 'content/cms/media/library.json',
-    content: mediaContent,
-    encoding: 'utf-8',
-  });
-
   return files;
 }
 
@@ -250,10 +216,6 @@ export function getCmsRootPath(): string {
 
 export function getBlogDirectoryPath(): string {
   return BLOG_DIR;
-}
-
-export function getMediaLibraryPath(): string {
-  return MEDIA_LIBRARY_FILE;
 }
 
 export function getPageDirectoryPath(): string {

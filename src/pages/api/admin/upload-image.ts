@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { promises as fs } from 'node:fs';
 import { resolve, extname } from 'node:path';
-import { randomUUID } from 'node:crypto';
 import {
   assertAdminSession,
   assertSameOrigin,
@@ -10,9 +9,7 @@ import {
 } from '../../../cms/api';
 import { commitFiles } from '../../../cms/github-publisher';
 import { tryGetGithubEnv } from '../../../cms/config';
-import { loadMediaLibrary, saveMediaLibrary } from '../../../cms/content-loader';
 import { getPublishErrorResponse } from '../../../cms/publish-errors';
-import { cmsMediaItemSchema } from '../../../cms/schema';
 
 function slugifyName(value: string): string {
   return value
@@ -60,32 +57,10 @@ export const POST: APIRoute = async (context) => {
 
     const bytes = Buffer.from(await file.arrayBuffer());
 
-    const mediaLibrary = await loadMediaLibrary();
-
-    const item = cmsMediaItemSchema.parse({
-      id: randomUUID(),
-      src: relativePath,
-      alt: {
-        en: String(form.get('altEn') ?? ''),
-        pt: String(form.get('altPt') ?? ''),
-      },
-      attributionName: String(form.get('attributionName') ?? ''),
-      attributionUrl: String(form.get('attributionUrl') ?? ''),
-      licenseUrl: String(form.get('licenseUrl') ?? ''),
-      caption: {
-        en: String(form.get('captionEn') ?? ''),
-        pt: String(form.get('captionPt') ?? ''),
-      },
-    });
-
-    mediaLibrary.items.unshift(item);
-    mediaLibrary.updatedAt = new Date().toISOString();
-
     const absolutePath = resolve(process.cwd(), `public${relativePath}`);
     try {
       await fs.mkdir(resolve(process.cwd(), 'public/images/library'), { recursive: true });
       await fs.writeFile(absolutePath, bytes);
-      await saveMediaLibrary(mediaLibrary);
     } catch {
       // Ignore read-only filesystem failures in serverless runtime.
     }
@@ -94,7 +69,6 @@ export const POST: APIRoute = async (context) => {
     let commitSha: string | null = null;
 
     if (githubEnv) {
-      const mediaContent = JSON.stringify(mediaLibrary, null, 2) + '\n';
       commitSha = await commitFiles({
         config: githubEnv,
         files: [
@@ -103,17 +77,12 @@ export const POST: APIRoute = async (context) => {
             content: bytes.toString('base64'),
             encoding: 'base64',
           },
-          {
-            path: 'content/cms/media/library.json',
-            content: mediaContent,
-            encoding: 'utf-8',
-          },
         ],
         message: `cms: media upload ${filename}`,
       });
     }
 
-    return jsonResponse({ ok: true, item, commitSha });
+    return jsonResponse({ ok: true, src: relativePath, commitSha });
   } catch (error) {
     const publishError = getPublishErrorResponse(error);
     if (publishError) {

@@ -98,22 +98,6 @@ describe('cms text normalization', () => {
           },
         },
       ],
-      mediaLibrary: {
-        updatedAt: '2026-03-11T10:00:00.000Z',
-        items: [
-          {
-            id: 'media-1',
-            src: '/images/library/example.webp',
-            alt: {
-              en: '',
-              pt: 'Vista para a baÃ­a',
-            },
-            attributionName: 'JoÃ£o',
-            attributionUrl: 'https://example.com',
-            licenseUrl: 'https://example.com/license',
-          },
-        ],
-      },
       baseSha: 'abc123',
     };
 
@@ -124,7 +108,5 @@ describe('cms text normalization', () => {
     expect(normalized.pages[0]?.texts[0]?.value.pt).toBe('Experiência em UX, raízes madeirenses.');
     expect(normalized.blogPosts[0]?.locales.pt.title).toBe('Gestão remota');
     expect(normalized.blogPosts[0]?.tags[0]).toBe('gestão');
-    expect(normalized.mediaLibrary.items[0]?.alt.pt).toBe('Vista para a baía');
-    expect(normalized.mediaLibrary.items[0]?.attributionName).toBe('João');
   });
 });
