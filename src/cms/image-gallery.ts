@@ -133,16 +133,93 @@ function addGalleryCandidate(map: Map<string, CmsGalleryImage>, candidate: CmsGa
   existing.licenseUrl = existing.licenseUrl.trim() || nextCandidate.licenseUrl.trim();
 }
 
+function collectReferenceLabels(
+  map: Map<string, Set<string>>,
+  src: string,
+  label: string,
+): void {
+  const key = imageDedupKey(src);
+  if (!key) {
+    return;
+  }
+
+  const labels = map.get(key) ?? new Set<string>();
+  labels.add(label);
+  map.set(key, labels);
+}
+
+function collectImageUsageLabelsFromContent(
+  pages: Awaited<ReturnType<typeof listPageDocuments>>,
+  blogPosts: Awaited<ReturnType<typeof listBlogPosts>>,
+): Map<string, string[]> {
+  const labelsByKey = new Map<string, Set<string>>();
+
+  for (const page of pages) {
+    for (const image of page.images) {
+      collectReferenceLabels(labelsByKey, image.src, `Page: ${page.pageId}`);
+    }
+
+    for (const localeKey of ['en', 'pt'] as const) {
+      const seo = page.seo[localeKey];
+      if (!seo.ogImage.trim()) {
+        continue;
+      }
+
+      collectReferenceLabels(labelsByKey, seo.ogImage, `SEO ${localeKey.toUpperCase()}: ${page.pageId}`);
+    }
+  }
+
+  for (const post of blogPosts) {
+    if (post.coverImage.trim()) {
+      collectReferenceLabels(labelsByKey, post.coverImage, `Blog cover: ${post.slug}`);
+    }
+
+    for (const localeKey of ['en', 'pt'] as const) {
+      const seo = post.seoByLocale[localeKey];
+      if (!seo.ogImage.trim()) {
+        continue;
+      }
+
+      collectReferenceLabels(labelsByKey, seo.ogImage, `Blog SEO ${localeKey.toUpperCase()}: ${post.slug}`);
+    }
+  }
+
+  return new Map(
+    Array.from(labelsByKey.entries(), ([key, labels]) => [key, Array.from(labels).sort()]),
+  );
+}
+
+export async function collectImageUsageLabels(): Promise<Map<string, string[]>> {
+  const [pages, blogPosts] = await Promise.all([
+    listPageDocuments(),
+    listBlogPosts(),
+  ]);
+
+  return collectImageUsageLabelsFromContent(pages, blogPosts);
+}
+
+export async function getImageUsageLabels(src: string): Promise<string[]> {
+  const key = imageDedupKey(src);
+  if (!key) {
+    return [];
+  }
+
+  const labelsByKey = await collectImageUsageLabels();
+  return labelsByKey.get(key) ?? [];
+}
+
 export async function collectSiteGalleryImages(): Promise<CmsGalleryImage[]> {
   const [publicImages, pages, blogPosts] = await Promise.all([
     listPublicImagePaths(),
     listPageDocuments(),
     listBlogPosts(),
   ]);
+  const usageLabels = collectImageUsageLabelsFromContent(pages, blogPosts);
 
   const map = new Map<string, CmsGalleryImage>();
 
   for (const src of publicImages) {
+    const key = imageDedupKey(src);
     addGalleryCandidate(map, {
       id: `public:${src}`,
       src,
@@ -151,7 +228,7 @@ export async function collectSiteGalleryImages(): Promise<CmsGalleryImage[]> {
       attributionUrl: '',
       licenseUrl: '',
       source: 'public',
-      sourceLabels: ['Public folder'],
+      sourceLabels: ['Public folder', ...(key ? usageLabels.get(key) ?? [] : [])],
     });
   }
 

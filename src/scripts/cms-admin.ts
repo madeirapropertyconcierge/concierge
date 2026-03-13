@@ -228,6 +228,16 @@ function setPendingAdminImagePreview(src: string, file: File): void {
   pendingAdminImagePreviewUrls.set(src, URL.createObjectURL(file));
 }
 
+function clearPendingAdminImagePreview(src: string): void {
+  const existing = pendingAdminImagePreviewUrls.get(src);
+  if (!existing) {
+    return;
+  }
+
+  URL.revokeObjectURL(existing);
+  pendingAdminImagePreviewUrls.delete(src);
+}
+
 function clearAllPendingAdminImagePreviews(): void {
   for (const previewUrl of pendingAdminImagePreviewUrls.values()) {
     URL.revokeObjectURL(previewUrl);
@@ -1512,6 +1522,16 @@ function upsertGalleryItem(item: CmsGalleryItem): void {
   ];
 }
 
+function removeGalleryItem(item: CmsGalleryItem): void {
+  const key = imageDedupKey(item.src);
+  if (!key) {
+    return;
+  }
+
+  globalGalleryItems = globalGalleryItems.filter((item) => imageDedupKey(item.src) !== key);
+  clearPendingAdminImagePreview(item.src);
+}
+
 function replaceSelectedImage(options: {
   src: string;
   alt?: LocaleText;
@@ -1570,6 +1590,63 @@ function applyGalleryImageToSelected(item: CmsGalleryItem): void {
   }
 
   markDirty('Selected image replaced from gallery');
+}
+
+function canDeleteGalleryItem(item: CmsGalleryItem): boolean {
+  return item.source === 'public';
+}
+
+function isGalleryItemInUse(item: CmsGalleryItem): boolean {
+  return item.sourceLabels.some((label) => label !== 'Public folder');
+}
+
+async function deleteGalleryItem(item: CmsGalleryItem): Promise<void> {
+  if (!canDeleteGalleryItem(item)) {
+    setStatus('Only files that exist in the public folder can be deleted here.');
+    return;
+  }
+
+  if (isGalleryItemInUse(item)) {
+    setStatus('This image is still used somewhere and cannot be deleted yet.');
+    return;
+  }
+
+  const confirmed = window.confirm(`Delete ${item.src} from the public folder?`);
+  if (!confirmed) {
+    return;
+  }
+
+  const response = await fetch('/api/admin/delete-image', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ src: item.src }),
+  });
+
+  const payload = await readApiPayload<{
+    ok?: boolean;
+    src?: string;
+    commitSha?: string;
+  }>(response);
+
+  if (!response.ok || !payload.src || !workingState) {
+    setStatus(payload.error ?? 'Image delete failed');
+    return;
+  }
+
+  removeGalleryItem(item);
+
+  if (payload.commitSha) {
+    workingState.baseSha = payload.commitSha;
+    if (publishedState) {
+      publishedState.baseSha = payload.commitSha;
+    }
+  }
+
+  renderImageLibrary();
+  setStatus('Image file deleted from the public folder.');
 }
 
 function renderImageLibrary(): void {
@@ -1632,6 +1709,23 @@ function renderImageLibrary(): void {
     });
 
     actions.append(useButton);
+
+    if (canDeleteGalleryItem(item)) {
+      const deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.className = 'cms-btn cms-btn-danger';
+      deleteButton.textContent = 'Delete file';
+      deleteButton.disabled = isGalleryItemInUse(item);
+      deleteButton.title = isGalleryItemInUse(item)
+        ? 'This image is still referenced by page, blog, or SEO content.'
+        : 'Delete this file from the public folder';
+      deleteButton.addEventListener('click', async () => {
+        await deleteGalleryItem(item);
+      });
+
+      actions.append(deleteButton);
+    }
+
     card.append(image, path, alt, source, actions);
     imageLibraryList.append(card);
   }
