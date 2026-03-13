@@ -1,4 +1,20 @@
 {
-  "updatedAt": "2026-03-13T15:08:16.057Z",
-  "items": []
+  "updatedAt": "2026-03-13T15:30:52.030Z",
+  "items": [
+    {
+      "id": "0401e573-5213-4f46-931c-3b6824b9a17a",
+      "src": "/images/library/1773415852020-img-0202.jpg",
+      "alt": {
+        "en": "",
+        "pt": ""
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": "",
+      "caption": {
+        "en": "",
+        "pt": ""
+      }
+    }
+  ]
 }
