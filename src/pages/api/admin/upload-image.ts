@@ -11,6 +11,7 @@ import {
 import { commitFiles } from '../../../cms/github-publisher';
 import { tryGetGithubEnv } from '../../../cms/config';
 import { loadMediaLibrary, saveMediaLibrary } from '../../../cms/content-loader';
+import { getPublishErrorResponse } from '../../../cms/publish-errors';
 import { cmsMediaItemSchema } from '../../../cms/schema';
 
 function slugifyName(value: string): string {
@@ -114,6 +115,11 @@ export const POST: APIRoute = async (context) => {
 
     return jsonResponse({ ok: true, item, commitSha });
   } catch (error) {
+    const publishError = getPublishErrorResponse(error);
+    if (publishError) {
+      return jsonResponse({ error: publishError.message }, publishError.status);
+    }
+
     return errorResponse(error);
   }
 };

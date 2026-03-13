@@ -1,4 +1,5 @@
 import type { GithubEnv } from './config';
+import { GithubRequestError } from './publish-errors';
 
 export interface PublishFile {
   path: string;
@@ -39,20 +40,26 @@ export class PublishConflictError extends Error {
 }
 
 async function githubRequest<T>(config: GithubEnv, path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`https://api.github.com${path}`, {
-    ...init,
-    headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${config.token}`,
-      'X-GitHub-Api-Version': '2022-11-28',
-      'Content-Type': 'application/json',
-      ...init?.headers,
-    },
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(`https://api.github.com${path}`, {
+      ...init,
+      headers: {
+        Accept: 'application/vnd.github+json',
+        Authorization: `Bearer ${config.token}`,
+        'X-GitHub-Api-Version': '2022-11-28',
+        'Content-Type': 'application/json',
+        ...init?.headers,
+      },
+    });
+  } catch {
+    throw new GithubRequestError(502, 'GitHub request failed');
+  }
 
   if (!response.ok) {
     const message = await response.text();
-    throw new Error(`GitHub API error (${response.status}): ${message}`);
+    throw new GithubRequestError(response.status, message);
   }
 
   return (await response.json()) as T;

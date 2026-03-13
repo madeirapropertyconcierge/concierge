@@ -14,12 +14,13 @@ import {
   savePageDocument,
 } from '../../../cms/content-loader';
 import { getGithubEnv } from '../../../cms/config';
+import { normalizePublishRequest } from '../../../cms/content-normalization';
 import {
   commitFiles,
   PublishConflictError,
   type PublishFile,
 } from '../../../cms/github-publisher';
-import { normalizePublishRequest } from '../../../cms/content-normalization';
+import { getPublishErrorResponse } from '../../../cms/publish-errors';
 import { cmsPublishRequestSchema, type CmsBlogPost } from '../../../cms/schema';
 
 function isValidCmsUrl(value: string): boolean {
@@ -184,6 +185,11 @@ export const POST: APIRoute = async (context) => {
 
     return jsonResponse({ ok: true, commitSha });
   } catch (error) {
+    const publishError = getPublishErrorResponse(error);
+    if (publishError) {
+      return jsonResponse({ error: publishError.message }, publishError.status);
+    }
+
     if (error instanceof PublishConflictError) {
       return jsonResponse({ error: error.message }, 409);
     }

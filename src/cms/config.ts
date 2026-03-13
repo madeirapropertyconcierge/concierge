@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { MissingGithubConfigError } from './publish-errors';
 
 const requiredString = z.string().min(1);
 
@@ -112,18 +113,22 @@ export function getAuthEnv(): AuthEnv {
 }
 
 export function getGithubEnv(): GithubEnv {
-  const parsed = githubEnvSchema.parse({
+  const parsed = githubEnvSchema.safeParse({
     GITHUB_TOKEN: readFromNodeEnv('GITHUB_TOKEN'),
     GITHUB_OWNER: readFromNodeEnv('GITHUB_OWNER'),
     GITHUB_REPO: readFromNodeEnv('GITHUB_REPO'),
     GITHUB_BRANCH: readFromNodeEnv('GITHUB_BRANCH') ?? 'main',
   });
 
+  if (!parsed.success) {
+    throw new MissingGithubConfigError();
+  }
+
   return {
-    token: parsed.GITHUB_TOKEN,
-    owner: parsed.GITHUB_OWNER,
-    repo: parsed.GITHUB_REPO,
-    branch: parsed.GITHUB_BRANCH,
+    token: parsed.data.GITHUB_TOKEN,
+    owner: parsed.data.GITHUB_OWNER,
+    repo: parsed.data.GITHUB_REPO,
+    branch: parsed.data.GITHUB_BRANCH,
   };
 }
 
