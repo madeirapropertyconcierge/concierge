@@ -5,7 +5,7 @@ import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
-import { PEXELS_LICENSE_URL, pexelsMadeiraAttribution, pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 
 interface Props {
   lang: Locale;
@@ -97,21 +97,6 @@ const pageSchema = [
     description: t(lang, 'about.hero.subtitle'),
   },
 ];
-
-const attributionHeading = lang === 'pt' ? 'AtribuiÃ§Ã£o de imagens' : 'Image attribution';
-const attributionSubheading =
-  lang === 'pt'
-    ? 'Todas as imagens externas usadas no site sÃ£o da Pexels.'
-    : 'All external images used across the site are sourced from Pexels.';
-const photoPrefix = lang === 'pt' ? 'Foto de' : 'Photo by';
-const attributionNudge =
-  lang === 'pt'
-    ? 'Mini-galeria de crÃ©ditos: cada imagem abre a fonte original.'
-    : 'Credit gallery: each thumbnail opens the original source.';
-const attributionGallery = pexelsMadeiraAttribution.map((image) => ({
-  ...image,
-  thumbnailSrc: image.src.replace('w=2000', 'w=120&h=90&fit=crop'),
-}));
 ---
 
 <VisualPageLayout
@@ -121,8 +106,8 @@ const attributionGallery = pexelsMadeiraAttribution.map((image) => ({
   heroEyebrow={copy.heroEyebrow}
   heroTitle={copy.heroTitle}
   heroSubtitle={copy.heroSubtitle}
-  heroImage={pexelsMadeiraImages.oceanfrontBench.src}
-  heroAlt={pexelsMadeiraImages.oceanfrontBench.alt}
+  heroImage={madeiraImages.oceanfrontBench.src}
+  heroAlt={madeiraImages.oceanfrontBench.alt}
   heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
   heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
   jsonLd={pageSchema}
@@ -182,8 +167,8 @@ const attributionGallery = pexelsMadeiraAttribution.map((image) => ({
 
   <section class="relative isolate overflow-hidden px-4 sm:px-6 lg:px-8">
     <img
-      src={pexelsMadeiraImages.cliffsPeninsula.src}
-      alt={pexelsMadeiraImages.cliffsPeninsula.alt}
+      src={madeiraImages.cliffsPeninsula.src}
+      alt={madeiraImages.cliffsPeninsula.alt}
       class="absolute inset-0 -z-20 h-full w-full object-cover"
       loading="lazy"
     />
@@ -198,51 +183,6 @@ const attributionGallery = pexelsMadeiraAttribution.map((image) => ({
       <h2 class="mt-8 text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.ctaTitle}</h2>
       <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{copy.ctaBody}</p>
       <a href={routes.contact} class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{copy.ctaPrimary}</a>
-    </div>
-  </section>
-
-  <section id="image-attribution" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-24">
-    <div class="premium-panel p-6 sm:p-8 lg:p-10">
-      <h2 class="text-charcoal">{attributionHeading}</h2>
-      <p class="mt-2 text-sm leading-relaxed text-charcoal/72">{attributionSubheading}</p>
-
-      <div class="mt-6 flex flex-wrap items-center gap-3">
-        <a
-          href={PEXELS_LICENSE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-flex items-center rounded-full border border-forest-green/28 bg-forest-green/10 px-3 py-1 text-xs font-semibold tracking-[0.04em] text-forest-green transition-colors hover:bg-forest-green hover:text-white"
-        >
-          Pexels License
-        </a>
-        <p class="text-xs leading-relaxed text-charcoal/62">{attributionNudge}</p>
-      </div>
-
-      <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {attributionGallery.map((image) => (
-          <li>
-            <a
-              href={image.photoUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group block rounded-xl border border-charcoal/10 bg-white/72 p-2 transition-all duration-200 hover:-translate-y-0.5 hover:border-forest-green/40 hover:bg-white hover:shadow-[0_10px_24px_rgba(16,32,43,0.10)]"
-            >
-              <img
-                src={image.thumbnailSrc}
-                alt={image.alt}
-                width="96"
-                height="72"
-                loading="lazy"
-                class="h-12 w-full rounded-md object-cover ring-1 ring-black/6"
-              />
-              <span class="mt-1.5 block text-[0.62rem] leading-snug text-charcoal/74">
-                {photoPrefix} {image.photographer}
-              </span>
-              <span class="sr-only">{image.label}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   </section>
 </VisualPageLayout>

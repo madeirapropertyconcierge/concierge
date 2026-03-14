@@ -6,7 +6,7 @@ import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
-import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 import { getPricingPageContent } from '../../lib/pageContent/pricing';
 
 interface Props {
@@ -42,8 +42,8 @@ const pageSchema = [
   heroEyebrow={copy.heroEyebrow}
   heroTitle={copy.heroTitle}
   heroSubtitle={copy.heroSubtitle}
-  heroImage={pexelsMadeiraImages.treeFramedValleyTown.src}
-  heroAlt={pexelsMadeiraImages.treeFramedValleyTown.alt}
+  heroImage={madeiraImages.treeFramedValleyTown.src}
+  heroAlt={madeiraImages.treeFramedValleyTown.alt}
   heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
   heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
   jsonLd={pageSchema}
@@ -81,8 +81,8 @@ const pageSchema = [
 
   <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <img
-      src={pexelsMadeiraImages.machicoFireFestival.src}
-      alt={pexelsMadeiraImages.machicoFireFestival.alt}
+      src={madeiraImages.machicoFireFestival.src}
+      alt={madeiraImages.machicoFireFestival.alt}
       class="absolute inset-0 -z-20 h-full w-full object-cover"
       loading="lazy"
     />

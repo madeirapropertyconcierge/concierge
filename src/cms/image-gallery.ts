@@ -59,12 +59,7 @@ function imageDedupKey(src: string): string {
   }
 
   try {
-    const resolved = new URL(normalized);
-    if (resolved.hostname.toLowerCase() === 'images.pexels.com') {
-      return `${resolved.origin}${resolved.pathname}`;
-    }
-
-    return resolved.toString();
+    return new URL(normalized).toString();
   } catch {
     return normalized;
   }

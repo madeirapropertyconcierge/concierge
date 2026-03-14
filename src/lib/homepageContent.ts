@@ -1,6 +1,6 @@
 import type { Locale } from '../i18n/utils';
 import type { RouteKey } from '../i18n/routes';
-import { pexelsMadeiraImages } from './pexelsImages';
+import { madeiraImages } from './madeiraImages';
 
 export interface HomeTrustSignal {
   value: string;
@@ -55,8 +55,8 @@ export interface HomePageContent {
 export const homepageContent: Record<Locale, HomePageContent> = {
   en: {
     metaDescription: 'Boutique hosting and property care in Madeira for overseas owners who want peace of mind.',
-    heroBackgroundAlt: 'Madeira coastal village with terraced vineyards',
-    finalBackgroundAlt: 'Aerial sunset over Madeira coastline',
+    heroBackgroundAlt: madeiraImages.vineyardCoastalVillage.alt,
+    finalBackgroundAlt: madeiraImages.coastSunsetAerial.alt,
     heroBadge: 'Madeira Property Concierge',
     heroTitle: 'Boutique Hosting + Property Care. True Peace of Mind.',
     heroSubtitle:
@@ -65,18 +65,18 @@ export const homepageContent: Record<Locale, HomePageContent> = {
     secondaryCta: 'See Service Tiers',
     mediaCards: [
       {
-        image: pexelsMadeiraImages.pontaHikers.src,
-        alt: 'Hikers on the Ponta de Sao Lourenco trail',
+        image: madeiraImages.pontaHikers.src,
+        alt: madeiraImages.pontaHikers.alt,
         caption: 'Property Care & Preventative Checks',
       },
       {
-        image: pexelsMadeiraImages.saoVicenteCoast.src,
-        alt: 'Atlantic waves near Sao Vicente in Madeira',
+        image: madeiraImages.saoVicenteCoast.src,
+        alt: madeiraImages.saoVicenteCoast.alt,
         caption: 'Guest Experience & Concierge',
       },
       {
-        image: pexelsMadeiraImages.villageAerialShadow.src,
-        alt: 'Aerial view of a village in Madeira mountains',
+        image: madeiraImages.villageAerialShadow.src,
+        alt: madeiraImages.villageAerialShadow.alt,
         caption: 'West Coast Expansion Coverage',
       },
     ],
@@ -92,40 +92,40 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       {
         title: 'Keyholding + Home Care',
         blurb: 'Scheduled visits, humidity/leak checks, storm readiness, and photo reports.',
-        image: pexelsMadeiraImages.treeFramedValleyTown.src,
-        alt: 'Madeira valley town framed by pine trees',
+        image: madeiraImages.treeFramedValleyTown.src,
+        alt: madeiraImages.treeFramedValleyTown.alt,
         hrefKey: 'services',
         span: 'lg:col-span-5',
       },
       {
         title: 'Hosting Essentials',
         blurb: 'Guest messaging, check-ins, turnovers, restocking, and escalation handling.',
-        image: pexelsMadeiraImages.tobogganRideFunchal.src,
-        alt: 'Traditional toboggan ride in Funchal',
+        image: madeiraImages.tobogganRideFunchal.src,
+        alt: madeiraImages.tobogganRideFunchal.alt,
         hrefKey: 'pricing',
         span: 'lg:col-span-7',
       },
       {
         title: 'Full-Service AL Management',
         blurb: 'Listings, pricing, maintenance coordination, and AL/SIBA compliance support.',
-        image: pexelsMadeiraImages.mercadoMural.src,
-        alt: 'Mercado dos Lavradores mural in Funchal',
+        image: madeiraImages.mercadoMural.src,
+        alt: madeiraImages.mercadoMural.alt,
         hrefKey: 'guide',
         span: 'lg:col-span-4',
       },
       {
         title: 'Premium White-Glove (Phase 2)',
         blurb: 'Welcome packs, family-friendly concierge, and local experiences with vetted partners.',
-        image: pexelsMadeiraImages.villageRuggedMountains.src,
-        alt: 'Madeira village between rugged mountains',
+        image: madeiraImages.villageRuggedMountains.src,
+        alt: madeiraImages.villageRuggedMountains.alt,
         hrefKey: 'howItWorks',
         span: 'lg:col-span-4',
       },
       {
         title: 'Founder-Led Accountability',
         blurb: 'One WhatsApp line, monthly owner reporting, and no-surprise invoices.',
-        image: pexelsMadeiraImages.oceanfrontBench.src,
-        alt: 'People overlooking the Madeira oceanfront',
+        image: madeiraImages.oceanfrontBench.src,
+        alt: madeiraImages.oceanfrontBench.alt,
         hrefKey: 'about',
         span: 'lg:col-span-4',
       },
@@ -162,8 +162,8 @@ export const homepageContent: Record<Locale, HomePageContent> = {
   },
   pt: {
     metaDescription: 'Hosting boutique e cuidado de propriedade na Madeira para proprietários no estrangeiro que querem tranquilidade.',
-    heroBackgroundAlt: 'Aldeia costeira da Madeira com vinhas em socalcos',
-    finalBackgroundAlt: 'Pôr do sol aéreo sobre a costa da Madeira',
+    heroBackgroundAlt: madeiraImages.vineyardCoastalVillage.alt,
+    finalBackgroundAlt: madeiraImages.coastSunsetAerial.alt,
     heroBadge: 'Madeira Property Concierge',
     heroTitle: 'Hosting Boutique + Cuidado de Propriedade. Tranquilidade Real.',
     heroSubtitle:
@@ -172,18 +172,18 @@ export const homepageContent: Record<Locale, HomePageContent> = {
     secondaryCta: 'Ver Níveis de Serviço',
     mediaCards: [
       {
-        image: pexelsMadeiraImages.pontaHikers.src,
-        alt: 'Caminhantes no trilho da Ponta de Sao Lourenco',
+        image: madeiraImages.pontaHikers.src,
+        alt: madeiraImages.pontaHikers.alt,
         caption: 'Cuidado de Propriedade & Verificações Preventivas',
       },
       {
-        image: pexelsMadeiraImages.saoVicenteCoast.src,
-        alt: 'Ondas do Atlântico junto a Sao Vicente',
+        image: madeiraImages.saoVicenteCoast.src,
+        alt: madeiraImages.saoVicenteCoast.alt,
         caption: 'Experiência de Hóspede & Concierge',
       },
       {
-        image: pexelsMadeiraImages.villageAerialShadow.src,
-        alt: 'Vista aérea de uma aldeia nas montanhas da Madeira',
+        image: madeiraImages.villageAerialShadow.src,
+        alt: madeiraImages.villageAerialShadow.alt,
         caption: 'Cobertura em Expansão na Costa Oeste',
       },
     ],
@@ -199,40 +199,40 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       {
         title: 'Guarda de Chaves + Home Care',
         blurb: 'Visitas programadas, verificações de humidade/fugas, preparação para tempestades e fotos.',
-        image: pexelsMadeiraImages.treeFramedValleyTown.src,
-        alt: 'Aldeia madeirense enquadrada por pinheiros',
+        image: madeiraImages.treeFramedValleyTown.src,
+        alt: madeiraImages.treeFramedValleyTown.alt,
         hrefKey: 'services',
         span: 'lg:col-span-5',
       },
       {
         title: 'Hosting Essentials',
         blurb: 'Mensagens de hóspedes, check-ins, turnovers, reposição e gestão de incidentes.',
-        image: pexelsMadeiraImages.tobogganRideFunchal.src,
-        alt: 'Carros de cesto tradicionais no Funchal',
+        image: madeiraImages.tobogganRideFunchal.src,
+        alt: madeiraImages.tobogganRideFunchal.alt,
         hrefKey: 'pricing',
         span: 'lg:col-span-7',
       },
       {
         title: 'Gestão AL Full-Service',
         blurb: 'Anúncios, pricing, coordenação de manutenção e apoio de conformidade AL/SIBA.',
-        image: pexelsMadeiraImages.mercadoMural.src,
-        alt: 'Mural do Mercado dos Lavradores no Funchal',
+        image: madeiraImages.mercadoMural.src,
+        alt: madeiraImages.mercadoMural.alt,
         hrefKey: 'guide',
         span: 'lg:col-span-4',
       },
       {
         title: 'Premium White-Glove (Fase 2)',
         blurb: 'Welcome packs, concierge familiar e experiências locais com parceiros validados.',
-        image: pexelsMadeiraImages.villageRuggedMountains.src,
-        alt: 'Aldeia da Madeira entre montanhas escarpadas',
+        image: madeiraImages.villageRuggedMountains.src,
+        alt: madeiraImages.villageRuggedMountains.alt,
         hrefKey: 'howItWorks',
         span: 'lg:col-span-4',
       },
       {
         title: 'Responsabilidade Direta da Fundadora',
         blurb: 'Um número WhatsApp, relatório mensal ao proprietário e zero surpresas em faturas.',
-        image: pexelsMadeiraImages.oceanfrontBench.src,
-        alt: 'Pessoas a observar o oceano na Madeira',
+        image: madeiraImages.oceanfrontBench.src,
+        alt: madeiraImages.oceanfrontBench.alt,
         hrefKey: 'about',
         span: 'lg:col-span-4',
       },

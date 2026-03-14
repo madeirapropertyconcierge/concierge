@@ -7,7 +7,7 @@ import type { Locale } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import { getLocalizedBlogPosts } from '../../lib/blogData';
 import { breadcrumbJsonLd, absoluteUrl } from '../../lib/seo';
-import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 
 interface Props {
   lang: Locale;
@@ -70,8 +70,8 @@ const pageSchema = [
   heroEyebrow={copy.heroEyebrow}
   heroTitle={copy.heroTitle}
   heroSubtitle={copy.heroSubtitle}
-  heroImage={pexelsMadeiraImages.mountainRiverValley.src}
-  heroAlt={pexelsMadeiraImages.mountainRiverValley.alt}
+  heroImage={madeiraImages.mountainRiverValley.src}
+  heroAlt={madeiraImages.mountainRiverValley.alt}
   heroPrimaryCta={{ label: t(lang, 'nav.contact'), href: routes.contact }}
   heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
   jsonLd={pageSchema}

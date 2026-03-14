@@ -4,7 +4,7 @@ import Testimonials from '../sections/Testimonials.astro';
 import type { Locale } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import { homepageContent } from '../../lib/homepageContent';
-import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 
 interface Props {
   lang: Locale;
@@ -20,7 +20,7 @@ const copy = homepageContent[lang];
 
   <section class="relative isolate overflow-hidden px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-24 lg:pt-10">
     <img
-      src={pexelsMadeiraImages.vineyardCoastalVillage.src}
+      src={madeiraImages.vineyardCoastalVillage.src}
       alt={copy.heroBackgroundAlt}
       class="absolute inset-0 -z-20 h-full w-full object-cover"
       loading="eager"
@@ -115,7 +115,7 @@ const copy = homepageContent[lang];
         <a
           href={routes[tile.hrefKey]}
           class:list={[
-            'service-tile reveal aspect-[16/10]',
+            'service-tile reveal h-[18rem] sm:h-[22rem] lg:h-[24rem]',
             tile.span,
             index > 0 ? 'reveal-delay-1' : '',
           ]}
@@ -156,7 +156,7 @@ const copy = homepageContent[lang];
 
   <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <img
-      src={pexelsMadeiraImages.coastSunsetAerial.src}
+      src={madeiraImages.coastSunsetAerial.src}
       alt={copy.finalBackgroundAlt}
       class="absolute inset-0 -z-20 h-full w-full object-cover"
       loading="lazy"

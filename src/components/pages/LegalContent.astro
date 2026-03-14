@@ -5,7 +5,7 @@ import LegalSectionCard from '../legal/LegalSectionCard.astro';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
-import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 import { SITE } from '../../lib/constants';
 import { getLegalPageContent, type LegalPageType } from '../../lib/pageContent/legal';
 
@@ -51,8 +51,8 @@ const pageSchema = [
   heroEyebrow={page.heroEyebrow}
   heroTitle={page.heroTitle}
   heroSubtitle={page.heroSubtitle}
-  heroImage={pexelsMadeiraImages.yachtCoastline.src}
-  heroAlt={pexelsMadeiraImages.yachtCoastline.alt}
+  heroImage={madeiraImages.yachtCoastline.src}
+  heroAlt={madeiraImages.yachtCoastline.alt}
   heroPrimaryCta={{ label: lang === 'pt' ? 'Contacto' : 'Contact', href: routes.contact }}
   heroSecondaryCta={{ label: lang === 'pt' ? 'Início' : 'Home', href: routes.home }}
   jsonLd={pageSchema}

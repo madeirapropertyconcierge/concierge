@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { t } from '../i18n/utils';
 import { routeMap } from '../i18n/routes';
-import { pexelsMadeiraImages } from '../lib/pexelsImages';
+import { madeiraImages } from '../lib/madeiraImages';
 
 const routes = routeMap.en;
 ---
@@ -11,8 +11,8 @@ const routes = routeMap.en;
   <div class="relative overflow-hidden">
     <section class="relative isolate overflow-hidden px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
       <img
-        src={pexelsMadeiraImages.machicoFireFestival.src}
-        alt={pexelsMadeiraImages.machicoFireFestival.alt}
+        src={madeiraImages.machicoFireFestival.src}
+        alt={madeiraImages.machicoFireFestival.alt}
         class="absolute inset-0 -z-20 h-full w-full object-cover"
         loading="eager"
       />

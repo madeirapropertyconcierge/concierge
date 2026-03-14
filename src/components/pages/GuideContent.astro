@@ -5,7 +5,7 @@ import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
-import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 
 interface Props {
   lang: Locale;
@@ -124,8 +124,8 @@ const pageSchema = [
   heroEyebrow={copy.heroEyebrow}
   heroTitle={copy.heroTitle}
   heroSubtitle={copy.heroSubtitle}
-  heroImage={pexelsMadeiraImages.villageRuggedMountains.src}
-  heroAlt={pexelsMadeiraImages.villageRuggedMountains.alt}
+  heroImage={madeiraImages.villageRuggedMountains.src}
+  heroAlt={madeiraImages.villageRuggedMountains.alt}
   heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
   heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
   jsonLd={pageSchema}
@@ -149,8 +149,8 @@ const pageSchema = [
 
     <article class="media-card reveal min-h-[22rem]">
       <img
-        src={pexelsMadeiraImages.mercadoMural.src}
-        alt={pexelsMadeiraImages.mercadoMural.alt}
+        src={madeiraImages.mercadoMural.src}
+        alt={madeiraImages.mercadoMural.alt}
         class="h-full w-full object-cover"
         loading="lazy"
       />
@@ -203,8 +203,8 @@ const pageSchema = [
 
   <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <img
-      src={pexelsMadeiraImages.saoVicenteCoast.src}
-      alt={pexelsMadeiraImages.saoVicenteCoast.alt}
+      src={madeiraImages.saoVicenteCoast.src}
+      alt={madeiraImages.saoVicenteCoast.alt}
       class="absolute inset-0 -z-20 h-full w-full object-cover"
       loading="lazy"
     />

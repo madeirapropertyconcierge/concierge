@@ -5,7 +5,7 @@ import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd, serviceListJsonLd } from '../../lib/seo';
-import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 
 interface Props {
   lang: Locale;
@@ -41,7 +41,7 @@ const copy =
           {
             title: 'Tier B - Pacote de Cuidados Standard',
             price: '€180/mês',
-            image: pexelsMadeiraImages.coastalVillageAerial.src,
+            image: madeiraImages.coastalVillageAerial.src,
             audience:
               'A nossa opção mais popular, oferecendo monitorização reforçada e coordenação local para proprietários que vivem no estrangeiro.',
             bullets: [
@@ -53,7 +53,7 @@ const copy =
           {
             title: 'Tier C - Pacote Concierge Premium',
             price: '€295/mês',
-            image: pexelsMadeiraImages.santanaCottageGarden.src,
+            image: madeiraImages.santanaCottageGarden.src,
             audience:
               'Um serviço totalmente gerido para proprietários internacionais que procuram total tranquilidade.',
             bullets: [
@@ -65,7 +65,7 @@ const copy =
           {
             title: 'Serviços Concierge Personalizados',
             price: 'Desde €35/hora',
-            image: pexelsMadeiraImages.santanaHouseFacade.src,
+            image: madeiraImages.santanaHouseFacade.src,
             audience:
               'Apoio flexível e sob pedido para situações que exigem uma pessoa de confiança no terreno.',
             bullets: [
@@ -117,7 +117,7 @@ const copy =
           {
             title: 'Tier B - Standard Care Package',
             price: '€180/month',
-            image: pexelsMadeiraImages.coastalVillageAerial.src,
+            image: madeiraImages.coastalVillageAerial.src,
             audience:
               'Our most popular option, offering enhanced monitoring and local coordination for owners living abroad.',
             bullets: [
@@ -129,7 +129,7 @@ const copy =
           {
             title: 'Tier C - Premium Concierge Package',
             price: '€295/month',
-            image: pexelsMadeiraImages.santanaCottageGarden.src,
+            image: madeiraImages.santanaCottageGarden.src,
             audience:
               'A fully managed service for international owners seeking complete peace of mind.',
             bullets: [
@@ -141,7 +141,7 @@ const copy =
           {
             title: 'Bespoke Concierge Services',
             price: 'From €35/hour',
-            image: pexelsMadeiraImages.santanaHouseFacade.src,
+            image: madeiraImages.santanaHouseFacade.src,
             audience:
               'Flexible, on-demand support for situations that require a trusted person on the ground.',
             bullets: [
@@ -190,8 +190,8 @@ const pageSchema = [
   heroEyebrow={copy.heroEyebrow}
   heroTitle={copy.heroTitle}
   heroSubtitle={copy.heroSubtitle}
-  heroImage={pexelsMadeiraImages.mercadoMural.src}
-  heroAlt={pexelsMadeiraImages.mercadoMural.alt}
+  heroImage={madeiraImages.mercadoMural.src}
+  heroAlt={madeiraImages.mercadoMural.alt}
   heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
   heroSecondaryCta={{ label: copy.ctaSecondary, href: routes.pricing }}
   jsonLd={pageSchema}
@@ -248,8 +248,8 @@ const pageSchema = [
 
   <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <img
-      src={pexelsMadeiraImages.cliffsPeninsula.src}
-      alt={pexelsMadeiraImages.cliffsPeninsula.alt}
+      src={madeiraImages.cliffsPeninsula.src}
+      alt={madeiraImages.cliffsPeninsula.alt}
       class="absolute inset-0 -z-20 h-full w-full object-cover"
       loading="lazy"
     />

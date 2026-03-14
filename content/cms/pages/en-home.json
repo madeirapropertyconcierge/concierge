@@ -53,10 +53,10 @@
     {
       "id": "image:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(1) > img:nth-of-type(1)",
       "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(1) > img:nth-of-type(1)",
-      "src": "https://images.pexels.com/photos/33637860/pexels-photo-33637860.jpeg?auto=compress&cs=tinysrgb&w=2000",
+      "src": "/images/library/1773413290313-img-1407.jpg",
       "alt": {
-        "en": "Madeira village framed by steep mountains",
-        "pt": "Aldeia da Madeira enquadrada por montanhas escarpadas"
+        "en": "Terraced valley village surrounded by green mountains in Madeira",
+        "pt": "Aldeia em socalcos rodeada por montanhas verdes na Madeira"
       },
       "attributionName": "",
       "attributionUrl": "",

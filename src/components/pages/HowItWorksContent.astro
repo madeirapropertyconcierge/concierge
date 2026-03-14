@@ -5,7 +5,7 @@ import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
-import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 
 interface Props {
   lang: Locale;
@@ -96,8 +96,8 @@ const pageSchema = [
   heroEyebrow={copy.heroEyebrow}
   heroTitle={copy.heroTitle}
   heroSubtitle={copy.heroSubtitle}
-  heroImage={pexelsMadeiraImages.pontaHikers.src}
-  heroAlt={pexelsMadeiraImages.pontaHikers.alt}
+  heroImage={madeiraImages.pontaHikers.src}
+  heroAlt={madeiraImages.pontaHikers.alt}
   heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
   heroSecondaryCta={{ label: t(lang, 'nav.pricing'), href: routes.pricing }}
   jsonLd={pageSchema}
@@ -129,7 +129,7 @@ const pageSchema = [
       </div>
 
       <article class="media-card reveal reveal-delay-1 min-h-[20rem]">
-        <img src={pexelsMadeiraImages.tobogganRideFunchal.src} alt={pexelsMadeiraImages.tobogganRideFunchal.alt} class="h-full w-full object-cover" loading="lazy" />
+        <img src={madeiraImages.tobogganRideFunchal.src} alt={madeiraImages.tobogganRideFunchal.alt} class="h-full w-full object-cover" loading="lazy" />
         <div class="media-card-caption">{copy.mediaCaption}</div>
       </article>
     </div>
@@ -151,8 +151,8 @@ const pageSchema = [
 
   <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <img
-      src={pexelsMadeiraImages.funchalBayBoats.src}
-      alt={pexelsMadeiraImages.funchalBayBoats.alt}
+      src={madeiraImages.funchalBayBoats.src}
+      alt={madeiraImages.funchalBayBoats.alt}
       class="absolute inset-0 -z-20 h-full w-full object-cover"
       loading="lazy"
     />

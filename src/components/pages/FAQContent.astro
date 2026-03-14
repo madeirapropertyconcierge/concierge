@@ -6,7 +6,7 @@ import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
-import { pexelsMadeiraImages } from '../../lib/pexelsImages';
+import { madeiraImages } from '../../lib/madeiraImages';
 import { getFaqPageContent } from '../../lib/pageContent/faq';
 
 interface Props {
@@ -45,8 +45,8 @@ const pageSchema = [
   heroEyebrow="FAQ"
   heroTitle={copy.heroTitle}
   heroSubtitle={copy.heroSubtitle}
-  heroImage={pexelsMadeiraImages.fruitMarketStalls.src}
-  heroAlt={pexelsMadeiraImages.fruitMarketStalls.alt}
+  heroImage={madeiraImages.fruitMarketStalls.src}
+  heroAlt={madeiraImages.fruitMarketStalls.alt}
   heroPrimaryCta={{ label: copy.closing.cta, href: routes.contact }}
   heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
   jsonLd={pageSchema}
@@ -60,7 +60,7 @@ const pageSchema = [
   </section>
 
   <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
-    <img src={pexelsMadeiraImages.machicoFireFestival.src} alt={pexelsMadeiraImages.machicoFireFestival.alt} class="absolute inset-0 -z-20 h-full w-full object-cover" loading="lazy" />
+    <img src={madeiraImages.machicoFireFestival.src} alt={madeiraImages.machicoFireFestival.alt} class="absolute inset-0 -z-20 h-full w-full object-cover" loading="lazy" />
     <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
 
     <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">

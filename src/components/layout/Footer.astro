@@ -3,7 +3,6 @@ import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import { SITE } from '../../lib/constants';
 import type { Locale } from '../../i18n/utils';
-import { PEXELS_LICENSE_URL } from '../../lib/pexelsImages';
 
 interface Props {
   lang: Locale;
@@ -25,7 +24,6 @@ const footerCopy =
           'Tier C: Gestão Full-Service',
           'Tier D: White-Glove',
         ],
-        imageCredits: 'Créditos de imagens',
         complaintsBook: 'Livro de Reclamações',
         adrInfo: 'RAL (consumo)',
       }
@@ -41,7 +39,6 @@ const footerCopy =
           'Tier C: Full-Service',
           'Tier D: White-Glove',
         ],
-        imageCredits: 'Image credits',
         complaintsBook: 'Complaints Book',
         adrInfo: 'Consumer ADR',
       };
@@ -120,19 +117,7 @@ const footerCopy =
     </div>
 
     <div class="mt-12 flex flex-col gap-3 border-t border-white/14 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
-      <div class="space-y-1">
-        <p>{t(lang, 'footer.copyright')}</p>
-        <p>
-          {footerCopy.imageCredits}:{' '}
-          <a href={PEXELS_LICENSE_URL} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white">
-            Pexels
-          </a>{' '}
-          ·{' '}
-          <a href={`${routes.about}#image-attribution`} class="transition-colors hover:text-white">
-            {lang === 'pt' ? 'fotógrafos' : 'photographers'}
-          </a>
-        </p>
-      </div>
+      <p>{t(lang, 'footer.copyright')}</p>
       <div class="flex flex-wrap gap-6">
         <a
           href="#"
