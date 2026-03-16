@@ -19,7 +19,134 @@
       "canonical": "/pt/como-funciona"
     }
   },
-  "texts": [],
+  "texts": [
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2)",
+      "kind": "block",
+      "value": {
+        "en": "From first diagnostic to monthly rhythm, each phase is designed to give you peace of mind that you're property is being managed and taken care of in your absense.",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > h2:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > h2:nth-of-type(1)",
+      "kind": "inline",
+      "value": {
+        "en": "Diagnostic Call",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > p:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(1) > p:nth-of-type(2)",
+      "kind": "block",
+      "value": {
+        "en": "We start with a 30-minute call to map your property needs and goals.",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(2) > p:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > article:nth-of-type(2) > p:nth-of-type(2)",
+      "kind": "block",
+      "value": {
+        "en": "We assess property condition and compliance gaps (if you're looking to rent/ AL).",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > span:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > span:nth-of-type(2)",
+      "kind": "inline",
+      "value": {
+        "en": "Monthly owner report with occupancy, revenue, costs, and maintenance (for home that are generating revenue)",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > span:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > span:nth-of-type(2)",
+      "kind": "inline",
+      "value": {
+        "en": "Cleaning checklist with photo proof",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > span:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > span:nth-of-type(2)",
+      "kind": "inline",
+      "value": {
+        "en": "Maintenance and issue log with clear next actions",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > span:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > span:nth-of-type(2)",
+      "kind": "inline",
+      "value": {
+        "en": "SLA targets: owner response within 4 business hours; guest emergencies within 30 mins",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > span:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > span:nth-of-type(2)",
+      "kind": "inline",
+      "value": {
+        "en": "Single WhatsApp contact plus updates on critical decisions",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5)",
+      "kind": "block",
+      "value": {
+        "en": "Single WhatsApp contact plus updates on critical decisions",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "Single WhatsApp contact plus updates on critical decisions",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)",
+      "kind": "block",
+      "value": {
+        "en": "SLA targets: owner response within 4 business hours; guest emergencies within 30 mins",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "SLA targets: owner response within 4 business hours; guest emergencies within 30 mins",
+        "pt": ""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "Single WhatsApp contact plus updates on critical decisions",
+        "pt": ""
+      }
+    }
+  ],
   "links": [],
   "images": []
 }
