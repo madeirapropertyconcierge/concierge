@@ -21,5 +21,22 @@
   },
   "texts": [],
   "links": [],
-  "images": []
+  "images": [
+    {
+      "id": "image:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > img:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > img:nth-of-type(1)",
+      "src": "/images/about/lisa-and-marley-walk.jpg",
+      "alt": {
+        "en": "Lisa with Marley Madeira",
+        "pt": "Lisa with Marley Madeira"
+      },
+      "attributionName": "Lisa with Marley Madeira",
+      "attributionUrl": "",
+      "licenseUrl": "",
+      "caption": {
+        "en": "Lisa with Marley Madeira",
+        "pt": "Lisa with Marley Madeira"
+      }
+    }
+  ]
 }
