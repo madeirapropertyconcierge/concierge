@@ -11,16 +11,25 @@ import {
   listBlogPosts,
   replaceBlogPosts,
   savePageDocument,
+  saveServicePackageDocument,
 } from '../../../cms/content-loader';
 import { getGithubEnv } from '../../../cms/config';
-import { normalizePublishRequest } from '../../../cms/content-normalization';
+import {
+  normalizePublishRequest,
+  normalizeServicePackageDocument,
+} from '../../../cms/content-normalization';
 import {
   commitFiles,
   PublishConflictError,
   type PublishFile,
 } from '../../../cms/github-publisher';
 import { getPublishErrorResponse } from '../../../cms/publish-errors';
-import { cmsPublishRequestSchema, type CmsBlogPost } from '../../../cms/schema';
+import {
+  cmsPublishRequestSchema,
+  cmsServicePackageDocumentSchema,
+  type CmsBlogPost,
+  type CmsServicePackageDocument,
+} from '../../../cms/schema';
 
 function isValidCmsUrl(value: string): boolean {
   if (!value) {
@@ -98,6 +107,26 @@ function validateBlogPosts(posts: CmsBlogPost[]): void {
   }
 }
 
+function validatePackages(packages: CmsServicePackageDocument): void {
+  for (const entry of packages.packages) {
+    if (!entry.title.en.trim()) {
+      throw new ApiError(400, `Package "${entry.key}" is missing en.title`);
+    }
+
+    if (!entry.title.pt.trim()) {
+      throw new ApiError(400, `Package "${entry.key}" is missing pt.title`);
+    }
+
+    if (!entry.audience.en.trim()) {
+      throw new ApiError(400, `Package "${entry.key}" is missing en.audience`);
+    }
+
+    if (!entry.audience.pt.trim()) {
+      throw new ApiError(400, `Package "${entry.key}" is missing pt.audience`);
+    }
+  }
+}
+
 function toJsonFile(path: string, payload: unknown): PublishFile {
   return {
     path,
@@ -116,6 +145,7 @@ export const POST: APIRoute = async (context) => {
     );
 
     validateBlogPosts(payload.blogPosts);
+    validatePackages(payload.packages);
 
     const files: PublishFile[] = [];
     for (const page of payload.pages) {
@@ -143,6 +173,13 @@ export const POST: APIRoute = async (context) => {
       files.push(toJsonFile(`content/cms/blog/posts/${post.id}.json`, post));
     }
 
+    files.push(
+      toJsonFile(
+        'content/cms/packages.json',
+        cmsServicePackageDocumentSchema.parse(payload.packages),
+      ),
+    );
+
     const existingPosts = await listBlogPosts();
     const incomingIds = new Set(payload.blogPosts.map((post) => post.id));
     for (const existingPost of existingPosts) {
@@ -166,6 +203,12 @@ export const POST: APIRoute = async (context) => {
 
     try {
       await replaceBlogPosts(payload.blogPosts);
+    } catch {
+      // Ignore read-only filesystem failures in serverless runtime.
+    }
+
+    try {
+      await saveServicePackageDocument(normalizeServicePackageDocument(payload.packages));
     } catch {
       // Ignore read-only filesystem failures in serverless runtime.
     }

@@ -3,7 +3,7 @@ import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import { SITE } from '../../lib/constants';
 import type { Locale } from '../../i18n/utils';
-import { getFooterServiceLabels } from '../../lib/pageContent/packages';
+import { loadCoreServicePackages } from '../../lib/pageContent/packages';
 
 interface Props {
   lang: Locale;
@@ -11,7 +11,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const serviceLinks = getFooterServiceLabels(lang);
+const serviceLinks = await loadCoreServicePackages(lang);
 const footerCopy =
   lang === 'pt'
     ? {
@@ -71,8 +71,20 @@ const footerCopy =
       <div class="lg:col-span-2">
         <h4 class="footer-heading">{t(lang, 'footer.services')}</h4>
         <ul class="footer-links">
-          {serviceLinks.map((label) => (
-            <li><a href={routes.services}>{label}</a></li>
+          {serviceLinks.map((item) => (
+            <li>
+              <a
+                href={routes.services}
+                data-cms-owner="packages"
+                data-cms-shared-doc="packages"
+                data-cms-shared-key={item.key}
+                data-cms-shared-field="title"
+                data-cms-kind="inline"
+                data-cms-source={item.title}
+              >
+                {item.title}
+              </a>
+            </li>
           ))}
           <li><a href={routes.pricing}>{t(lang, 'nav.pricing')}</a></li>
         </ul>

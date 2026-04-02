@@ -1,9 +1,10 @@
 ---
 import WhatsAppButton from '../WhatsAppButton.astro';
 import Testimonials from '../sections/Testimonials.astro';
+import SharedPackageText from '../cms/SharedPackageText.astro';
 import type { Locale } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
-import { homepageContent } from '../../lib/homepageContent';
+import { getHomepageContent } from '../../lib/homepageContent';
 import { madeiraImages } from '../../lib/madeiraImages';
 
 interface Props {
@@ -12,7 +13,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const copy = homepageContent[lang];
+const copy = await getHomepageContent(lang);
 ---
 
 <div class="relative overflow-hidden">
@@ -101,7 +102,7 @@ const copy = homepageContent[lang];
     </div>
   </section>
 
-  <section data-cms-ignore="all" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
     <div class="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div class="max-w-2xl">
         <p class="eyebrow">{copy.architectureEyebrow}</p>
@@ -122,15 +123,29 @@ const copy = homepageContent[lang];
         >
           <img src={tile.image} alt={tile.alt} class="h-full w-full object-cover" loading="lazy" />
           <div class="service-overlay">
-            <h3 class="text-2xl text-white sm:text-3xl">{tile.title}</h3>
-            <p class="text-sm text-white/82 sm:text-base">{tile.blurb}</p>
+            <SharedPackageText
+              packageKey={tile.packageKey}
+              field="title"
+              value={tile.title}
+              kind="inline"
+              as="h3"
+              class="text-2xl text-white sm:text-3xl"
+            />
+            <SharedPackageText
+              packageKey={tile.packageKey}
+              field="homeBlurb"
+              value={tile.blurb}
+              kind="block"
+              as="p"
+              class="text-sm text-white/82 sm:text-base"
+            />
           </div>
         </a>
       ))}
     </div>
   </section>
 
-  <section data-cms-ignore="all" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+  <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <div class="premium-panel p-6 sm:p-8 lg:p-10">
       <div class="mb-8 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
         <div>

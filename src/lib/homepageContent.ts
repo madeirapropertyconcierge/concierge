@@ -1,7 +1,7 @@
 import type { Locale } from '../i18n/utils';
 import type { RouteKey } from '../i18n/routes';
 import { madeiraImages } from './madeiraImages';
-import { getCoreServicePackages, type ServicePackageKey } from './pageContent/packages';
+import { loadCoreServicePackages, type ServicePackageKey } from './pageContent/packages';
 
 export interface HomeTrustSignal {
   value: string;
@@ -9,6 +9,7 @@ export interface HomeTrustSignal {
 }
 
 export interface HomeServiceTile {
+  packageKey: Exclude<ServicePackageKey, 'addOns'>;
   title: string;
   blurb: string;
   image: string;
@@ -53,6 +54,8 @@ export interface HomePageContent {
   finalSecondaryCta: string;
 }
 
+type StaticHomePageContent = Omit<HomePageContent, 'serviceTiles'>;
+
 const homeTileConfig: Record<
   Exclude<ServicePackageKey, 'addOns'>,
   { image: string; alt: string; hrefKey: RouteKey; span: string }
@@ -89,15 +92,18 @@ const homeTileConfig: Record<
   },
 };
 
-function buildHomeServiceTiles(locale: Locale): HomeServiceTile[] {
-  return getCoreServicePackages(locale).map((item) => ({
+async function buildHomeServiceTiles(locale: Locale): Promise<HomeServiceTile[]> {
+  const packages = await loadCoreServicePackages(locale);
+
+  return packages.map((item) => ({
+    packageKey: item.key,
     title: item.title,
     blurb: item.homeBlurb,
     ...homeTileConfig[item.key],
   }));
 }
 
-export const homepageContent: Record<Locale, HomePageContent> = {
+const staticHomepageContent: Record<Locale, StaticHomePageContent> = {
   en: {
     metaDescription: 'Boutique hosting and property care in Madeira for overseas owners who want peace of mind.',
     heroBackgroundAlt: madeiraImages.vineyardCoastalVillage.alt,
@@ -133,7 +139,6 @@ export const homepageContent: Record<Locale, HomePageContent> = {
     architectureEyebrow: 'Built For Overseas Owners',
     architectureTitle: 'Small on purpose. One owner, one point of contact, full accountability.',
     architectureLink: 'How We Operate',
-    serviceTiles: buildHomeServiceTiles('en'),
     processEyebrow: 'Owner Journey',
     processTitle: 'Clear onboarding. Predictable operations.',
     processLink: 'View The Process',
@@ -199,7 +204,6 @@ export const homepageContent: Record<Locale, HomePageContent> = {
     architectureEyebrow: 'Feito Para Proprietarios no Estrangeiro',
     architectureTitle: 'Pequenos de proposito. Uma responsavel, um ponto de contacto, total responsabilidade.',
     architectureLink: 'Como Operamos',
-    serviceTiles: buildHomeServiceTiles('pt'),
     processEyebrow: 'Jornada do Proprietario',
     processTitle: 'Integracao clara. Operacao previsivel.',
     processLink: 'Ver O Processo',
@@ -231,3 +235,10 @@ export const homepageContent: Record<Locale, HomePageContent> = {
     finalSecondaryCta: 'Ver Precos',
   },
 };
+
+export async function getHomepageContent(locale: Locale): Promise<HomePageContent> {
+  return {
+    ...staticHomepageContent[locale],
+    serviceTiles: await buildHomeServiceTiles(locale),
+  };
+}

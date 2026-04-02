@@ -1,7 +1,7 @@
 import type { Locale } from '../../i18n/utils';
-import { getServicePackages, type PricingTier } from './packages';
+import { loadServicePackages, type ServicePackage } from './packages';
 
-export type { PricingTier } from './packages';
+export type { ServicePackage } from './packages';
 
 export interface PricingPageContent {
   heroEyebrow: string;
@@ -10,7 +10,7 @@ export interface PricingPageContent {
   customQuote: string;
   includesLabel: string;
   idealForLabel: string;
-  tiers: PricingTier[];
+  tiers: ServicePackage[];
   transparencyTitle: string;
   transparencyItems: string[];
   ctaTitle: string;
@@ -66,9 +66,9 @@ const pricingPageCopy = {
   },
 } as const satisfies Record<Omit<Locale, never>, Omit<PricingPageContent, 'tiers'>>;
 
-export function getPricingPageContent(lang: Locale): PricingPageContent {
+export async function getPricingPageContent(lang: Locale): Promise<PricingPageContent> {
   return {
     ...pricingPageCopy[lang],
-    tiers: getServicePackages(lang),
+    tiers: await loadServicePackages(lang),
   };
 }

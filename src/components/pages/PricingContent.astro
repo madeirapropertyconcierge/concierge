@@ -15,7 +15,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const copy = getPricingPageContent(lang);
+const copy = await getPricingPageContent(lang);
 
 const pageSchema = [
   breadcrumbJsonLd([
@@ -48,7 +48,7 @@ const pageSchema = [
   heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
   jsonLd={pageSchema}
 >
-  <section data-cms-ignore="all" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
     <div class="pricing-grid grid gap-6 md:grid-cols-2 xl:grid-cols-4">
       {copy.tiers.map((tier, index) => (
         <PricingTierCard
@@ -65,7 +65,7 @@ const pageSchema = [
     </div>
   </section>
 
-  <section data-cms-ignore="all" class="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+  <section class="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <div class="premium-panel p-6 sm:p-8">
       <p class="eyebrow">{copy.transparencyTitle}</p>
       <div class="mt-5 grid gap-3 sm:grid-cols-3">
@@ -79,7 +79,7 @@ const pageSchema = [
     </div>
   </section>
 
-  <section data-cms-ignore="all" class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+  <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <img
       src={madeiraImages.machicoFireFestival.src}
       alt={madeiraImages.machicoFireFestival.alt}

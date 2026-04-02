@@ -1,8 +1,9 @@
 ---
-import type { PricingTier } from '../../lib/pageContent/packages';
+import SharedPackageText from '../cms/SharedPackageText.astro';
+import type { ServicePackage } from '../../lib/pageContent/packages';
 
 interface Props {
-  tier: PricingTier;
+  tier: ServicePackage;
   index: number;
   customQuoteLabel: string;
   primaryCtaLabel: string;
@@ -31,9 +32,30 @@ const {
   ]}
 >
   <header class="min-h-[10.75rem]">
-    <p class="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ocean-blue/85">{tier.tierLabel}</p>
-    <h2 class="mt-2 text-3xl text-charcoal">{tier.title}</h2>
-    <p class="mt-2 text-sm leading-relaxed text-charcoal/66">{tier.audience}</p>
+    <SharedPackageText
+      packageKey={tier.key}
+      field="tierLabel"
+      value={tier.tierLabel}
+      kind="inline"
+      as="p"
+      class="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ocean-blue/85"
+    />
+    <SharedPackageText
+      packageKey={tier.key}
+      field="title"
+      value={tier.title}
+      kind="inline"
+      as="h2"
+      class="mt-2 text-3xl text-charcoal"
+    />
+    <SharedPackageText
+      packageKey={tier.key}
+      field="audience"
+      value={tier.audience}
+      kind="block"
+      as="p"
+      class="mt-2 text-sm leading-relaxed text-charcoal/66"
+    />
   </header>
 
   <div
@@ -44,9 +66,23 @@ const {
   >
     {tier.price ? (
       <div class="flex flex-col gap-1">
-        <p class="text-3xl leading-tight text-charcoal sm:text-4xl">{tier.price.headline}</p>
+        <SharedPackageText
+          packageKey={tier.key}
+          field="priceHeadline"
+          value={tier.price.headline}
+          kind="inline"
+          as="p"
+          class="text-3xl leading-tight text-charcoal sm:text-4xl"
+        />
         {tier.price.detail && (
-          <p class="max-w-[17rem] text-sm leading-relaxed text-charcoal/64">{tier.price.detail}</p>
+          <SharedPackageText
+            packageKey={tier.key}
+            field="priceDetail"
+            value={tier.price.detail}
+            kind="block"
+            as="p"
+            class="max-w-[17rem] text-sm leading-relaxed text-charcoal/64"
+          />
         )}
       </div>
     ) : (
@@ -75,10 +111,17 @@ const {
   >
     <p class="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ocean-blue/85">{includesLabel}</p>
     <ul class="mt-3 grid gap-3 text-sm text-charcoal/72">
-      {tier.features.map((feature) => (
+      {tier.features.map((feature, featureIndex) => (
         <li class="flex items-start gap-2.5">
           <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ocean-blue"></span>
-          <span>{feature}</span>
+          <SharedPackageText
+            packageKey={tier.key}
+            field="feature"
+            index={featureIndex}
+            value={feature}
+            kind="block"
+            as="span"
+          />
         </li>
       ))}
     </ul>
@@ -86,7 +129,14 @@ const {
     {tier.idealFor && (
       <div class="mt-6 border-t border-charcoal/10 pt-5">
         <p class="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-ocean-blue/85">{idealForLabel}</p>
-        <p class="mt-2 text-sm leading-relaxed text-charcoal/72">{tier.idealFor}</p>
+        <SharedPackageText
+          packageKey={tier.key}
+          field="idealFor"
+          value={tier.idealFor}
+          kind="block"
+          as="p"
+          class="mt-2 text-sm leading-relaxed text-charcoal/72"
+        />
       </div>
     )}
   </div>

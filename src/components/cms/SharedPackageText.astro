@@ -1,0 +1,39 @@
+---
+import { renderBlockMarkdown, renderInlineMarkdown } from '../../cms/markdown';
+import type { ServicePackageKey } from '../../lib/pageContent/packageCatalog';
+
+interface Props {
+  packageKey: ServicePackageKey;
+  field: string;
+  value: string;
+  kind: 'inline' | 'block';
+  as?: keyof HTMLElementTagNameMap;
+  index?: number;
+  class?: string;
+}
+
+const {
+  packageKey,
+  field,
+  value,
+  kind,
+  as = 'span',
+  index,
+} = Astro.props;
+
+const Tag = as as keyof HTMLElementTagNameMap;
+const className = Astro.props.class;
+const html = kind === 'block' ? renderBlockMarkdown(value) : renderInlineMarkdown(value);
+---
+
+<Tag
+  class={className}
+  data-cms-owner="packages"
+  data-cms-shared-doc="packages"
+  data-cms-shared-key={packageKey}
+  data-cms-shared-field={field}
+  data-cms-shared-index={index === undefined ? undefined : String(index)}
+  data-cms-kind={kind}
+  data-cms-source={value}
+  set:html={html}
+/>

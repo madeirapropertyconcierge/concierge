@@ -5,11 +5,15 @@ import {
   cmsPageDocumentSchema,
   type CmsBlogPost,
   type CmsPageDocument,
+  cmsServicePackageDocumentSchema,
+  type CmsServicePackageDocument,
 } from './schema';
+import { defaultServicePackageDocument } from '../lib/pageContent/packageCatalog';
 
 const CMS_ROOT = resolve(process.cwd(), 'content/cms');
 const PAGE_DIR = resolve(CMS_ROOT, 'pages');
 const BLOG_DIR = resolve(CMS_ROOT, 'blog/posts');
+const PACKAGE_FILE = resolve(CMS_ROOT, 'packages.json');
 
 function defaultSeoLocale(canonical = '') {
   return {
@@ -33,6 +37,34 @@ export function createDefaultPageDocument(pageId: string): CmsPageDocument {
     texts: [],
     links: [],
     images: [],
+  };
+}
+
+export function createDefaultServicePackageDocument(): CmsServicePackageDocument {
+  return {
+    ...defaultServicePackageDocument,
+    packages: defaultServicePackageDocument.packages.map((entry) => ({
+      ...entry,
+      tierLabel: { ...entry.tierLabel },
+      title: { ...entry.title },
+      price: entry.price
+        ? {
+            headline: { ...entry.price.headline },
+            detail: { ...entry.price.detail },
+          }
+        : null,
+      audience: { ...entry.audience },
+      features: {
+        en: [...entry.features.en],
+        pt: [...entry.features.pt],
+      },
+      idealFor: { ...entry.idealFor },
+      servicesBullets: {
+        en: [...entry.servicesBullets.en],
+        pt: [...entry.servicesBullets.pt],
+      },
+      homeBlurb: { ...entry.homeBlurb },
+    })),
   };
 }
 
@@ -86,6 +118,17 @@ export async function loadPageDocument(pageId: string): Promise<CmsPageDocument>
   return cmsPageDocumentSchema.parse(raw);
 }
 
+export async function loadServicePackageDocument(): Promise<CmsServicePackageDocument> {
+  await ensureCmsDirectories();
+  const raw = await readJsonFile<unknown>(PACKAGE_FILE);
+
+  if (!raw) {
+    return createDefaultServicePackageDocument();
+  }
+
+  return cmsServicePackageDocumentSchema.parse(raw);
+}
+
 export async function savePageDocument(document: CmsPageDocument): Promise<void> {
   await ensureCmsDirectories();
   const parsed = cmsPageDocumentSchema.parse({
@@ -95,6 +138,18 @@ export async function savePageDocument(document: CmsPageDocument): Promise<void>
 
   const path = resolve(PAGE_DIR, `${parsed.pageId}.json`);
   await writeJsonFile(path, parsed);
+}
+
+export async function saveServicePackageDocument(
+  document: CmsServicePackageDocument,
+): Promise<void> {
+  await ensureCmsDirectories();
+  const parsed = cmsServicePackageDocumentSchema.parse({
+    ...document,
+    updatedAt: new Date().toISOString(),
+  });
+
+  await writeJsonFile(PACKAGE_FILE, parsed);
 }
 
 export async function listPageDocuments(): Promise<CmsPageDocument[]> {
@@ -202,6 +257,14 @@ export async function listCmsFilesForPublish(): Promise<
 
   await addDirectory(PAGE_DIR, 'content/cms/pages');
   await addDirectory(BLOG_DIR, 'content/cms/blog/posts');
+  const packagesContent = await fs.readFile(PACKAGE_FILE, 'utf-8').catch(() => null);
+  if (packagesContent) {
+    files.push({
+      path: 'content/cms/packages.json',
+      content: packagesContent,
+      encoding: 'utf-8',
+    });
+  }
 
   return files;
 }

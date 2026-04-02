@@ -5,6 +5,8 @@ import type {
   CmsLinkField,
   CmsPageDocument,
   CmsPublishRequest,
+  CmsServicePackageDocument,
+  CmsServicePackageEntry,
   CmsTextField,
 } from './schema';
 
@@ -85,6 +87,40 @@ export function normalizeBlogPost(post: CmsBlogPost): CmsBlogPost {
   };
 }
 
+export function normalizeServicePackageEntry(entry: CmsServicePackageEntry): CmsServicePackageEntry {
+  return {
+    ...entry,
+    tierLabel: normalizeLocaleText(entry.tierLabel),
+    title: normalizeLocaleText(entry.title),
+    price: entry.price
+      ? {
+          headline: normalizeLocaleText(entry.price.headline),
+          detail: normalizeLocaleText(entry.price.detail),
+        }
+      : null,
+    audience: normalizeLocaleText(entry.audience),
+    features: {
+      en: entry.features.en.map((item) => normalizeCmsText(item)),
+      pt: entry.features.pt.map((item) => normalizeCmsText(item)),
+    },
+    idealFor: normalizeLocaleText(entry.idealFor),
+    servicesBullets: {
+      en: entry.servicesBullets.en.map((item) => normalizeCmsText(item)),
+      pt: entry.servicesBullets.pt.map((item) => normalizeCmsText(item)),
+    },
+    homeBlurb: normalizeLocaleText(entry.homeBlurb),
+  };
+}
+
+export function normalizeServicePackageDocument(
+  document: CmsServicePackageDocument,
+): CmsServicePackageDocument {
+  return {
+    ...document,
+    packages: document.packages.map(normalizeServicePackageEntry),
+  };
+}
+
 export function normalizePageDocument(page: CmsPageDocument): CmsPageDocument {
   return {
     ...page,
@@ -103,5 +139,6 @@ export function normalizePublishRequest(payload: CmsPublishRequest): CmsPublishR
     ...payload,
     pages: payload.pages.map(normalizePageDocument),
     blogPosts: payload.blogPosts.map(normalizeBlogPost),
+    packages: normalizeServicePackageDocument(payload.packages),
   };
 }

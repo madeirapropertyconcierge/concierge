@@ -2,6 +2,7 @@ import { describe, expect, it } from 'bun:test';
 import { normalizePublishRequest } from './content-normalization';
 import type { CmsPublishRequest } from './schema';
 import { normalizeCmsText } from './text-normalization';
+import { defaultServicePackageDocument } from '../lib/pageContent/packageCatalog';
 
 describe('cms text normalization', () => {
   it('repairs common UTF-8 mojibake', () => {
@@ -98,6 +99,7 @@ describe('cms text normalization', () => {
           },
         },
       ],
+      packages: defaultServicePackageDocument,
       baseSha: 'abc123',
     };
 

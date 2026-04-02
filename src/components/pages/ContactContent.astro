@@ -8,7 +8,7 @@ import { SITE, FORMSPREE_ENDPOINT } from '../../lib/constants';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd, absoluteUrl } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
-import { getContactServiceLabels } from '../../lib/pageContent/packages';
+import { loadContactServiceOptions } from '../../lib/pageContent/packages';
 
 interface Props {
   lang: Locale;
@@ -16,7 +16,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const contactServiceLabels = getContactServiceLabels(lang);
+const contactServiceLabels = await loadContactServiceOptions(lang);
 
 const formLabels = {
   name: t(lang, 'contact.form.name'),

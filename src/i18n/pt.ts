@@ -1,7 +1,4 @@
 import en from "./en";
-import { getContactServiceLabels } from "../lib/pageContent/packages";
-
-const contactServiceOptions = getContactServiceLabels("pt");
 
 const pt = {
   // Site-wide
@@ -168,12 +165,6 @@ const pt = {
       },
       service: "Serviço de Interesse",
       serviceOptions: {
-        essentialCare: contactServiceOptions.essentialCare,
-        managedCare: contactServiceOptions.managedCare,
-        premiumCare: contactServiceOptions.premiumCare,
-        revenueHosting: contactServiceOptions.revenueHosting,
-        onDemand: contactServiceOptions.onDemand,
-        addOns: contactServiceOptions.addOns,
         notSure: "Ainda Não Tenho a Certeza",
       },
       message: "Conte-nos sobre a sua propriedade e necessidades",

@@ -78,4 +78,79 @@ describe('cms server render', () => {
     expect(output).toContain('<span>Card label</span>');
     expect(output).not.toContain('Will not replace card');
   });
+
+  it('skips page overrides for shared package-owned elements', () => {
+    const page: CmsPageDocument = {
+      pageId: 'en-home',
+      updatedAt: '2026-02-28T00:00:00.000Z',
+      seo: {
+        en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+        pt: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+      },
+      texts: [
+        {
+          id: 'text:package-title',
+          selector: 'main > section:nth-of-type(1) > h2:nth-of-type(1)',
+          kind: 'inline',
+          value: { en: 'Old CMS Title', pt: '' },
+        },
+      ],
+      links: [
+        {
+          id: 'link:package-link',
+          selector: 'main > section:nth-of-type(1) > a:nth-of-type(1)',
+          label: { en: 'Old CMS Label', pt: '' },
+          href: { en: '/en/old-link', pt: '' },
+        },
+      ],
+      images: [
+        {
+          id: 'image:package-image',
+          selector: 'main > section:nth-of-type(1) > img:nth-of-type(1)',
+          src: '/images/old-package.jpg',
+          alt: { en: 'Old CMS Alt', pt: '' },
+          attributionName: '',
+          attributionUrl: '',
+          licenseUrl: '',
+        },
+      ],
+    };
+
+    const input = `
+      <html>
+        <body>
+          <main>
+            <section>
+              <h2 data-cms-owner="packages">Shared Package Title</h2>
+              <a
+                href="/en/services"
+                data-cms-owner="packages"
+                data-cms-shared-doc="packages"
+                data-cms-shared-key="essentialCare"
+                data-cms-shared-field="title"
+              >
+                Shared Package Link
+              </a>
+              <img
+                src="/images/package.jpg"
+                alt="Shared Package Alt"
+                data-cms-owner="packages"
+              />
+            </section>
+          </main>
+        </body>
+      </html>
+    `;
+
+    const output = applyCmsPageDocumentToHtml(input, page, 'en');
+
+    expect(output).toContain('Shared Package Title');
+    expect(output).toContain('href="/en/services"');
+    expect(output).toContain('Shared Package Link');
+    expect(output).toContain('src="/images/package.jpg"');
+    expect(output).toContain('alt="Shared Package Alt"');
+    expect(output).not.toContain('Old CMS Title');
+    expect(output).not.toContain('/en/old-link');
+    expect(output).not.toContain('/images/old-package.jpg');
+  });
 });

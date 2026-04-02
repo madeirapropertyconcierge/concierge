@@ -1,8 +1,14 @@
 import { z } from 'zod';
+import { servicePackageKeys } from '../lib/pageContent/packageCatalog';
 
 export const localeTextSchema = z.object({
   en: z.string(),
   pt: z.string(),
+});
+
+export const localeTextListSchema = z.object({
+  en: z.array(z.string()),
+  pt: z.array(z.string()),
 });
 
 const urlFieldSchema = z.string().trim().max(2048);
@@ -55,6 +61,28 @@ export const cmsPageDocumentSchema = z.object({
   images: z.array(cmsImageFieldSchema),
 });
 
+export const cmsServicePackagePriceSchema = z.object({
+  headline: localeTextSchema,
+  detail: localeTextSchema,
+});
+
+export const cmsServicePackageEntrySchema = z.object({
+  key: z.enum(servicePackageKeys),
+  tierLabel: localeTextSchema,
+  title: localeTextSchema,
+  price: cmsServicePackagePriceSchema.nullable(),
+  audience: localeTextSchema,
+  features: localeTextListSchema,
+  idealFor: localeTextSchema,
+  servicesBullets: localeTextListSchema,
+  homeBlurb: localeTextSchema,
+});
+
+export const cmsServicePackageDocumentSchema = z.object({
+  updatedAt: z.string().min(1),
+  packages: z.array(cmsServicePackageEntrySchema),
+});
+
 export const cmsBlogLocaleSchema = z.object({
   title: z.string(),
   excerpt: z.string(),
@@ -93,6 +121,7 @@ export const cmsBlogPostSchema = z.object({
 export const cmsPublishRequestSchema = z.object({
   pages: z.array(cmsPageDocumentSchema),
   blogPosts: z.array(cmsBlogPostSchema),
+  packages: cmsServicePackageDocumentSchema,
   baseSha: z.string().optional(),
 });
 
@@ -100,5 +129,7 @@ export type CmsTextField = z.infer<typeof cmsTextFieldSchema>;
 export type CmsLinkField = z.infer<typeof cmsLinkFieldSchema>;
 export type CmsImageField = z.infer<typeof cmsImageFieldSchema>;
 export type CmsPageDocument = z.infer<typeof cmsPageDocumentSchema>;
+export type CmsServicePackageDocument = z.infer<typeof cmsServicePackageDocumentSchema>;
+export type CmsServicePackageEntry = z.infer<typeof cmsServicePackageEntrySchema>;
 export type CmsBlogPost = z.infer<typeof cmsBlogPostSchema>;
 export type CmsPublishRequest = z.infer<typeof cmsPublishRequestSchema>;

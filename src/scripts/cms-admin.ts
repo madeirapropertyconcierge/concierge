@@ -4,6 +4,7 @@ import {
   normalizeImageField,
   normalizeLinkField,
   normalizePageDocument,
+  normalizeServicePackageDocument,
   normalizeTextField,
 } from '../cms/content-normalization';
 import { normalizeCmsText } from '../cms/text-normalization';
@@ -55,6 +56,47 @@ interface CmsPageDocument {
   images: CmsImageField[];
 }
 
+type CmsServicePackageKey =
+  | 'essentialCare'
+  | 'managedCare'
+  | 'premiumCare'
+  | 'revenueHosting'
+  | 'onDemand'
+  | 'addOns';
+
+type CmsServicePackageField =
+  | 'tierLabel'
+  | 'title'
+  | 'audience'
+  | 'priceHeadline'
+  | 'priceDetail'
+  | 'idealFor'
+  | 'homeBlurb'
+  | 'feature'
+  | 'servicesBullet';
+
+interface CmsServicePackagePrice {
+  headline: LocaleText;
+  detail: LocaleText;
+}
+
+interface CmsServicePackageEntry {
+  key: CmsServicePackageKey;
+  tierLabel: LocaleText;
+  title: LocaleText;
+  price: CmsServicePackagePrice | null;
+  audience: LocaleText;
+  features: Record<Locale, string[]>;
+  idealFor: LocaleText;
+  servicesBullets: Record<Locale, string[]>;
+  homeBlurb: LocaleText;
+}
+
+interface CmsServicePackageDocument {
+  updatedAt: string;
+  packages: CmsServicePackageEntry[];
+}
+
 interface CmsBlogLocale {
   title: string;
   excerpt: string;
@@ -86,6 +128,7 @@ interface CmsBlogPost {
 
 interface ContentResponse {
   page: CmsPageDocument;
+  packages: CmsServicePackageDocument;
   blogPosts: CmsBlogPost[];
   branchSha: string | null;
   galleryItems?: CmsGalleryItem[];
@@ -94,6 +137,7 @@ interface ContentResponse {
 
 interface WorkingState {
   page: CmsPageDocument;
+  packages: CmsServicePackageDocument;
   blogPosts: CmsBlogPost[];
   baseSha: string | null;
 }
@@ -298,6 +342,22 @@ function setLocaleValue(value: LocaleText, nextValue: string): LocaleText {
   };
 }
 
+function isSharedPackageElement(element: Element | null): element is HTMLElement {
+  return Boolean(element instanceof HTMLElement && element.dataset.cmsSharedDoc === 'packages');
+}
+
+function hasSharedEditableDescendant(element: HTMLElement): boolean {
+  return Boolean(element.querySelector('[data-cms-shared-doc="packages"]'));
+}
+
+function isSharedOwnedElement(element: Element | null): boolean {
+  const owner = element instanceof HTMLElement
+    ? element.closest<HTMLElement>('[data-cms-owner]')
+    : null;
+
+  return Boolean(owner && owner.dataset.cmsOwner && owner.dataset.cmsOwner !== 'page');
+}
+
 function isAdminControl(element: Element | null): boolean {
   return Boolean(element?.closest('[data-admin-allow]'));
 }
@@ -319,7 +379,25 @@ function isTextCandidate(element: HTMLElement): boolean {
     return false;
   }
 
+  if (hasSharedEditableDescendant(element)) {
+    return false;
+  }
+
   return Boolean(element.textContent?.trim());
+}
+
+function findEditableTextElement(target: Element): HTMLElement | null {
+  const sharedElement = target.closest<HTMLElement>('[data-cms-shared-doc="packages"]');
+  if (sharedElement?.closest('main')) {
+    return sharedElement;
+  }
+
+  const textElement = target.closest<HTMLElement>('main *');
+  if (textElement && isTextCandidate(textElement)) {
+    return textElement;
+  }
+
+  return null;
 }
 
 function escapeHtml(input: string): string {
@@ -443,6 +521,108 @@ function upsertImageField(field: CmsImageField): void {
   workingState.page.images.push(normalizedField);
 }
 
+function findServicePackageEntry(key: CmsServicePackageKey): CmsServicePackageEntry | null {
+  if (!workingState) {
+    return null;
+  }
+
+  return workingState.packages.packages.find((entry) => entry.key === key) ?? null;
+}
+
+function resolveLocalizedListValue(values: Record<Locale, string[]>, index: number): string {
+  const localized = values[locale]?.[index]?.trim();
+  if (localized) {
+    return localized;
+  }
+
+  return values.en[index]?.trim() ?? '';
+}
+
+function readSharedPackageFieldValue(
+  entry: CmsServicePackageEntry,
+  field: CmsServicePackageField,
+  index?: number,
+): string {
+  switch (field) {
+    case 'tierLabel':
+      return localeValue(entry.tierLabel);
+    case 'title':
+      return localeValue(entry.title);
+    case 'audience':
+      return localeValue(entry.audience);
+    case 'priceHeadline':
+      return entry.price ? localeValue(entry.price.headline) : '';
+    case 'priceDetail':
+      return entry.price ? localeValue(entry.price.detail) : '';
+    case 'idealFor':
+      return localeValue(entry.idealFor);
+    case 'homeBlurb':
+      return localeValue(entry.homeBlurb);
+    case 'feature':
+      return typeof index === 'number' ? resolveLocalizedListValue(entry.features, index) : '';
+    case 'servicesBullet':
+      return typeof index === 'number' ? resolveLocalizedListValue(entry.servicesBullets, index) : '';
+  }
+}
+
+function setLocalizedListValue(values: Record<Locale, string[]>, index: number, nextValue: string): void {
+  const nextItems = [...values[locale]];
+  while (nextItems.length <= index) {
+    nextItems.push('');
+  }
+  nextItems[index] = nextValue;
+  values[locale] = nextItems;
+}
+
+function writeSharedPackageFieldValue(
+  entry: CmsServicePackageEntry,
+  field: CmsServicePackageField,
+  nextValue: string,
+  index?: number,
+): void {
+  switch (field) {
+    case 'tierLabel':
+      entry.tierLabel = setLocaleValue(entry.tierLabel, nextValue);
+      return;
+    case 'title':
+      entry.title = setLocaleValue(entry.title, nextValue);
+      return;
+    case 'audience':
+      entry.audience = setLocaleValue(entry.audience, nextValue);
+      return;
+    case 'priceHeadline':
+      entry.price = entry.price ?? {
+        headline: { en: '', pt: '' },
+        detail: { en: '', pt: '' },
+      };
+      entry.price.headline = setLocaleValue(entry.price.headline, nextValue);
+      return;
+    case 'priceDetail':
+      entry.price = entry.price ?? {
+        headline: { en: '', pt: '' },
+        detail: { en: '', pt: '' },
+      };
+      entry.price.detail = setLocaleValue(entry.price.detail, nextValue);
+      return;
+    case 'idealFor':
+      entry.idealFor = setLocaleValue(entry.idealFor, nextValue);
+      return;
+    case 'homeBlurb':
+      entry.homeBlurb = setLocaleValue(entry.homeBlurb, nextValue);
+      return;
+    case 'feature':
+      if (typeof index === 'number') {
+        setLocalizedListValue(entry.features, index, nextValue);
+      }
+      return;
+    case 'servicesBullet':
+      if (typeof index === 'number') {
+        setLocalizedListValue(entry.servicesBullets, index, nextValue);
+      }
+      return;
+  }
+}
+
 function updateModeLabel(): void {
   if (!modeLabel || !toggleModeButton) {
     return;
@@ -542,7 +722,7 @@ function closePanels(except?: HTMLElement | null): void {
 function applyPageDocument(page: CmsPageDocument): void {
   for (const field of page.texts) {
     const element = document.querySelector<HTMLElement>(field.selector);
-    if (!element) {
+    if (!element || isSharedOwnedElement(element)) {
       continue;
     }
 
@@ -557,7 +737,7 @@ function applyPageDocument(page: CmsPageDocument): void {
 
   for (const field of page.links) {
     const element = document.querySelector<HTMLElement>(field.selector);
-    if (!element) {
+    if (!element || isSharedOwnedElement(element)) {
       continue;
     }
 
@@ -593,7 +773,7 @@ function applyPageDocument(page: CmsPageDocument): void {
 
   for (const field of page.images) {
     const element = document.querySelector<HTMLImageElement>(field.selector);
-    if (!element) {
+    if (!element || isSharedOwnedElement(element)) {
       continue;
     }
 
@@ -603,6 +783,31 @@ function applyPageDocument(page: CmsPageDocument): void {
     element.dataset.cmsId = field.id;
     element.dataset.cmsSelector = field.selector;
     element.dataset.cmsSourceSrc = field.src;
+  }
+}
+
+function applyServicePackageDocument(packages: CmsServicePackageDocument): void {
+  const elements = document.querySelectorAll<HTMLElement>('[data-cms-shared-doc="packages"]');
+
+  for (const element of elements) {
+    const key = element.dataset.cmsSharedKey as CmsServicePackageKey | undefined;
+    const field = element.dataset.cmsSharedField as CmsServicePackageField | undefined;
+    const kind = (element.dataset.cmsKind as 'inline' | 'block' | undefined) ?? 'inline';
+    const index = element.dataset.cmsSharedIndex ? Number.parseInt(element.dataset.cmsSharedIndex, 10) : undefined;
+
+    if (!key || !field) {
+      continue;
+    }
+
+    const entry = packages.packages.find((item) => item.key === key);
+    if (!entry) {
+      continue;
+    }
+
+    const source = readSharedPackageFieldValue(entry, field, index);
+    element.innerHTML = renderMarkdown(source, kind);
+    element.dataset.cmsField = 'text';
+    element.dataset.cmsSource = source;
   }
 }
 
@@ -630,6 +835,46 @@ function updateFallbackWarning(page: CmsPageDocument): void {
       if (!field.alt.pt.trim() && field.alt.en.trim()) {
         fallbackCount += 1;
       }
+    }
+
+    for (const entry of workingState?.packages.packages ?? []) {
+      if (!entry.tierLabel.pt.trim() && entry.tierLabel.en.trim()) {
+        fallbackCount += 1;
+      }
+
+      if (!entry.title.pt.trim() && entry.title.en.trim()) {
+        fallbackCount += 1;
+      }
+
+      if (!entry.audience.pt.trim() && entry.audience.en.trim()) {
+        fallbackCount += 1;
+      }
+
+      if (!entry.idealFor.pt.trim() && entry.idealFor.en.trim()) {
+        fallbackCount += 1;
+      }
+
+      if (!entry.homeBlurb.pt.trim() && entry.homeBlurb.en.trim()) {
+        fallbackCount += 1;
+      }
+
+      if (entry.price) {
+        if (!entry.price.headline.pt.trim() && entry.price.headline.en.trim()) {
+          fallbackCount += 1;
+        }
+
+        if (!entry.price.detail.pt.trim() && entry.price.detail.en.trim()) {
+          fallbackCount += 1;
+        }
+      }
+
+      fallbackCount += entry.features.en.reduce((count, item, index) => (
+        count + (!entry.features.pt[index]?.trim() && item.trim() ? 1 : 0)
+      ), 0);
+
+      fallbackCount += entry.servicesBullets.en.reduce((count, item, index) => (
+        count + (!entry.servicesBullets.pt[index]?.trim() && item.trim() ? 1 : 0)
+      ), 0);
     }
   }
 
@@ -675,6 +920,7 @@ function applyCurrentState(): void {
     return;
   }
 
+  applyServicePackageDocument(workingState.packages);
   applyPageDocument(workingState.page);
   updateFallbackWarning(workingState.page);
   updateSeoPreview(workingState.page);
@@ -781,8 +1027,50 @@ function toggleEditMode(): void {
   enableEditMode();
 }
 
+function completeSharedPackageTextEdit(element: HTMLElement): void {
+  if (!workingState) {
+    return;
+  }
+
+  const key = element.dataset.cmsSharedKey as CmsServicePackageKey | undefined;
+  const field = element.dataset.cmsSharedField as CmsServicePackageField | undefined;
+  const kind = (element.dataset.cmsKind as 'inline' | 'block' | undefined) ?? 'inline';
+  const index = element.dataset.cmsSharedIndex ? Number.parseInt(element.dataset.cmsSharedIndex, 10) : undefined;
+
+  if (!key || !field) {
+    return;
+  }
+
+  const entry = findServicePackageEntry(key);
+  if (!entry) {
+    return;
+  }
+
+  const previousValue = readSharedPackageFieldValue(entry, field, index);
+  const nextValue = normalizeTextInput(element.textContent ?? '');
+
+  if (nextValue === previousValue) {
+    element.innerHTML = renderMarkdown(nextValue, kind);
+    element.dataset.cmsSource = nextValue;
+    return;
+  }
+
+  writeSharedPackageFieldValue(entry, field, nextValue, index);
+  workingState.packages = normalizeServicePackageDocument(workingState.packages);
+
+  element.innerHTML = renderMarkdown(nextValue, kind);
+  element.dataset.cmsField = 'text';
+  element.dataset.cmsSource = nextValue;
+  markDirty('Package content updated');
+}
+
 function completeTextEdit(element: HTMLElement): void {
   if (!workingState) {
+    return;
+  }
+
+  if (isSharedPackageElement(element)) {
+    completeSharedPackageTextEdit(element);
     return;
   }
 
@@ -2006,6 +2294,7 @@ async function checkSession(): Promise<boolean> {
 function hydrateStateFromResponse(response: ContentResponse): void {
   const baseState: WorkingState = {
     page: normalizePageDocument(response.page),
+    packages: normalizeServicePackageDocument(response.packages),
     blogPosts: response.blogPosts.map(normalizeBlogPost),
     baseSha: response.branchSha,
   };
@@ -2049,6 +2338,7 @@ async function publishChanges(): Promise<void> {
       },
       body: JSON.stringify({
         pages: [workingState.page],
+        packages: workingState.packages,
         blogPosts: workingState.blogPosts,
         baseSha: workingState.baseSha,
       }),
@@ -2199,8 +2489,8 @@ function handleEditClick(event: MouseEvent): void {
     }
   }
 
-  const textElement = target.closest<HTMLElement>('main *');
-  if (textElement && isTextCandidate(textElement)) {
+  const textElement = findEditableTextElement(target);
+  if (textElement) {
     event.preventDefault();
     event.stopPropagation();
     beginTextEdit(textElement);

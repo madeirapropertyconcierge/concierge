@@ -15,26 +15,17 @@ function isSimpleLinkLabelTarget(childrenCount: number): boolean {
   return childrenCount === 0;
 }
 
-function shouldIgnoreOverride(
+function hasSharedOwner(
   $: ReturnType<typeof load>,
   element: Parameters<ReturnType<typeof load>>[0],
-  fieldType: 'text' | 'link' | 'image',
 ): boolean {
   return $(element)
     .parents()
     .addBack()
     .toArray()
     .some((node) => {
-      const value = $(node).attr('data-cms-ignore')?.trim();
-      if (!value) {
-        return false;
-      }
-
-      if (value === 'all') {
-        return true;
-      }
-
-      return value.split(',').map((item) => item.trim()).includes(fieldType);
+      const owner = $(node).attr('data-cms-owner')?.trim();
+      return Boolean(owner && owner !== 'page');
     });
 }
 
@@ -60,7 +51,7 @@ export function applyCmsPageDocumentToHtml(
       : renderInlineMarkdown(content);
 
     $(field.selector).each((_index, element) => {
-      if (shouldIgnoreOverride($, element, 'text')) {
+      if (hasSharedOwner($, element)) {
         return;
       }
 
@@ -83,7 +74,7 @@ export function applyCmsPageDocumentToHtml(
       const tagName = 'tagName' in element ? element.tagName.toLowerCase() : '';
       const simpleLabelTarget = isSimpleLinkLabelTarget(node.children().length);
 
-      if (shouldIgnoreOverride($, element, 'link')) {
+      if (hasSharedOwner($, element)) {
         return;
       }
 
@@ -119,7 +110,7 @@ export function applyCmsPageDocumentToHtml(
 
     $(field.selector).each((_index, element) => {
       const node = $(element);
-      if (shouldIgnoreOverride($, element, 'image')) {
+      if (hasSharedOwner($, element)) {
         return;
       }
 

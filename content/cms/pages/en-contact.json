@@ -1,6 +1,6 @@
 {
   "pageId": "en-contact",
-  "updatedAt": "2026-02-28T17:51:19.052Z",
+  "updatedAt": "2026-04-03T00:00:00.000Z",
   "seo": {
     "en": {
       "title": "Contact | Madeira Property Concierge",
@@ -19,98 +19,7 @@
       "canonical": "/pt/contacto"
     }
   },
-  "texts": [
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(2) > span:nth-of-type(2)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(2) > span:nth-of-type(2)",
-      "kind": "inline",
-      "value": {
-        "en": "+351 967 637 133",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(3) > span:nth-of-type(2)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(3) > span:nth-of-type(2)",
-      "kind": "inline",
-      "value": {
-        "en": "WhatsApp:  +351 967 637 133",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > span:nth-of-type(2)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > span:nth-of-type(2)",
-      "kind": "inline",
-      "value": {
-        "en": "Funchal, Madeira Island, Portugal",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
-      "kind": "block",
-      "value": {
-        "en": "Loc Ponta Delgada, Madeira Island, Portugal",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > p:nth-of-type(3)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > p:nth-of-type(3)",
-      "kind": "block",
-      "value": {
-        "en": "Mon–Sat, 09:00–18:00 WET",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
-      "kind": "block",
-      "value": {
-        "en": "Loc Ponta Delgada, Madeira Island, Portugal",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > p:nth-of-type(3) > p:nth-of-type(1)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > p:nth-of-type(3) > p:nth-of-type(1)",
-      "kind": "block",
-      "value": {
-        "en": "Mon–Sat, 09:00–18:00 WET",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(3) > span:nth-of-type(1)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(3) > span:nth-of-type(1)",
-      "kind": "inline",
-      "value": {
-        "en": "WA",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
-      "kind": "block",
-      "value": {
-        "en": "Loc Ponta Delgada, Madeira Island, Portugal",
-        "pt": ""
-      }
-    },
-    {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
-      "kind": "block",
-      "value": {
-        "en": "Loc Ponta Delgada, Madeira Island, Portugal",
-        "pt": ""
-      }
-    }
-  ],
+  "texts": [],
   "links": [],
   "images": []
 }

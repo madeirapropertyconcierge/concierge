@@ -4,6 +4,7 @@ import { getPageIdFromPath, normalizePageId } from '../../../cms/page-id';
 import {
   listBlogPosts,
   loadPageDocument,
+  loadServicePackageDocument,
 } from '../../../cms/content-loader';
 import { collectSiteGalleryImages } from '../../../cms/image-gallery';
 import { getAuthEnv, tryGetGithubEnv } from '../../../cms/config';
@@ -40,8 +41,9 @@ function isAuthenticated(token: string | null): boolean {
 export const GET: APIRoute = async ({ url, cookies }) => {
   try {
     const pageId = resolvePageId(url);
-    const [page, allBlogPosts] = await Promise.all([
+    const [page, packages, allBlogPosts] = await Promise.all([
       loadPageDocument(pageId),
+      loadServicePackageDocument(),
       listBlogPosts(),
     ]);
 
@@ -62,6 +64,7 @@ export const GET: APIRoute = async ({ url, cookies }) => {
 
     return jsonResponse({
       page,
+      packages,
       blogPosts,
       branchSha,
       galleryItems,
