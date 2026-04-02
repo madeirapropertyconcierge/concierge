@@ -1,4 +1,7 @@
 import en from "./en";
+import { getContactServiceLabels } from "../lib/pageContent/packages";
+
+const contactServiceOptions = getContactServiceLabels("pt");
 
 const pt = {
   // Site-wide
@@ -44,7 +47,7 @@ const pt = {
   services: {
     title: "Os Nossos Serviços",
     metaTitle: "Serviços de Gestão de Propriedades | Madeira Property Concierge",
-    metaDescription: "Níveis de serviço na Madeira para proprietários no estrangeiro: Cuidados Essenciais, Cuidados Standard, Concierge Premium, apoio personalizado e add-ons opcionais.",
+    metaDescription: "Pacotes de servico na Madeira para proprietarios no estrangeiro: Cuidados Essenciais, Gestao Assistida, Cuidados Premium, Revenue & Hosting, Servicos Sob Pedido e add-ons opcionais.",
     hero: {
       title: "Gestão de Propriedades Que Funciona",
       subtitle: "Cada serviço é pensado para o seu imóvel e para a forma como quer geri-lo.",
@@ -107,7 +110,7 @@ const pt = {
       },
       step2: {
         title: "Auditoria de Imóvel e Risco",
-        description: "Avaliamos condição do imóvel, lacunas de conformidade, estrutura de fornecedores e adequação do Tier A/B/C/D.",
+        description: "Avaliamos a condicao do imovel, lacunas de conformidade, estrutura de fornecedores e o pacote mais adequado a forma como a propriedade e usada.",
       },
       step3: {
         title: "Setup de Sistemas",
@@ -124,7 +127,7 @@ const pt = {
   pricing: {
     title: "Preços",
     metaTitle: "Preços | Madeira Property Concierge",
-    metaDescription: "Preços mensais transparentes: €150 no Tier A, €300 no Tier B, €500 no Tier C, mais projetos complementares sob orçamento.",
+    metaDescription: "Precos transparentes por pacote: Cuidados Essenciais a EUR95/mes, Gestao Assistida a EUR95/mes mais suporte de turnover, Cuidados Premium a EUR140/mes, Revenue & Hosting a EUR95/mes mais revenue share, e apoio sob pedido desde EUR35/hora.",
     hero: {
       title: "Preços Claros, Sem Surpresas",
       subtitle: "Sem taxas ocultas. Escolha o nível que se adequa ao que precisa.",
@@ -139,7 +142,7 @@ const pt = {
   faq: {
     title: "Perguntas Frequentes",
     metaTitle: "FAQ | Madeira Property Concierge",
-    metaDescription: "Perguntas frequentes sobre propriedade à distância na Madeira, níveis de serviço, apoio de conformidade AL, SLAs e integração.",
+    metaDescription: "Perguntas frequentes sobre propriedade a distancia na Madeira, pacotes de servico, apoio de conformidade AL, SLAs e integracao.",
   },
 
   // Contact page
@@ -165,10 +168,12 @@ const pt = {
       },
       service: "Serviço de Interesse",
       serviceOptions: {
-        essentials: "Tier A - Guarda de Chaves + Home Care",
-        professional: "Tier B - Hosting Essentials",
-        premium: "Tier C - Gestão Full-Service",
-        project: "Tier D / Projetos Complementares",
+        essentialCare: contactServiceOptions.essentialCare,
+        managedCare: contactServiceOptions.managedCare,
+        premiumCare: contactServiceOptions.premiumCare,
+        revenueHosting: contactServiceOptions.revenueHosting,
+        onDemand: contactServiceOptions.onDemand,
+        addOns: contactServiceOptions.addOns,
         notSure: "Ainda Não Tenho a Certeza",
       },
       message: "Conte-nos sobre a sua propriedade e necessidades",

@@ -27,7 +27,7 @@ const faqPageContent = {
   pt: {
     heroTitle: 'Respostas claras para proprietários no estrangeiro.',
     heroSubtitle:
-      'Questões frequentes sobre níveis de serviço, SLAs, conformidade AL e operação contínua na Madeira.',
+      'Questoes frequentes sobre pacotes de servico, SLAs, conformidade AL e operacao continua na Madeira.',
     categories: [
       {
         title: 'Público & Enquadramento',
@@ -40,7 +40,7 @@ const faqPageContent = {
           {
             question: 'Trabalham com imóveis que não estão sempre em aluguer?',
             answer:
-              'Sim. O Tier A (Guarda de Chaves + Home Care) foi desenhado para segunda habitação e imóveis com ocupação parcial, mesmo sem reservas contínuas.',
+              'Sim. O Pacote de Cuidados Essenciais foi pensado precisamente para segundas habitacoes e imoveis com ocupacao parcial, mesmo sem reservas continuas.',
           },
           {
             question: 'Em que zonas da Madeira atuam?',
@@ -55,12 +55,12 @@ const faqPageContent = {
           {
             question: 'Como funcionam os níveis e preços?',
             answer:
-              'Tier A: €100-€250/mês. Tier B: 15%-18% da receita bruta. Tier C: 20%-25% da receita bruta. Tier D (white-glove): €50-€150 por estadia. Também existem projetos complementares por escopo.',
+              'Cuidados Essenciais: EUR95/mes. Gestao Assistida: EUR95/mes mais EUR80 por suporte de turnover. Cuidados Premium: EUR140/mes. Revenue & Hosting: EUR95/mes mais 25% da receita bruta. Servicos Sob Pedido: desde EUR35/hora. Add-ons opcionais sao orcamentados por escopo.',
           },
           {
             question: 'Quais são os SLAs de resposta?',
             answer:
-              'Objetivo de resposta ao proprietário em até 4 horas úteis. Emergências de hóspedes até 30 minutos, e até 15 minutos nos níveis Tier C/D.',
+              'Objetivo de resposta ao proprietario em ate 4 horas uteis. Situacoes urgentes recebem prioridade reforcada nos pacotes Premium Care e Revenue & Hosting.',
           },
           {
             question: 'Como garantem qualidade na limpeza e turnover?',
@@ -94,7 +94,7 @@ const faqPageContent = {
   en: {
     heroTitle: 'Clear answers for overseas owners.',
     heroSubtitle:
-      'Common questions on service tiers, SLAs, AL compliance support, and ongoing operations in Madeira.',
+      'Common questions on service packages, SLAs, AL compliance support, and ongoing operations in Madeira.',
     categories: [
       {
         title: 'Fit & Scope',
@@ -107,7 +107,7 @@ const faqPageContent = {
           {
             question: 'Do you handle homes that are not rented full-time?',
             answer:
-              'Yes. Tier A (Keyholding + Home Care) is designed for second homes and part-time rentals, even without continuous bookings.',
+              'Yes. The Essential Care Package is designed for second homes and part-time use, even without continuous bookings.',
           },
           {
             question: 'What areas of Madeira do you cover?',
@@ -122,12 +122,12 @@ const faqPageContent = {
           {
             question: 'How do your tiers and pricing work?',
             answer:
-              'Tier A: €100-€250/month. Tier B: 15%-18% of gross rental income. Tier C: 20%-25% of gross rental income. Tier D (white-glove): €50-€150 per stay. We also run scoped add-on projects.',
+              'Essential Care is €95/month. Managed Care is €95/month plus €80 per turnover support. Premium Care is €140/month. Revenue & Hosting is €95/month plus 25% of gross rental revenue. On-Demand Services start at €35/hour, and optional add-ons are scoped separately.',
           },
           {
             question: 'What response SLAs do you commit to?',
             answer:
-              'Owner response target is within 4 business hours. Guest emergencies are handled within 30 minutes, or 15 minutes on Tier C/D.',
+              'Owner response target is within 4 business hours. Urgent issues receive faster escalation on Premium Care and Revenue & Hosting.',
           },
           {
             question: 'How do you control turnover quality?',

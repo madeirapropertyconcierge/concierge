@@ -1,3 +1,7 @@
+import { getContactServiceLabels } from "../lib/pageContent/packages";
+
+const contactServiceOptions = getContactServiceLabels("en");
+
 const en = {
   // Site-wide
   site: {
@@ -42,7 +46,7 @@ const en = {
   services: {
     title: "Our Services",
     metaTitle: "Property Management Services | Madeira Property Concierge",
-    metaDescription: "Madeira service tiers for overseas owners: Essential Care, Standard Care, Premium Concierge, Bespoke support, and optional add-ons.",
+    metaDescription: "Madeira service packages for overseas owners: Essential Care, Managed Care, Premium Care, Revenue & Hosting, On-Demand Services, and optional add-ons.",
     hero: {
       title: "Property Management That Actually Works",
       subtitle: "Each service is built around your property and how you want it run.",
@@ -105,7 +109,7 @@ const en = {
       },
       step2: {
         title: "Property & Risk Audit",
-        description: "We assess property condition, compliance gaps, vendor setup, and service-tier fit (Tier A/B/C/D).",
+        description: "We assess property condition, compliance gaps, vendor setup, and the package fit for how the property is actually used.",
       },
       step3: {
         title: "Systems Setup",
@@ -122,7 +126,7 @@ const en = {
   pricing: {
     title: "Pricing",
     metaTitle: "Pricing | Madeira Property Concierge",
-    metaDescription: "Transparent monthly pricing: €150 Tier A, €300 Tier B, €500 Tier C, plus custom-quoted project add-ons.",
+    metaDescription: "Transparent package pricing: Essential Care at €95/month, Managed Care at €95/month plus turnover support, Premium Care at €140/month, Revenue & Hosting at €95/month plus revenue share, and on-demand help from €35/hour.",
     hero: {
       title: "Clear Pricing, No Surprises",
       subtitle: "No hidden fees. Pick the tier that matches what you need.",
@@ -137,7 +141,7 @@ const en = {
   faq: {
     title: "Frequently Asked Questions",
     metaTitle: "FAQ | Madeira Property Concierge",
-    metaDescription: "Common questions about remote ownership in Madeira, service tiers, AL compliance support, response SLAs, and onboarding.",
+    metaDescription: "Common questions about remote ownership in Madeira, service packages, AL compliance support, response SLAs, and onboarding.",
   },
 
   // Contact page
@@ -163,10 +167,12 @@ const en = {
       },
       service: "Service Interest",
       serviceOptions: {
-        essentials: "Tier A - Keyholding + Home Care",
-        professional: "Tier B - Hosting Essentials",
-        premium: "Tier C - Full-Service Management",
-        project: "Tier D / Project Add-ons",
+        essentialCare: contactServiceOptions.essentialCare,
+        managedCare: contactServiceOptions.managedCare,
+        premiumCare: contactServiceOptions.premiumCare,
+        revenueHosting: contactServiceOptions.revenueHosting,
+        onDemand: contactServiceOptions.onDemand,
+        addOns: contactServiceOptions.addOns,
         notSure: "Not Sure Yet",
       },
       message: "Tell us about your property and needs",

@@ -1,5 +1,5 @@
 ---
-import type { PricingTier } from '../../lib/pageContent/pricing';
+import type { PricingTier } from '../../lib/pageContent/packages';
 
 interface Props {
   tier: PricingTier;
@@ -44,8 +44,10 @@ const {
   >
     {tier.price ? (
       <div class="flex flex-col gap-1">
-        <p class="text-3xl leading-tight text-charcoal sm:text-4xl">{tier.price.amount}</p>
-        <p class="text-sm font-medium uppercase tracking-[0.06em] text-charcoal/64">{tier.price.unit}</p>
+        <p class="text-3xl leading-tight text-charcoal sm:text-4xl">{tier.price.headline}</p>
+        {tier.price.detail && (
+          <p class="max-w-[17rem] text-sm leading-relaxed text-charcoal/64">{tier.price.detail}</p>
+        )}
       </div>
     ) : (
       <div class="flex flex-col gap-1">

@@ -28,13 +28,13 @@ const copy =
           'Relatório mensal com ocupação, receita, despesas e manutenção',
           'Checklist de limpeza de 56 pontos com prova fotográfica',
           'Registo de ocorrências e próximos passos com responsáveis definidos',
-          'SLA: resposta ao proprietário em até 4h úteis; emergência de hóspede em até 30 min (15 min no Tier C/D)',
+          'SLA: resposta ao proprietário em até 4h úteis; situações urgentes recebem prioridade reforçada nos pacotes Premium Care e Revenue & Hosting',
           'Comunicação única via WhatsApp e atualizações em decisões críticas',
         ],
         mediaCaption: 'Visibilidade Operacional',
         timelineTitle: 'Primeiros 30 dias (onboarding)',
         timeline: [
-          { range: 'Dia 1–3', text: 'Chamada de diagnóstico e definição do nível Tier A/B/C/D.' },
+          { range: 'Dia 1–3', text: 'Chamada de diagnóstico e definição do pacote mais adequado.' },
           { range: 'Dia 4–10', text: 'Auditoria do imóvel: condição, riscos, conformidade e prioridades.' },
           { range: 'Dia 11–20', text: 'Ativação de fornecedores, SOPs e templates de comunicação.' },
           { range: 'Dia 21–30', text: 'Operação ativa com primeiro relatório mensal e log de manutenção.' },
@@ -53,13 +53,13 @@ const copy =
           'Monthly owner report with occupancy, revenue, costs, and maintenance',
           '56-point turnover cleaning checklist with photo proof',
           'Maintenance and issue log with clear next actions',
-          'SLA targets: owner response within 4 business hours; guest emergencies within 30 mins (15 mins on Tier C/D)',
+          'SLA targets: owner response within 4 business hours; urgent issues receive faster escalation on Premium Care and Revenue & Hosting',
           'Single WhatsApp contact plus updates on critical decisions',
         ],
         mediaCaption: 'Operational Visibility',
         timelineTitle: 'Your first 30 days (onboarding)',
         timeline: [
-          { range: 'Day 1–3', text: 'Diagnostic call and tier fit (A/B/C/D).' },
+          { range: 'Day 1–3', text: 'Diagnostic call and package fit.' },
           { range: 'Day 4–10', text: 'Property audit: condition, risk, compliance, and priorities.' },
           { range: 'Day 11–20', text: 'Vendor activation, SOP setup, and communication templates.' },
           { range: 'Day 21–30', text: 'Go-live with first monthly report and maintenance log.' },
@@ -102,7 +102,7 @@ const pageSchema = [
   heroSecondaryCta={{ label: t(lang, 'nav.pricing'), href: routes.pricing }}
   jsonLd={pageSchema}
 >
-  <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
+  <section data-cms-ignore="all" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
     <div class="grid gap-5 md:grid-cols-2">
       {steps.map((step, index) => (
         <article class:list={['step-card reveal', index > 0 ? 'reveal-delay-1' : '']}>
@@ -114,7 +114,7 @@ const pageSchema = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+  <section data-cms-ignore="all" class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
       <div class="premium-panel p-6 sm:p-8 lg:p-10">
         <p class="eyebrow">{copy.deliverablesTitle}</p>
@@ -135,7 +135,7 @@ const pageSchema = [
     </div>
   </section>
 
-  <section class="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+  <section data-cms-ignore="all" class="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <div class="premium-panel p-6 sm:p-8">
       <p class="eyebrow">{copy.timelineTitle}</p>
       <div class="mt-6 grid gap-4">
@@ -149,7 +149,7 @@ const pageSchema = [
     </div>
   </section>
 
-  <section class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
+  <section data-cms-ignore="all" class="relative isolate overflow-hidden px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <img
       src={madeiraImages.funchalBayBoats.src}
       alt={madeiraImages.funchalBayBoats.alt}

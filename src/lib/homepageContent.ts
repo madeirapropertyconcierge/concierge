@@ -1,6 +1,7 @@
 import type { Locale } from '../i18n/utils';
 import type { RouteKey } from '../i18n/routes';
 import { madeiraImages } from './madeiraImages';
+import { getCoreServicePackages, type ServicePackageKey } from './pageContent/packages';
 
 export interface HomeTrustSignal {
   value: string;
@@ -52,6 +53,50 @@ export interface HomePageContent {
   finalSecondaryCta: string;
 }
 
+const homeTileConfig: Record<
+  Exclude<ServicePackageKey, 'addOns'>,
+  { image: string; alt: string; hrefKey: RouteKey; span: string }
+> = {
+  essentialCare: {
+    image: madeiraImages.treeFramedValleyTown.src,
+    alt: madeiraImages.treeFramedValleyTown.alt,
+    hrefKey: 'services',
+    span: 'lg:col-span-5',
+  },
+  managedCare: {
+    image: madeiraImages.tobogganRideFunchal.src,
+    alt: madeiraImages.tobogganRideFunchal.alt,
+    hrefKey: 'pricing',
+    span: 'lg:col-span-7',
+  },
+  premiumCare: {
+    image: madeiraImages.saoVicenteCoast.src,
+    alt: madeiraImages.saoVicenteCoast.alt,
+    hrefKey: 'services',
+    span: 'lg:col-span-4',
+  },
+  revenueHosting: {
+    image: madeiraImages.mercadoMural.src,
+    alt: madeiraImages.mercadoMural.alt,
+    hrefKey: 'pricing',
+    span: 'lg:col-span-4',
+  },
+  onDemand: {
+    image: madeiraImages.villageRuggedMountains.src,
+    alt: madeiraImages.villageRuggedMountains.alt,
+    hrefKey: 'contact',
+    span: 'lg:col-span-4',
+  },
+};
+
+function buildHomeServiceTiles(locale: Locale): HomeServiceTile[] {
+  return getCoreServicePackages(locale).map((item) => ({
+    title: item.title,
+    blurb: item.homeBlurb,
+    ...homeTileConfig[item.key],
+  }));
+}
+
 export const homepageContent: Record<Locale, HomePageContent> = {
   en: {
     metaDescription: 'Boutique hosting and property care in Madeira for overseas owners who want peace of mind.',
@@ -62,7 +107,7 @@ export const homepageContent: Record<Locale, HomePageContent> = {
     heroSubtitle:
       'Founder-led property management in Madeira for overseas owners. Bilingual EN/PT support, clear reporting, and local execution you can trust.',
     primaryCta: 'Book Diagnostic Call',
-    secondaryCta: 'See Service Tiers',
+    secondaryCta: 'See Service Packages',
     mediaCards: [
       {
         image: madeiraImages.pontaHikers.src,
@@ -72,7 +117,7 @@ export const homepageContent: Record<Locale, HomePageContent> = {
       {
         image: madeiraImages.saoVicenteCoast.src,
         alt: madeiraImages.saoVicenteCoast.alt,
-        caption: 'Guest Experience & Concierge',
+        caption: 'Guest Experience & Hosting Support',
       },
       {
         image: madeiraImages.villageAerialShadow.src,
@@ -88,48 +133,7 @@ export const homepageContent: Record<Locale, HomePageContent> = {
     architectureEyebrow: 'Built For Overseas Owners',
     architectureTitle: 'Small on purpose. One owner, one point of contact, full accountability.',
     architectureLink: 'How We Operate',
-    serviceTiles: [
-      {
-        title: 'Keyholding + Home Care',
-        blurb: 'Scheduled visits, humidity/leak checks, storm readiness, and photo reports.',
-        image: madeiraImages.treeFramedValleyTown.src,
-        alt: madeiraImages.treeFramedValleyTown.alt,
-        hrefKey: 'services',
-        span: 'lg:col-span-5',
-      },
-      {
-        title: 'Hosting Essentials',
-        blurb: 'Guest messaging, check-ins, turnovers, restocking, and escalation handling.',
-        image: madeiraImages.tobogganRideFunchal.src,
-        alt: madeiraImages.tobogganRideFunchal.alt,
-        hrefKey: 'pricing',
-        span: 'lg:col-span-7',
-      },
-      {
-        title: 'Full-Service AL Management',
-        blurb: 'Listings, pricing, maintenance coordination, and AL/SIBA compliance support.',
-        image: madeiraImages.mercadoMural.src,
-        alt: madeiraImages.mercadoMural.alt,
-        hrefKey: 'guide',
-        span: 'lg:col-span-4',
-      },
-      {
-        title: 'Premium White-Glove (Phase 2)',
-        blurb: 'Welcome packs, family-friendly concierge, and local experiences with vetted partners.',
-        image: madeiraImages.villageRuggedMountains.src,
-        alt: madeiraImages.villageRuggedMountains.alt,
-        hrefKey: 'howItWorks',
-        span: 'lg:col-span-4',
-      },
-      {
-        title: 'Founder-Led Accountability',
-        blurb: 'One WhatsApp line, monthly owner reporting, and no-surprise invoices.',
-        image: madeiraImages.oceanfrontBench.src,
-        alt: madeiraImages.oceanfrontBench.alt,
-        hrefKey: 'about',
-        span: 'lg:col-span-4',
-      },
-    ],
+    serviceTiles: buildHomeServiceTiles('en'),
     processEyebrow: 'Owner Journey',
     processTitle: 'Clear onboarding. Predictable operations.',
     processLink: 'View The Process',
@@ -138,7 +142,7 @@ export const homepageContent: Record<Locale, HomePageContent> = {
         step: '01',
         title: 'Discovery Call',
         detail:
-          'A 30-minute call to map goals, rental model, and property-care priorities.',
+          'A 30-minute call to map goals, hosting needs, and the level of property support required.',
       },
       {
         step: '02',
@@ -156,115 +160,74 @@ export const homepageContent: Record<Locale, HomePageContent> = {
     finalEyebrow: 'Ready To Talk?',
     finalTitle: 'Own property in Madeira but live abroad? We handle it locally, you stay in the loop.',
     finalSubtitle:
-      'Start with a 30-minute diagnostic call. We\'ll map out what your property needs for care, hosting, or compliance.',
+      "Start with a 30-minute diagnostic call. We'll work out whether your property needs care, guest support, revenue management, or flexible on-the-ground help.",
     finalPrimaryCta: 'Book Consultation',
     finalSecondaryCta: 'View Pricing',
   },
   pt: {
-    metaDescription: 'Hosting boutique e cuidado de propriedade na Madeira para proprietários no estrangeiro que querem tranquilidade.',
+    metaDescription: 'Hosting boutique e cuidado de propriedade na Madeira para proprietarios no estrangeiro que querem tranquilidade.',
     heroBackgroundAlt: madeiraImages.vineyardCoastalVillage.alt,
     finalBackgroundAlt: madeiraImages.coastSunsetAerial.alt,
     heroBadge: 'Madeira Property Concierge',
     heroTitle: 'Hosting Boutique + Cuidado de Propriedade. Tranquilidade Real.',
     heroSubtitle:
-      'Gestão de propriedade na Madeira, liderada pela fundadora, para proprietários no estrangeiro. Suporte bilingue EN/PT, reporting claro e execução local de confiança.',
-    primaryCta: 'Marcar Chamada de Diagnóstico',
-    secondaryCta: 'Ver Níveis de Serviço',
+      'Gestao de propriedade na Madeira, liderada pela fundadora, para proprietarios no estrangeiro. Suporte bilingue EN/PT, reporting claro e execucao local de confianca.',
+    primaryCta: 'Marcar Chamada de Diagnostico',
+    secondaryCta: 'Ver Pacotes de Servico',
     mediaCards: [
       {
         image: madeiraImages.pontaHikers.src,
         alt: madeiraImages.pontaHikers.alt,
-        caption: 'Cuidado de Propriedade & Verificações Preventivas',
+        caption: 'Cuidado de Propriedade e Verificacoes Preventivas',
       },
       {
         image: madeiraImages.saoVicenteCoast.src,
         alt: madeiraImages.saoVicenteCoast.alt,
-        caption: 'Experiência de Hóspede & Concierge',
+        caption: 'Experiencia de Hospede e Apoio de Hosting',
       },
       {
         image: madeiraImages.villageAerialShadow.src,
         alt: madeiraImages.villageAerialShadow.alt,
-        caption: 'Cobertura em Expansão na Costa Oeste',
+        caption: 'Cobertura em Expansao na Costa Oeste',
       },
     ],
     trustSignals: [
       { value: 'EN/PT', label: 'Bilingue, nascida canadiana-madeirense' },
-      { value: '4h', label: 'Objetivo de resposta ao proprietário' },
+      { value: '4h', label: 'Objetivo de resposta ao proprietario' },
       { value: '56 pontos', label: 'Checklist de qualidade no turnover' },
     ],
-    architectureEyebrow: 'Feito Para Proprietários no Estrangeiro',
-    architectureTitle: 'Pequenos de propósito. Uma responsável, um ponto de contacto, total responsabilidade.',
+    architectureEyebrow: 'Feito Para Proprietarios no Estrangeiro',
+    architectureTitle: 'Pequenos de proposito. Uma responsavel, um ponto de contacto, total responsabilidade.',
     architectureLink: 'Como Operamos',
-    serviceTiles: [
-      {
-        title: 'Guarda de Chaves + Home Care',
-        blurb: 'Visitas programadas, verificações de humidade/fugas, preparação para tempestades e fotos.',
-        image: madeiraImages.treeFramedValleyTown.src,
-        alt: madeiraImages.treeFramedValleyTown.alt,
-        hrefKey: 'services',
-        span: 'lg:col-span-5',
-      },
-      {
-        title: 'Hosting Essentials',
-        blurb: 'Mensagens de hóspedes, check-ins, turnovers, reposição e gestão de incidentes.',
-        image: madeiraImages.tobogganRideFunchal.src,
-        alt: madeiraImages.tobogganRideFunchal.alt,
-        hrefKey: 'pricing',
-        span: 'lg:col-span-7',
-      },
-      {
-        title: 'Gestão AL Full-Service',
-        blurb: 'Anúncios, pricing, coordenação de manutenção e apoio de conformidade AL/SIBA.',
-        image: madeiraImages.mercadoMural.src,
-        alt: madeiraImages.mercadoMural.alt,
-        hrefKey: 'guide',
-        span: 'lg:col-span-4',
-      },
-      {
-        title: 'Premium White-Glove (Fase 2)',
-        blurb: 'Welcome packs, concierge familiar e experiências locais com parceiros validados.',
-        image: madeiraImages.villageRuggedMountains.src,
-        alt: madeiraImages.villageRuggedMountains.alt,
-        hrefKey: 'howItWorks',
-        span: 'lg:col-span-4',
-      },
-      {
-        title: 'Responsabilidade Direta da Fundadora',
-        blurb: 'Um número WhatsApp, relatório mensal ao proprietário e zero surpresas em faturas.',
-        image: madeiraImages.oceanfrontBench.src,
-        alt: madeiraImages.oceanfrontBench.alt,
-        hrefKey: 'about',
-        span: 'lg:col-span-4',
-      },
-    ],
-    processEyebrow: 'Jornada do Proprietário',
-    processTitle: 'Integração clara. Operação previsível.',
+    serviceTiles: buildHomeServiceTiles('pt'),
+    processEyebrow: 'Jornada do Proprietario',
+    processTitle: 'Integracao clara. Operacao previsivel.',
     processLink: 'Ver O Processo',
     steps: [
       {
         step: '01',
         title: 'Chamada de Descoberta',
         detail:
-          'Chamada de 30 minutos para mapear objetivos, modelo de arrendamento e prioridades de cuidado.',
+          'Chamada de 30 minutos para mapear objetivos, necessidades de hosting e o nivel de apoio que o imovel exige.',
       },
       {
         step: '02',
-        title: 'Auditoria de Imóvel e Risco',
+        title: 'Auditoria de Imovel e Risco',
         detail:
-          'Avaliação no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidão.',
+          'Avaliacao no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidao.',
       },
       {
         step: '03',
-        title: 'Lançamento e Gestão',
+        title: 'Lancamento e Gestao',
         detail:
-          'Executamos a operação diária com relatórios mensais, registo de manutenção e suporte por SLA.',
+          'Executamos a operacao diaria com relatorios mensais, registo de manutencao e suporte por SLA.',
       },
     ],
     finalEyebrow: 'Pronto Para Falar?',
-    finalTitle: 'Tem imóvel na Madeira mas vive fora? Nós tratamos localmente, você acompanha tudo.',
+    finalTitle: 'Tem imovel na Madeira mas vive fora? Nos tratamos localmente, voce acompanha tudo.',
     finalSubtitle:
-      'Comece com uma chamada de diagnóstico de 30 minutos. Mapeamos o que o seu imóvel precisa em cuidado, hosting ou conformidade.',
+      'Comece com uma chamada de diagnostico de 30 minutos. Percebemos se o seu imovel precisa de cuidado, apoio a hospedes, revenue e hosting, ou ajuda flexivel no terreno.',
     finalPrimaryCta: 'Marcar Consulta',
-    finalSecondaryCta: 'Ver Preços',
+    finalSecondaryCta: 'Ver Precos',
   },
 };
