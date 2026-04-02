@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { servicePackageKeys } from '../lib/pageContent/packageCatalog';
+import { servicePackageKeys } from '../lib/pageContent/packageTypes';
 
 export const localeTextSchema = z.object({
   en: z.string(),

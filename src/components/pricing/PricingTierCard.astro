@@ -1,11 +1,13 @@
 ---
+import EditableText from '../cms/EditableText.astro';
 import SharedPackageText from '../cms/SharedPackageText.astro';
+import type { CmsPageTextValue } from '../../lib/pageContent/cmsPageText';
 import type { ServicePackage } from '../../lib/pageContent/packages';
 
 interface Props {
   tier: ServicePackage;
   index: number;
-  customQuoteLabel: string;
+  customQuoteLabel: CmsPageTextValue;
   primaryCtaLabel: string;
   projectCtaLabel: string;
   contactHref: string;
@@ -88,7 +90,14 @@ const {
     ) : (
       <div class="flex flex-col gap-1">
         {tier.showQuoteLabel !== false && (
-          <p class="pricing-quote text-3xl text-charcoal">{customQuoteLabel}</p>
+          <EditableText
+            id={customQuoteLabel.id}
+            selector={customQuoteLabel.selector}
+            kind={customQuoteLabel.kind}
+            value={customQuoteLabel.value}
+            as="p"
+            class="pricing-quote js-pricing-custom-quote text-3xl text-charcoal"
+          />
         )}
         <p
           aria-hidden="true"

@@ -19,7 +19,17 @@
       "canonical": "/pt/servicos"
     }
   },
-  "texts": [],
+  "texts": [
+    {
+      "id": "text:add-on-quote-label",
+      "selector": ".js-services-add-on-quote-label",
+      "kind": "inline",
+      "value": {
+        "en": "Scoped quote",
+        "pt": "Orcamento por escopo"
+      }
+    }
+  ],
   "links": [],
   "images": []
 }

@@ -1,6 +1,7 @@
 ---
 import VisualPageLayout from './VisualPageLayout.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
+import EditableText from '../cms/EditableText.astro';
 import PricingTierCard from '../pricing/PricingTierCard.astro';
 import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
@@ -67,12 +68,27 @@ const pageSchema = [
 
   <section class="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <div class="premium-panel p-6 sm:p-8">
-      <p class="eyebrow">{copy.transparencyTitle}</p>
+      <EditableText
+        id={copy.transparencyTitle.id}
+        selector={copy.transparencyTitle.selector}
+        kind={copy.transparencyTitle.kind}
+        value={copy.transparencyTitle.value}
+        as="p"
+        class="eyebrow js-pricing-transparency-title"
+      />
       <div class="mt-5 grid gap-3 sm:grid-cols-3">
         {copy.transparencyItems.map((item) => (
           <article class="step-card pricing-shared-card flex items-center gap-3">
             <span aria-hidden="true" class="h-2 w-2 flex-shrink-0 rounded-full bg-ocean-blue"></span>
-            <p class="text-sm leading-relaxed text-charcoal/75">{item}</p>
+            <EditableText
+              id={item.id}
+              selector={item.selector}
+              kind={item.kind}
+              value={item.value}
+              as="p"
+              class="text-sm leading-relaxed text-charcoal/75"
+              data-pricing-summary-item={item.id.replace('text:transparency-item-', '')}
+            />
           </article>
         ))}
       </div>

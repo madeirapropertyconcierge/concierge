@@ -1,7 +1,7 @@
 import { loadServicePackageDocument } from '../../cms/content-loader';
-import type { SiteLocale, ServicePackageKey } from './packageCatalog';
+import type { SiteLocale, ServicePackageKey } from './packageTypes';
 
-export type { SiteLocale, ServicePackageKey } from './packageCatalog';
+export type { SiteLocale, ServicePackageKey } from './packageTypes';
 
 export interface PackagePrice {
   headline: string;

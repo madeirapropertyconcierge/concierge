@@ -2,7 +2,41 @@ import { describe, expect, it } from 'bun:test';
 import { normalizePublishRequest } from './content-normalization';
 import type { CmsPublishRequest } from './schema';
 import { normalizeCmsText } from './text-normalization';
-import { defaultServicePackageDocument } from '../lib/pageContent/packageCatalog';
+
+const packageFixture: CmsPublishRequest['packages'] = {
+  updatedAt: '2026-03-11T10:00:00.000Z',
+  packages: [
+    {
+      key: 'essentialCare',
+      tierLabel: { en: 'Property Care', pt: 'Cuidado do Imovel' },
+      title: { en: 'Essential Care Package', pt: 'Pacote de Cuidados Essenciais' },
+      price: {
+        headline: { en: '€95/month', pt: 'EUR95/mes' },
+        detail: { en: '', pt: '' },
+      },
+      audience: {
+        en: 'Designed for overseas owners.',
+        pt: 'Pensado para proprietarios no estrangeiro.',
+      },
+      features: {
+        en: ['Secure key holding'],
+        pt: ['Guarda segura de chaves'],
+      },
+      idealFor: {
+        en: 'Vacant homes.',
+        pt: 'Casas vazias.',
+      },
+      servicesBullets: {
+        en: ['Monthly inspections'],
+        pt: ['Inspecoes mensais'],
+      },
+      homeBlurb: {
+        en: 'Monthly inspections and reports.',
+        pt: 'Inspecoes mensais e relatorios.',
+      },
+    },
+  ],
+};
 
 describe('cms text normalization', () => {
   it('repairs common UTF-8 mojibake', () => {
@@ -99,7 +133,7 @@ describe('cms text normalization', () => {
           },
         },
       ],
-      packages: defaultServicePackageDocument,
+      packages: packageFixture,
       baseSha: 'abc123',
     };
 

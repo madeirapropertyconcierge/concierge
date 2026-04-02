@@ -19,7 +19,71 @@
       "canonical": "/pt/precos"
     }
   },
-  "texts": [],
+  "texts": [
+    {
+      "id": "text:custom-quote-label",
+      "selector": ".js-pricing-custom-quote",
+      "kind": "inline",
+      "value": {
+        "en": "Scoped quote",
+        "pt": "Orcamento por escopo"
+      }
+    },
+    {
+      "id": "text:transparency-title",
+      "selector": ".js-pricing-transparency-title",
+      "kind": "inline",
+      "value": {
+        "en": "How costs are structured",
+        "pt": "Como estruturamos os custos"
+      }
+    },
+    {
+      "id": "text:transparency-item-essential-care",
+      "selector": "[data-pricing-summary-item=\"essential-care\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Essential Care: €95/month",
+        "pt": "Cuidados Essenciais: EUR95/mes"
+      }
+    },
+    {
+      "id": "text:transparency-item-managed-care",
+      "selector": "[data-pricing-summary-item=\"managed-care\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Managed Care: €95/month, plus €80 per turnover support (arrival & departure coordination)",
+        "pt": "Gestao Assistida: EUR95/mes + EUR80 por suporte de turnover (coordenacao de chegadas e saidas)"
+      }
+    },
+    {
+      "id": "text:transparency-item-premium-care",
+      "selector": "[data-pricing-summary-item=\"premium-care\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Premium Care: €140/month",
+        "pt": "Cuidados Premium: EUR140/mes"
+      }
+    },
+    {
+      "id": "text:transparency-item-revenue-hosting",
+      "selector": "[data-pricing-summary-item=\"revenue-hosting\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Revenue & Hosting: €95/month + 25% of gross rental revenue",
+        "pt": "Revenue & Hosting: EUR95/mes + 25% da receita bruta"
+      }
+    },
+    {
+      "id": "text:transparency-item-on-demand",
+      "selector": "[data-pricing-summary-item=\"on-demand\"]",
+      "kind": "inline",
+      "value": {
+        "en": "On-Demand Services: from €35/hour",
+        "pt": "Servicos Sob Pedido: desde EUR35/hora"
+      }
+    }
+  ],
   "links": [],
   "images": []
 }

@@ -7,14 +7,17 @@ interface Props {
   kind: 'inline' | 'block';
   value: string;
   as?: string;
+  class?: string;
 }
 
-const { id, selector, kind, value, as = 'span' } = Astro.props;
+const { id, selector, kind, value, as = 'span', class: className, ...rest } = Astro.props;
 const Tag = as as keyof HTMLElementTagNameMap;
 const html = kind === 'block' ? renderBlockMarkdown(value) : renderInlineMarkdown(value);
 ---
 
 <Tag
+  {...rest}
+  class={className}
   data-cms-field="text"
   data-cms-id={id}
   data-cms-selector={selector}

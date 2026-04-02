@@ -1,12 +1,14 @@
 ---
 import VisualPageLayout from './VisualPageLayout.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
+import EditableText from '../cms/EditableText.astro';
 import SharedPackageText from '../cms/SharedPackageText.astro';
 import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd, serviceListJsonLd } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
+import { loadRequiredPageText } from '../../lib/pageContent/cmsPageText';
 import {
   loadCoreServicePackages,
   loadServicePackages,
@@ -19,8 +21,10 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
+const pageId = lang === 'en' ? 'en-services' : 'pt-servicos';
 const packages = await loadCoreServicePackages(lang);
 const addOns = (await loadServicePackages(lang)).find((item) => item.key === 'addOns');
+const addOnQuoteLabel = await loadRequiredPageText(pageId, 'text:add-on-quote-label', lang);
 
 if (!addOns) {
   throw new Error('Optional add-ons package is missing.');
@@ -49,7 +53,6 @@ const copy =
         addOnsSubtitle:
           'Complementos opcionais para elevar a apresentacao, a automacao e a experiencia do hospede.',
         addOnLabel: 'Add-On',
-        addOnPriceLabel: 'Orcamento por escopo',
         ctaTitle: 'Sugerimos o pacote que encaixa na operacao real do imovel.',
         ctaBody:
           'Na primeira chamada, percebemos se precisa de cuidado do imovel, suporte a hospedes, revenue e hosting, ou apenas apoio sob pedido.',
@@ -69,7 +72,6 @@ const copy =
         addOnsSubtitle:
           'Optional upgrades to improve presentation, automation, and guest-ready finishing.',
         addOnLabel: 'Add-On',
-        addOnPriceLabel: 'Scoped quote',
         ctaTitle: "We'll suggest the package that fits the operation, not the most expensive one.",
         ctaBody:
           "In the first call, we work out whether you need property care, guest support, revenue and hosting management, or just flexible help on the ground.",
@@ -204,7 +206,14 @@ const pageSchema = [
               as="h3"
               class="mt-2 text-xl text-charcoal"
             />
-            <p class="mt-2 text-sm font-semibold text-ocean-blue">{copy.addOnPriceLabel}</p>
+            <EditableText
+              id={addOnQuoteLabel.id}
+              selector={addOnQuoteLabel.selector}
+              kind={addOnQuoteLabel.kind}
+              value={addOnQuoteLabel.value}
+              as="p"
+              class="js-services-add-on-quote-label mt-2 text-sm font-semibold text-ocean-blue"
+            />
           </div>
         ))}
       </div>

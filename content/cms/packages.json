@@ -84,8 +84,8 @@
           "pt": "EUR95/mes"
         },
         "detail": {
-          "en": "+ €80 per turnover support",
-          "pt": "+ EUR80 por suporte de turnover"
+          "en": "+ €80 per turnover support (arrival & departure coordination)",
+          "pt": "+ EUR80 por suporte de turnover (coordenacao de chegadas e saidas)"
         }
       },
       "audience": {
@@ -95,13 +95,13 @@
       "features": {
         "en": [
           "Includes everything in the Essential Care package",
-          "Water, gas, and electricity switched on before guest arrival",
-          "Water, gas, and electricity switched off after guest departure",
-          "Rubbish removal after guest departure",
-          "Key handover for arriving guests",
+          "Turning on water, gas, and electricity before guest arrival",
+          "Turning off water, gas, and electricity after guest departure",
+          "Taking out rubbish after guest departure",
+          "Handing over keys to guests when they arrive",
           "Detailed updates and photo reporting",
-          "Optional house cleaning and guest-ready prep from €80",
-          "Terrace sweeping from €20",
+          "House cleaning and pre-arrival guest preparation (from €80)",
+          "Sweeping terraces (from €20)",
           "Utility management for water, gas, electricity, and Wi-Fi"
         ],
         "pt": [
@@ -109,10 +109,10 @@
           "Ligar agua, gas e eletricidade antes da chegada dos hospedes",
           "Desligar agua, gas e eletricidade depois da saida dos hospedes",
           "Retirar o lixo apos a saida dos hospedes",
-          "Entrega de chaves na chegada dos hospedes",
+          "Entregar as chaves aos hospedes quando chegam",
           "Atualizacoes detalhadas e relatorios fotograficos",
-          "Limpeza da casa e preparacao para chegada desde EUR80",
-          "Varredura de terracos desde EUR20",
+          "Limpeza da casa e preparacao antes da chegada dos hospedes (desde EUR80)",
+          "Varredura de terracos (desde EUR20)",
           "Gestao de utilidades: agua, gas, eletricidade e Wi-Fi"
         ]
       },
@@ -123,13 +123,13 @@
       "servicesBullets": {
         "en": [
           "Builds on Essential Care with guest arrival and departure coordination",
-          "Utilities on and off, rubbish removal, key handovers, and detailed photo updates",
-          "Optional cleaning, terrace sweeping, and utility management for hosted stays"
+          "Utilities on and off, rubbish removal, key handovers, and detailed updates with photo reporting",
+          "House cleaning, terrace sweeping, and utility management as additional support"
         ],
         "pt": [
           "Assenta na base dos Cuidados Essenciais com coordenacao de chegadas e saidas",
-          "Utilidades ligadas e desligadas, lixo tratado, entrega de chaves e atualizacoes fotograficas",
-          "Limpeza opcional, varredura de terracos e gestao de utilidades para estadias com hospedes"
+          "Utilidades ligadas e desligadas, lixo tratado, entrega de chaves, atualizacoes detalhadas e relatorios fotograficos",
+          "Limpeza da casa, varredura de terracos e gestao de utilidades como apoio adicional"
         ]
       },
       "homeBlurb": {
@@ -158,43 +158,43 @@
         }
       },
       "audience": {
-        "en": "A higher-touch service for owners who want more frequent oversight and faster response times. We spot small issues early so they do not become bigger, more expensive problems.",
-        "pt": "Um servico mais proximo para proprietarios que querem mais frequencia de supervisao e tempos de resposta mais rapidos. Detetamos pequenos problemas cedo para evitar situacoes maiores e mais dispendiosas."
+        "en": "A higher-touch service for owners who want more frequent oversight and faster response times. We keep a closer eye on your property, handling small issues early so they don't become bigger (and more expensive) problems.",
+        "pt": "Um servico mais proximo para proprietarios que querem mais frequencia de supervisao e tempos de resposta mais rapidos. Mantemos um olhar mais atento sobre a propriedade, tratando pequenos problemas cedo para que nao se tornem maiores e mais dispendiosos."
       },
       "features": {
         "en": [
-          "Includes Essential Care coverage, plus:",
-          "Two property visits per month with interior and exterior checks",
+          "Includes everything in the Essential Care package, plus:",
+          "Two property visits per month (interior & exterior checks)",
           "Priority response for urgent issues",
           "Minor troubleshooting and minor fixes during visits",
-          "Coordination of routine maintenance such as gardeners, cleaners, and basic upkeep",
+          "Coordination of routine maintenance (e.g. gardeners, cleaners, basic upkeep)",
           "Enhanced photo reporting and updates",
-          "Seasonal readiness checks before or after winter, storms, or long vacancy periods"
+          "Seasonal readiness checks (before/after winter, storms, or long vacancy periods)"
         ],
         "pt": [
-          "Inclui a cobertura dos Cuidados Essenciais, mais:",
-          "Duas visitas por mes com verificacoes interiores e exteriores",
+          "Inclui tudo no Pacote de Cuidados Essenciais, mais:",
+          "Duas visitas por mes (verificacoes interiores e exteriores)",
           "Resposta prioritaria para situacoes urgentes",
           "Pequeno troubleshooting e pequenas correcoes durante as visitas",
-          "Coordenacao de manutencao de rotina com jardineiros, limpezas e pequenas tarefas",
-          "Relatorios fotograficos e atualizacoes mais detalhados",
-          "Verificacoes sazonais antes ou depois do inverno, tempestades ou longos periodos sem ocupacao"
+          "Coordenacao de manutencao de rotina (por exemplo, jardineiros, limpezas e pequenas tarefas)",
+          "Relatorios fotograficos e atualizacoes reforcados",
+          "Verificacoes sazonais de prontidao (antes/depois do inverno, tempestades ou longos periodos sem ocupacao)"
         ]
       },
       "idealFor": {
-        "en": "Homeowners who want a more proactive, hands-on approach, especially for higher-value homes or long vacancy periods.",
-        "pt": "Proprietarios que querem uma abordagem mais proativa e acompanhada, especialmente em casas de maior valor ou com longos periodos de vacancia."
+        "en": "Homeowners who want a more proactive, hands-on approach - whether your property sits empty for long periods, is higher value, or you simply want extra peace of mind it's being closely looked after.",
+        "pt": "Proprietarios que querem uma abordagem mais proativa e acompanhada, quer a propriedade fique vazia durante longos periodos, tenha maior valor, ou simplesmente queira a tranquilidade extra de saber que esta a ser acompanhada de perto."
       },
       "servicesBullets": {
         "en": [
-          "Two property visits per month with enhanced oversight inside and outside the home",
-          "Priority handling for urgent issues plus minor troubleshooting during visits",
-          "Routine maintenance coordination, enhanced reporting, and seasonal readiness checks"
+          "Two property visits per month with interior and exterior checks",
+          "Priority response for urgent issues plus minor troubleshooting and fixes during visits",
+          "Routine maintenance coordination, enhanced photo reporting, and seasonal readiness checks"
         ],
         "pt": [
-          "Duas visitas por mes com supervisao reforcada dentro e fora da propriedade",
-          "Tratamento prioritario de situacoes urgentes e pequenas correcoes durante as visitas",
-          "Coordenacao de manutencao, reporting reforcado e verificacoes sazonais de prontidao"
+          "Duas visitas por mes com verificacoes interiores e exteriores",
+          "Resposta prioritaria a situacoes urgentes, mais pequenas correcoes e troubleshooting durante as visitas",
+          "Coordenacao de manutencao de rotina, relatorios fotograficos reforcados e verificacoes sazonais de prontidao"
         ]
       },
       "homeBlurb": {
@@ -223,52 +223,52 @@
         }
       },
       "audience": {
-        "en": "A fully managed white-glove service for international owners who want revenue without day-to-day involvement. We handle listings, guest communication, and on-the-ground coordination end to end.",
-        "pt": "Um servico white-glove totalmente gerido para proprietarios internacionais que querem gerar receita sem envolvimento diario. Gerimos anuncios, comunicacao com hospedes e coordenacao local de ponta a ponta."
+        "en": "A fully managed white-glove service for international owners seeking to earn revenue from their properties with complete peace of mind. We manage everything end-to-end, from listings and guest communication to on-the-ground coordination.",
+        "pt": "Um servico white-glove totalmente gerido para proprietarios internacionais que querem gerar receita com total tranquilidade. Gerimos tudo de ponta a ponta, desde os anuncios e a comunicacao com hospedes ate a coordenacao no terreno."
       },
       "features": {
         "en": [
-          "Includes Managed Care coordination, plus:",
-          "Multi-platform listing management across Airbnb, Booking.com, and similar channels",
-          "Listing optimisation for copy, user experience, and conversion",
+          "Includes everything in the Managed Care package, plus:",
+          "Management of multi-platform listings (Airbnb, Booking.com, etc.)",
+          "Listing optimisation (copy, UX, conversion)",
           "Revenue optimisation and dynamic pricing strategy",
           "Guest messaging",
           "Booking management",
           "Performance tracking and monthly reporting",
-          "AL licensing and Portuguese compliance support at €35/hour when needed",
-          "Multi-platform listing setup: €300 per platform, €500 for Airbnb + Booking.com, €700 for Airbnb + Booking.com + Vrbo"
+          "Full support in obtaining an Alojamento Local license (AL) and compliance with Portuguese regulations at €35/hour",
+          "Multi-platform listing setup, including listing creation, photography coordination, pricing setup, and initial optimisation: €300 per platform, €500 for Airbnb + Booking.com, €700 for Airbnb + Booking.com + Vrbo"
         ],
         "pt": [
-          "Inclui a coordenacao da Gestao Assistida, mais:",
-          "Gestao de anuncios em varias plataformas como Airbnb, Booking.com e semelhantes",
-          "Otimizacao do anuncio ao nivel de copy, experiencia e conversao",
+          "Inclui tudo no Pacote de Gestao Assistida, mais:",
+          "Gestao de anuncios em varias plataformas (Airbnb, Booking.com, etc.)",
+          "Otimizacao do anuncio (copy, UX, conversao)",
           "Otimizacao de receita e estrategia de precos dinamicos",
           "Mensagens com hospedes",
           "Gestao de reservas",
           "Acompanhamento de desempenho e relatorio mensal",
-          "Apoio no licenciamento AL e conformidade portuguesa a EUR35/hora quando necessario",
-          "Setup multi-plataforma: EUR300 por plataforma, EUR500 para Airbnb + Booking.com, EUR700 para Airbnb + Booking.com + Vrbo"
+          "Apoio completo na obtencao da licenca de Alojamento Local (AL) e conformidade com regulamentos portugueses a EUR35/hora",
+          "Setup multi-plataforma, incluindo criacao do anuncio, coordenacao de fotografia, configuracao de precos e otimizacao inicial: EUR300 por plataforma, EUR500 para Airbnb + Booking.com, EUR700 para Airbnb + Booking.com + Vrbo"
         ]
       },
       "idealFor": {
-        "en": "High-value properties, frequent visitors, or owners who want a hands-off setup focused on occupancy, nightly rate, and annual return.",
-        "pt": "Propriedades de maior valor, visitantes frequentes ou proprietarios que querem uma operacao sem intervencao direta, focada em ocupacao, nightly rate e retorno anual."
+        "en": "High-value properties, frequent visitors, or owners who want a hands-off, worry-free solution. Our goal is to maximise your occupancy, nightly rate, and overall annual return while keeping your property stress-free.",
+        "pt": "Propriedades de maior valor, visitantes frequentes, ou proprietarios que querem uma solucao hands-off e sem preocupacoes. O nosso objetivo e maximizar a ocupacao, a nightly rate e o retorno anual, mantendo a propriedade tranquila para si."
       },
       "servicesBullets": {
         "en": [
-          "Managed Care coordination plus multi-platform listings, guest messaging, and booking management",
+          "Managed Care support plus multi-platform listings, guest messaging, and booking management",
           "Listing optimisation, dynamic pricing, and monthly performance reporting",
-          "Optional AL licensing support and setup for Airbnb, Booking.com, and Vrbo"
+          "AL licensing support and multi-platform setup for Airbnb, Booking.com, and Vrbo"
         ],
         "pt": [
-          "Coordenacao da Gestao Assistida mais anuncios multi-plataforma, mensagens e gestao de reservas",
+          "Apoio de Gestao Assistida mais anuncios multi-plataforma, mensagens com hospedes e gestao de reservas",
           "Otimizacao de anuncios, precos dinamicos e relatorio mensal de desempenho",
-          "Apoio opcional em licenciamento AL e setups para Airbnb, Booking.com e Vrbo"
+          "Apoio em licenciamento AL e setup multi-plataforma para Airbnb, Booking.com e Vrbo"
         ]
       },
       "homeBlurb": {
-        "en": "Listings, dynamic pricing, guest messaging, booking management, and monthly performance reporting.",
-        "pt": "Anuncios, precos dinamicos, mensagens com hospedes, reservas e relatorio mensal de desempenho."
+        "en": "End-to-end listings, dynamic pricing, guest messaging, booking management, and monthly performance reporting.",
+        "pt": "Gestao de anuncios de ponta a ponta, precos dinamicos, mensagens com hospedes, reservas e relatorio mensal de desempenho."
       }
     },
     {
@@ -299,53 +299,53 @@
         "en": [
           "Emergency call-outs",
           "Additional property visits",
-          "Storm checks outside package cover",
+          "Storm checks (outside package)",
           "Waiting for repairs, inspections, or deliveries",
-          "Renovation or vendor project coordination",
+          "Renovation or vendor project coordination (scoped quote)",
           "Inventory and condition checks",
           "Furniture or appliance deliveries",
           "Local errands and administrative support",
-          "Utility setup for water, gas, electricity, or Wi-Fi at €60 per utility",
-          "Ongoing utility management",
+          "Utility setup for water, gas, electricity, or Wi-Fi (€60 per utility)",
+          "Utility management for water, gas, electricity, and Wi-Fi",
           "Assistance navigating local services and bureaucracy",
-          "Coordination of licensed tour guides for guests",
-          "Interior styling and professional listing photography",
-          "Guest welcome preparation from €80",
-          "Key handover coordination at €35",
+          "Coordination of licensed tour guides for guests (scoped quote)",
+          "Interior styling and professional listing photography (scoped quote)",
+          "Guest welcome preparation (cleaning & essentials) from €80",
+          "Key handover coordination: €35",
           "Custom monthly retainers are available for ongoing support"
         ],
         "pt": [
           "Chamadas de emergencia",
           "Visitas adicionais a propriedade",
-          "Verificacoes de tempestade fora da cobertura do pacote",
+          "Verificacoes de tempestade (fora do pacote)",
           "Esperar por reparacoes, inspecoes ou entregas",
-          "Coordenacao de renovacao ou projetos com fornecedores",
+          "Coordenacao de renovacao ou projetos com fornecedores (orcamento por escopo)",
           "Inventario e verificacoes de estado",
           "Entregas de mobiliario ou eletrodomesticos",
           "Tarefas locais e apoio administrativo",
-          "Setup de utilidades de agua, gas, eletricidade ou Wi-Fi a EUR60 por utilidade",
-          "Gestao continua de utilidades",
+          "Setup de utilidades de agua, gas, eletricidade ou Wi-Fi (EUR60 por utilidade)",
+          "Gestao de utilidades de agua, gas, eletricidade e Wi-Fi",
           "Apoio na navegacao de servicos locais e burocracia",
-          "Coordenacao de guias turisticos licenciados para hospedes",
-          "Styling interior e fotografia profissional",
-          "Preparacao de boas-vindas para hospedes desde EUR80",
-          "Coordenacao de entrega de chaves a EUR35",
+          "Coordenacao de guias turisticos licenciados para hospedes (orcamento por escopo)",
+          "Styling interior e fotografia profissional para anuncios (orcamento por escopo)",
+          "Preparacao de boas-vindas para hospedes (limpeza e essenciais) desde EUR80",
+          "Coordenacao de entrega de chaves: EUR35",
           "Retainers mensais personalizados disponiveis para apoio continuo"
         ]
       },
       "idealFor": {
-        "en": "Homeowners who do not want a monthly service fee but still need a trusted local bilingual EN/PT person on the ground.",
-        "pt": "Proprietarios que nao querem assumir um fee mensal mas precisam de uma pessoa local bilingue EN/PT de confianca no terreno."
+        "en": "Homeowners who don't want to commit to a monthly service fee but need a trusted local EN/PT person on the ground.",
+        "pt": "Proprietarios que nao querem comprometer-se com uma mensalidade, mas precisam de uma pessoa local EN/PT de confianca no terreno."
       },
       "servicesBullets": {
         "en": [
           "Emergency support, extra property visits, storm checks, and waiting time for repairs or deliveries",
-          "Inventories, errands, furniture deliveries, utility setup, and local admin support",
+          "Inventories, errands, furniture deliveries, utility setup and management, and local admin support",
           "Guest prep, key handovers, styling, photography, and ongoing retained support when needed"
         ],
         "pt": [
           "Suporte de emergencia, visitas extra, verificacoes de tempestade e espera por reparacoes ou entregas",
-          "Inventarios, recados, entregas, setup de utilidades e apoio administrativo local",
+          "Inventarios, recados, entregas, setup e gestao de utilidades, e apoio administrativo local",
           "Preparacao para hospedes, entrega de chaves, styling, fotografia e apoio continuado quando necessario"
         ]
       },
@@ -372,17 +372,17 @@
       "features": {
         "en": [
           "Professional photography",
-          "Interior styling and staging",
+          "Interior styling / staging",
           "Smart lock installation",
           "Guest welcome packs",
-          "Linen and hotel-quality upgrades"
+          "Linen / hotel-quality upgrades"
         ],
         "pt": [
           "Fotografia profissional",
-          "Styling interior e staging",
+          "Styling interior / staging",
           "Instalacao de smart lock",
           "Welcome packs para hospedes",
-          "Upgrade de lencois e padrao hoteleiro"
+          "Lencois / upgrades de padrao hoteleiro"
         ]
       },
       "idealFor": {
