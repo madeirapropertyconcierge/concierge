@@ -17,7 +17,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const pageId = lang === 'en' ? 'en-about' : 'pt-sobre';
+const pageId = 'about';
 
 const differentiators = ['bilingual', 'design', 'personal', 'network'] as const;
 

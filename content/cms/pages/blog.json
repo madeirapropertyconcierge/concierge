@@ -1,5 +1,5 @@
 {
-  "pageId": "pt-blog",
+  "pageId": "blog",
   "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
@@ -12,9 +12,9 @@
     },
     "pt": {
       "title": "Blog | Madeira Property Concierge",
-      "description": "Artigos práticos sobre gestão de propriedades na Madeira, licenciamento AL, investimento e operação para proprietários no estrangeiro.",
+      "description": "Artigos praticos sobre gestao de propriedades na Madeira, licenciamento AL, investimento e operacao para proprietarios no estrangeiro.",
       "ogTitle": "Blog | Madeira Property Concierge",
-      "ogDescription": "Artigos práticos sobre gestão de propriedades na Madeira, licenciamento AL, investimento e operação para proprietários no estrangeiro.",
+      "ogDescription": "Artigos praticos sobre gestao de propriedades na Madeira, licenciamento AL, investimento e operacao para proprietarios no estrangeiro.",
       "ogImage": "/images/madeira/coastal-viewpoint.jpg",
       "canonical": "/pt/blog"
     }

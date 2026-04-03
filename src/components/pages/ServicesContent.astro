@@ -22,7 +22,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const pageId = lang === 'en' ? 'en-services' : 'pt-servicos';
+const pageId = 'services';
 const [packages, allPackages, pageFields, siteChrome] = await Promise.all([
   loadCoreServicePackages(lang),
   loadServicePackages(lang),

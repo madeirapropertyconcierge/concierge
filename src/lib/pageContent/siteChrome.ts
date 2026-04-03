@@ -103,7 +103,7 @@ export interface NotFoundContent {
 }
 
 export async function getSiteChromeContent(lang: Locale): Promise<SiteChromeContent> {
-  const fields = await loadRequiredPageFields('shared-site', lang, { texts: siteChromeTextIds });
+  const fields = await loadRequiredPageFields('site', lang, { texts: siteChromeTextIds });
   const eyebrow = fields.texts['text:brand-eyebrow'].value;
   const wordmark = fields.texts['text:brand-wordmark'].value;
 
@@ -158,7 +158,7 @@ export async function getSiteChromeContent(lang: Locale): Promise<SiteChromeCont
 }
 
 export async function getNotFoundContent(lang: Locale): Promise<NotFoundContent> {
-  const fields = await loadRequiredPageFields('shared-404', lang, { texts: notFoundTextIds });
+  const fields = await loadRequiredPageFields('404', lang, { texts: notFoundTextIds });
 
   return {
     title: fields.texts['text:title'].value,

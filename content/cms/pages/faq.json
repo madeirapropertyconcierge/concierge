@@ -1,5 +1,5 @@
 {
-  "pageId": "pt-perguntas-frequentes",
+  "pageId": "faq",
   "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
@@ -12,9 +12,9 @@
     },
     "pt": {
       "title": "FAQ | Madeira Property Concierge",
-      "description": "Respostas as perguntas frequentes sobre propriedade a distancia na Madeira, pacotes de servico, apoio de conformidade AL, integracao e relatorios mensais.",
+      "description": "Respostas as perguntas frequentes sobre propriedade a distancia na Madeira, pacotes de servico, apoio de conformidade AL, onboarding e reporting mensal.",
       "ogTitle": "FAQ | Madeira Property Concierge",
-      "ogDescription": "Respostas as perguntas frequentes sobre propriedade a distancia na Madeira, pacotes de servico, apoio de conformidade AL, integracao e relatorios mensais.",
+      "ogDescription": "Respostas as perguntas frequentes sobre propriedade a distancia na Madeira, pacotes de servico, apoio de conformidade AL, onboarding e reporting mensal.",
       "ogImage": "/images/madeira/mountain-village.jpg",
       "canonical": "/pt/perguntas-frequentes"
     }

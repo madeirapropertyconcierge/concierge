@@ -5,7 +5,7 @@ import type { CmsPageDocument } from './schema';
 describe('cms server render', () => {
   it('applies text, link, and image overrides server-side', () => {
     const page: CmsPageDocument = {
-      pageId: 'en-home',
+      pageId: 'home',
       updatedAt: '2026-02-28T00:00:00.000Z',
       seo: {
         en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
@@ -52,7 +52,7 @@ describe('cms server render', () => {
 
   it('preserves complex link structure while updating href', () => {
     const page: CmsPageDocument = {
-      pageId: 'en-home',
+      pageId: 'home',
       updatedAt: '2026-02-28T00:00:00.000Z',
       seo: {
         en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
@@ -81,7 +81,7 @@ describe('cms server render', () => {
 
   it('skips page overrides for shared package-owned elements', () => {
     const page: CmsPageDocument = {
-      pageId: 'en-home',
+      pageId: 'home',
       updatedAt: '2026-02-28T00:00:00.000Z',
       seo: {
         en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },

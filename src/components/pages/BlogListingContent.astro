@@ -19,7 +19,7 @@ const { lang } = Astro.props;
 const routes = routeMap[lang];
 const [posts, pageFields, siteChrome] = await Promise.all([
   getLocalizedBlogPosts(lang),
-  loadRequiredPageFields(lang === 'en' ? 'en-blog' : 'pt-blog', lang, {
+  loadRequiredPageFields('blog', lang, {
     texts: [
       'text:hero-eyebrow',
       'text:hero-title',

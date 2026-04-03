@@ -16,7 +16,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const pageId = lang === 'en' ? 'en-guide' : 'pt-guia';
+const pageId = 'guide';
 
 const [pageFields, siteChrome] = await Promise.all([
   loadRequiredPageFields(pageId, lang, {

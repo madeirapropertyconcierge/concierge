@@ -27,10 +27,7 @@ export interface FAQPageContent {
   closingCta: CmsPageLinkValue;
 }
 
-const faqPageIds = {
-  en: 'en-faq',
-  pt: 'pt-perguntas-frequentes',
-} as const satisfies Record<Locale, string>;
+const faqPageId = 'faq';
 
 const faqTextIds = [
   'text:hero-eyebrow',
@@ -65,8 +62,7 @@ const faqLinkIds = [
 ] as const;
 
 export async function getFaqPageContent(lang: Locale): Promise<FAQPageContent> {
-  const pageId = faqPageIds[lang];
-  const pageFields = await loadRequiredPageFields(pageId, lang, {
+  const pageFields = await loadRequiredPageFields(faqPageId, lang, {
     texts: faqTextIds,
     links: faqLinkIds,
   });

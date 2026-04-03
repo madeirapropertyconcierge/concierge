@@ -25,10 +25,7 @@ export interface PricingPageContent {
   tierProjectCta: CmsPageLinkValue;
 }
 
-const pricingPageIds = {
-  en: 'en-pricing',
-  pt: 'pt-precos',
-} as const satisfies Record<Locale, string>;
+const pricingPageId = 'pricing';
 
 const pricingTextIds = [
   'text:hero-eyebrow',
@@ -48,10 +45,9 @@ const pricingLinkIds = [
 ] as const;
 
 export async function getPricingPageContent(lang: Locale): Promise<PricingPageContent> {
-  const pageId = pricingPageIds[lang];
   const [allTiers, pageFields] = await Promise.all([
     loadServicePackages(lang),
-    loadRequiredPageFields(pageId, lang, {
+    loadRequiredPageFields(pricingPageId, lang, {
       texts: pricingTextIds,
       links: pricingLinkIds,
     }),

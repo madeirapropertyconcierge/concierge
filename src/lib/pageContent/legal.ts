@@ -36,16 +36,10 @@ export interface LegalPageContext {
   hasLegalPlaceholders: boolean;
 }
 
-const legalPageIds = {
-  privacy: {
-    en: 'en-privacy',
-    pt: 'pt-privacidade',
-  },
-  terms: {
-    en: 'en-terms',
-    pt: 'pt-termos',
-  },
-} as const satisfies Record<LegalPageType, Record<Locale, string>>;
+const legalPageIds: Record<LegalPageType, string> = {
+  privacy: 'privacy',
+  terms: 'terms',
+};
 
 const legalFieldIds = {
   privacy: [
@@ -130,7 +124,7 @@ export async function getLegalPageContent(
   type: LegalPageType,
   context: LegalPageContext,
 ): Promise<LegalPageContent> {
-  const pageFields = await loadRequiredPageFields(legalPageIds[type][lang], lang, {
+  const pageFields = await loadRequiredPageFields(legalPageIds[type], lang, {
     texts: legalFieldIds[type],
     links: legalLinkIds,
   });

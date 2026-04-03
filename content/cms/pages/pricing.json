@@ -1,5 +1,5 @@
 {
-  "pageId": "pt-precos",
+  "pageId": "pricing",
   "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
@@ -11,9 +11,9 @@
       "canonical": "/en/pricing"
     },
     "pt": {
-      "title": "Preços | Madeira Property Concierge",
+      "title": "Precos | Madeira Property Concierge",
       "description": "Precos transparentes por pacote para proprietarios na Madeira: Cuidados Essenciais, Gestao Assistida, Cuidados Premium, Revenue & Hosting, Servicos Sob Pedido e add-ons por escopo.",
-      "ogTitle": "Preços | Madeira Property Concierge",
+      "ogTitle": "Precos | Madeira Property Concierge",
       "ogDescription": "Precos transparentes por pacote para proprietarios na Madeira: Cuidados Essenciais, Gestao Assistida, Cuidados Premium, Revenue & Hosting, Servicos Sob Pedido e add-ons por escopo.",
       "ogImage": "/images/madeira/funchal-bay.jpg",
       "canonical": "/pt/precos"

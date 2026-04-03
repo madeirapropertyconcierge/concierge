@@ -59,7 +59,7 @@ describe('cms text normalization', () => {
     const payload: CmsPublishRequest = {
       pages: [
         {
-          pageId: 'pt-sobre',
+          pageId: 'about',
           updatedAt: '2026-03-11T10:00:00.000Z',
           seo: {
             en: {

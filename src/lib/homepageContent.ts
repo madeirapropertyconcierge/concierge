@@ -100,10 +100,7 @@ const homeTileConfig: Record<
   },
 };
 
-const homePageIds = {
-  en: 'en-home',
-  pt: 'pt-home',
-} as const satisfies Record<Locale, string>;
+const homePageId = 'home';
 
 const homeTextIds = [
   'text:hero-badge',
@@ -165,10 +162,9 @@ async function buildHomeServiceTiles(locale: Locale): Promise<HomeServiceTile[]>
 }
 
 export async function getHomepageContent(locale: Locale): Promise<HomePageContent> {
-  const pageId = homePageIds[locale];
   const [serviceTiles, pageFields] = await Promise.all([
     buildHomeServiceTiles(locale),
-    loadRequiredPageFields(pageId, locale, {
+    loadRequiredPageFields(homePageId, locale, {
       texts: homeTextIds,
       links: homeLinkIds,
       images: homeImageIds,

@@ -1,5 +1,5 @@
 {
-  "pageId": "pt-sobre",
+  "pageId": "about",
   "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
@@ -12,9 +12,9 @@
     },
     "pt": {
       "title": "Sobre a Lisa | Madeira Property Concierge",
-      "description": "Conheça a Lisa, fundadora da Madeira Property Concierge. Bilingue EN/PT, raízes madeirenses, experiência em UX e 3+ anos a viver na ilha.",
+      "description": "Conheca a Lisa, fundadora da Madeira Property Concierge. Bilingue EN/PT, raizes madeirenses, experiencia em UX e 3+ anos a viver na ilha.",
       "ogTitle": "Sobre a Lisa | Madeira Property Concierge",
-      "ogDescription": "Conheça a Lisa, fundadora da Madeira Property Concierge. Bilingue EN/PT, raízes madeirenses, experiência em UX e 3+ anos a viver na ilha.",
+      "ogDescription": "Conheca a Lisa, fundadora da Madeira Property Concierge. Bilingue EN/PT, raizes madeirenses, experiencia em UX e 3+ anos a viver na ilha.",
       "ogImage": "/images/about/lisa_1.webp",
       "canonical": "/pt/sobre"
     }

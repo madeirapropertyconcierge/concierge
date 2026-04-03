@@ -46,7 +46,7 @@ const {
 const routes = routeMap[lang];
 
 const [pageFields, siteChrome] = await Promise.all([
-  loadRequiredPageFields(lang === 'en' ? 'en-blog-post' : 'pt-blog-post', lang, {
+  loadRequiredPageFields('blog-post', lang, {
     texts: [
       'text:summary-title',
       'text:toc-title',

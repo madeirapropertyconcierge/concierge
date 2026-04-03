@@ -1,6 +1,5 @@
 ---
 import type { Locale } from '../../i18n/utils';
-import { t } from '../../i18n/utils';
 
 interface Props {
   lang: Locale;
@@ -53,8 +52,8 @@ const testimonials = testimonialsByLocale[lang];
   <div class="premium-panel p-6 sm:p-8 lg:p-10">
     <div class="mx-auto max-w-3xl text-center">
       <p class="eyebrow">{lang === 'pt' ? 'Prova Social' : 'Social Proof'}</p>
-      <h2 class="mt-3 text-4xl leading-[1.05] text-charcoal sm:text-5xl">{t(lang, 'testimonials.title')}</h2>
-      <p class="mt-4 text-base leading-relaxed text-charcoal/72 sm:text-lg">{t(lang, 'testimonials.subtitle')}</p>
+      <h2 class="mt-3 text-4xl leading-[1.05] text-charcoal sm:text-5xl">{lang === 'pt' ? 'O Que Dizem os Nossos Clientes' : 'What Our Clients Say'}</h2>
+      <p class="mt-4 text-base leading-relaxed text-charcoal/72 sm:text-lg">{lang === 'pt' ? 'O que dizem os proprietários com quem trabalhamos.' : 'Hear from property owners we work with.'}</p>
     </div>
 
     <div class="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-2">

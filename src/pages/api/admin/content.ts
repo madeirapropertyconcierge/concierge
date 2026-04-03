@@ -22,7 +22,7 @@ function resolvePageId(url: URL): string {
     return getPageIdFromPath(fromPath);
   }
 
-  return 'en-home';
+  return 'home';
 }
 
 function isAuthenticated(token: string | null): boolean {

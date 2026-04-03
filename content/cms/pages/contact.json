@@ -1,5 +1,5 @@
 {
-  "pageId": "pt-contacto",
+  "pageId": "contact",
   "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
@@ -12,9 +12,9 @@
     },
     "pt": {
       "title": "Contacto | Madeira Property Concierge",
-      "description": "Marque uma chamada de diagnóstico para o seu imóvel na Madeira. Apoiamos proprietários no estrangeiro com comunicação bilingue EN/PT e execução local.",
+      "description": "Marque uma chamada de diagnostico para o seu imovel na Madeira. Apoiamos proprietarios no estrangeiro com comunicacao bilingue EN/PT e execucao local.",
       "ogTitle": "Contacto | Madeira Property Concierge",
-      "ogDescription": "Marque uma chamada de diagnóstico para o seu imóvel na Madeira. Apoiamos proprietários no estrangeiro com comunicação bilingue EN/PT e execução local.",
+      "ogDescription": "Marque uma chamada de diagnostico para o seu imovel na Madeira. Apoiamos proprietarios no estrangeiro com comunicacao bilingue EN/PT e execucao local.",
       "ogImage": "/images/madeira/sailboat-cliffs.jpg",
       "canonical": "/pt/contacto"
     }

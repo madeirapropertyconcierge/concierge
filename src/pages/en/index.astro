@@ -1,15 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HomeShowcase from '../../components/pages/HomeShowcase.astro';
-import { t } from '../../i18n/utils';
 
 const lang = 'en';
 ---
 
-<BaseLayout
-  title={t(lang, 'site.title')}
-  description=""
-  lang={lang}
->
+<BaseLayout lang={lang}>
   <HomeShowcase lang={lang} />
 </BaseLayout>

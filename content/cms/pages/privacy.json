@@ -1,5 +1,5 @@
 {
-  "pageId": "en-privacy",
+  "pageId": "privacy",
   "updatedAt": "2026-04-02T22:34:36.565Z",
   "seo": {
     "en": {
@@ -70,8 +70,8 @@
       "selector": "[data-cms-id=\"text:section-1-body\"]",
       "kind": "block",
       "value": {
-        "en": "The data controller for this website and related services is:\n\n- Controller: {{legalName}}\n- Email: {{email}}\n- Telephone: {{phone}}\n- Postal address: {{address}}",
-        "pt": "O responsavel pelo tratamento de dados deste website e servicos associados e:\n\n- Responsavel: {{legalName}}\n- Email: {{email}}\n- Telefone: {{phone}}\n- Morada postal: {{address}}"
+        "en": "The data controller for this website and related services is:\n\n- Controller: Madeira Property Concierge\n- Email: hello@madeirapropertyconcierge.com\n- Telephone: +351 967 637 133\n- Postal address: Ponta Delgada, Madeira Island, Portugal",
+        "pt": "O responsavel pelo tratamento de dados deste website e servicos associados e:\n\n- Responsavel: Madeira Property Concierge\n- Email: hello@madeirapropertyconcierge.com\n- Telefone: +351 967 637 133\n- Morada postal: Ponta Delgada, Madeira Island, Portugal"
       }
     },
     {
@@ -160,8 +160,8 @@
       "selector": "[data-cms-id=\"text:section-6-body\"]",
       "kind": "block",
       "value": {
-        "en": "Under GDPR, you may request access, rectification, erasure, restriction, objection, and portability where applicable.\n\n- To exercise rights, contact: {{email}}\n- You may withdraw consent at any time where consent is the legal basis.\n- You may lodge a complaint with the Portuguese supervisory authority (CNPD).\n\n[CNPD (Portuguese Data Protection Authority)](https://www.cnpd.pt/)",
-        "pt": "Nos termos do RGPD, pode exercer direitos de acesso, retificacao, apagamento, limitacao, oposicao e portabilidade, quando aplicavel.\n\n- Para exercer direitos: {{email}}\n- Pode retirar o consentimento a qualquer momento quando o tratamento se basear em consentimento.\n- Pode apresentar reclamacao a autoridade de controlo portuguesa (CNPD).\n\n[CNPD (Comissao Nacional de Protecao de Dados)](https://www.cnpd.pt/)"
+        "en": "Under GDPR, you may request access, rectification, erasure, restriction, objection, and portability where applicable.\n\n- To exercise rights, contact: hello@madeirapropertyconcierge.com\n- You may withdraw consent at any time where consent is the legal basis.\n- You may lodge a complaint with the Portuguese supervisory authority (CNPD).\n\n[CNPD (Portuguese Data Protection Authority)](https://www.cnpd.pt/)",
+        "pt": "Nos termos do RGPD, pode exercer direitos de acesso, retificacao, apagamento, limitacao, oposicao e portabilidade, quando aplicavel.\n\n- Para exercer direitos: hello@madeirapropertyconcierge.com\n- Pode retirar o consentimento a qualquer momento quando o tratamento se basear em consentimento.\n- Pode apresentar reclamacao a autoridade de controlo portuguesa (CNPD).\n\n[CNPD (Comissao Nacional de Protecao de Dados)](https://www.cnpd.pt/)"
       }
     },
     {
@@ -178,8 +178,8 @@
       "selector": "[data-cms-id=\"text:section-7-body\"]",
       "kind": "block",
       "value": {
-        "en": "We use strictly necessary cookies for site operation. Non-essential cookies (such as analytics/marketing) require prior consent.\n\n- No non-essential cookies run before your explicit acceptance.\n- Vercel Web Analytics is enabled only after you click Accept in the cookie banner.\n- You can change cookie preferences at any time through browser settings and local storage controls.\n\n[Terms and cookie details]({{termsHref}})",
-        "pt": "Utilizamos cookies estritamente necessarios para operacao do website. Cookies nao essenciais (analiticos/marketing) exigem consentimento previo.\n\n- Nao sao ativados cookies nao essenciais antes da sua aceitacao explicita.\n- A Vercel Web Analytics so e ativada depois de clicar em Aceitar no banner de cookies.\n- Pode alterar preferencias de cookies a qualquer momento nas definicoes do navegador e do armazenamento local.\n\n[Termos e informacao de cookies]({{termsHref}})"
+        "en": "We use strictly necessary cookies for site operation. Non-essential cookies (such as analytics/marketing) require prior consent.\n\n- No non-essential cookies run before your explicit acceptance.\n- Vercel Web Analytics is enabled only after you click Accept in the cookie banner.\n- You can change cookie preferences at any time through browser settings and local storage controls.\n\n[Terms and cookie details](/en/terms)",
+        "pt": "Utilizamos cookies estritamente necessarios para operacao do website. Cookies nao essenciais (analiticos/marketing) exigem consentimento previo.\n\n- Nao sao ativados cookies nao essenciais antes da sua aceitacao explicita.\n- A Vercel Web Analytics so e ativada depois de clicar em Aceitar no banner de cookies.\n- Pode alterar preferencias de cookies a qualquer momento nas definicoes do navegador e do armazenamento local.\n\n[Termos e informacao de cookies](/pt/termos)"
       }
     }
   ],

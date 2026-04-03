@@ -166,7 +166,7 @@ if (!root) {
   throw new Error('CMS admin root not found');
 }
 
-const pageId = root.dataset.pageId ?? 'en-home';
+const pageId = root.dataset.pageId ?? 'home';
 const locale = (root.dataset.locale ?? 'en') as Locale;
 const isBlogPage = root.dataset.isBlogPage === 'true';
 const isMediaPage = window.location.pathname === '/admin/images';

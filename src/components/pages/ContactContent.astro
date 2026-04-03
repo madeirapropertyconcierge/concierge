@@ -20,7 +20,7 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const pageId = lang === 'en' ? 'en-contact' : 'pt-contacto';
+const pageId = 'contact';
 const [contactServiceLabels, pageFields, siteChrome] = await Promise.all([
   loadContactServiceOptions(lang),
   loadRequiredPageFields(pageId, lang, {

@@ -1,23 +1,4 @@
-import en from "./en";
-import pt from "./pt";
-
-const translations = { en, pt } as const;
-
-export type Locale = keyof typeof translations;
-export type TranslationKey = string;
-
-export function t(locale: Locale, key: string): string {
-  const value = key
-    .split(".")
-    .reduce<unknown>((current, segment) => {
-      if (current && typeof current === "object") {
-        return (current as Record<string, unknown>)[segment];
-      }
-      return undefined;
-    }, translations[locale]);
-
-  return typeof value === "string" ? value : key;
-}
+export type Locale = 'en' | 'pt';
 
 export function getCurrentLocale(url: URL): Locale {
   const [, locale] = url.pathname.split("/");
