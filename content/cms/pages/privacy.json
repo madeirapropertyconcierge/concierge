@@ -4,17 +4,17 @@
   "seo": {
     "en": {
       "title": "Privacy Policy | Madeira Property Concierge",
-      "description": "How Madeira Property Concierge collects, uses, stores, and protects personal data on our website and in service operations.",
-      "ogTitle": "Privacy Policy | Madeira Property Concierge",
-      "ogDescription": "How Madeira Property Concierge collects, uses, stores, and protects personal data on our website and in service operations.",
+      "description": "Learn how Madeira Property Concierge collects, uses, stores, and protects your personal data. GDPR-compliant privacy practices for our website and services.",
+      "ogTitle": "Privacy Policy — Madeira Property Concierge",
+      "ogDescription": "How we handle your personal data. GDPR-compliant privacy practices covering our website, contact forms, and service operations.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/en/privacy"
     },
     "pt": {
       "title": "Politica de Privacidade | Madeira Property Concierge",
-      "description": "Saiba como a Madeira Property Concierge recolhe, utiliza, armazena e protege dados pessoais no website, nos contactos e na prestacao de servicos.",
-      "ogTitle": "Politica de Privacidade | Madeira Property Concierge",
-      "ogDescription": "Saiba como a Madeira Property Concierge recolhe, utiliza, armazena e protege dados pessoais no website, nos contactos e na prestacao de servicos.",
+      "description": "Saiba como a Madeira Property Concierge recolhe, utiliza, armazena e protege os seus dados pessoais. Praticas de privacidade em conformidade com o RGPD.",
+      "ogTitle": "Politica de Privacidade — Madeira Property Concierge",
+      "ogDescription": "Como tratamos os seus dados pessoais. Praticas de privacidade em conformidade com o RGPD para o nosso website, formularios e prestacao de servicos.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/pt/privacidade"
     }

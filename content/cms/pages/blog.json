@@ -3,18 +3,18 @@
   "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
-      "title": "Blog | Madeira Property Concierge",
-      "description": "Practical articles on Madeira property management, AL licensing, investment, guest operations, and guidance for overseas owners.",
-      "ogTitle": "Blog | Madeira Property Concierge",
-      "ogDescription": "Practical articles on Madeira property management, AL licensing, investment, guest operations, and guidance for overseas owners.",
+      "title": "Blog — Madeira Property Insights | Madeira Property Concierge",
+      "description": "Expert articles on Madeira property management, AL licensing, investment strategy, tax compliance, and operational guidance for overseas property owners.",
+      "ogTitle": "Madeira Property Insights for Overseas Owners",
+      "ogDescription": "Practical articles on buying, managing, and hosting property in Madeira — covering AL licensing, tax strategy, revenue growth, and remote ownership.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/en/blog"
     },
     "pt": {
-      "title": "Blog | Madeira Property Concierge",
-      "description": "Artigos praticos sobre gestao de propriedades na Madeira, licenciamento AL, investimento e operacao para proprietarios no estrangeiro.",
-      "ogTitle": "Blog | Madeira Property Concierge",
-      "ogDescription": "Artigos praticos sobre gestao de propriedades na Madeira, licenciamento AL, investimento e operacao para proprietarios no estrangeiro.",
+      "title": "Blog — Insights sobre Propriedade na Madeira | Madeira Property Concierge",
+      "description": "Artigos especializados sobre gestao de propriedade na Madeira, licenciamento AL, estrategia de investimento, fiscalidade e orientacao para proprietarios remotos.",
+      "ogTitle": "Insights sobre Propriedade na Madeira para Proprietarios no Estrangeiro",
+      "ogDescription": "Artigos praticos sobre compra, gestao e hosting de imoveis na Madeira — licenciamento AL, fiscalidade, revenue e gestao remota.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/pt/blog"
     }

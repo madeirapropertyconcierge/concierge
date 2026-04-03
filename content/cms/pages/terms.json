@@ -4,17 +4,17 @@
   "seo": {
     "en": {
       "title": "Terms of Service | Madeira Property Concierge",
-      "description": "Terms covering Madeira Property Concierge website use, service agreements, billing, and liability.",
-      "ogTitle": "Terms of Service | Madeira Property Concierge",
-      "ogDescription": "Terms covering Madeira Property Concierge website use, service agreements, billing, and liability.",
+      "description": "Read the terms governing Madeira Property Concierge website use, service agreements, billing, liability, and dispute resolution under Portuguese law.",
+      "ogTitle": "Terms of Service — Madeira Property Concierge",
+      "ogDescription": "Terms covering website use, service agreements, billing, liability, and dispute resolution. Governed by Portuguese law, jurisdiction of Funchal courts.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/en/terms"
     },
     "pt": {
       "title": "Termos de Servico | Madeira Property Concierge",
-      "description": "Consulte os termos comerciais, legais e operacionais que regem o uso do website, os servicos, a faturacao e a responsabilidade da Madeira Property Concierge.",
-      "ogTitle": "Termos de Servico | Madeira Property Concierge",
-      "ogDescription": "Consulte os termos comerciais, legais e operacionais que regem o uso do website, os servicos, a faturacao e a responsabilidade da Madeira Property Concierge.",
+      "description": "Consulte os termos que regem o uso do website, os servicos, a faturacao, a responsabilidade e a resolucao de litigios da Madeira Property Concierge.",
+      "ogTitle": "Termos de Servico — Madeira Property Concierge",
+      "ogDescription": "Termos sobre utilizacao do website, contratos de servico, faturacao, responsabilidade e resolucao de litigios. Lei portuguesa, tribunal do Funchal.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/pt/termos"
     }

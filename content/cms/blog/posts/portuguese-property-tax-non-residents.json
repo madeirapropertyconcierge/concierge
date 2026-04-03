@@ -23,18 +23,18 @@
   },
   "seoByLocale": {
     "en": {
-      "title": "Tax Readiness for Non-Resident Owners: Build the System Early",
-      "description": "A practical guide to structuring AL taxation, VAT, and compliance workflows early so non-resident owners avoid year-end panic.",
-      "ogTitle": "Tax Readiness for Non-Resident Owners: Build the System Early",
-      "ogDescription": "A practical guide to structuring AL taxation, VAT, and compliance workflows early so non-resident owners avoid year-end panic.",
+      "title": "Portuguese Property Tax for Non-Residents in Madeira (2026 Guide)",
+      "description": "Practical guide to AL taxation, VAT, and compliance for non-resident property owners in Madeira. Structure your tax system early and avoid year-end panic.",
+      "ogTitle": "Non-Resident Property Tax in Madeira: Build the System Early",
+      "ogDescription": "Stop treating tax as a year-end problem. Structure AL taxation, VAT, and compliance workflows from day one as a non-resident owner in Madeira.",
       "ogImage": "/images/library/img-0919.webp",
       "canonical": "/en/blog/portuguese-property-tax-non-residents"
     },
     "pt": {
-      "title": "Preparacao Fiscal para Nao Residentes: Estruture o Sistema Cedo",
-      "description": "Guia pratico para estruturar fiscalidade AL, IVA e fluxos de conformidade desde cedo e evitar panico no final do ano.",
-      "ogTitle": "Preparacao Fiscal para Nao Residentes: Estruture o Sistema Cedo",
-      "ogDescription": "Guia pratico para estruturar fiscalidade AL, IVA e fluxos de conformidade desde cedo e evitar panico no final do ano.",
+      "title": "Fiscalidade para Proprietarios Nao Residentes na Madeira (Guia 2026)",
+      "description": "Guia pratico de fiscalidade AL, IVA e conformidade para proprietarios nao residentes na Madeira. Estruture o sistema cedo e evite panico no final do ano.",
+      "ogTitle": "Fiscalidade para Nao Residentes na Madeira: Estruture o Sistema Cedo",
+      "ogDescription": "Pare de tratar fiscalidade como tarefa de fim de ano. Estruture tributacao AL, IVA e fluxos de conformidade desde o primeiro dia na Madeira.",
       "ogImage": "/images/library/img-0919.webp",
       "canonical": "/pt/blog/portuguese-property-tax-non-residents"
     }
