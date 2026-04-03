@@ -7,7 +7,7 @@
       "description": "Book a diagnostic call for your Madeira property. We support overseas owners with bilingual EN/PT communication, compliant operations, and local execution.",
       "ogTitle": "Contact | Madeira Property Concierge",
       "ogDescription": "Book a diagnostic call for your Madeira property. We support overseas owners with bilingual EN/PT communication, compliant operations, and local execution.",
-      "ogImage": "/images/madeira/sailboat-cliffs.jpg",
+      "ogImage": "/images/madeira/sailboat-cliffs.webp",
       "canonical": "/en/contact"
     },
     "pt": {
@@ -15,7 +15,7 @@
       "description": "Marque uma chamada de diagnostico para o seu imovel na Madeira. Apoiamos proprietarios no estrangeiro com comunicacao bilingue EN/PT e execucao local.",
       "ogTitle": "Contacto | Madeira Property Concierge",
       "ogDescription": "Marque uma chamada de diagnostico para o seu imovel na Madeira. Apoiamos proprietarios no estrangeiro com comunicacao bilingue EN/PT e execucao local.",
-      "ogImage": "/images/madeira/sailboat-cliffs.jpg",
+      "ogImage": "/images/madeira/sailboat-cliffs.webp",
       "canonical": "/pt/contacto"
     }
   },

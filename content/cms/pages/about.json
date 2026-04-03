@@ -312,7 +312,7 @@
     {
       "id": "image:story-photo",
       "selector": "[data-cms-id=\"image:story-photo\"]",
-      "src": "/images/about/lisa-and-marley-walk.jpg",
+      "src": "/images/about/lisa-and-marley-walk.webp",
       "alt": {
         "en": "Lisa with her daughter",
         "pt": "Lisa e a sua filha"

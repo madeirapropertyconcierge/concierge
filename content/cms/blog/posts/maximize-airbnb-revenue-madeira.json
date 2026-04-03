@@ -6,7 +6,7 @@
   "updatedAt": "2026-02-28T19:50:07.417Z",
   "tags": [],
   "readingMinutes": 9,
-  "coverImage": "/images/madeira/funchal-bay.jpg",
+  "coverImage": "/images/madeira/funchal-bay.webp",
   "locales": {
     "en": {
       "title": "Revenue Growth in Madeira Starts with Operational Consistency",
@@ -27,7 +27,7 @@
       "description": "How high-performing AL properties in Madeira protect ratings and pricing power through disciplined year-round operations.",
       "ogTitle": "Revenue Growth in Madeira Starts with Operational Consistency",
       "ogDescription": "How high-performing AL properties in Madeira protect ratings and pricing power through disciplined year-round operations.",
-      "ogImage": "/images/madeira/funchal-bay.jpg",
+      "ogImage": "/images/madeira/funchal-bay.webp",
       "canonical": "/en/blog/maximize-airbnb-revenue-madeira"
     },
     "pt": {
@@ -35,7 +35,7 @@
       "description": "Como propriedades AL de alto desempenho na Madeira protegem classificacoes e poder de preco com operacao disciplinada ao longo de todo o ano.",
       "ogTitle": "O Crescimento da Receita na Madeira Comeca com Consistencia Operacional",
       "ogDescription": "Como propriedades AL de alto desempenho na Madeira protegem classificacoes e poder de preco com operacao disciplinada ao longo de todo o ano.",
-      "ogImage": "/images/madeira/funchal-bay.jpg",
+      "ogImage": "/images/madeira/funchal-bay.webp",
       "canonical": "/pt/blog/maximize-airbnb-revenue-madeira"
     }
   }

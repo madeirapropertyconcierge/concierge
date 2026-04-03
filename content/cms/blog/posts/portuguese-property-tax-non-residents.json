@@ -6,7 +6,7 @@
   "updatedAt": "2026-02-28T19:50:07.417Z",
   "tags": [],
   "readingMinutes": 10,
-  "coverImage": "/images/library/img-0919.jpg",
+  "coverImage": "/images/library/img-0919.webp",
   "locales": {
     "en": {
       "title": "Tax Readiness for Non-Resident Owners: Build the System Early",
@@ -27,7 +27,7 @@
       "description": "A practical guide to structuring AL taxation, VAT, and compliance workflows early so non-resident owners avoid year-end panic.",
       "ogTitle": "Tax Readiness for Non-Resident Owners: Build the System Early",
       "ogDescription": "A practical guide to structuring AL taxation, VAT, and compliance workflows early so non-resident owners avoid year-end panic.",
-      "ogImage": "/images/library/img-0919.jpg",
+      "ogImage": "/images/library/img-0919.webp",
       "canonical": "/en/blog/portuguese-property-tax-non-residents"
     },
     "pt": {
@@ -35,7 +35,7 @@
       "description": "Guia pratico para estruturar fiscalidade AL, IVA e fluxos de conformidade desde cedo e evitar panico no final do ano.",
       "ogTitle": "Preparacao Fiscal para Nao Residentes: Estruture o Sistema Cedo",
       "ogDescription": "Guia pratico para estruturar fiscalidade AL, IVA e fluxos de conformidade desde cedo e evitar panico no final do ano.",
-      "ogImage": "/images/library/img-0919.jpg",
+      "ogImage": "/images/library/img-0919.webp",
       "canonical": "/pt/blog/portuguese-property-tax-non-residents"
     }
   }

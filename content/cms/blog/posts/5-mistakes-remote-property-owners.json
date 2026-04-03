@@ -6,7 +6,7 @@
   "updatedAt": "2026-02-28T19:50:07.417Z",
   "tags": [],
   "readingMinutes": 10,
-  "coverImage": "/images/library/img-5830.jpg",
+  "coverImage": "/images/library/img-5830.webp",
   "locales": {
     "en": {
       "title": "5 Remote-Owner Mistakes That Quietly Erode Property Value in Madeira",
@@ -27,7 +27,7 @@
       "description": "The five recurring blind spots that reduce yield and increase legal risk for remote owners in Madeira, plus corrective actions.",
       "ogTitle": "5 Remote-Owner Mistakes That Quietly Erode Property Value in Madeira",
       "ogDescription": "The five recurring blind spots that reduce yield and increase legal risk for remote owners in Madeira, plus corrective actions.",
-      "ogImage": "/images/library/img-5830.jpg",
+      "ogImage": "/images/library/img-5830.webp",
       "canonical": "/en/blog/5-mistakes-remote-property-owners"
     },
     "pt": {
@@ -35,7 +35,7 @@
       "description": "Cinco pontos cegos recorrentes que reduzem rentabilidade e aumentam risco legal para proprietarios remotos na Madeira, com correcoes praticas.",
       "ogTitle": "5 Erros de Proprietarios Remotos que Erodem Valor na Madeira",
       "ogDescription": "Cinco pontos cegos recorrentes que reduzem rentabilidade e aumentam risco legal para proprietarios remotos na Madeira, com correcoes praticas.",
-      "ogImage": "/images/library/img-5830.jpg",
+      "ogImage": "/images/library/img-5830.webp",
       "canonical": "/pt/blog/5-mistakes-remote-property-owners"
     }
   }

@@ -7,7 +7,7 @@
       "description": "Boutique hosting and property care in Madeira for overseas owners. Founder-led execution with bilingual EN/PT support and clear monthly reporting.",
       "ogTitle": "Madeira Property Concierge | Boutique Hosting and Property Care",
       "ogDescription": "Boutique hosting and property care in Madeira for overseas owners. Founder-led execution with bilingual EN/PT support and clear monthly reporting.",
-      "ogImage": "/images/madeira/funchal-bay.jpg",
+      "ogImage": "/images/madeira/funchal-bay.webp",
       "canonical": "/en/"
     },
     "pt": {
@@ -15,7 +15,7 @@
       "description": "Hosting boutique e cuidado de propriedade na Madeira para proprietarios no estrangeiro. Execucao liderada pela fundadora com suporte bilingue EN/PT e reporting claro.",
       "ogTitle": "Madeira Property Concierge | Hosting Boutique e Cuidado de Propriedade",
       "ogDescription": "Hosting boutique e cuidado de propriedade na Madeira para proprietarios no estrangeiro. Execucao liderada pela fundadora com suporte bilingue EN/PT e reporting claro.",
-      "ogImage": "/images/madeira/funchal-bay.jpg",
+      "ogImage": "/images/madeira/funchal-bay.webp",
       "canonical": "/pt/"
     }
   },
@@ -357,7 +357,7 @@
     {
       "id": "image:hero-background",
       "selector": "[data-cms-id=\"image:hero-background\"]",
-      "src": "/images/library/img-0919.jpg",
+      "src": "/images/library/img-0919.webp",
       "alt": {
         "en": "Seaside village and sheltered bay on the Madeira coast",
         "pt": "Aldeia costeira e baia protegida na costa da Madeira"
@@ -366,7 +366,7 @@
     {
       "id": "image:final-background",
       "selector": "[data-cms-id=\"image:final-background\"]",
-      "src": "/images/madeira/coastal-viewpoint.jpg",
+      "src": "/images/madeira/coastal-viewpoint.webp",
       "alt": {
         "en": "Steep viewpoint above the Atlantic coastline in Madeira",
         "pt": "Miradouro sobre a costa atlantica da Madeira"
@@ -375,7 +375,7 @@
     {
       "id": "image:media-card-1",
       "selector": "[data-cms-id=\"image:media-card-1\"]",
-      "src": "/images/madeira/green-ridges.jpg",
+      "src": "/images/madeira/green-ridges.webp",
       "alt": {
         "en": "Cliffs and blue Atlantic water at Ponta de Sao Lourenco in Madeira",
         "pt": "Falesias e agua azul do Atlantico na Ponta de Sao Lourenco"
@@ -384,7 +384,7 @@
     {
       "id": "image:media-card-2",
       "selector": "[data-cms-id=\"image:media-card-2\"]",
-      "src": "/images/library/img-0747.jpg",
+      "src": "/images/library/img-0747.webp",
       "alt": {
         "en": "Coastal path descending toward the Atlantic in Madeira",
         "pt": "Caminho costeiro a descer para o Atlantico na Madeira"
@@ -393,7 +393,7 @@
     {
       "id": "image:media-card-3",
       "selector": "[data-cms-id=\"image:media-card-3\"]",
-      "src": "/images/library/1773413290313-img-1407.jpg",
+      "src": "/images/library/1773413290313-img-1407.webp",
       "alt": {
         "en": "Terraced valley village surrounded by green mountains in Madeira",
         "pt": "Aldeia em socalcos rodeada por montanhas verdes na Madeira"

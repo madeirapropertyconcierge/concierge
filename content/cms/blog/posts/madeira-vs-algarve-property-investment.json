@@ -6,7 +6,7 @@
   "updatedAt": "2026-02-28T19:50:07.417Z",
   "tags": [],
   "readingMinutes": 9,
-  "coverImage": "/images/madeira/coastal-viewpoint.jpg",
+  "coverImage": "/images/madeira/coastal-viewpoint.webp",
   "locales": {
     "en": {
       "title": "Madeira vs Algarve: Choose by Operating Model, Not Hype",
@@ -27,7 +27,7 @@
       "description": "A practical 2026 comparison of Madeira and Algarve through revenue seasonality, regulation, labor reliability, and remote-owner control.",
       "ogTitle": "Madeira vs Algarve: Choose by Operating Model, Not Hype",
       "ogDescription": "A practical 2026 comparison of Madeira and Algarve through revenue seasonality, regulation, labor reliability, and remote-owner control.",
-      "ogImage": "/images/madeira/coastal-viewpoint.jpg",
+      "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/en/blog/madeira-vs-algarve-property-investment"
     },
     "pt": {
@@ -35,7 +35,7 @@
       "description": "Comparacao pratica em 2026 entre Madeira e Algarve por sazonalidade de receita, regulacao, estabilidade de equipa e controlo do proprietario remoto.",
       "ogTitle": "Madeira vs Algarve: Decida pelo Modelo Operacional, Nao pelo Hype",
       "ogDescription": "Comparacao pratica em 2026 entre Madeira e Algarve por sazonalidade de receita, regulacao, estabilidade de equipa e controlo do proprietario remoto.",
-      "ogImage": "/images/madeira/coastal-viewpoint.jpg",
+      "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/pt/blog/madeira-vs-algarve-property-investment"
     }
   }

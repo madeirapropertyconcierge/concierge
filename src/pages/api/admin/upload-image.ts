@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { promises as fs } from 'node:fs';
-import { resolve, extname } from 'node:path';
+import { resolve } from 'node:path';
 import {
   assertAdminSession,
   assertSameOrigin,
@@ -10,6 +10,7 @@ import {
 import { commitFiles } from '../../../cms/github-publisher';
 import { tryGetGithubEnv } from '../../../cms/config';
 import { getPublishErrorResponse } from '../../../cms/publish-errors';
+import { optimizeImage } from '../../../cms/optimize-image';
 
 function slugifyName(value: string): string {
   return value
@@ -19,19 +20,6 @@ function slugifyName(value: string): string {
     .replace(/[^a-z0-9.-]/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '');
-}
-
-function detectExtension(fileName: string, mimeType: string): string {
-  const fromName = extname(fileName);
-  if (fromName) {
-    return fromName;
-  }
-
-  if (mimeType === 'image/png') return '.png';
-  if (mimeType === 'image/webp') return '.webp';
-  if (mimeType === 'image/gif') return '.gif';
-
-  return '.jpg';
 }
 
 export const POST: APIRoute = async (context) => {
@@ -51,11 +39,11 @@ export const POST: APIRoute = async (context) => {
     }
 
     const nameBase = slugifyName(file.name.replace(/\.[^.]+$/, '')) || 'image';
-    const extension = detectExtension(file.name, file.type);
-    const filename = `${Date.now()}-${nameBase}${extension}`;
+    const filename = `${Date.now()}-${nameBase}.webp`;
     const relativePath = `/images/library/${filename}`;
 
-    const bytes = Buffer.from(await file.arrayBuffer());
+    const raw = Buffer.from(await file.arrayBuffer());
+    const bytes = await optimizeImage(raw);
 
     const absolutePath = resolve(process.cwd(), `public${relativePath}`);
     try {
