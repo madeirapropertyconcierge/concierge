@@ -43,7 +43,7 @@
       "selector": "[data-cms-id=\"text:hero-subtitle\"]",
       "kind": "inline",
       "value": {
-        "en": "Founder-led property management in Madeira for overseas owners. Bilingual EN/PT support, clear reporting, and local execution you can trust.",
+        "en": "Founder-led property management in North Madeira for overseas owners. Bilingual EN/PT support. We offer absentee property owners a single, trusted point of contact for everything from routine property care, property protection, maintenance coordination, and guest coordination to fully managed Airbnb hosting.\nTrue peace of mind, wherever you are.",
         "pt": "Gestao de propriedade na Madeira, liderada pela fundadora, para proprietarios no estrangeiro. Suporte bilingue EN/PT, reporting claro e execucao local de confianca."
       }
     },
@@ -111,30 +111,12 @@
       }
     },
     {
-      "id": "text:trust-signal-3-value",
-      "selector": "[data-cms-id=\"text:trust-signal-3-value\"]",
-      "kind": "inline",
-      "value": {
-        "en": "56-point",
-        "pt": "56 pontos"
-      }
-    },
-    {
-      "id": "text:trust-signal-3-label",
-      "selector": "[data-cms-id=\"text:trust-signal-3-label\"]",
-      "kind": "inline",
-      "value": {
-        "en": "Turnover quality checklist",
-        "pt": "Checklist de qualidade no turnover"
-      }
-    },
-    {
       "id": "text:architecture-eyebrow",
       "selector": "[data-cms-id=\"text:architecture-eyebrow\"]",
       "kind": "inline",
       "value": {
-        "en": "Built For Overseas Owners",
-        "pt": "Feito Para Proprietarios no Estrangeiro"
+        "en": "Peace of Mind, wherever you are.",
+        "pt": "Tranquilidade, esteja onde estiver."
       }
     },
     {
@@ -142,8 +124,8 @@
       "selector": "[data-cms-id=\"text:architecture-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Small on purpose. One owner, one point of contact, full accountability.",
-        "pt": "Pequenos de proposito. Uma responsavel, um ponto de contacto, total responsabilidade."
+        "en": "Whether you visit occasionally or want to generate income from your home, we're here to make ownership effortless. We work with:",
+        "pt": "Quer visite ocasionalmente ou queira gerar rendimento com a sua casa, estamos aqui para tornar a gestão simples. Trabalhamos com:"
       }
     },
     {
@@ -151,8 +133,8 @@
       "selector": "[data-cms-id=\"text:process-eyebrow\"]",
       "kind": "inline",
       "value": {
-        "en": "Owner Journey",
-        "pt": "Jornada do Proprietario"
+        "en": "Here To Help",
+        "pt": "Aqui Para Ajudar"
       }
     },
     {
@@ -160,8 +142,35 @@
       "selector": "[data-cms-id=\"text:process-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Clear onboarding. Predictable operations.",
-        "pt": "Integracao clara. Operacao previsivel."
+        "en": "Small on purpose. One owner, one point of contact, full accountability.",
+        "pt": "Pequenos de propósito. Uma responsável, um ponto de contacto, total responsabilidade."
+      }
+    },
+    {
+      "id": "text:process-body",
+      "selector": "[data-cms-id=\"text:process-body\"]",
+      "kind": "inline",
+      "value": {
+        "en": "We act as your trusted local partner in Madeira, taking care of the day-to-day so you don't have to.\nFrom property checks and maintenance coordination to guest management and revenue optimization — we ensure your property is:",
+        "pt": "Somos o seu parceiro local de confiança na Madeira, cuidando do dia-a-dia para que não tenha de o fazer.\nDesde inspeções e coordenação de manutenção até gestão de hóspedes e otimização de receitas — garantimos que a sua propriedade está:"
+      }
+    },
+    {
+      "id": "text:process-checklist",
+      "selector": "[data-cms-id=\"text:process-checklist\"]",
+      "kind": "inline",
+      "value": {
+        "en": "✔ Looked after\n✔ Ready when you need it\n✔ Working for you when you're away",
+        "pt": "✔ Bem cuidada\n✔ Pronta quando precisar\n✔ A trabalhar para si quando está longe"
+      }
+    },
+    {
+      "id": "text:process-closing",
+      "selector": "[data-cms-id=\"text:process-closing\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Whether you're looking for peace of mind or to unlock your property's full potential — we're here to help.",
+        "pt": "Quer procure tranquilidade ou desbloquear todo o potencial da sua propriedade — estamos aqui para ajudar."
       }
     },
     {
@@ -248,11 +257,35 @@
   ],
   "links": [
     {
+      "id": "link:process-primary-cta",
+      "selector": "[data-cms-id=\"link:process-primary-cta\"]",
+      "label": {
+        "en": "Let's talk about your property",
+        "pt": "Vamos falar sobre a sua propriedade"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    },
+    {
+      "id": "link:process-secondary-cta",
+      "selector": "[data-cms-id=\"link:process-secondary-cta\"]",
+      "label": {
+        "en": "Find out what your property could earn",
+        "pt": "Descubra quanto a sua propriedade pode render"
+      },
+      "href": {
+        "en": "/en/pricing",
+        "pt": "/pt/precos"
+      }
+    },
+    {
       "id": "link:hero-primary-cta",
       "selector": "[data-cms-id=\"link:hero-primary-cta\"]",
       "label": {
-        "en": "Book Diagnostic Call",
-        "pt": "Marcar Chamada de Diagnostico"
+        "en": "Get Started",
+        "pt": "Começar Agora"
       },
       "href": {
         "en": "/en/contact",
@@ -275,8 +308,8 @@
       "id": "link:architecture-cta",
       "selector": "[data-cms-id=\"link:architecture-cta\"]",
       "label": {
-        "en": "How We Operate",
-        "pt": "Como Operamos"
+        "en": "Who We Help",
+        "pt": "Quem Ajudamos"
       },
       "href": {
         "en": "/en/how-it-works",
@@ -287,8 +320,8 @@
       "id": "link:process-cta",
       "selector": "[data-cms-id=\"link:process-cta\"]",
       "label": {
-        "en": "View The Process",
-        "pt": "Ver O Processo"
+        "en": "What We Do",
+        "pt": "O Que Fazemos"
       },
       "href": {
         "en": "/en/how-it-works",
@@ -299,8 +332,8 @@
       "id": "link:final-primary-cta",
       "selector": "[data-cms-id=\"link:final-primary-cta\"]",
       "label": {
-        "en": "Book Consultation",
-        "pt": "Marcar Consulta"
+        "en": "Get Started",
+        "pt": "Começar Agora"
       },
       "href": {
         "en": "/en/contact",

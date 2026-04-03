@@ -196,8 +196,8 @@
       "selector": "[data-cms-id=\"text:why-design-description\"]",
       "kind": "inline",
       "value": {
-        "en": "15 years of UX work means I notice what breaks before it becomes a problem, and I build processes that actually hold up.",
-        "pt": "15 anos em UX significam que deteto o que vai falhar antes de ser problema, e crio processos que se mantem."
+        "en": "With over 15 years in UX and as a homeowner myself, I notice the small things others might miss and take care of them early, before they turn into bigger (and more costly) problems.",
+        "pt": "Com mais de 15 anos em UX e sendo proprietária, reparo nos pequenos detalhes que outros podem não notar e trato deles cedo, antes que se tornem problemas maiores (e mais dispendiosos)."
       }
     },
     {
@@ -287,8 +287,8 @@
       "id": "link:primary-cta",
       "selector": "[data-cms-id=\"link:primary-cta\"]",
       "label": {
-        "en": "Book Diagnostic Call",
-        "pt": "Marcar Chamada de Diagnostico"
+        "en": "Get Started",
+        "pt": "Começar Agora"
       },
       "href": {
         "en": "/en/contact",

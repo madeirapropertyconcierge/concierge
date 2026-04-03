@@ -124,8 +124,8 @@
       "selector": "[data-cms-id=\"text:nav-cta\"]",
       "kind": "inline",
       "value": {
-        "en": "Book Diagnostic Call",
-        "pt": "Marcar Chamada de Diagnóstico"
+        "en": "Get Started",
+        "pt": "Começar"
       }
     },
     {

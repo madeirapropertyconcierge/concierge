@@ -115,8 +115,8 @@
       "selector": "[data-cms-id=\"text:category-operations-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Tiers & Operations",
-        "pt": "Niveis & Operacao"
+        "en": "Packages & Operations",
+        "pt": "Pacotes & Operacao"
       }
     },
     {
@@ -124,8 +124,8 @@
       "selector": "[data-cms-id=\"text:category-operations-question-1\"]",
       "kind": "inline",
       "value": {
-        "en": "How do your tiers and pricing work?",
-        "pt": "Como funcionam os niveis e precos?"
+        "en": "How do your packages and pricing work?",
+        "pt": "Como funcionam os pacotes e precos?"
       }
     },
     {
@@ -133,8 +133,8 @@
       "selector": "[data-cms-id=\"text:category-operations-answer-1\"]",
       "kind": "inline",
       "value": {
-        "en": "Essential Care is EUR95/month. Managed Care is EUR95/month plus EUR80 per turnover support. Premium Care is EUR140/month. Revenue & Hosting is EUR95/month plus 25% of gross rental revenue. On-Demand Services start at EUR35/hour, and optional add-ons are scoped separately.",
-        "pt": "Cuidados Essenciais: EUR95/mes. Gestao Assistida: EUR95/mes mais EUR80 por suporte de turnover. Cuidados Premium: EUR140/mes. Revenue & Hosting: EUR95/mes mais 25% da receita bruta. Servicos Sob Pedido: desde EUR35/hora. Add-ons opcionais sao orcamentados por escopo."
+        "en": "We offer five service packages. Essential Care (EUR95/month) covers property checks and maintenance for vacant homes. Managed Care (EUR95/month plus EUR80 per turnover) adds guest arrival and departure coordination. Premium Care (EUR140/month) provides higher-frequency visits and priority response. Revenue & Hosting (EUR95/month plus 25% of gross rental revenue) is fully managed end-to-end hosting. On-Demand Services start at EUR35/hour for flexible, one-off support. Optional add-ons are scoped separately.",
+        "pt": "Oferecemos cinco pacotes de servico. Cuidados Essenciais (EUR95/mes) cobre verificacoes e manutencao de imoveis vazios. Gestao Assistida (EUR95/mes mais EUR80 por turnover) acrescenta coordenacao de chegadas e saidas. Cuidados Premium (EUR140/mes) oferece visitas mais frequentes e resposta prioritaria. Revenue & Hosting (EUR95/mes mais 25% da receita bruta) e hosting totalmente gerido de ponta a ponta. Servicos Sob Pedido comecam em EUR35/hora para apoio flexivel e pontual. Add-ons opcionais sao orcamentados por escopo."
       }
     },
     {
@@ -160,8 +160,8 @@
       "selector": "[data-cms-id=\"text:category-operations-question-3\"]",
       "kind": "inline",
       "value": {
-        "en": "How do you control turnover quality?",
-        "pt": "Como garantem qualidade na limpeza e turnover?"
+        "en": "What does onboarding look like?",
+        "pt": "Como funciona o onboarding?"
       }
     },
     {
@@ -169,8 +169,8 @@
       "selector": "[data-cms-id=\"text:category-operations-answer-3\"]",
       "kind": "inline",
       "value": {
-        "en": "We use a 56-point cleaning checklist with photo verification before each arrival. No guest check-in happens without visual QA.",
-        "pt": "Usamos checklist de 56 pontos com verificacao fotografica antes de cada chegada. Nenhum imovel entra em estadia sem validacao visual."
+        "en": "We follow a 30-day onboarding process: a diagnostic call to map your goals and package fit, an on-site property and risk audit, systems setup with vendor activation and communication templates, then go-live with your first monthly report and maintenance log.",
+        "pt": "Seguimos um processo de onboarding de 30 dias: chamada de diagnostico para mapear objetivos e definir o pacote adequado, auditoria presencial do imovel e risco, setup de sistemas com ativacao de fornecedores e templates de comunicacao, e arranque com o primeiro relatorio mensal e log de manutencao."
       }
     },
     {
@@ -232,8 +232,8 @@
       "selector": "[data-cms-id=\"text:closing-body\"]",
       "kind": "inline",
       "value": {
-        "en": "We can look at your situation and suggest which tier makes sense.",
-        "pt": "Podemos avaliar a sua situacao e sugerir qual nivel faz sentido."
+        "en": "We can look at your situation and suggest which package makes sense.",
+        "pt": "Podemos avaliar a sua situacao e sugerir qual pacote faz sentido."
       }
     }
   ],
@@ -242,8 +242,8 @@
       "id": "link:primary-cta",
       "selector": "[data-cms-id=\"link:primary-cta\"]",
       "label": {
-        "en": "Book Diagnostic Call",
-        "pt": "Marcar Chamada de Diagnostico"
+        "en": "Get Started",
+        "pt": "Começar Agora"
       },
       "href": {
         "en": "/en/contact",

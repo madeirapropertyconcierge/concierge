@@ -30,10 +30,15 @@ const cta = tier.price ? primaryCta : projectCta;
 
 <article
   class:list={[
-    'pricing-card premium-panel reveal grid p-6 sm:p-7',
+    'pricing-card premium-panel reveal relative grid p-6 sm:p-7',
     index > 0 ? 'reveal-delay-1' : '',
   ]}
 >
+  {tier.popular && (
+    <span class="absolute right-5 top-5 rounded-full bg-ocean-blue/10 px-3 py-1 text-[0.7rem] font-semibold tracking-wide text-ocean-blue sm:right-6 sm:top-6">
+      ⭐ Most Popular
+    </span>
+  )}
   <header>
     <SharedPackageText
       packageKey={tier.key}

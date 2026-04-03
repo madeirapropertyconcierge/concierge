@@ -139,6 +139,7 @@
     },
     {
       "key": "premiumCare",
+      "popular": true,
       "tierLabel": {
         "en": "Proactive Oversight",
         "pt": "Supervisao Proativa"

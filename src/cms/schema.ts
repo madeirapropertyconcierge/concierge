@@ -68,6 +68,7 @@ export const cmsServicePackagePriceSchema = z.object({
 
 export const cmsServicePackageEntrySchema = z.object({
   key: z.enum(servicePackageKeys),
+  popular: z.boolean().optional(),
   tierLabel: localeTextSchema,
   title: localeTextSchema,
   price: cmsServicePackagePriceSchema.nullable(),

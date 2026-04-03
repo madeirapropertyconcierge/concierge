@@ -22,6 +22,7 @@ export interface ServicePackage extends PricingTier {
   key: ServicePackageKey;
   servicesBullets: string[];
   homeBlurb: string;
+  popular?: boolean;
 }
 
 function resolveLocaleText(
@@ -58,6 +59,7 @@ export async function loadServicePackages(locale: SiteLocale): Promise<ServicePa
       servicesBullets: entry.servicesBullets[locale].map((item) => item.trim()).filter(Boolean),
       homeBlurb: resolveLocaleText(entry.homeBlurb, locale),
       showQuoteLabel: entry.price === null,
+      popular: entry.popular ?? false,
     };
   });
 }

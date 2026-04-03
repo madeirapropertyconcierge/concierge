@@ -79,8 +79,8 @@
       "selector": "[data-cms-id=\"text:step-2-description\"]",
       "kind": "inline",
       "value": {
-        "en": "We assess property condition, compliance gaps, vendor setup, and the package fit for how the property is actually used.",
-        "pt": "Avaliamos a condicao do imovel, lacunas de conformidade, estrutura de fornecedores e o pacote mais adequado a forma como a propriedade e usada."
+        "en": "We assess property condition, compliance gaps, vendor/ utility setup, and service-tier fit (Tier A, B, C or D).",
+        "pt": "Avaliamos o estado do imóvel, lacunas de conformidade, configuração de fornecedores/utilidades e adequação do nível de serviço (Tier A, B, C ou D)."
       }
     },
     {
@@ -138,15 +138,6 @@
       }
     },
     {
-      "id": "text:deliverable-2",
-      "selector": "[data-cms-id=\"text:deliverable-2\"]",
-      "kind": "inline",
-      "value": {
-        "en": "56-point turnover cleaning checklist with photo proof",
-        "pt": "Checklist de limpeza de 56 pontos com prova fotografica"
-      }
-    },
-    {
       "id": "text:deliverable-3",
       "selector": "[data-cms-id=\"text:deliverable-3\"]",
       "kind": "inline",
@@ -160,8 +151,8 @@
       "selector": "[data-cms-id=\"text:deliverable-4\"]",
       "kind": "inline",
       "value": {
-        "en": "SLA targets: owner response within 4 business hours; urgent issues receive faster escalation on Premium Care and Revenue & Hosting",
-        "pt": "SLA: resposta ao proprietario em ate 4h uteis; situacoes urgentes recebem prioridade reforcada nos pacotes Premium Care e Revenue & Hosting"
+        "en": "SLA targets: owner response within 4 business hours; guest emergencies within 30 mins",
+        "pt": "SLA: resposta ao proprietario em ate 4h uteis; emergencias de hospedes em ate 30 minutos"
       }
     },
     {
@@ -214,8 +205,8 @@
       "selector": "[data-cms-id=\"text:timeline-range-2\"]",
       "kind": "inline",
       "value": {
-        "en": "Day 4-10",
-        "pt": "Dia 4-10"
+        "en": "Day 3-5",
+        "pt": "Dia 3-5"
       }
     },
     {
@@ -223,8 +214,8 @@
       "selector": "[data-cms-id=\"text:timeline-text-2\"]",
       "kind": "inline",
       "value": {
-        "en": "Property audit: condition, risk, compliance, and priorities.",
-        "pt": "Auditoria do imovel: condicao, riscos, conformidade e prioridades."
+        "en": "Property audit: condition, needs/goals, risk, compliance and priorities.",
+        "pt": "Auditoria do imovel: condicao, necessidades/objetivos, riscos, conformidade e prioridades."
       }
     },
     {
@@ -232,8 +223,8 @@
       "selector": "[data-cms-id=\"text:timeline-range-3\"]",
       "kind": "inline",
       "value": {
-        "en": "Day 11-20",
-        "pt": "Dia 11-20"
+        "en": "Day 6-10",
+        "pt": "Dia 6-10"
       }
     },
     {
@@ -241,8 +232,8 @@
       "selector": "[data-cms-id=\"text:timeline-text-3\"]",
       "kind": "inline",
       "value": {
-        "en": "Vendor activation, SOP setup, and communication templates.",
-        "pt": "Ativacao de fornecedores, SOPs e templates de comunicacao."
+        "en": "Property audit: condition, risk, compliance, and priorities.",
+        "pt": "Auditoria do imovel: condicao, riscos, conformidade e prioridades."
       }
     },
     {
@@ -250,13 +241,31 @@
       "selector": "[data-cms-id=\"text:timeline-range-4\"]",
       "kind": "inline",
       "value": {
-        "en": "Day 21-30",
-        "pt": "Dia 21-30"
+        "en": "Day 11-20",
+        "pt": "Dia 11-20"
       }
     },
     {
       "id": "text:timeline-text-4",
       "selector": "[data-cms-id=\"text:timeline-text-4\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Vendor activation, SOP setup, and communication templates.",
+        "pt": "Ativacao de fornecedores, SOPs e templates de comunicacao."
+      }
+    },
+    {
+      "id": "text:timeline-range-5",
+      "selector": "[data-cms-id=\"text:timeline-range-5\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Day 21-30",
+        "pt": "Dia 21-30"
+      }
+    },
+    {
+      "id": "text:timeline-text-5",
+      "selector": "[data-cms-id=\"text:timeline-text-5\"]",
       "kind": "inline",
       "value": {
         "en": "Go-live with first monthly report and maintenance log.",
@@ -287,8 +296,8 @@
       "id": "link:primary-cta",
       "selector": "[data-cms-id=\"link:primary-cta\"]",
       "label": {
-        "en": "Book Diagnostic Call",
-        "pt": "Marcar Chamada de Diagnostico"
+        "en": "Get Started",
+        "pt": "Começar Agora"
       },
       "href": {
         "en": "/en/contact",

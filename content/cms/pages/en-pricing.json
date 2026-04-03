@@ -75,15 +75,6 @@
       }
     },
     {
-      "id": "text:transparency-title",
-      "selector": "[data-cms-id=\"text:transparency-title\"]",
-      "kind": "inline",
-      "value": {
-        "en": "How costs are structured",
-        "pt": "Como estruturamos os custos"
-      }
-    },
-    {
       "id": "text:cta-title",
       "selector": "[data-cms-id=\"text:cta-title\"]",
       "kind": "inline",
@@ -107,8 +98,8 @@
       "id": "link:hero-primary-cta",
       "selector": "[data-cms-id=\"link:hero-primary-cta\"]",
       "label": {
-        "en": "Book Diagnostic Call",
-        "pt": "Marcar Chamada de Diagnostico"
+        "en": "Get Started",
+        "pt": "Começar Agora"
       },
       "href": {
         "en": "/en/contact",

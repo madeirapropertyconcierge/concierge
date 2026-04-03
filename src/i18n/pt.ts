@@ -18,7 +18,7 @@ const pt = {
     contact: "Contacto",
     faq: "FAQ",
     guide: "Guia AL",
-    cta: "Marcar Chamada de Diagnóstico",
+    cta: "Começar",
     languageToggle: "EN",
   },
 
@@ -74,7 +74,7 @@ const pt = {
       },
       design: {
         title: "Abordagem Design Thinking",
-        description: "15 anos em UX significam que deteto o que vai falhar antes de ser problema, e crio processos que se mantêm.",
+        description: "Com mais de 15 anos em UX e sendo proprietária, reparo nos pequenos detalhes que outros podem não notar e trato deles cedo, antes que se tornem problemas maiores (e mais dispendiosos).",
       },
       personal: {
         title: "Pessoalmente Investida",
@@ -107,7 +107,7 @@ const pt = {
       },
       step2: {
         title: "Auditoria de Imóvel e Risco",
-        description: "Avaliamos a condicao do imovel, lacunas de conformidade, estrutura de fornecedores e o pacote mais adequado a forma como a propriedade e usada.",
+        description: "Avaliamos o estado do imóvel, lacunas de conformidade, configuração de fornecedores/utilidades e adequação do nível de serviço (Tier A, B, C ou D).",
       },
       step3: {
         title: "Setup de Sistemas",
@@ -204,7 +204,7 @@ const pt = {
   common: {
     learnMore: "Saber Mais",
     getStarted: "Começar",
-    bookConsultation: "Marcar Chamada de Diagnóstico",
+    bookConsultation: "Começar Agora",
     viewServices: "Ver Serviços",
     readMore: "Ler Mais",
     backToTop: "Voltar ao topo",

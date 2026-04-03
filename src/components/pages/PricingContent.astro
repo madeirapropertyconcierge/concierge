@@ -3,6 +3,7 @@ import EditableLink from '../cms/EditableLink.astro';
 import VisualPageLayout from './VisualPageLayout.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
 import EditableText from '../cms/EditableText.astro';
+import SharedPackageText from '../cms/SharedPackageText.astro';
 import PricingTierCard from '../pricing/PricingTierCard.astro';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
@@ -71,24 +72,50 @@ const pageSchema = [
 
   <section class="mx-auto max-w-5xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <div class="premium-panel p-6 sm:p-8">
-      <EditableText
-        id={copy.transparencyTitle.id}
-        selector={copy.transparencyTitle.selector}
-        kind={copy.transparencyTitle.kind}
-        value={copy.transparencyTitle.value}
+      <SharedPackageText
+        packageKey={copy.addOnsTier.key}
+        field="tierLabel"
+        value={copy.addOnsTier.tierLabel}
+        kind="inline"
         as="p"
-        class="eyebrow js-pricing-transparency-title"
+        class="eyebrow"
+      />
+      <SharedPackageText
+        packageKey={copy.addOnsTier.key}
+        field="title"
+        value={copy.addOnsTier.title}
+        kind="inline"
+        as="h2"
+        class="mt-2 text-3xl text-charcoal"
+      />
+      <SharedPackageText
+        packageKey={copy.addOnsTier.key}
+        field="audience"
+        value={copy.addOnsTier.audience}
+        kind="inline"
+        as="p"
+        class="mt-2 text-sm leading-relaxed text-charcoal/66"
       />
       <div class="mt-5 grid gap-3 sm:grid-cols-3">
-        {copy.transparencyItems.map((item) => (
+        {copy.addOnsTier.features.map((feature, featureIndex) => (
           <article class="step-card pricing-shared-card flex items-center gap-3">
             <span aria-hidden="true" class="h-2 w-2 flex-shrink-0 rounded-full bg-ocean-blue"></span>
-            <p class="text-sm leading-relaxed text-charcoal/75" data-pricing-summary-item={item.key}>
-              {item.label}
-            </p>
+            <SharedPackageText
+              packageKey={copy.addOnsTier.key}
+              field="feature"
+              index={featureIndex}
+              value={feature}
+              kind="inline"
+              as="p"
+              class="text-sm leading-relaxed text-charcoal/75"
+            />
           </article>
         ))}
       </div>
+      <EditableLink
+        {...copy.tierProjectCta}
+        class="mt-6 inline-flex items-center justify-center rounded-full bg-charcoal px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-ocean-blue"
+      />
     </div>
   </section>
 

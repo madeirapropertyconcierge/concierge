@@ -50,7 +50,12 @@ export interface HomePageContent {
   serviceTiles: HomeServiceTile[];
   processEyebrow: CmsPageTextValue;
   processTitle: CmsPageTextValue;
+  processBody: CmsPageTextValue;
+  processChecklist: CmsPageTextValue;
+  processClosing: CmsPageTextValue;
   processLink: CmsPageLinkValue;
+  processPrimaryCta: CmsPageLinkValue;
+  processSecondaryCta: CmsPageLinkValue;
   steps: HomeStep[];
   finalEyebrow: CmsPageTextValue;
   finalTitle: CmsPageTextValue;
@@ -111,12 +116,13 @@ const homeTextIds = [
   'text:trust-signal-1-label',
   'text:trust-signal-2-value',
   'text:trust-signal-2-label',
-  'text:trust-signal-3-value',
-  'text:trust-signal-3-label',
   'text:architecture-eyebrow',
   'text:architecture-title',
   'text:process-eyebrow',
   'text:process-title',
+  'text:process-body',
+  'text:process-checklist',
+  'text:process-closing',
   'text:step-1-title',
   'text:step-1-detail',
   'text:step-2-title',
@@ -133,6 +139,8 @@ const homeLinkIds = [
   'link:hero-secondary-cta',
   'link:architecture-cta',
   'link:process-cta',
+  'link:process-primary-cta',
+  'link:process-secondary-cta',
   'link:final-primary-cta',
   'link:final-secondary-cta',
 ] as const;
@@ -198,10 +206,6 @@ export async function getHomepageContent(locale: Locale): Promise<HomePageConten
         value: pageFields.texts['text:trust-signal-2-value'],
         label: pageFields.texts['text:trust-signal-2-label'],
       },
-      {
-        value: pageFields.texts['text:trust-signal-3-value'],
-        label: pageFields.texts['text:trust-signal-3-label'],
-      },
     ],
     architectureEyebrow: pageFields.texts['text:architecture-eyebrow'],
     architectureTitle: pageFields.texts['text:architecture-title'],
@@ -209,7 +213,12 @@ export async function getHomepageContent(locale: Locale): Promise<HomePageConten
     serviceTiles,
     processEyebrow: pageFields.texts['text:process-eyebrow'],
     processTitle: pageFields.texts['text:process-title'],
+    processBody: pageFields.texts['text:process-body'],
+    processChecklist: pageFields.texts['text:process-checklist'],
+    processClosing: pageFields.texts['text:process-closing'],
     processLink: pageFields.links['link:process-cta'],
+    processPrimaryCta: pageFields.links['link:process-primary-cta'],
+    processSecondaryCta: pageFields.links['link:process-secondary-cta'],
     steps: [
       {
         step: '01',

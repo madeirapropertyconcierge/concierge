@@ -34,7 +34,6 @@ const [pageFields, siteChrome] = await Promise.all([
       'text:step-4-description',
       'text:deliverables-title',
       'text:deliverable-1',
-      'text:deliverable-2',
       'text:deliverable-3',
       'text:deliverable-4',
       'text:deliverable-5',
@@ -48,6 +47,8 @@ const [pageFields, siteChrome] = await Promise.all([
       'text:timeline-text-3',
       'text:timeline-range-4',
       'text:timeline-text-4',
+      'text:timeline-range-5',
+      'text:timeline-text-5',
       'text:cta-title',
       'text:cta-body',
     ] as const,
@@ -130,7 +131,6 @@ const pageSchema = [
         <ul class="mt-6 space-y-3">
           {[
             pageFields.texts['text:deliverable-1'],
-            pageFields.texts['text:deliverable-2'],
             pageFields.texts['text:deliverable-3'],
             pageFields.texts['text:deliverable-4'],
             pageFields.texts['text:deliverable-5'],
@@ -159,6 +159,7 @@ const pageSchema = [
           [pageFields.texts['text:timeline-range-2'], pageFields.texts['text:timeline-text-2']],
           [pageFields.texts['text:timeline-range-3'], pageFields.texts['text:timeline-text-3']],
           [pageFields.texts['text:timeline-range-4'], pageFields.texts['text:timeline-text-4']],
+          [pageFields.texts['text:timeline-range-5'], pageFields.texts['text:timeline-text-5']],
         ].map(([range, text]) => (
           <article class="step-card">
             <EditableText {...range} as="p" class="step-index" />

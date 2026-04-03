@@ -79,8 +79,8 @@
       "selector": "[data-cms-id=\"text:add-ons-subtitle\"]",
       "kind": "inline",
       "value": {
-        "en": "Optional upgrades to improve presentation, automation, and guest-ready finishing.",
-        "pt": "Complementos opcionais para elevar a apresentacao, a automacao e a experiencia do hospede."
+        "en": "Additional services available as needed for on-the-ground support.",
+        "pt": "Servicos adicionais disponiveis conforme necessario para apoio no terreno."
       }
     },
     {
@@ -125,8 +125,8 @@
       "id": "link:primary-cta",
       "selector": "[data-cms-id=\"link:primary-cta\"]",
       "label": {
-        "en": "Book Diagnostic Call",
-        "pt": "Marcar Chamada de Diagnostico"
+        "en": "Get Started",
+        "pt": "Começar Agora"
       },
       "href": {
         "en": "/en/contact",

@@ -89,8 +89,8 @@
       "id": "link:primary-cta",
       "selector": "[data-cms-id=\"link:primary-cta\"]",
       "label": {
-        "en": "Book Consultation",
-        "pt": "Marcar Consulta"
+        "en": "Get Started",
+        "pt": "Começar Agora"
       },
       "href": {
         "en": "/en/contact",

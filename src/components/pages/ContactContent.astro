@@ -47,7 +47,6 @@ const [contactServiceLabels, pageFields, siteChrome] = await Promise.all([
       'text:form-select-placeholder',
       'text:side-title',
       'text:side-body',
-      'text:hours',
       'text:form-notice-prefix',
       'text:form-notice-suffix',
       'text:contact-email-badge',
@@ -168,7 +167,7 @@ const pageSchema = [
             </a>
             <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 transition-colors hover:text-ocean-blue">
               <EditableText {...pageFields.texts['text:contact-whatsapp-badge']} as="span" class="step-index !px-2 !py-1" />
-              <EditableText {...pageFields.texts['text:contact-whatsapp-label']} as="span" />
+              <span><EditableText {...pageFields.texts['text:contact-whatsapp-label']} as="span" />: {SITE.phone}</span>
             </a>
             <p class="flex items-center gap-2">
               <EditableText {...pageFields.texts['text:contact-location-badge']} as="span" class="step-index !px-2 !py-1" />
@@ -176,11 +175,6 @@ const pageSchema = [
             </p>
           </div>
 
-          <EditableText
-            {...pageFields.texts['text:hours']}
-            as="p"
-            class="mt-5 text-xs uppercase tracking-[0.14em] text-charcoal/50"
-          />
         </article>
       </div>
     </div>

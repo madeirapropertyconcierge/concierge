@@ -110,11 +110,15 @@ const copy = await getHomepageContent(lang);
   <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
     <div class="mb-10 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
       <div class="max-w-2xl">
-        <EditableText {...copy.architectureEyebrow} as="p" class="eyebrow" />
+        <EditableText
+          {...copy.architectureEyebrow}
+          as="h2"
+          class="text-4xl leading-[1.05] text-charcoal sm:text-5xl"
+        />
         <EditableText
           {...copy.architectureTitle}
-          as="h2"
-          class="mt-3 text-4xl leading-[1.05] text-charcoal sm:text-5xl"
+          as="p"
+          class="mt-4 text-base leading-relaxed text-charcoal/75 sm:text-lg"
         />
       </div>
       <EditableLink {...copy.architectureLink} class="link-chip w-fit" />
@@ -168,7 +172,36 @@ const copy = await getHomepageContent(lang);
         <EditableLink {...copy.processLink} class="link-chip w-fit" />
       </div>
 
-      <div class="grid gap-5 md:grid-cols-3">
+      <div class="max-w-3xl space-y-5">
+        <EditableText
+          {...copy.processBody}
+          as="p"
+          class="text-base leading-relaxed text-charcoal/75 sm:text-lg whitespace-pre-line"
+        />
+        <EditableText
+          {...copy.processChecklist}
+          as="p"
+          class="text-base font-semibold leading-loose text-charcoal whitespace-pre-line"
+        />
+        <EditableText
+          {...copy.processClosing}
+          as="p"
+          class="text-base leading-relaxed text-charcoal/75 sm:text-lg"
+        />
+      </div>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <EditableLink
+          {...copy.processPrimaryCta}
+          class="inline-flex items-center justify-center rounded-full bg-golden-sand px-7 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(247,180,94,0.35)]"
+        />
+        <EditableLink
+          {...copy.processSecondaryCta}
+          class="inline-flex items-center justify-center rounded-full border border-charcoal/20 bg-white px-7 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-all duration-300 hover:bg-charcoal/5"
+        />
+      </div>
+
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
         {copy.steps.map((item, index) => (
           <article class:list={['step-card reveal', index > 0 ? 'reveal-delay-1' : '']}>
             <p class="step-index">{item.step}</p>

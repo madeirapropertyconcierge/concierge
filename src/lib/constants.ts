@@ -3,9 +3,9 @@ export const SITE = {
   tagline: "Boutique hosting and property care for overseas owners who want peace of mind",
   url: "https://madeirapropertyconcierge.com",
   email: "hello@madeirapropertyconcierge.com",
-  phone: "+351 XXX XXX XXX",
+  phone: "+351 967 637 133",
   whatsapp: "351967637133",
-  address: "Funchal, Madeira Island, Portugal",
+  address: "Ponta Delgada, Madeira Island, Portugal",
   legal: {
     legalName: "Madeira Property Concierge (replace with full registered entity name before launch)",
     taxId: "PTXXXXXXXXX",

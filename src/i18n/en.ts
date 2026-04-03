@@ -16,7 +16,7 @@ const en = {
     contact: "Contact",
     faq: "FAQ",
     guide: "AL Guide",
-    cta: "Book Diagnostic Call",
+    cta: "Get Started",
     languageToggle: "PT",
   },
 
@@ -72,7 +72,7 @@ const en = {
       },
       design: {
         title: "Design-Thinking Approach",
-        description: "15 years of UX work means I notice what breaks before it becomes a problem, and I build processes that actually hold up.",
+        description: "With over 15 years in UX and as a homeowner myself, I notice the small things others might miss and take care of them early, before they turn into bigger (and more costly) problems.",
       },
       personal: {
         title: "Personally Invested",
@@ -105,7 +105,7 @@ const en = {
       },
       step2: {
         title: "Property & Risk Audit",
-        description: "We assess property condition, compliance gaps, vendor setup, and the package fit for how the property is actually used.",
+        description: "We assess property condition, compliance gaps, vendor/ utility setup, and service-tier fit (Tier A, B, C or D).",
       },
       step3: {
         title: "Systems Setup",
@@ -202,7 +202,7 @@ const en = {
   common: {
     learnMore: "Learn More",
     getStarted: "Get Started",
-    bookConsultation: "Book Diagnostic Call",
+    bookConsultation: "Get Started",
     viewServices: "View Services",
     readMore: "Read More",
     backToTop: "Back to top",

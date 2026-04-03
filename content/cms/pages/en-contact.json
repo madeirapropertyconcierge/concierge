@@ -43,8 +43,8 @@
       "selector": "[data-cms-id=\"text:hero-subtitle\"]",
       "kind": "inline",
       "value": {
-        "en": "Share what you're dealing with, what you need, and what's not working. We'll come back with a plan.",
-        "pt": "Partilhe o que precisa, o que nao esta a funcionar e o que quer resolver. Voltamos com um plano."
+        "en": "Tell us what you need — whether it's someone to keep an eye on your property or to manage it end-to-end as a rental — and we'll put together a plan for you.",
+        "pt": "Diga-nos o que precisa — seja alguém para cuidar do seu imóvel ou para o gerir de ponta a ponta como alojamento — e preparamos um plano à sua medida."
       }
     },
     {
@@ -296,8 +296,8 @@
       "id": "link:primary-cta",
       "selector": "[data-cms-id=\"link:primary-cta\"]",
       "label": {
-        "en": "Book Diagnostic Call",
-        "pt": "Marcar Chamada de Diagnostico"
+        "en": "Contact Us",
+        "pt": "Contacte-nos"
       },
       "href": {
         "en": "#contact-form",
