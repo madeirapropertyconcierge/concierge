@@ -105,7 +105,7 @@ const en = {
       },
       step2: {
         title: "Property & Risk Audit",
-        description: "We assess property condition, compliance gaps, vendor/ utility setup, and service-tier fit (Tier A, B, C or D).",
+        description: "We assess property condition, compliance gaps, vendor/ utility setup, and service-tier fit.",
       },
       step3: {
         title: "Systems Setup",

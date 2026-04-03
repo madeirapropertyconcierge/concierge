@@ -95,8 +95,6 @@ const copy = providedCopy ?? await getSiteChromeContent(lang);
             <a href={`tel:${SITE.phone.replace(/\s/g, '')}`}>{SITE.phone}</a>
           </li>
           <li class="!text-white/60">{SITE.address}</li>
-          <li class="!text-white/60">{copy.footer.taxIdLabel}: {SITE.legal.taxId}</li>
-          <li class="!text-white/60">{SITE.legal.commercialRegistry}</li>
         </ul>
       </div>
     </div>

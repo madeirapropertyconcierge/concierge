@@ -79,7 +79,7 @@
       "selector": "[data-cms-id=\"text:step-2-description\"]",
       "kind": "inline",
       "value": {
-        "en": "We assess property condition, compliance gaps, vendor/ utility setup, and service-tier fit (Tier A, B, C or D).",
+        "en": "We assess property condition, compliance gaps, vendor/ utility setup, and service-tier fit.",
         "pt": "Avaliamos o estado do imóvel, lacunas de conformidade, configuração de fornecedores/utilidades e adequação do nível de serviço (Tier A, B, C ou D)."
       }
     },
