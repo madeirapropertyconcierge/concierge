@@ -19,11 +19,16 @@ export interface PricingPageContent {
   idealForLabel: CmsPageTextValue;
   tiers: ServicePackage[];
   transparencyTitle: CmsPageTextValue;
-  transparencyItems: CmsPageTextValue[];
+  transparencyItems: PricingTransparencyItem[];
   ctaTitle: CmsPageTextValue;
   ctaBody: CmsPageTextValue;
   ctaPrimary: CmsPageLinkValue;
   tierProjectCta: CmsPageLinkValue;
+}
+
+interface PricingTransparencyItem {
+  key: ServicePackage['key'];
+  label: string;
 }
 
 const pricingPageIds = {
@@ -39,11 +44,6 @@ const pricingTextIds = [
   'text:includes-label',
   'text:ideal-for-label',
   'text:transparency-title',
-  'text:transparency-item-essential-care',
-  'text:transparency-item-managed-care',
-  'text:transparency-item-premium-care',
-  'text:transparency-item-revenue-hosting',
-  'text:transparency-item-on-demand',
   'text:cta-title',
   'text:cta-body',
 ] as const;
@@ -53,6 +53,15 @@ const pricingLinkIds = [
   'link:hero-secondary-cta',
   'link:tier-project-cta',
 ] as const;
+
+function buildTransparencyLabel(tier: ServicePackage, customQuoteLabel: string): string {
+  if (!tier.price) {
+    return `${tier.title}: ${customQuoteLabel}`;
+  }
+
+  const detail = tier.price.detail ? ` ${tier.price.detail}` : '';
+  return `${tier.title}: ${tier.price.headline}${detail}`;
+}
 
 export async function getPricingPageContent(lang: Locale): Promise<PricingPageContent> {
   const pageId = pricingPageIds[lang];
@@ -74,13 +83,10 @@ export async function getPricingPageContent(lang: Locale): Promise<PricingPageCo
     includesLabel: pageFields.texts['text:includes-label'],
     idealForLabel: pageFields.texts['text:ideal-for-label'],
     transparencyTitle: pageFields.texts['text:transparency-title'],
-    transparencyItems: [
-      pageFields.texts['text:transparency-item-essential-care'],
-      pageFields.texts['text:transparency-item-managed-care'],
-      pageFields.texts['text:transparency-item-premium-care'],
-      pageFields.texts['text:transparency-item-revenue-hosting'],
-      pageFields.texts['text:transparency-item-on-demand'],
-    ],
+    transparencyItems: tiers.map((tier) => ({
+      key: tier.key,
+      label: buildTransparencyLabel(tier, pageFields.texts['text:custom-quote-label'].value),
+    })),
     ctaTitle: pageFields.texts['text:cta-title'],
     ctaBody: pageFields.texts['text:cta-body'],
     ctaPrimary: pageFields.links['link:hero-primary-cta'],

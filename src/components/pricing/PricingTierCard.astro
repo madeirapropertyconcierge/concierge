@@ -30,11 +30,11 @@ const cta = tier.price ? primaryCta : projectCta;
 
 <article
   class:list={[
-    'pricing-card premium-panel reveal flex h-full flex-col p-6 sm:p-7',
+    'pricing-card premium-panel reveal grid p-6 sm:p-7',
     index > 0 ? 'reveal-delay-1' : '',
   ]}
 >
-  <header class="min-h-[10.75rem]">
+  <header>
     <SharedPackageText
       packageKey={tier.key}
       field="tierLabel"
@@ -55,18 +55,13 @@ const cta = tier.price ? primaryCta : projectCta;
       packageKey={tier.key}
       field="audience"
       value={tier.audience}
-      kind="block"
+      kind="inline"
       as="p"
       class="mt-2 text-sm leading-relaxed text-charcoal/66"
     />
   </header>
 
-  <div
-    class:list={[
-      'mt-3 flex items-start',
-      tier.price || tier.showQuoteLabel !== false ? 'min-h-[5.8rem]' : 'min-h-0',
-    ]}
-  >
+  <div class="flex items-start">
     {tier.price ? (
       <div class="flex flex-col gap-1">
         <SharedPackageText
@@ -82,7 +77,7 @@ const cta = tier.price ? primaryCta : projectCta;
             packageKey={tier.key}
             field="priceDetail"
             value={tier.price.detail}
-            kind="block"
+            kind="inline"
             as="p"
             class="max-w-[17rem] text-sm leading-relaxed text-charcoal/64"
           />
@@ -113,12 +108,7 @@ const cta = tier.price ? primaryCta : projectCta;
     )}
   </div>
 
-  <div
-    class:list={[
-      'flex flex-1 flex-col',
-      tier.price || tier.showQuoteLabel !== false ? 'mt-6' : 'mt-2',
-    ]}
-  >
+  <div class="flex flex-col">
     <EditableText
       {...includesLabel}
       as="p"
@@ -133,7 +123,7 @@ const cta = tier.price ? primaryCta : projectCta;
             field="feature"
             index={featureIndex}
             value={feature}
-            kind="block"
+            kind="inline"
             as="span"
           />
         </li>
@@ -151,7 +141,7 @@ const cta = tier.price ? primaryCta : projectCta;
           packageKey={tier.key}
           field="idealFor"
           value={tier.idealFor}
-          kind="block"
+          kind="inline"
           as="p"
           class="mt-2 text-sm leading-relaxed text-charcoal/72"
         />
@@ -161,6 +151,6 @@ const cta = tier.price ? primaryCta : projectCta;
 
   <EditableLink
     {...cta}
-    class="mt-8 inline-flex w-full items-center justify-center rounded-full bg-charcoal px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-ocean-blue"
+    class="inline-flex w-full items-center justify-center self-end rounded-full bg-charcoal px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-ocean-blue"
   />
 </article>

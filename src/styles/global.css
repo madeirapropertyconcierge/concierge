@@ -295,10 +295,10 @@
   }
 
   .service-tile {
-    display: block;
+    display: grid;
+    grid-template-rows: 1fr;
     position: relative;
     overflow: hidden;
-    min-height: 18rem;
     border-radius: 1.35rem;
     border: 1px solid rgba(16, 32, 43, 0.1);
     box-shadow: 0 20px 44px rgba(13, 23, 36, 0.17);
@@ -309,7 +309,13 @@
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(11, 25, 35, 0.88), rgba(11, 25, 35, 0.08));
+    background: linear-gradient(
+      to top,
+      rgba(11, 25, 35, 0.94) 0%,
+      rgba(11, 25, 35, 0.88) 50%,
+      rgba(11, 25, 35, 0.72) 75%,
+      rgba(11, 25, 35, 0.18) 100%
+    );
     pointer-events: none;
   }
 
@@ -329,12 +335,14 @@
   }
 
   .service-overlay {
-    position: absolute;
-    inset-inline: 1.15rem;
-    bottom: 1.1rem;
+    position: relative;
     z-index: 2;
-    display: grid;
-    gap: 0.45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    padding-top: 8rem;
+    justify-content: flex-end;
   }
 
   .premium-panel {

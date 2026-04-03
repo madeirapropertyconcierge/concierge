@@ -107,7 +107,7 @@ const pageSchema = [
 
     <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
       {packages.map((item, index) => (
-        <article class:list={['service-tile reveal aspect-[16/10]', index > 0 ? 'reveal-delay-1' : '']}>
+        <article class:list={['service-tile reveal', index > 0 ? 'reveal-delay-1' : '']}>
           <img src={tileImages[item.key]} alt={item.title} class="h-full w-full object-cover" loading="lazy" />
           <div class="service-overlay">
             {item.price && (
@@ -125,7 +125,7 @@ const pageSchema = [
                     packageKey={item.key}
                     field="priceDetail"
                     value={item.price.detail}
-                    kind="block"
+                    kind="inline"
                     as="p"
                     class="max-w-md text-sm text-white/76"
                   />
@@ -144,11 +144,11 @@ const pageSchema = [
               packageKey={item.key}
               field="audience"
               value={item.audience}
-              kind="block"
+              kind="inline"
               as="p"
-              class="text-sm text-white/82"
+              class="text-sm leading-relaxed text-white/90"
             />
-            <ul class="space-y-1 text-sm text-white/84">
+            <ul class="space-y-1.5 text-sm text-white/90">
               {item.servicesBullets.map((bullet, bulletIndex) => (
                 <li class="flex items-start gap-2">
                   <span class="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-golden-sand"></span>
@@ -157,7 +157,7 @@ const pageSchema = [
                     field="servicesBullet"
                     index={bulletIndex}
                     value={bullet}
-                    kind="block"
+                    kind="inline"
                     as="span"
                   />
                 </li>
@@ -200,7 +200,7 @@ const pageSchema = [
               field="feature"
               index={featureIndex}
               value={item}
-              kind="block"
+              kind="inline"
               as="h3"
               class="mt-2 text-xl text-charcoal"
             />

@@ -84,51 +84,6 @@
       }
     },
     {
-      "id": "text:transparency-item-essential-care",
-      "selector": "[data-cms-id=\"text:transparency-item-essential-care\"]",
-      "kind": "inline",
-      "value": {
-        "en": "Essential Care: EUR95/month",
-        "pt": "Cuidados Essenciais: EUR95/mes"
-      }
-    },
-    {
-      "id": "text:transparency-item-managed-care",
-      "selector": "[data-cms-id=\"text:transparency-item-managed-care\"]",
-      "kind": "inline",
-      "value": {
-        "en": "Managed Care: EUR95/month, plus EUR80 per turnover support (arrival & departure coordination)",
-        "pt": "Gestao Assistida: EUR95/mes + EUR80 por suporte de turnover (coordenacao de chegadas e saidas)"
-      }
-    },
-    {
-      "id": "text:transparency-item-premium-care",
-      "selector": "[data-cms-id=\"text:transparency-item-premium-care\"]",
-      "kind": "inline",
-      "value": {
-        "en": "Premium Care: EUR140/month",
-        "pt": "Cuidados Premium: EUR140/mes"
-      }
-    },
-    {
-      "id": "text:transparency-item-revenue-hosting",
-      "selector": "[data-cms-id=\"text:transparency-item-revenue-hosting\"]",
-      "kind": "inline",
-      "value": {
-        "en": "Revenue & Hosting: EUR95/month + 25% of gross rental revenue",
-        "pt": "Revenue & Hosting: EUR95/mes + 25% da receita bruta"
-      }
-    },
-    {
-      "id": "text:transparency-item-on-demand",
-      "selector": "[data-cms-id=\"text:transparency-item-on-demand\"]",
-      "kind": "inline",
-      "value": {
-        "en": "On-Demand Services: from EUR35/hour",
-        "pt": "Servicos Sob Pedido: desde EUR35/hora"
-      }
-    },
-    {
       "id": "text:cta-title",
       "selector": "[data-cms-id=\"text:cta-title\"]",
       "kind": "inline",

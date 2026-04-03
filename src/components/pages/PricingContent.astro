@@ -83,15 +83,9 @@ const pageSchema = [
         {copy.transparencyItems.map((item) => (
           <article class="step-card pricing-shared-card flex items-center gap-3">
             <span aria-hidden="true" class="h-2 w-2 flex-shrink-0 rounded-full bg-ocean-blue"></span>
-            <EditableText
-              id={item.id}
-              selector={item.selector}
-              kind={item.kind}
-              value={item.value}
-              as="p"
-              class="text-sm leading-relaxed text-charcoal/75"
-              data-pricing-summary-item={item.id.replace('text:transparency-item-', '')}
-            />
+            <p class="text-sm leading-relaxed text-charcoal/75" data-pricing-summary-item={item.key}>
+              {item.label}
+            </p>
           </article>
         ))}
       </div>
@@ -130,11 +124,21 @@ const pageSchema = [
 
 <style>
   .pricing-grid {
-    grid-auto-rows: 1fr;
+    grid-template-rows: auto;
+  }
+
+  @supports (grid-template-rows: subgrid) {
+    .pricing-grid {
+      grid-template-rows: repeat(4, auto);
+    }
+
+    .pricing-grid > :global(.pricing-card) {
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+    }
   }
 
   .pricing-card {
-    min-height: 33.5rem;
     transition: transform 240ms ease, box-shadow 240ms ease, border-color 240ms ease;
   }
 
