@@ -1,6 +1,6 @@
 {
   "pageId": "en-terms",
-  "updatedAt": "2026-02-28T17:51:19.053Z",
+  "updatedAt": "2026-04-02T22:34:36.565Z",
   "seo": {
     "en": {
       "title": "Terms of Service | Madeira Property Concierge",
@@ -19,7 +19,186 @@
       "canonical": "/pt/termos"
     }
   },
-  "texts": [],
-  "links": [],
+  "texts": [
+    {
+      "id": "text:hero-eyebrow",
+      "selector": "[data-cms-id=\"text:hero-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Legal",
+        "pt": "Legal"
+      }
+    },
+    {
+      "id": "text:hero-title",
+      "selector": "[data-cms-id=\"text:hero-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Terms of Service",
+        "pt": "Termos de Servico"
+      }
+    },
+    {
+      "id": "text:hero-subtitle",
+      "selector": "[data-cms-id=\"text:hero-subtitle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Commercial and operational terms that apply to our website and service delivery.",
+        "pt": "Termos comerciais e operacionais aplicaveis ao website e a execucao dos servicos."
+      }
+    },
+    {
+      "id": "text:updated-label",
+      "selector": "[data-cms-id=\"text:updated-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Last updated: February 28, 2026",
+        "pt": "Ultima atualizacao: 28 de fevereiro de 2026"
+      }
+    },
+    {
+      "id": "text:section-1-title",
+      "selector": "[data-cms-id=\"text:section-1-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Mandatory Provider Information (Portugal)",
+        "pt": "Informacao Obrigatoria do Prestador (Portugal)"
+      }
+    },
+    {
+      "id": "text:section-1-body",
+      "selector": "[data-cms-id=\"text:section-1-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "In line with Decree-Law no. 7/2004 (Article 10), we publish core provider identification details:\n\n- Legal name: {{legalName}}\n- Registered address: {{address}}\n- Email: {{email}}\n- Tax identification (NIF): {{taxId}}\n- Commercial registry details: {{commercialRegistry}}",
+        "pt": "Nos termos do Decreto-Lei n. 7/2004 (artigo 10), disponibilizamos os elementos essenciais de identificacao:\n\n- Firma/denominacao: {{legalName}}\n- Morada: {{address}}\n- Email: {{email}}\n- NIF: {{taxId}}\n- Registo comercial: {{commercialRegistry}}"
+      }
+    },
+    {
+      "id": "text:section-2-title",
+      "selector": "[data-cms-id=\"text:section-2-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Service Scope and Contracting",
+        "pt": "Ambito de Servico e Contratacao"
+      }
+    },
+    {
+      "id": "text:section-2-body",
+      "selector": "[data-cms-id=\"text:section-2-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "Service scope, deliverables, and execution timelines are defined in each proposal or signed service agreement.\n\n- Website information is informational and does not constitute an automatically binding offer.\n- A service agreement becomes effective only after explicit acceptance by both parties.",
+        "pt": "O escopo, entregaveis e prazos sao definidos em proposta ou contrato de servico especifico.\n\n- A informacao do website e informativa e nao constitui proposta vinculativa automatica.\n- O contrato so produz efeitos apos aceitacao expressa das partes."
+      }
+    },
+    {
+      "id": "text:section-3-title",
+      "selector": "[data-cms-id=\"text:section-3-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Fees, Billing, and Taxes",
+        "pt": "Honorarios, Faturacao e Tributos"
+      }
+    },
+    {
+      "id": "text:section-3-body",
+      "selector": "[data-cms-id=\"text:section-3-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "Management and project fees are invoiced according to the signed agreement.\n\n- Third-party vendor costs are disclosed separately when applicable.\n- Taxes and VAT treatment follow Portuguese law and the applicable invoicing framework.\n- Any additional mandatory fees are communicated before confirmation.",
+        "pt": "Mensalidades e projetos sao faturados conforme condicoes contratuais acordadas.\n\n- Custos de terceiros sao discriminados separadamente quando aplicavel.\n- IVA e demais enquadramentos fiscais seguem a lei portuguesa e o regime de faturacao aplicavel.\n- Qualquer encargo adicional obrigatorio e comunicado antes da confirmacao."
+      }
+    },
+    {
+      "id": "text:section-4-title",
+      "selector": "[data-cms-id=\"text:section-4-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Complaints Book and Consumer ADR",
+        "pt": "Livro de Reclamacoes e RAL"
+      }
+    },
+    {
+      "id": "text:section-4-body",
+      "selector": "[data-cms-id=\"text:section-4-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "Consumer-facing operators in Portugal must provide complaint channels and ADR information.\n\n- Electronic complaints book access is available through the official Livro de Reclamacoes portal.\n- Information on consumer ADR entities (RAL) is available on the Portuguese Consumer Portal.\n- If a sector-specific ADR entity applies to a specific contract, it must be identified in that contract documentation.\n\n[Livro de Reclamacoes Eletronico]({{complaintsBookUrl}})\n\n[Consumer ADR entities (RAL)]({{adrInfoUrl}})",
+        "pt": "Operadores economicos com relacao de consumo em Portugal devem disponibilizar canais de reclamacao e informacao sobre resolucao alternativa de litigios.\n\n- O acesso ao Livro de Reclamacoes Eletronico esta disponivel no portal oficial.\n- A informacao sobre entidades RAL esta disponivel no Portal do Consumidor.\n- Quando aplicavel, a entidade RAL competente deve ser identificada na documentacao contratual.\n\n[Livro de Reclamacoes Eletronico]({{complaintsBookUrl}})\n\n[Entidades de RAL (Portal do Consumidor)]({{adrInfoUrl}})"
+      }
+    },
+    {
+      "id": "text:section-5-title",
+      "selector": "[data-cms-id=\"text:section-5-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Liability, Law, and Jurisdiction",
+        "pt": "Responsabilidade, Lei e Foro"
+      }
+    },
+    {
+      "id": "text:section-5-body",
+      "selector": "[data-cms-id=\"text:section-5-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "We operate with professional care and vetted local partners. Liability limits apply as defined in signed agreements.\n\n- These terms are governed by Portuguese law.\n- Unless mandatory consumer rules state otherwise, disputes are handled in the competent courts of Funchal, Madeira.",
+        "pt": "Atuamos com diligencia profissional e com parceiros locais validados. Limites de responsabilidade aplicam-se conforme contrato assinado.\n\n- Estes termos regem-se pela lei portuguesa.\n- Salvo norma imperativa de protecao do consumidor em contrario, o foro competente e o do Funchal, Madeira."
+      }
+    },
+    {
+      "id": "text:section-6-title",
+      "selector": "[data-cms-id=\"text:section-6-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Publication Checklist",
+        "pt": "Checklist de Publicacao"
+      }
+    },
+    {
+      "id": "text:section-6-body",
+      "selector": "[data-cms-id=\"text:section-6-body\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Before public launch, confirm all corporate and tax identifiers on this page are final and accurate.",
+        "pt": "Antes de publicar o website, confirme que os identificadores societarios e fiscais desta pagina estao finais e corretos."
+      }
+    },
+    {
+      "id": "text:section-6-note",
+      "selector": "[data-cms-id=\"text:section-6-note\"]",
+      "kind": "inline",
+      "value": {
+        "en": "This website currently contains placeholder legal identifiers. Replace them with final registered data before publication.",
+        "pt": "Este website contem identificadores legais em formato provisiorio. Substitua-os pelos dados oficiais antes da publicacao."
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "link:primary-cta",
+      "selector": "[data-cms-id=\"link:primary-cta\"]",
+      "label": {
+        "en": "Contact",
+        "pt": "Contacto"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    },
+    {
+      "id": "link:secondary-cta",
+      "selector": "[data-cms-id=\"link:secondary-cta\"]",
+      "label": {
+        "en": "Home",
+        "pt": "Inicio"
+      },
+      "href": {
+        "en": "/en/",
+        "pt": "/pt/"
+      }
+    }
+  ],
   "images": []
 }

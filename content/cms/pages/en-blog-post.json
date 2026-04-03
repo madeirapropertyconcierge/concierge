@@ -1,0 +1,114 @@
+{
+  "pageId": "en-blog-post",
+  "updatedAt": "2026-04-02T22:33:15.244Z",
+  "seo": {
+    "en": {
+      "title": "",
+      "description": "",
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "canonical": ""
+    },
+    "pt": {
+      "title": "",
+      "description": "",
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "canonical": ""
+    }
+  },
+  "texts": [
+    {
+      "id": "text:summary-title",
+      "selector": "[data-cms-id=\"text:summary-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Executive Summary",
+        "pt": "Resumo Executivo"
+      }
+    },
+    {
+      "id": "text:toc-title",
+      "selector": "[data-cms-id=\"text:toc-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "In This Article",
+        "pt": "Neste artigo"
+      }
+    },
+    {
+      "id": "text:meta-published",
+      "selector": "[data-cms-id=\"text:meta-published\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Published",
+        "pt": "Publicado"
+      }
+    },
+    {
+      "id": "text:meta-updated",
+      "selector": "[data-cms-id=\"text:meta-updated\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Updated",
+        "pt": "Atualizado"
+      }
+    },
+    {
+      "id": "text:meta-reading",
+      "selector": "[data-cms-id=\"text:meta-reading\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Reading Time",
+        "pt": "Leitura"
+      }
+    },
+    {
+      "id": "text:cta-title",
+      "selector": "[data-cms-id=\"text:cta-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Want help applying this to your property?",
+        "pt": "Quer aplicar isto ao seu imovel?"
+      }
+    },
+    {
+      "id": "text:cta-body",
+      "selector": "[data-cms-id=\"text:cta-body\"]",
+      "kind": "inline",
+      "value": {
+        "en": "We can put together and run a local operating plan for your situation.",
+        "pt": "Podemos montar e executar um plano operacional local para a sua situacao."
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "link:primary-cta",
+      "selector": "[data-cms-id=\"link:primary-cta\"]",
+      "label": {
+        "en": "Book Consultation",
+        "pt": "Marcar Consulta"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    },
+    {
+      "id": "link:secondary-cta",
+      "selector": "[data-cms-id=\"link:secondary-cta\"]",
+      "label": {
+        "en": "Back to Blog",
+        "pt": "Voltar ao Blog"
+      },
+      "href": {
+        "en": "/en/blog",
+        "pt": "/pt/blog"
+      }
+    }
+  ],
+  "images": []
+}

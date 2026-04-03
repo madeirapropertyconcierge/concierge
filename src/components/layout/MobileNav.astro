@@ -8,32 +8,36 @@ interface Props {
   navItems: NavItem[];
   ctaLabel: string;
   ctaHref: string;
+  openLabel: string;
+  closeLabel: string;
+  panelLabel: string;
+  navigationLabel: string;
 }
 
-const { navItems, ctaLabel, ctaHref } = Astro.props;
+const { navItems, ctaLabel, ctaHref, openLabel, closeLabel, panelLabel, navigationLabel } = Astro.props;
 ---
 
 <details class="mobile-nav xl:hidden" data-mobile-nav>
-  <summary class="mobile-nav-toggle" aria-label="Open menu">
+  <summary class="mobile-nav-toggle" aria-label={openLabel}>
     <span class="mobile-nav-icon" aria-hidden="true"></span>
   </summary>
 
-  <button class="mobile-nav-backdrop" type="button" data-close-nav aria-label="Close menu"></button>
+  <button class="mobile-nav-backdrop" type="button" data-close-nav aria-label={closeLabel}></button>
 
-  <div class="mobile-nav-panel" role="dialog" aria-label="Mobile navigation">
+  <div class="mobile-nav-panel" role="dialog" aria-label={panelLabel}>
     <div class="mb-4 flex items-center justify-between">
-      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-charcoal/55">Navigation</p>
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-charcoal/55">{navigationLabel}</p>
       <button
         type="button"
         class="inline-flex h-9 w-9 items-center justify-center rounded-full border border-charcoal/15 text-charcoal transition-colors hover:bg-charcoal hover:text-white"
         data-close-nav
-        aria-label="Close menu"
+        aria-label={closeLabel}
       >
         ✕
       </button>
     </div>
 
-    <nav class="flex flex-col gap-1" aria-label="Mobile navigation links">
+    <nav class="flex flex-col gap-1" aria-label={navigationLabel}>
       {navItems.map((item) => (
         <a href={item.href} class="mobile-nav-link" data-nav-link>
           {item.label}

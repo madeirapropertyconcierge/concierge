@@ -1,6 +1,6 @@
 {
   "pageId": "en-privacy",
-  "updatedAt": "2026-02-28T17:51:19.053Z",
+  "updatedAt": "2026-04-02T22:34:36.565Z",
   "seo": {
     "en": {
       "title": "Privacy Policy | Madeira Property Concierge",
@@ -19,7 +19,195 @@
       "canonical": "/pt/privacidade"
     }
   },
-  "texts": [],
-  "links": [],
+  "texts": [
+    {
+      "id": "text:hero-eyebrow",
+      "selector": "[data-cms-id=\"text:hero-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Legal",
+        "pt": "Legal"
+      }
+    },
+    {
+      "id": "text:hero-title",
+      "selector": "[data-cms-id=\"text:hero-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Privacy Policy",
+        "pt": "Politica de Privacidade"
+      }
+    },
+    {
+      "id": "text:hero-subtitle",
+      "selector": "[data-cms-id=\"text:hero-subtitle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "How we process and protect personal data across our website and services.",
+        "pt": "Como tratamos e protegemos dados pessoais no website e na prestacao de servicos."
+      }
+    },
+    {
+      "id": "text:updated-label",
+      "selector": "[data-cms-id=\"text:updated-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Last updated: February 28, 2026",
+        "pt": "Ultima atualizacao: 28 de fevereiro de 2026"
+      }
+    },
+    {
+      "id": "text:section-1-title",
+      "selector": "[data-cms-id=\"text:section-1-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Data Controller",
+        "pt": "Responsavel pelo Tratamento"
+      }
+    },
+    {
+      "id": "text:section-1-body",
+      "selector": "[data-cms-id=\"text:section-1-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "The data controller for this website and related services is:\n\n- Controller: {{legalName}}\n- Email: {{email}}\n- Telephone: {{phone}}\n- Postal address: {{address}}",
+        "pt": "O responsavel pelo tratamento de dados deste website e servicos associados e:\n\n- Responsavel: {{legalName}}\n- Email: {{email}}\n- Telefone: {{phone}}\n- Morada postal: {{address}}"
+      }
+    },
+    {
+      "id": "text:section-2-title",
+      "selector": "[data-cms-id=\"text:section-2-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Data We Process",
+        "pt": "Dados Tratados"
+      }
+    },
+    {
+      "id": "text:section-2-body",
+      "selector": "[data-cms-id=\"text:section-2-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "We process personal data that you provide directly when contacting us or requesting services.\n\n- Identity and contact details (name, email, phone).\n- Property context details shared in enquiry messages.\n- Communication history and service-preparation notes.\n- Technical data required for site operation and security (for example, essential logs).",
+        "pt": "Tratamos dados pessoais fornecidos diretamente por si em contactos e pedidos de servico.\n\n- Dados de identificacao e contacto (nome, email, telefone).\n- Contexto do imovel e necessidades comunicadas em pedidos de contacto.\n- Historico de comunicacoes e notas de preparacao de servico.\n- Dados tecnicos necessarios para operacao e seguranca do website."
+      }
+    },
+    {
+      "id": "text:section-3-title",
+      "selector": "[data-cms-id=\"text:section-3-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Purposes and Legal Bases (GDPR Art. 6)",
+        "pt": "Finalidades e Fundamentos Juridicos (RGPD Art. 6)"
+      }
+    },
+    {
+      "id": "text:section-3-body",
+      "selector": "[data-cms-id=\"text:section-3-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "Your data is processed only where there is a valid legal basis:\n\n- Responding to pre-contractual requests and providing services: Art. 6(1)(b) GDPR.\n- Managing invoices and legal accounting/tax duties: Art. 6(1)(c) GDPR.\n- Protecting our operations and handling legal claims: Art. 6(1)(f) GDPR.\n- Optional marketing communications (if used): Art. 6(1)(a) GDPR consent.",
+        "pt": "Os dados apenas sao tratados quando exista fundamento legal aplicavel:\n\n- Resposta a pedidos pre-contratuais e execucao de servicos: art. 6, n. 1, al. b) RGPD.\n- Cumprimento de obrigacoes legais (faturacao/contabilidade/fiscal): art. 6, n. 1, al. c) RGPD.\n- Defesa de interesses legitimos (seguranca, defesa de direitos): art. 6, n. 1, al. f) RGPD.\n- Comunicacoes de marketing opcionais (quando aplicavel): consentimento, art. 6, n. 1, al. a) RGPD."
+      }
+    },
+    {
+      "id": "text:section-4-title",
+      "selector": "[data-cms-id=\"text:section-4-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Retention Periods",
+        "pt": "Prazos de Conservacao"
+      }
+    },
+    {
+      "id": "text:section-4-body",
+      "selector": "[data-cms-id=\"text:section-4-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "We keep data only for the period necessary for each purpose and legal obligation.\n\n- Enquiry records: up to 12 months after last contact, unless a contract follows.\n- Contract, invoicing, and accounting records: according to Portuguese legal retention duties.\n- Technical/security records: only for operational security and legal defense windows.",
+        "pt": "Conservamos dados apenas durante o periodo necessario para cada finalidade e obrigacao legal.\n\n- Pedidos de contacto: ate 12 meses apos o ultimo contacto, salvo celebracao de contrato.\n- Registos contratuais e de faturacao: conforme prazos legais portugueses aplicaveis.\n- Registos tecnicos/seguranca: apenas enquanto necessarios para seguranca e defesa juridica."
+      }
+    },
+    {
+      "id": "text:section-5-title",
+      "selector": "[data-cms-id=\"text:section-5-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Recipients and International Transfers",
+        "pt": "Destinatarios e Transferencias Internacionais"
+      }
+    },
+    {
+      "id": "text:section-5-body",
+      "selector": "[data-cms-id=\"text:section-5-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "Data may be shared with service providers strictly needed to run our operations (for example hosting, email, forms, and scheduling tools).\n\n- Hosting provider: Vercel (infrastructure and site delivery).\n- Analytics provider: Vercel Web Analytics, loaded only after explicit cookie consent.\n- Processors act under contractual confidentiality and data-protection obligations.\n- If data is transferred outside the EEA, we apply lawful safeguards such as Standard Contractual Clauses.\n\n[Vercel Privacy Policy](https://vercel.com/legal/privacy-policy)",
+        "pt": "Os dados podem ser partilhados com subcontratantes estritamente necessarios ao funcionamento do servico (alojamento, email, formularios, agendamento).\n\n- Fornecedor de alojamento: Vercel (infraestrutura e entrega do website).\n- Fornecedor de analitica: Vercel Web Analytics, ativado apenas apos consentimento explicito de cookies.\n- Os subcontratantes atuam com deveres contratuais de confidencialidade e protecao de dados.\n- Se houver transferencias fora do EEE, aplicamos salvaguardas legais como Clausulas Contratuais-Tipo.\n\n[Politica de Privacidade da Vercel](https://vercel.com/legal/privacy-policy)"
+      }
+    },
+    {
+      "id": "text:section-6-title",
+      "selector": "[data-cms-id=\"text:section-6-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Your Rights and Complaints",
+        "pt": "Direitos do Titular e Reclamacoes"
+      }
+    },
+    {
+      "id": "text:section-6-body",
+      "selector": "[data-cms-id=\"text:section-6-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "Under GDPR, you may request access, rectification, erasure, restriction, objection, and portability where applicable.\n\n- To exercise rights, contact: {{email}}\n- You may withdraw consent at any time where consent is the legal basis.\n- You may lodge a complaint with the Portuguese supervisory authority (CNPD).\n\n[CNPD (Portuguese Data Protection Authority)](https://www.cnpd.pt/)",
+        "pt": "Nos termos do RGPD, pode exercer direitos de acesso, retificacao, apagamento, limitacao, oposicao e portabilidade, quando aplicavel.\n\n- Para exercer direitos: {{email}}\n- Pode retirar o consentimento a qualquer momento quando o tratamento se basear em consentimento.\n- Pode apresentar reclamacao a autoridade de controlo portuguesa (CNPD).\n\n[CNPD (Comissao Nacional de Protecao de Dados)](https://www.cnpd.pt/)"
+      }
+    },
+    {
+      "id": "text:section-7-title",
+      "selector": "[data-cms-id=\"text:section-7-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Cookies and Similar Technologies",
+        "pt": "Cookies e Tecnologias Semelhantes"
+      }
+    },
+    {
+      "id": "text:section-7-body",
+      "selector": "[data-cms-id=\"text:section-7-body\"]",
+      "kind": "block",
+      "value": {
+        "en": "We use strictly necessary cookies for site operation. Non-essential cookies (such as analytics/marketing) require prior consent.\n\n- No non-essential cookies run before your explicit acceptance.\n- Vercel Web Analytics is enabled only after you click Accept in the cookie banner.\n- You can change cookie preferences at any time through browser settings and local storage controls.\n\n[Terms and cookie details]({{termsHref}})",
+        "pt": "Utilizamos cookies estritamente necessarios para operacao do website. Cookies nao essenciais (analiticos/marketing) exigem consentimento previo.\n\n- Nao sao ativados cookies nao essenciais antes da sua aceitacao explicita.\n- A Vercel Web Analytics so e ativada depois de clicar em Aceitar no banner de cookies.\n- Pode alterar preferencias de cookies a qualquer momento nas definicoes do navegador e do armazenamento local.\n\n[Termos e informacao de cookies]({{termsHref}})"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "link:primary-cta",
+      "selector": "[data-cms-id=\"link:primary-cta\"]",
+      "label": {
+        "en": "Contact",
+        "pt": "Contacto"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    },
+    {
+      "id": "link:secondary-cta",
+      "selector": "[data-cms-id=\"link:secondary-cta\"]",
+      "label": {
+        "en": "Home",
+        "pt": "Inicio"
+      },
+      "href": {
+        "en": "/en/",
+        "pt": "/pt/"
+      }
+    }
+  ],
   "images": []
 }

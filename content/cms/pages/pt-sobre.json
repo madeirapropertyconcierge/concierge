@@ -1,6 +1,6 @@
 {
   "pageId": "pt-sobre",
-  "updatedAt": "2026-02-28T17:51:19.050Z",
+  "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
       "title": "About Lisa | Madeira Property Concierge",
@@ -19,7 +19,304 @@
       "canonical": "/pt/sobre"
     }
   },
-  "texts": [],
-  "links": [],
-  "images": []
+  "texts": [
+    {
+      "id": "text:hero-eyebrow",
+      "selector": "[data-cms-id=\"text:hero-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Founder & Vision",
+        "pt": "Fundadora & Visao"
+      }
+    },
+    {
+      "id": "text:hero-title",
+      "selector": "[data-cms-id=\"text:hero-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "One person runs this. You'll always know who's responsible.",
+        "pt": "Uma pessoa gere tudo. Vai saber sempre quem e responsavel."
+      }
+    },
+    {
+      "id": "text:hero-subtitle",
+      "selector": "[data-cms-id=\"text:hero-subtitle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "UX Director background, bilingual EN/PT, Madeiran roots. I'm your local point of contact so you don't have to manage from a distance.",
+        "pt": "Experiencia em UX, bilingue EN/PT, raizes madeirenses. Sou o seu ponto de contacto local para nao ter de gerir a distancia."
+      }
+    },
+    {
+      "id": "text:story-eyebrow",
+      "selector": "[data-cms-id=\"text:story-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "The Story",
+        "pt": "A Historia"
+      }
+    },
+    {
+      "id": "text:story-title",
+      "selector": "[data-cms-id=\"text:story-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "My Story",
+        "pt": "A Minha Historia"
+      }
+    },
+    {
+      "id": "text:story-paragraph-1",
+      "selector": "[data-cms-id=\"text:story-paragraph-1\"]",
+      "kind": "inline",
+      "value": {
+        "en": "I'm Lisa. My parents are from Madeira, and much of my family is still here. They emigrated to Canada, where I was born and raised, and later I built my career in London leading UX teams.",
+        "pt": "Sou a Lisa. Os meus pais sao da Madeira, e grande parte da minha familia continua aqui. Emigraram para o Canada, onde nasci e cresci, e mais tarde construí a minha carreira em Londres a liderar equipas de UX."
+      }
+    },
+    {
+      "id": "text:story-paragraph-2",
+      "selector": "[data-cms-id=\"text:story-paragraph-2\"]",
+      "kind": "inline",
+      "value": {
+        "en": "After my daughter was born, I felt a strong pull back to our roots and moved to Madeira. Living on-island, I built a trusted local network and kept seeing the same pattern for overseas owners: communication gaps, uneven quality, and costly surprises.",
+        "pt": "Depois de a minha filha nascer, senti um forte chamamento as nossas raizes e voltei para a Madeira. A viver na ilha, construí uma rede local de confianca e continuei a ver o mesmo padrao para quem vive fora: falhas de comunicacao, qualidade irregular e custos inesperados."
+      }
+    },
+    {
+      "id": "text:story-paragraph-3",
+      "selector": "[data-cms-id=\"text:story-paragraph-3\"]",
+      "kind": "inline",
+      "value": {
+        "en": "I was already managing two family properties in Madeira, and I knew it was the right time to expand. That is why I founded Madeira Property Concierge: a small, founder-led service with clear tiers, clear reporting, and one person you can hold accountable.",
+        "pt": "Ja fazia a gestao de duas propriedades da familia na Madeira e percebi que era o momento certo para expandir. Foi por isso que fundei a Madeira Property Concierge: um servico pequeno, liderado pela fundadora, com niveis claros, relatorios claros e uma pessoa a quem pode pedir responsabilidades."
+      }
+    },
+    {
+      "id": "text:story-stat-1-value",
+      "selector": "[data-cms-id=\"text:story-stat-1-value\"]",
+      "kind": "inline",
+      "value": {
+        "en": "15 years",
+        "pt": "15 anos"
+      }
+    },
+    {
+      "id": "text:story-stat-1-label",
+      "selector": "[data-cms-id=\"text:story-stat-1-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Leading UX teams and designing service systems that hold up.",
+        "pt": "A liderar equipas de UX e a desenhar operacoes centradas no utilizador."
+      }
+    },
+    {
+      "id": "text:story-stat-2-value",
+      "selector": "[data-cms-id=\"text:story-stat-2-value\"]",
+      "kind": "inline",
+      "value": {
+        "en": "3+ years",
+        "pt": "3+ anos"
+      }
+    },
+    {
+      "id": "text:story-stat-2-label",
+      "selector": "[data-cms-id=\"text:story-stat-2-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Living in Madeira and building a reliable local vendor network.",
+        "pt": "A viver na Madeira e a construir rede local de fornecedores de confianca."
+      }
+    },
+    {
+      "id": "text:story-stat-3-value",
+      "selector": "[data-cms-id=\"text:story-stat-3-value\"]",
+      "kind": "inline",
+      "value": {
+        "en": "EN/PT",
+        "pt": "EN/PT"
+      }
+    },
+    {
+      "id": "text:story-stat-3-label",
+      "selector": "[data-cms-id=\"text:story-stat-3-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Native bilingual, born Canadian-Madeiran. Bridges overseas owners and local teams.",
+        "pt": "Bilingue nativa, nascida canadiana-madeirense. Faz a ponte entre proprietarios e equipas locais."
+      }
+    },
+    {
+      "id": "text:why-eyebrow",
+      "selector": "[data-cms-id=\"text:why-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Why It Feels Different",
+        "pt": "Porque e Diferente"
+      }
+    },
+    {
+      "id": "text:why-title",
+      "selector": "[data-cms-id=\"text:why-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Why I'm Different",
+        "pt": "Porque Sou Diferente"
+      }
+    },
+    {
+      "id": "text:why-bilingual-title",
+      "selector": "[data-cms-id=\"text:why-bilingual-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Truly Bilingual",
+        "pt": "Verdadeiramente Bilingue"
+      }
+    },
+    {
+      "id": "text:why-bilingual-description",
+      "selector": "[data-cms-id=\"text:why-bilingual-description\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Native-level English and Portuguese. I handle the cultural gaps that cause expensive misunderstandings between owners and local vendors.",
+        "pt": "Ingles e Portugues nativos. Trato das diferencas culturais que causam mal-entendidos caros entre proprietarios e fornecedores locais."
+      }
+    },
+    {
+      "id": "text:why-design-title",
+      "selector": "[data-cms-id=\"text:why-design-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Design-Thinking Approach",
+        "pt": "Abordagem Design Thinking"
+      }
+    },
+    {
+      "id": "text:why-design-description",
+      "selector": "[data-cms-id=\"text:why-design-description\"]",
+      "kind": "inline",
+      "value": {
+        "en": "15 years of UX work means I notice what breaks before it becomes a problem, and I build processes that actually hold up.",
+        "pt": "15 anos em UX significam que deteto o que vai falhar antes de ser problema, e crio processos que se mantem."
+      }
+    },
+    {
+      "id": "text:why-personal-title",
+      "selector": "[data-cms-id=\"text:why-personal-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Personally Invested",
+        "pt": "Pessoalmente Investida"
+      }
+    },
+    {
+      "id": "text:why-personal-description",
+      "selector": "[data-cms-id=\"text:why-personal-description\"]",
+      "kind": "inline",
+      "value": {
+        "en": "I live in Madeira and raise my daughter here. My reputation is local, visible, and tied directly to your results.",
+        "pt": "Vivo na Madeira e crio aqui a minha filha. A minha reputacao e local, visivel e diretamente ligada aos seus resultados."
+      }
+    },
+    {
+      "id": "text:why-network-title",
+      "selector": "[data-cms-id=\"text:why-network-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Local Madeiran Network",
+        "pt": "Rede Local Madeirense"
+      }
+    },
+    {
+      "id": "text:why-network-description",
+      "selector": "[data-cms-id=\"text:why-network-description\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Family roots and years of local relationships. You get vetted vendors with clear standards and documentation, not guesswork.",
+        "pt": "Raizes familiares e anos de relacoes locais. Recebe fornecedores validados com padroes claros e documentacao."
+      }
+    },
+    {
+      "id": "text:quote-eyebrow",
+      "selector": "[data-cms-id=\"text:quote-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "The Commitment",
+        "pt": "Compromisso"
+      }
+    },
+    {
+      "id": "text:promise-text",
+      "selector": "[data-cms-id=\"text:promise-text\"]",
+      "kind": "inline",
+      "value": {
+        "en": "I treat every property as if it were my own. I'll flag problems before they grow and I won't cut corners. If something goes wrong, you hear it from me first, with a fix already underway.",
+        "pt": "Trato cada propriedade como se fosse minha. Aviso antes dos problemas crescerem e nao corto nos cantos. Se algo correr mal, vai ouvir primeiro de mim, com uma solucao ja a caminho."
+      }
+    },
+    {
+      "id": "text:cta-title",
+      "selector": "[data-cms-id=\"text:cta-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Want to know exactly what's happening with your property?",
+        "pt": "Quer saber exatamente o que se passa com o seu imovel?"
+      }
+    },
+    {
+      "id": "text:cta-body",
+      "selector": "[data-cms-id=\"text:cta-body\"]",
+      "kind": "inline",
+      "value": {
+        "en": "We'll look at your situation and put together a plan for care, hosting, or compliance.",
+        "pt": "Olhamos para a sua situacao e montamos um plano de cuidado, hosting ou conformidade."
+      }
+    },
+    {
+      "id": "text:person-job-title",
+      "selector": "[data-cms-id=\"text:person-job-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Founder",
+        "pt": "Fundadora"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "link:primary-cta",
+      "selector": "[data-cms-id=\"link:primary-cta\"]",
+      "label": {
+        "en": "Book Diagnostic Call",
+        "pt": "Marcar Chamada de Diagnostico"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    },
+    {
+      "id": "link:secondary-cta",
+      "selector": "[data-cms-id=\"link:secondary-cta\"]",
+      "label": {
+        "en": "Services",
+        "pt": "Servicos"
+      },
+      "href": {
+        "en": "/en/services",
+        "pt": "/pt/servicos"
+      }
+    }
+  ],
+  "images": [
+    {
+      "id": "image:story-photo",
+      "selector": "[data-cms-id=\"image:story-photo\"]",
+      "src": "/images/about/lisa-and-marley-walk.jpg",
+      "alt": {
+        "en": "Lisa with her daughter",
+        "pt": "Lisa e a sua filha"
+      }
+    }
+  ]
 }

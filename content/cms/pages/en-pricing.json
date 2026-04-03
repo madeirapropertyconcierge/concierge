@@ -1,6 +1,6 @@
 {
   "pageId": "en-pricing",
-  "updatedAt": "2026-02-28T17:51:19.051Z",
+  "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
       "title": "Pricing | Madeira Property Concierge",
@@ -21,8 +21,35 @@
   },
   "texts": [
     {
+      "id": "text:hero-eyebrow",
+      "selector": "[data-cms-id=\"text:hero-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Transparent Model",
+        "pt": "Modelo Transparente"
+      }
+    },
+    {
+      "id": "text:hero-title",
+      "selector": "[data-cms-id=\"text:hero-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Pricing aligned with the level of support your property actually needs.",
+        "pt": "Precos alinhados com o tipo de apoio que o seu imovel realmente precisa."
+      }
+    },
+    {
+      "id": "text:hero-subtitle",
+      "selector": "[data-cms-id=\"text:hero-subtitle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Five clear packages, flexible on-demand help, and optional add-ons. No hidden fees and no vague bundles.",
+        "pt": "Cinco pacotes claros, servicos sob pedido e add-ons opcionais. Sem taxas escondidas e sem linguagem vaga."
+      }
+    },
+    {
       "id": "text:custom-quote-label",
-      "selector": ".js-pricing-custom-quote",
+      "selector": "[data-cms-id=\"text:custom-quote-label\"]",
       "kind": "inline",
       "value": {
         "en": "Scoped quote",
@@ -30,8 +57,26 @@
       }
     },
     {
+      "id": "text:includes-label",
+      "selector": "[data-cms-id=\"text:includes-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Includes",
+        "pt": "Inclui"
+      }
+    },
+    {
+      "id": "text:ideal-for-label",
+      "selector": "[data-cms-id=\"text:ideal-for-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Ideal for",
+        "pt": "Ideal para"
+      }
+    },
+    {
       "id": "text:transparency-title",
-      "selector": ".js-pricing-transparency-title",
+      "selector": "[data-cms-id=\"text:transparency-title\"]",
       "kind": "inline",
       "value": {
         "en": "How costs are structured",
@@ -40,50 +85,105 @@
     },
     {
       "id": "text:transparency-item-essential-care",
-      "selector": "[data-pricing-summary-item=\"essential-care\"]",
+      "selector": "[data-cms-id=\"text:transparency-item-essential-care\"]",
       "kind": "inline",
       "value": {
-        "en": "Essential Care: €95/month",
+        "en": "Essential Care: EUR95/month",
         "pt": "Cuidados Essenciais: EUR95/mes"
       }
     },
     {
       "id": "text:transparency-item-managed-care",
-      "selector": "[data-pricing-summary-item=\"managed-care\"]",
+      "selector": "[data-cms-id=\"text:transparency-item-managed-care\"]",
       "kind": "inline",
       "value": {
-        "en": "Managed Care: €95/month, plus €80 per turnover support (arrival & departure coordination)",
+        "en": "Managed Care: EUR95/month, plus EUR80 per turnover support (arrival & departure coordination)",
         "pt": "Gestao Assistida: EUR95/mes + EUR80 por suporte de turnover (coordenacao de chegadas e saidas)"
       }
     },
     {
       "id": "text:transparency-item-premium-care",
-      "selector": "[data-pricing-summary-item=\"premium-care\"]",
+      "selector": "[data-cms-id=\"text:transparency-item-premium-care\"]",
       "kind": "inline",
       "value": {
-        "en": "Premium Care: €140/month",
+        "en": "Premium Care: EUR140/month",
         "pt": "Cuidados Premium: EUR140/mes"
       }
     },
     {
       "id": "text:transparency-item-revenue-hosting",
-      "selector": "[data-pricing-summary-item=\"revenue-hosting\"]",
+      "selector": "[data-cms-id=\"text:transparency-item-revenue-hosting\"]",
       "kind": "inline",
       "value": {
-        "en": "Revenue & Hosting: €95/month + 25% of gross rental revenue",
+        "en": "Revenue & Hosting: EUR95/month + 25% of gross rental revenue",
         "pt": "Revenue & Hosting: EUR95/mes + 25% da receita bruta"
       }
     },
     {
       "id": "text:transparency-item-on-demand",
-      "selector": "[data-pricing-summary-item=\"on-demand\"]",
+      "selector": "[data-cms-id=\"text:transparency-item-on-demand\"]",
       "kind": "inline",
       "value": {
-        "en": "On-Demand Services: from €35/hour",
+        "en": "On-Demand Services: from EUR35/hour",
         "pt": "Servicos Sob Pedido: desde EUR35/hora"
+      }
+    },
+    {
+      "id": "text:cta-title",
+      "selector": "[data-cms-id=\"text:cta-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "We'll recommend the package that matches the operation, not the most expensive one.",
+        "pt": "Recomendamos o pacote certo para a operacao real, nao o mais caro."
+      }
+    },
+    {
+      "id": "text:cta-body",
+      "selector": "[data-cms-id=\"text:cta-body\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Tell us how the property is used, whether it hosts guests, and where you need help. We'll reply with a clear, no-pressure scope.",
+        "pt": "Explique-nos como usa o imovel, se recebe hospedes e onde precisa de apoio. Respondemos com um escopo claro e sem pressao."
       }
     }
   ],
-  "links": [],
+  "links": [
+    {
+      "id": "link:hero-primary-cta",
+      "selector": "[data-cms-id=\"link:hero-primary-cta\"]",
+      "label": {
+        "en": "Book Diagnostic Call",
+        "pt": "Marcar Chamada de Diagnostico"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    },
+    {
+      "id": "link:hero-secondary-cta",
+      "selector": "[data-cms-id=\"link:hero-secondary-cta\"]",
+      "label": {
+        "en": "Services",
+        "pt": "Servicos"
+      },
+      "href": {
+        "en": "/en/services",
+        "pt": "/pt/servicos"
+      }
+    },
+    {
+      "id": "link:tier-project-cta",
+      "selector": "[data-cms-id=\"link:tier-project-cta\"]",
+      "label": {
+        "en": "Scope Add-On Project",
+        "pt": "Definir Projeto"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    }
+  ],
   "images": []
 }

@@ -1,11 +1,14 @@
 ---
+import EditableLink from '../cms/EditableLink.astro';
+import EditableText from '../cms/EditableText.astro';
 import VisualPageLayout from './VisualPageLayout.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
-import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
+import { loadRequiredPageFields } from '../../lib/pageContent/cmsPageText';
+import { getSiteChromeContent } from '../../lib/pageContent/siteChrome';
 
 interface Props {
   lang: Locale;
@@ -13,105 +16,76 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
+const pageId = lang === 'en' ? 'en-guide' : 'pt-guia';
 
-const copy =
-  lang === 'pt'
-    ? {
-        heroEyebrow: 'Guia AL',
-        heroTitle: 'Guia prático de conformidade AL para proprietários internacionais.',
-        heroSubtitle:
-          'Resumo objetivo de requisitos, sequência operacional e riscos comuns em licenciamento e operação AL.',
-        sectionLabels: {
-          overview: 'Visão Geral',
-          checklist: 'Checklist',
-          process: 'Processo',
-          risks: 'Riscos',
-        },
-        sections: {
-          overview: {
-            title: 'O que este guia cobre',
-            body: 'Este conteúdo é informativo e não substitui aconselhamento legal/fiscal. Se recebe hóspedes em curta duração, precisa de registo AL ativo e de rotina de compliance contínua.',
-          },
-          checklist: {
-            title: 'Checklist base de preparação',
-            items: ['Documentação do imóvel, titularidade e autorização de operação', 'Seguro de responsabilidade civil ativo para atividade AL', 'Equipamentos de segurança e sinalização obrigatória', 'Fluxo de proteção de dados (GDPR), faturação e reporting'],
-          },
-          process: {
-            title: 'Sequência recomendada',
-            steps: ['Diagnóstico de conformidade e definição do modelo operacional', 'Preparação documental e articulação com TOC/advogado', 'Submissão, coordenação municipal e configuração de SIBA/RNAL', 'Validação final, checklist de abertura e rotina de compliance'],
-          },
-          pitfalls: {
-            title: 'Erros frequentes',
-            items: ['Iniciar operação antes de confirmação formal do registo', 'Documentação incompleta ou inconsistências com dados do imóvel', 'Falhas em seguro obrigatório, SIBA ou rotinas de reporte', 'Tratar conformidade como evento único e não como processo contínuo'],
-          },
-        },
-        mediaCaption: 'Prontidão de Conformidade AL',
-        costTitle: 'Janela de planeamento (estimativa)',
-        costItems: [
-          { label: 'Prazos médios', value: '4–8 semanas' },
-          { label: 'Registo negócio/intermediação', value: '€500–€1.000' },
-          { label: 'Ponto crítico', value: 'Atrasos por documentação e validações' },
-        ],
-        ctaTitle: 'Se preferir, coordenamos o caminho AL de ponta a ponta.',
-        ctaBody: 'Apoiamos documentação, parceiros locais e execução de conformidade operacional no terreno.',
-        ctaPrimary: 'Falar com Especialista AL',
-      }
-    : {
-        heroEyebrow: 'AL Guide',
-        heroTitle: 'A practical AL compliance guide for overseas owners.',
-        heroSubtitle:
-          'A concise view of requirements, operational sequence, and the risks that most often delay approvals.',
-        sectionLabels: {
-          overview: 'Overview',
-          checklist: 'Checklist',
-          process: 'Process',
-          risks: 'Risks',
-        },
-        sections: {
-          overview: {
-            title: 'What this guide covers',
-            body: 'This content is informational and not legal/tax advice. If you host short stays, you need an active AL registration plus an ongoing compliance routine.',
-          },
-          checklist: {
-            title: 'Core preparation checklist',
-            items: ['Property ownership documents and operation authorization', 'Active liability insurance suitable for AL activity', 'Safety equipment and mandatory signage', 'GDPR-safe data handling, invoicing, and reporting workflow'],
-          },
-          process: {
-            title: 'Recommended process sequence',
-            steps: ['Compliance diagnostic and operating model definition', 'Documentation assembly with TOC/legal coordination', 'Submission, municipal coordination, and SIBA/RNAL setup', 'Final validation, opening checklist, and ongoing compliance routine'],
-          },
-          pitfalls: {
-            title: 'Common pitfalls',
-            items: ['Operating before formal registration is confirmed', 'Incomplete paperwork or mismatched property data', 'Missing insurance, SIBA reporting, or recurring obligations', 'Treating compliance as one-off instead of ongoing'],
-          },
-        },
-        mediaCaption: 'AL Compliance Readiness',
-        costTitle: 'Indicative planning window',
-        costItems: [
-          { label: 'Typical timeline', value: '4–8 weeks' },
-          { label: 'Business/intermediary registration', value: '€500–€1,000' },
-          { label: 'Primary risk', value: 'Documentation and approval delays' },
-        ],
-        ctaTitle: 'If you prefer, we coordinate the AL path end-to-end.',
-        ctaBody: 'We support documents, trusted local partners, and operational compliance execution on-island.',
-        ctaPrimary: 'Talk to an AL Specialist',
-      };
+const [pageFields, siteChrome] = await Promise.all([
+  loadRequiredPageFields(pageId, lang, {
+    texts: [
+      'text:hero-eyebrow',
+      'text:hero-title',
+      'text:hero-subtitle',
+      'text:section-label-overview',
+      'text:section-label-checklist',
+      'text:section-label-process',
+      'text:section-label-risks',
+      'text:overview-title',
+      'text:overview-body',
+      'text:cost-title',
+      'text:cost-item-1-label',
+      'text:cost-item-1-value',
+      'text:cost-item-2-label',
+      'text:cost-item-2-value',
+      'text:cost-item-3-label',
+      'text:cost-item-3-value',
+      'text:media-caption',
+      'text:checklist-title',
+      'text:checklist-item-1',
+      'text:checklist-item-2',
+      'text:checklist-item-3',
+      'text:checklist-item-4',
+      'text:process-title',
+      'text:process-step-1',
+      'text:process-step-2',
+      'text:process-step-3',
+      'text:process-step-4',
+      'text:pitfalls-title',
+      'text:pitfall-1',
+      'text:pitfall-2',
+      'text:pitfall-3',
+      'text:pitfall-4',
+      'text:cta-title',
+      'text:cta-body',
+    ] as const,
+    links: [
+      'link:primary-cta',
+      'link:secondary-cta',
+    ] as const,
+  }),
+  getSiteChromeContent(lang),
+]);
+
+const processSteps = [
+  pageFields.texts['text:process-step-1'],
+  pageFields.texts['text:process-step-2'],
+  pageFields.texts['text:process-step-3'],
+  pageFields.texts['text:process-step-4'],
+];
 
 const pageSchema = [
   breadcrumbJsonLd([
-    { name: 'Home', url: routes.home },
-    { name: t(lang, 'nav.guide'), url: routes.guide },
+    { name: siteChrome.nav.home, url: routes.home },
+    { name: pageFields.texts['text:hero-title'].value, url: routes.guide },
   ]),
   {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
-    name: t(lang, 'guide.title'),
-    description: t(lang, 'guide.metaDescription'),
-    step: copy.sections.process.steps.map((step, index) => ({
+    name: pageFields.texts['text:hero-title'].value,
+    description: pageFields.texts['text:hero-subtitle'].value,
+    step: processSteps.map((step, index) => ({
       '@type': 'HowToStep',
       position: index + 1,
-      name: step,
-      text: step,
+      name: step.value,
+      text: step.value,
     })),
   },
 ];
@@ -119,29 +93,41 @@ const pageSchema = [
 
 <VisualPageLayout
   lang={lang}
-  title={t(lang, 'guide.metaTitle')}
-  description={t(lang, 'guide.metaDescription')}
-  heroEyebrow={copy.heroEyebrow}
-  heroTitle={copy.heroTitle}
-  heroSubtitle={copy.heroSubtitle}
+  title=""
+  description=""
+  heroEyebrow={pageFields.texts['text:hero-eyebrow']}
+  heroTitle={pageFields.texts['text:hero-title']}
+  heroSubtitle={pageFields.texts['text:hero-subtitle']}
   heroImage={madeiraImages.villageRuggedMountains.src}
   heroAlt={madeiraImages.villageRuggedMountains.alt}
-  heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
-  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  heroPrimaryCta={pageFields.links['link:primary-cta']}
+  heroSecondaryCta={pageFields.links['link:secondary-cta']}
   jsonLd={pageSchema}
 >
   <section class="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:px-8 lg:py-20">
     <article class="premium-panel p-6 sm:p-8">
-      <p class="eyebrow">{copy.sectionLabels.overview}</p>
-      <h2 class="mt-3 text-3xl text-charcoal sm:text-4xl">{copy.sections.overview.title}</h2>
-      <p class="mt-4 text-sm leading-relaxed text-charcoal/75 sm:text-base">{copy.sections.overview.body}</p>
+      <EditableText {...pageFields.texts['text:section-label-overview']} as="p" class="eyebrow" />
+      <EditableText {...pageFields.texts['text:overview-title']} as="h2" class="mt-3 text-3xl text-charcoal sm:text-4xl" />
+      <EditableText
+        {...pageFields.texts['text:overview-body']}
+        as="p"
+        class="mt-4 text-sm leading-relaxed text-charcoal/75 sm:text-base"
+      />
 
-      <p class="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-charcoal/55">{copy.costTitle}</p>
+      <EditableText
+        {...pageFields.texts['text:cost-title']}
+        as="p"
+        class="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-charcoal/55"
+      />
       <div class="mt-6 grid gap-3 sm:grid-cols-2">
-        {copy.costItems.map((item) => (
+        {[
+          [pageFields.texts['text:cost-item-1-label'], pageFields.texts['text:cost-item-1-value']],
+          [pageFields.texts['text:cost-item-2-label'], pageFields.texts['text:cost-item-2-value']],
+          [pageFields.texts['text:cost-item-3-label'], pageFields.texts['text:cost-item-3-value']],
+        ].map(([label, value]) => (
           <div class="step-card">
-            <p class="text-xs uppercase tracking-[0.12em] text-charcoal/55">{item.label}</p>
-            <p class="mt-2 text-xl text-charcoal">{item.value}</p>
+            <EditableText {...label} as="p" class="text-xs uppercase tracking-[0.12em] text-charcoal/55" />
+            <EditableText {...value} as="p" class="mt-2 text-xl text-charcoal" />
           </div>
         ))}
       </div>
@@ -154,46 +140,56 @@ const pageSchema = [
         class="h-full w-full object-cover"
         loading="lazy"
       />
-      <div class="media-card-caption">{copy.mediaCaption}</div>
+      <EditableText {...pageFields.texts['text:media-caption']} as="div" class="media-card-caption" />
     </article>
   </section>
 
   <section class="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8 lg:pb-24">
     <div class="grid gap-6 md:grid-cols-3">
       <article class="step-card">
-        <p class="eyebrow !text-[0.58rem]">{copy.sectionLabels.checklist}</p>
-        <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.checklist.title}</h3>
+        <EditableText {...pageFields.texts['text:section-label-checklist']} as="p" class="eyebrow !text-[0.58rem]" />
+        <EditableText {...pageFields.texts['text:checklist-title']} as="h3" class="mt-3 text-2xl text-charcoal" />
         <ul class="mt-3 space-y-2 text-sm text-charcoal/72">
-          {copy.sections.checklist.items.map((item) => (
+          {[
+            pageFields.texts['text:checklist-item-1'],
+            pageFields.texts['text:checklist-item-2'],
+            pageFields.texts['text:checklist-item-3'],
+            pageFields.texts['text:checklist-item-4'],
+          ].map((item) => (
             <li class="flex items-start gap-2">
               <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-ocean-blue"></span>
-              <span>{item}</span>
+              <EditableText {...item} as="span" />
             </li>
           ))}
         </ul>
       </article>
 
       <article class="step-card">
-        <p class="eyebrow !text-[0.58rem]">{copy.sectionLabels.process}</p>
-        <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.process.title}</h3>
+        <EditableText {...pageFields.texts['text:section-label-process']} as="p" class="eyebrow !text-[0.58rem]" />
+        <EditableText {...pageFields.texts['text:process-title']} as="h3" class="mt-3 text-2xl text-charcoal" />
         <ol class="mt-3 space-y-2 text-sm text-charcoal/72">
-          {copy.sections.process.steps.map((item, index) => (
+          {processSteps.map((item, index) => (
             <li class="flex items-start gap-2">
               <span class="step-index !px-2 !py-1">{index + 1}</span>
-              <span>{item}</span>
+              <EditableText {...item} as="span" />
             </li>
           ))}
         </ol>
       </article>
 
       <article class="step-card">
-        <p class="eyebrow !text-[0.58rem]">{copy.sectionLabels.risks}</p>
-        <h3 class="mt-3 text-2xl text-charcoal">{copy.sections.pitfalls.title}</h3>
+        <EditableText {...pageFields.texts['text:section-label-risks']} as="p" class="eyebrow !text-[0.58rem]" />
+        <EditableText {...pageFields.texts['text:pitfalls-title']} as="h3" class="mt-3 text-2xl text-charcoal" />
         <ul class="mt-3 space-y-2 text-sm text-charcoal/72">
-          {copy.sections.pitfalls.items.map((item) => (
+          {[
+            pageFields.texts['text:pitfall-1'],
+            pageFields.texts['text:pitfall-2'],
+            pageFields.texts['text:pitfall-3'],
+            pageFields.texts['text:pitfall-4'],
+          ].map((item) => (
             <li class="flex items-start gap-2">
               <span class="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-terracotta"></span>
-              <span>{item}</span>
+              <EditableText {...item} as="span" />
             </li>
           ))}
         </ul>
@@ -211,9 +207,20 @@ const pageSchema = [
     <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
 
     <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
-      <h2 class="text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.ctaTitle}</h2>
-      <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{copy.ctaBody}</p>
-      <a href={routes.contact} class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{copy.ctaPrimary}</a>
+      <EditableText
+        {...pageFields.texts['text:cta-title']}
+        as="h2"
+        class="text-balance text-4xl leading-[1.05] text-white sm:text-5xl"
+      />
+      <EditableText
+        {...pageFields.texts['text:cta-body']}
+        as="p"
+        class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg"
+      />
+      <EditableLink
+        {...pageFields.links['link:primary-cta']}
+        class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand"
+      />
     </div>
   </section>
 </VisualPageLayout>

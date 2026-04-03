@@ -1,13 +1,15 @@
 ---
+import EditableText from '../cms/EditableText.astro';
 import VisualPageLayout from './VisualPageLayout.astro';
 import BlogCard from '../blog/BlogCard.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
-import { t } from '../../i18n/utils';
 import type { Locale } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import { getLocalizedBlogPosts } from '../../lib/blogData';
 import { breadcrumbJsonLd, absoluteUrl } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
+import { loadRequiredPageFields } from '../../lib/pageContent/cmsPageText';
+import { getSiteChromeContent } from '../../lib/pageContent/siteChrome';
 
 interface Props {
   lang: Locale;
@@ -15,42 +17,38 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const posts = await getLocalizedBlogPosts(lang);
+const [posts, pageFields, siteChrome] = await Promise.all([
+  getLocalizedBlogPosts(lang),
+  loadRequiredPageFields(lang === 'en' ? 'en-blog' : 'pt-blog', lang, {
+    texts: [
+      'text:hero-eyebrow',
+      'text:hero-title',
+      'text:hero-subtitle',
+      'text:featured-label',
+      'text:archive-title',
+      'text:archive-subtitle',
+      'text:posts-label',
+      'text:read-more-label',
+    ] as const,
+    links: [
+      'link:primary-cta',
+      'link:secondary-cta',
+    ] as const,
+  }),
+  getSiteChromeContent(lang),
+]);
 const [featuredPost, ...archivePosts] = posts;
-
-const copy =
-  lang === 'pt'
-    ? {
-        heroEyebrow: 'Insights',
-        heroTitle: 'Leituras práticas para proprietários na Madeira.',
-        heroSubtitle:
-          'Artigos sobre rentabilidade, regulamentação e gestão de imóveis à distância.',
-        featuredLabel: 'Artigo em Destaque',
-        archiveTitle: 'Arquivo de Estratégia',
-        archiveSubtitle: 'Modelos operacionais, risco regulatório e execução no terreno.',
-        postsLabel: 'artigos',
-      }
-    : {
-        heroEyebrow: 'Insights',
-        heroTitle: 'Practical reads for Madeira property owners.',
-        heroSubtitle:
-          'Articles on yield, regulation, and running a property from abroad.',
-        featuredLabel: 'Featured Analysis',
-        archiveTitle: 'Strategy Archive',
-        archiveSubtitle: 'Operating models, regulatory risk, and on-the-ground execution.',
-        postsLabel: 'posts',
-      };
 
 const pageSchema = [
   breadcrumbJsonLd([
-    { name: 'Home', url: routes.home },
-    { name: t(lang, 'nav.blog'), url: routes.blog },
+    { name: siteChrome.nav.home, url: routes.home },
+    { name: pageFields.texts['text:hero-title'].value, url: routes.blog },
   ]),
   {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: t(lang, 'blog.title'),
-    description: t(lang, 'blog.metaDescription'),
+    name: pageFields.texts['text:hero-title'].value,
+    description: pageFields.texts['text:hero-subtitle'].value,
     url: absoluteUrl(routes.blog),
     blogPost: posts.map((post) => ({
       '@type': 'BlogPosting',
@@ -65,15 +63,15 @@ const pageSchema = [
 
 <VisualPageLayout
   lang={lang}
-  title={t(lang, 'blog.metaTitle')}
-  description={t(lang, 'blog.metaDescription')}
-  heroEyebrow={copy.heroEyebrow}
-  heroTitle={copy.heroTitle}
-  heroSubtitle={copy.heroSubtitle}
+  title=""
+  description=""
+  heroEyebrow={pageFields.texts['text:hero-eyebrow']}
+  heroTitle={pageFields.texts['text:hero-title']}
+  heroSubtitle={pageFields.texts['text:hero-subtitle']}
   heroImage={madeiraImages.mountainRiverValley.src}
   heroAlt={madeiraImages.mountainRiverValley.alt}
-  heroPrimaryCta={{ label: t(lang, 'nav.contact'), href: routes.contact }}
-  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  heroPrimaryCta={pageFields.links['link:primary-cta']}
+  heroSecondaryCta={pageFields.links['link:secondary-cta']}
   jsonLd={pageSchema}
 >
   <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -95,9 +93,11 @@ const pageSchema = [
 
           <div class="flex flex-col gap-5 p-5 sm:p-6">
             <div>
-              <p class="inline-flex rounded-full border border-charcoal/16 bg-cream/70 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-charcoal/70">
-                {copy.featuredLabel}
-              </p>
+              <EditableText
+                {...pageFields.texts['text:featured-label']}
+                as="p"
+                class="inline-flex rounded-full border border-charcoal/16 bg-cream/70 px-3 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-charcoal/70"
+              />
               <h2 class="mt-4 text-3xl leading-tight text-charcoal transition-colors group-hover:text-ocean-blue sm:text-[2.1rem]">
                 {featuredPost.title}
               </h2>
@@ -108,7 +108,11 @@ const pageSchema = [
               <span>{new Date(featuredPost.publishedAt).toLocaleDateString(lang === 'pt' ? 'pt-PT' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
               <span aria-hidden>•</span>
               <span>{featuredPost.readingMinutes} min</span>
-              <span class="text-ocean-blue">{t(lang, 'blog.readMore')} →</span>
+              <span class="text-ocean-blue">
+                <EditableText {...pageFields.texts['text:read-more-label']} as="span" />
+                {' '}
+                →
+              </span>
             </div>
           </div>
         </a>
@@ -117,11 +121,17 @@ const pageSchema = [
 
     <div class="mt-10 flex flex-col gap-4 border-b border-charcoal/12 pb-5 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <h3 class="text-2xl text-charcoal sm:text-3xl">{copy.archiveTitle}</h3>
-        <p class="mt-2 text-sm leading-relaxed text-charcoal/70 sm:text-base">{copy.archiveSubtitle}</p>
+        <EditableText {...pageFields.texts['text:archive-title']} as="h3" class="text-2xl text-charcoal sm:text-3xl" />
+        <EditableText
+          {...pageFields.texts['text:archive-subtitle']}
+          as="p"
+          class="mt-2 text-sm leading-relaxed text-charcoal/70 sm:text-base"
+        />
       </div>
       <p class="text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-charcoal/55">
-        {posts.length} {copy.postsLabel}
+        {posts.length}
+        {' '}
+        <EditableText {...pageFields.texts['text:posts-label']} as="span" />
       </p>
     </div>
 
@@ -136,6 +146,7 @@ const pageSchema = [
             image={post.coverImage}
             imageAlt={post.coverAlt}
             readingMinutes={post.readingMinutes}
+            readMoreLabel={pageFields.texts['text:read-more-label']}
             lang={lang}
           />
         </div>

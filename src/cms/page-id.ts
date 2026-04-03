@@ -24,6 +24,10 @@ export function getPageIdFromPath(pathname: string): string {
     return `${locale}-home`;
   }
 
+  if (routeParts[0] === 'blog' && routeParts.length > 1) {
+    return `${locale}-blog-post`;
+  }
+
   return `${locale}-${routeParts.join('-')}`;
 }
 

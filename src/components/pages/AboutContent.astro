@@ -1,11 +1,15 @@
 ---
+import EditableImage from '../cms/EditableImage.astro';
+import EditableLink from '../cms/EditableLink.astro';
+import EditableText from '../cms/EditableText.astro';
 import VisualPageLayout from './VisualPageLayout.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
-import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
+import { loadRequiredPageFields } from '../../lib/pageContent/cmsPageText';
+import { getSiteChromeContent } from '../../lib/pageContent/siteChrome';
 
 interface Props {
   lang: Locale;
@@ -13,103 +17,120 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
+const pageId = lang === 'en' ? 'en-about' : 'pt-sobre';
 
 const differentiators = ['bilingual', 'design', 'personal', 'network'] as const;
 
 const iconByKey: Record<(typeof differentiators)[number], string> = {
-  bilingual: 'ðŸŒ',
-  design: 'âœ¦',
-  personal: 'â¤',
-  network: 'âš‘',
+  bilingual: '*',
+  design: '+',
+  personal: 'o',
+  network: '#',
 };
 
-const copy =
-  lang === 'pt'
-    ? {
-        heroEyebrow: 'Fundadora & VisÃ£o',
-        heroTitle: 'Uma pessoa gere tudo. Vai saber sempre quem Ã© responsÃ¡vel.',
-        heroSubtitle:
-          'ExperiÃªncia em UX, bilingue EN/PT, raÃ­zes madeirenses. Sou o seu ponto de contacto local para nÃ£o ter de gerir Ã  distÃ¢ncia.',
-        storyEyebrow: 'A HistÃ³ria',
-        whyEyebrow: 'Porque Ã© Diferente',
-        quoteEyebrow: 'Compromisso',
-        ctaTitle: 'Quer saber exatamente o que se passa com o seu imÃ³vel?',
-        ctaBody: 'Olhamos para a sua situaÃ§Ã£o e montamos um plano de cuidado, hosting ou conformidade.',
-        ctaPrimary: 'Marcar Chamada de DiagnÃ³stico',
-        familyPhotoAlt: 'Lisa e a sua filha',
-        storyStats: [
-          {
-            value: '15 anos',
-            label: 'A liderar equipas de UX e a desenhar operaÃ§Ãµes centradas no utilizador.',
-          },
-          {
-            value: '3+ anos',
-            label: 'A viver na Madeira e a construir rede local de fornecedores de confianÃ§a.',
-          },
-          {
-            value: 'EN/PT',
-            label: 'Bilingue nativa, nascida canadiana-madeirense. Faz a ponte entre proprietÃ¡rios e equipas locais.',
-          },
-        ],
-      }
-    : {
-        heroEyebrow: 'Founder & Vision',
-        heroTitle: 'One person runs this. You\'ll always know who\'s responsible.',
-        heroSubtitle:
-          'UX Director background, bilingual EN/PT, Madeiran roots. I\'m your local point of contact so you don\'t have to manage from a distance.',
-        storyEyebrow: 'The Story',
-        whyEyebrow: 'Why It Feels Different',
-        quoteEyebrow: 'The Commitment',
-        ctaTitle: 'Want to know exactly what\'s happening with your property?',
-        ctaBody: 'We\'ll look at your situation and put together a plan for care, hosting, or compliance.',
-        ctaPrimary: 'Book Diagnostic Call',
-        familyPhotoAlt: 'Lisa with her daughter',
-        storyStats: [
-          {
-            value: '15 years',
-            label: 'Leading UX teams and designing service systems that hold up.',
-          },
-          {
-            value: '3+ years',
-            label: 'Living in Madeira and building a reliable local vendor network.',
-          },
-          {
-            value: 'EN/PT',
-            label: 'Native bilingual, born Canadian-Madeiran. Bridges overseas owners and local teams.',
-          },
-        ],
-      };
+const aboutTextIds = [
+  'text:hero-eyebrow',
+  'text:hero-title',
+  'text:hero-subtitle',
+  'text:story-eyebrow',
+  'text:story-title',
+  'text:story-paragraph-1',
+  'text:story-paragraph-2',
+  'text:story-paragraph-3',
+  'text:story-stat-1-value',
+  'text:story-stat-1-label',
+  'text:story-stat-2-value',
+  'text:story-stat-2-label',
+  'text:story-stat-3-value',
+  'text:story-stat-3-label',
+  'text:why-eyebrow',
+  'text:why-title',
+  'text:why-bilingual-title',
+  'text:why-bilingual-description',
+  'text:why-design-title',
+  'text:why-design-description',
+  'text:why-personal-title',
+  'text:why-personal-description',
+  'text:why-network-title',
+  'text:why-network-description',
+  'text:quote-eyebrow',
+  'text:promise-text',
+  'text:cta-title',
+  'text:cta-body',
+  'text:person-job-title',
+] as const;
+
+const aboutLinkIds = [
+  'link:primary-cta',
+  'link:secondary-cta',
+] as const;
+
+const aboutImageIds = [
+  'image:story-photo',
+] as const;
+
+const [pageFields, siteChrome] = await Promise.all([
+  loadRequiredPageFields(pageId, lang, {
+    texts: aboutTextIds,
+    links: aboutLinkIds,
+    images: aboutImageIds,
+  }),
+  getSiteChromeContent(lang),
+]);
+
+const differentiatorCards = [
+  {
+    key: 'bilingual',
+    title: pageFields.texts['text:why-bilingual-title'],
+    description: pageFields.texts['text:why-bilingual-description'],
+  },
+  {
+    key: 'design',
+    title: pageFields.texts['text:why-design-title'],
+    description: pageFields.texts['text:why-design-description'],
+  },
+  {
+    key: 'personal',
+    title: pageFields.texts['text:why-personal-title'],
+    description: pageFields.texts['text:why-personal-description'],
+  },
+  {
+    key: 'network',
+    title: pageFields.texts['text:why-network-title'],
+    description: pageFields.texts['text:why-network-description'],
+  },
+] as const;
 
 const pageSchema = [
   breadcrumbJsonLd([
-    { name: 'Home', url: routes.home },
-    { name: t(lang, 'nav.about'), url: routes.about },
+    { name: siteChrome.nav.home, url: routes.home },
+    { name: siteChrome.nav.about, url: routes.about },
   ]),
   {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: 'Lisa',
-    jobTitle: lang === 'pt' ? 'Fundadora' : 'Founder',
+    jobTitle: pageFields.texts['text:person-job-title'].value,
     worksFor: {
       '@type': 'Organization',
-      name: 'Madeira Property Concierge',
+      name: siteChrome.brand.fullName,
     },
-    description: t(lang, 'about.hero.subtitle'),
+    description: pageFields.texts['text:hero-subtitle'].value,
   },
 ];
 ---
 
 <VisualPageLayout
   lang={lang}
-  title={t(lang, 'about.metaTitle')}
-  description={t(lang, 'about.metaDescription')}
-  heroEyebrow={copy.heroEyebrow}
-  heroTitle={copy.heroTitle}
-  heroSubtitle={copy.heroSubtitle}
+  title=""
+  description=""
+  heroEyebrow={pageFields.texts['text:hero-eyebrow']}
+  heroTitle={pageFields.texts['text:hero-title']}
+  heroSubtitle={pageFields.texts['text:hero-subtitle']}
   heroImage={madeiraImages.oceanfrontBench.src}
   heroAlt={madeiraImages.oceanfrontBench.alt}
-  heroPrimaryCta={{ label: copy.ctaPrimary, href: routes.contact }}
-  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  heroPrimaryCta={pageFields.links['link:primary-cta']}
+  heroSecondaryCta={pageFields.links['link:secondary-cta']}
   jsonLd={pageSchema}
 >
   <section class="relative isolate overflow-hidden px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -121,24 +142,57 @@ const pageSchema = [
         <div class="grid gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center">
           <div class="relative reveal min-w-0">
             <article class="overflow-hidden rounded-[1.35rem] border border-white/60 bg-white shadow-[0_24px_56px_rgba(5,13,20,0.24)]">
-              <img src="/images/about/lisa-and-marley.jpg" alt={copy.familyPhotoAlt} class="h-auto w-full object-cover" loading="lazy" />
+              <EditableImage
+                {...pageFields.images['image:story-photo']}
+                class="h-auto w-full object-cover"
+                loading="lazy"
+              />
             </article>
           </div>
 
           <div class="reveal reveal-delay-1 min-w-0 lg:pr-3">
-            <p class="eyebrow">{copy.storyEyebrow}</p>
-            <h2 class="mt-3 text-4xl leading-[1.04] text-charcoal sm:text-5xl">{t(lang, 'about.story.title')}</h2>
+            <EditableText {...pageFields.texts['text:story-eyebrow']} as="p" class="eyebrow" />
+            <EditableText
+              {...pageFields.texts['text:story-title']}
+              as="h2"
+              class="mt-3 text-4xl leading-[1.04] text-charcoal sm:text-5xl"
+            />
             <div class="mt-6 space-y-4 text-sm leading-relaxed text-charcoal/76 sm:text-base">
-              <p class="text-charcoal/86">{t(lang, 'about.story.p1')}</p>
-              <p>{t(lang, 'about.story.p2')}</p>
-              <p>{t(lang, 'about.story.p3')}</p>
+              <EditableText
+                {...pageFields.texts['text:story-paragraph-1']}
+                as="p"
+                class="text-charcoal/86"
+              />
+              <EditableText {...pageFields.texts['text:story-paragraph-2']} as="p" />
+              <EditableText {...pageFields.texts['text:story-paragraph-3']} as="p" />
             </div>
 
             <div class="mt-7 grid gap-3 sm:grid-cols-3">
-              {copy.storyStats.map((item, index) => (
+              {[
+                {
+                  value: pageFields.texts['text:story-stat-1-value'],
+                  label: pageFields.texts['text:story-stat-1-label'],
+                },
+                {
+                  value: pageFields.texts['text:story-stat-2-value'],
+                  label: pageFields.texts['text:story-stat-2-label'],
+                },
+                {
+                  value: pageFields.texts['text:story-stat-3-value'],
+                  label: pageFields.texts['text:story-stat-3-label'],
+                },
+              ].map((item, index) => (
                 <article class:list={['rounded-2xl border border-charcoal/10 bg-cream/72 px-4 py-3', index > 0 ? 'reveal reveal-delay-1' : 'reveal']}>
-                  <p class="text-[0.66rem] font-bold uppercase tracking-[0.14em] text-ocean-blue">{item.value}</p>
-                  <p class="mt-1 text-xs leading-relaxed text-charcoal/72">{item.label}</p>
+                  <EditableText
+                    {...item.value}
+                    as="p"
+                    class="text-[0.66rem] font-bold uppercase tracking-[0.14em] text-ocean-blue"
+                  />
+                  <EditableText
+                    {...item.label}
+                    as="p"
+                    class="mt-1 text-xs leading-relaxed text-charcoal/72"
+                  />
                 </article>
               ))}
             </div>
@@ -150,15 +204,27 @@ const pageSchema = [
 
   <section class="mx-auto max-w-7xl px-4 pb-20 pt-20 sm:px-6 lg:px-8 lg:pb-24 lg:pt-24">
     <div class="premium-panel p-6 sm:p-8 lg:p-10">
-      <p class="eyebrow">{copy.whyEyebrow}</p>
-      <h2 class="mt-3 text-4xl leading-[1.05] text-charcoal sm:text-5xl">{t(lang, 'about.whyDifferent.title')}</h2>
+      <EditableText {...pageFields.texts['text:why-eyebrow']} as="p" class="eyebrow" />
+      <EditableText
+        {...pageFields.texts['text:why-title']}
+        as="h2"
+        class="mt-3 text-4xl leading-[1.05] text-charcoal sm:text-5xl"
+      />
 
       <div class="mt-8 grid gap-4 sm:grid-cols-2">
-        {differentiators.map((key, index) => (
+        {differentiatorCards.map((item, index) => (
           <article class:list={['step-card reveal', index > 0 ? 'reveal-delay-1' : '']}>
-            <p class="text-xl">{iconByKey[key]}</p>
-            <h3 class="mt-2 text-2xl text-charcoal">{t(lang, `about.whyDifferent.${key}.title`)}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-charcoal/72">{t(lang, `about.whyDifferent.${key}.description`)}</p>
+            <p class="text-xl">{iconByKey[item.key]}</p>
+            <EditableText
+              {...item.title}
+              as="h3"
+              class="mt-2 text-2xl text-charcoal"
+            />
+            <EditableText
+              {...item.description}
+              as="p"
+              class="mt-2 text-sm leading-relaxed text-charcoal/72"
+            />
           </article>
         ))}
       </div>
@@ -175,14 +241,29 @@ const pageSchema = [
     <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
 
     <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
-      <p class="eyebrow !border-white/35 !bg-white/10 !text-white/80">{copy.quoteEyebrow}</p>
+      <EditableText
+        {...pageFields.texts['text:quote-eyebrow']}
+        as="p"
+        class="eyebrow !border-white/35 !bg-white/10 !text-white/80"
+      />
       <blockquote class="mt-4 text-balance text-2xl leading-relaxed text-white/94 sm:text-3xl">
-        â€œ{t(lang, 'about.promise.text')}â€
+        <EditableText {...pageFields.texts['text:promise-text']} as="span" />
       </blockquote>
 
-      <h2 class="mt-8 text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.ctaTitle}</h2>
-      <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{copy.ctaBody}</p>
-      <a href={routes.contact} class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{copy.ctaPrimary}</a>
+      <EditableText
+        {...pageFields.texts['text:cta-title']}
+        as="h2"
+        class="mt-8 text-balance text-4xl leading-[1.05] text-white sm:text-5xl"
+      />
+      <EditableText
+        {...pageFields.texts['text:cta-body']}
+        as="p"
+        class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg"
+      />
+      <EditableLink
+        {...pageFields.links['link:primary-cta']}
+        class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand"
+      />
     </div>
   </section>
 </VisualPageLayout>

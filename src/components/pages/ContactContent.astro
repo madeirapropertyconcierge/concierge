@@ -1,14 +1,18 @@
 ---
+import EditableImage from '../cms/EditableImage.astro';
+import EditableLink from '../cms/EditableLink.astro';
+import EditableText from '../cms/EditableText.astro';
 import VisualPageLayout from './VisualPageLayout.astro';
 import ContactForm from '../ContactForm.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
-import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import { SITE, FORMSPREE_ENDPOINT } from '../../lib/constants';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd, absoluteUrl } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
+import { loadRequiredPageFields } from '../../lib/pageContent/cmsPageText';
 import { loadContactServiceOptions } from '../../lib/pageContent/packages';
+import { getSiteChromeContent } from '../../lib/pageContent/siteChrome';
 
 interface Props {
   lang: Locale;
@@ -16,21 +20,67 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const contactServiceLabels = await loadContactServiceOptions(lang);
+const pageId = lang === 'en' ? 'en-contact' : 'pt-contacto';
+const [contactServiceLabels, pageFields, siteChrome] = await Promise.all([
+  loadContactServiceOptions(lang),
+  loadRequiredPageFields(pageId, lang, {
+    texts: [
+      'text:hero-eyebrow',
+      'text:hero-title',
+      'text:hero-subtitle',
+      'text:form-name',
+      'text:form-email',
+      'text:form-phone',
+      'text:form-property-type',
+      'text:form-property-type-apartment',
+      'text:form-property-type-villa',
+      'text:form-property-type-commercial',
+      'text:form-property-type-land',
+      'text:form-property-type-other',
+      'text:form-service',
+      'text:form-service-not-sure',
+      'text:form-message',
+      'text:form-submit',
+      'text:form-sending',
+      'text:form-success',
+      'text:form-error',
+      'text:form-select-placeholder',
+      'text:side-title',
+      'text:side-body',
+      'text:hours',
+      'text:form-notice-prefix',
+      'text:form-notice-suffix',
+      'text:contact-email-badge',
+      'text:contact-phone-badge',
+      'text:contact-whatsapp-badge',
+      'text:contact-whatsapp-label',
+      'text:contact-location-badge',
+    ] as const,
+    links: [
+      'link:primary-cta',
+      'link:secondary-cta',
+      'link:privacy-policy',
+    ] as const,
+    images: [
+      'image:side-photo',
+    ] as const,
+  }),
+  getSiteChromeContent(lang),
+]);
 
 const formLabels = {
-  name: t(lang, 'contact.form.name'),
-  email: t(lang, 'contact.form.email'),
-  phone: t(lang, 'contact.form.phone'),
-  propertyType: t(lang, 'contact.form.propertyType'),
+  name: pageFields.texts['text:form-name'].value,
+  email: pageFields.texts['text:form-email'].value,
+  phone: pageFields.texts['text:form-phone'].value,
+  propertyType: pageFields.texts['text:form-property-type'].value,
   propertyTypes: {
-    apartment: t(lang, 'contact.form.propertyTypes.apartment'),
-    villa: t(lang, 'contact.form.propertyTypes.villa'),
-    commercial: t(lang, 'contact.form.propertyTypes.commercial'),
-    land: t(lang, 'contact.form.propertyTypes.land'),
-    other: t(lang, 'contact.form.propertyTypes.other'),
+    apartment: pageFields.texts['text:form-property-type-apartment'].value,
+    villa: pageFields.texts['text:form-property-type-villa'].value,
+    commercial: pageFields.texts['text:form-property-type-commercial'].value,
+    land: pageFields.texts['text:form-property-type-land'].value,
+    other: pageFields.texts['text:form-property-type-other'].value,
   },
-  service: t(lang, 'contact.form.service'),
+  service: pageFields.texts['text:form-service'].value,
   serviceOptions: {
     essentialCare: contactServiceLabels.essentialCare,
     managedCare: contactServiceLabels.managedCare,
@@ -38,53 +88,25 @@ const formLabels = {
     revenueHosting: contactServiceLabels.revenueHosting,
     onDemand: contactServiceLabels.onDemand,
     addOns: contactServiceLabels.addOns,
-    notSure: t(lang, 'contact.form.serviceOptions.notSure'),
+    notSure: pageFields.texts['text:form-service-not-sure'].value,
   },
-  message: t(lang, 'contact.form.message'),
-  submit: t(lang, 'contact.form.submit'),
-  sending: t(lang, 'contact.form.sending'),
-  success: t(lang, 'contact.form.success'),
-  error: t(lang, 'contact.form.error'),
+  selectPlaceholder: pageFields.texts['text:form-select-placeholder'].value,
+  message: pageFields.texts['text:form-message'].value,
+  submit: pageFields.texts['text:form-submit'].value,
+  sending: pageFields.texts['text:form-sending'].value,
+  success: pageFields.texts['text:form-success'].value,
+  error: pageFields.texts['text:form-error'].value,
 };
-
-const copy =
-  lang === 'pt'
-    ? {
-        heroEyebrow: 'Consultoria Privada',
-        heroTitle: 'Conte-nos sobre o seu imóvel. Nós tratamos do resto.',
-        heroSubtitle:
-          'Partilhe o que precisa, o que não está a funcionar e o que quer resolver. Voltamos com um plano.',
-        sideTitle: 'Contacto Direto',
-        sideBody:
-          'Se preferir, fale diretamente por email ou WhatsApp. Respondemos normalmente em menos de 24 horas úteis com próximos passos claros.',
-        sidePhotoAlt: 'Lisa e a filha no carro',
-        hours: 'Seg–Sáb, 09:00–18:00 WET',
-        formNotice:
-          'Ao enviar este formulário confirma que leu a Política de Privacidade. Utilizamos os dados apenas para responder ao pedido e preparar proposta de serviço.',
-      }
-    : {
-        heroEyebrow: 'Private Consultation',
-        heroTitle: 'Tell us about your property. We\'ll figure out the rest.',
-        heroSubtitle:
-          'Share what you\'re dealing with, what you need, and what\'s not working. We\'ll come back with a plan.',
-        sideTitle: 'Direct Contact',
-        sideBody:
-          'If you prefer, reach out directly by email or WhatsApp. Typical response time is under 24 business hours with clear next steps.',
-        sidePhotoAlt: 'Lisa and her daughter in the car',
-        hours: 'Mon–Sat, 09:00–18:00 WET',
-        formNotice:
-          'By submitting this form, you confirm that you read the Privacy Policy. We use your data only to respond to your enquiry and prepare a service proposal.',
-      };
 
 const pageSchema = [
   breadcrumbJsonLd([
-    { name: 'Home', url: routes.home },
-    { name: t(lang, 'nav.contact'), url: routes.contact },
+    { name: siteChrome.nav.home, url: routes.home },
+    { name: siteChrome.nav.contact, url: routes.contact },
   ]),
   {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
-    name: t(lang, 'contact.metaTitle'),
+    name: siteChrome.nav.contact,
     url: absoluteUrl(routes.contact),
   },
 ];
@@ -92,15 +114,15 @@ const pageSchema = [
 
 <VisualPageLayout
   lang={lang}
-  title={t(lang, 'contact.metaTitle')}
-  description={t(lang, 'contact.metaDescription')}
-  heroEyebrow={copy.heroEyebrow}
-  heroTitle={copy.heroTitle}
-  heroSubtitle={copy.heroSubtitle}
+  title=""
+  description=""
+  heroEyebrow={pageFields.texts['text:hero-eyebrow']}
+  heroTitle={pageFields.texts['text:hero-title']}
+  heroSubtitle={pageFields.texts['text:hero-subtitle']}
   heroImage={madeiraImages.oceanfrontBench.src}
   heroAlt={madeiraImages.oceanfrontBench.alt}
-  heroPrimaryCta={{ label: t(lang, 'common.bookConsultation'), href: '#contact-form' }}
-  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  heroPrimaryCta={pageFields.links['link:primary-cta']}
+  heroSecondaryCta={pageFields.links['link:secondary-cta']}
   jsonLd={pageSchema}
 >
   <section id="contact-form" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -108,50 +130,57 @@ const pageSchema = [
       <div class="premium-panel p-6 sm:p-8 lg:p-10">
         <ContactForm lang={lang} formspreeEndpoint={FORMSPREE_ENDPOINT} labels={formLabels} />
         <p class="mt-4 text-xs leading-relaxed text-charcoal/62">
-          {copy.formNotice}
+          <EditableText {...pageFields.texts['text:form-notice-prefix']} as="span" />
           {' '}
-          <a href={routes.privacy} class="font-semibold text-ocean-blue transition-colors hover:text-charcoal">
-            {lang === 'pt' ? 'Política de Privacidade' : 'Privacy Policy'}
-          </a>
-          .
+          <EditableLink
+            {...pageFields.links['link:privacy-policy']}
+            class="font-semibold text-ocean-blue transition-colors hover:text-charcoal"
+          />
+          <EditableText {...pageFields.texts['text:form-notice-suffix']} as="span" />
         </p>
       </div>
 
       <div class="space-y-5">
         <article class="media-card reveal min-h-[15rem]">
-          <img
-            src="/images/about/lisa_1.webp"
-            alt={copy.sidePhotoAlt}
+          <EditableImage
+            {...pageFields.images['image:side-photo']}
             class="h-full w-full object-cover"
             loading="lazy"
           />
-          <div class="media-card-caption">Owner Support</div>
         </article>
 
         <article class="premium-panel p-6 sm:p-7">
-          <p class="eyebrow">{copy.sideTitle}</p>
-          <p class="mt-3 text-sm leading-relaxed text-charcoal/72 sm:text-base">{copy.sideBody}</p>
+          <EditableText {...pageFields.texts['text:side-title']} as="p" class="eyebrow" />
+          <EditableText
+            {...pageFields.texts['text:side-body']}
+            as="p"
+            class="mt-3 text-sm leading-relaxed text-charcoal/72 sm:text-base"
+          />
 
           <div class="mt-6 space-y-3 text-sm text-charcoal/80 sm:text-base">
             <a href={`mailto:${SITE.email}`} class="flex items-center gap-2 transition-colors hover:text-ocean-blue">
-              <span class="step-index !px-2 !py-1">@</span>
+              <EditableText {...pageFields.texts['text:contact-email-badge']} as="span" class="step-index !px-2 !py-1" />
               <span>{SITE.email}</span>
             </a>
             <a href={`tel:${SITE.phone.replace(/\s/g, '')}`} class="flex items-center gap-2 transition-colors hover:text-ocean-blue">
-              <span class="step-index !px-2 !py-1">Tel</span>
+              <EditableText {...pageFields.texts['text:contact-phone-badge']} as="span" class="step-index !px-2 !py-1" />
               <span>{SITE.phone}</span>
             </a>
             <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 transition-colors hover:text-ocean-blue">
-              <span class="step-index !px-2 !py-1">WA</span>
-              <span>WhatsApp</span>
+              <EditableText {...pageFields.texts['text:contact-whatsapp-badge']} as="span" class="step-index !px-2 !py-1" />
+              <EditableText {...pageFields.texts['text:contact-whatsapp-label']} as="span" />
             </a>
             <p class="flex items-center gap-2">
-              <span class="step-index !px-2 !py-1">Loc</span>
+              <EditableText {...pageFields.texts['text:contact-location-badge']} as="span" class="step-index !px-2 !py-1" />
               <span>{SITE.address}</span>
             </p>
           </div>
 
-          <p class="mt-5 text-xs uppercase tracking-[0.14em] text-charcoal/50">{copy.hours}</p>
+          <EditableText
+            {...pageFields.texts['text:hours']}
+            as="p"
+            class="mt-5 text-xs uppercase tracking-[0.14em] text-charcoal/50"
+          />
         </article>
       </div>
     </div>

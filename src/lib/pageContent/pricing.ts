@@ -1,23 +1,29 @@
 import type { Locale } from '../../i18n/utils';
-import { loadRequiredPageTexts, type CmsPageTextValue } from './cmsPageText';
+import {
+  loadRequiredPageFields,
+  type CmsPageLinkValue,
+  type CmsPageTextValue,
+} from './cmsPageText';
 import { loadServicePackages, type ServicePackage } from './packages';
 
 export type { ServicePackage } from './packages';
 
 export interface PricingPageContent {
-  heroEyebrow: string;
-  heroTitle: string;
-  heroSubtitle: string;
+  heroEyebrow: CmsPageTextValue;
+  heroTitle: CmsPageTextValue;
+  heroSubtitle: CmsPageTextValue;
+  heroPrimaryCta: CmsPageLinkValue;
+  heroSecondaryCta: CmsPageLinkValue;
   customQuote: CmsPageTextValue;
-  includesLabel: string;
-  idealForLabel: string;
+  includesLabel: CmsPageTextValue;
+  idealForLabel: CmsPageTextValue;
   tiers: ServicePackage[];
   transparencyTitle: CmsPageTextValue;
   transparencyItems: CmsPageTextValue[];
-  ctaTitle: string;
-  ctaBody: string;
-  ctaPrimary: string;
-  ctaProject: string;
+  ctaTitle: CmsPageTextValue;
+  ctaBody: CmsPageTextValue;
+  ctaPrimary: CmsPageLinkValue;
+  tierProjectCta: CmsPageLinkValue;
 }
 
 const pricingPageIds = {
@@ -26,64 +32,59 @@ const pricingPageIds = {
 } as const satisfies Record<Locale, string>;
 
 const pricingTextIds = [
+  'text:hero-eyebrow',
+  'text:hero-title',
+  'text:hero-subtitle',
   'text:custom-quote-label',
+  'text:includes-label',
+  'text:ideal-for-label',
   'text:transparency-title',
   'text:transparency-item-essential-care',
   'text:transparency-item-managed-care',
   'text:transparency-item-premium-care',
   'text:transparency-item-revenue-hosting',
   'text:transparency-item-on-demand',
+  'text:cta-title',
+  'text:cta-body',
 ] as const;
 
-const pricingPageCopy = {
-  pt: {
-    heroEyebrow: 'Modelo Transparente',
-    heroTitle: 'Precos alinhados com o tipo de apoio que o seu imovel realmente precisa.',
-    heroSubtitle:
-      'Cinco pacotes claros, servicos sob pedido e add-ons opcionais. Sem taxas escondidas e sem linguagem vaga.',
-    includesLabel: 'Inclui',
-    idealForLabel: 'Ideal para',
-    ctaTitle: 'Recomendamos o pacote certo para a operacao real, nao o mais caro.',
-    ctaBody:
-      'Explique-nos como usa o imovel, se recebe hospedes e onde precisa de apoio. Respondemos com um escopo claro e sem pressao.',
-    ctaPrimary: 'Marcar Chamada de Diagnostico',
-    ctaProject: 'Definir Projeto',
-  },
-  en: {
-    heroEyebrow: 'Transparent Model',
-    heroTitle: 'Pricing aligned with the level of support your property actually needs.',
-    heroSubtitle:
-      'Five clear packages, flexible on-demand help, and optional add-ons. No hidden fees and no vague bundles.',
-    includesLabel: 'Includes',
-    idealForLabel: 'Ideal for',
-    ctaTitle: "We'll recommend the package that matches the operation, not the most expensive one.",
-    ctaBody:
-      "Tell us how the property is used, whether it hosts guests, and where you need help. We'll reply with a clear, no-pressure scope.",
-    ctaPrimary: 'Book Diagnostic Call',
-    ctaProject: 'Scope Add-On Project',
-  },
-} as const satisfies Record<
-  Omit<Locale, never>,
-  Omit<PricingPageContent, 'tiers' | 'customQuote' | 'transparencyTitle' | 'transparencyItems'>
->;
+const pricingLinkIds = [
+  'link:hero-primary-cta',
+  'link:hero-secondary-cta',
+  'link:tier-project-cta',
+] as const;
 
 export async function getPricingPageContent(lang: Locale): Promise<PricingPageContent> {
-  const [tiers, pricingTexts] = await Promise.all([
+  const pageId = pricingPageIds[lang];
+  const [tiers, pageFields] = await Promise.all([
     loadServicePackages(lang),
-    loadRequiredPageTexts(pricingPageIds[lang], pricingTextIds, lang),
+    loadRequiredPageFields(pageId, lang, {
+      texts: pricingTextIds,
+      links: pricingLinkIds,
+    }),
   ]);
 
   return {
-    ...pricingPageCopy[lang],
-    customQuote: pricingTexts['text:custom-quote-label'],
-    transparencyTitle: pricingTexts['text:transparency-title'],
+    heroEyebrow: pageFields.texts['text:hero-eyebrow'],
+    heroTitle: pageFields.texts['text:hero-title'],
+    heroSubtitle: pageFields.texts['text:hero-subtitle'],
+    heroPrimaryCta: pageFields.links['link:hero-primary-cta'],
+    heroSecondaryCta: pageFields.links['link:hero-secondary-cta'],
+    customQuote: pageFields.texts['text:custom-quote-label'],
+    includesLabel: pageFields.texts['text:includes-label'],
+    idealForLabel: pageFields.texts['text:ideal-for-label'],
+    transparencyTitle: pageFields.texts['text:transparency-title'],
     transparencyItems: [
-      pricingTexts['text:transparency-item-essential-care'],
-      pricingTexts['text:transparency-item-managed-care'],
-      pricingTexts['text:transparency-item-premium-care'],
-      pricingTexts['text:transparency-item-revenue-hosting'],
-      pricingTexts['text:transparency-item-on-demand'],
+      pageFields.texts['text:transparency-item-essential-care'],
+      pageFields.texts['text:transparency-item-managed-care'],
+      pageFields.texts['text:transparency-item-premium-care'],
+      pageFields.texts['text:transparency-item-revenue-hosting'],
+      pageFields.texts['text:transparency-item-on-demand'],
     ],
+    ctaTitle: pageFields.texts['text:cta-title'],
+    ctaBody: pageFields.texts['text:cta-body'],
+    ctaPrimary: pageFields.links['link:hero-primary-cta'],
+    tierProjectCta: pageFields.links['link:tier-project-cta'],
     tiers,
   };
 }

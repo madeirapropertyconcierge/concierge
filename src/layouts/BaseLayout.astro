@@ -6,11 +6,11 @@ import CookieConsent from '../components/CookieConsent.astro';
 import VercelAnalytics from '../components/VercelAnalytics.astro';
 import AdminShell from '../components/cms/AdminShell.astro';
 import { SITE } from '../lib/constants';
-import { t } from '../i18n/utils';
 import type { Locale } from '../i18n/utils';
 import { getAlternateRoute, routeMap } from '../i18n/routes';
 import { getPageIdFromPath } from '../cms/page-id';
 import { loadPageDocument } from '../cms/content-loader';
+import { getSiteChromeContent } from '../lib/pageContent/siteChrome';
 
 interface Props {
   title?: string;
@@ -23,6 +23,7 @@ interface Props {
   modifiedTime?: string;
   canonicalUrl?: string;
   noindex?: boolean;
+  useCmsSeo?: boolean;
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
@@ -37,6 +38,7 @@ const {
   modifiedTime,
   canonicalUrl,
   noindex = false,
+  useCmsSeo = true,
   jsonLd,
 } = Astro.props;
 
@@ -46,8 +48,18 @@ const currentPath = Astro.url.pathname;
 const enPath = lang === 'en' ? currentPath : getAlternateRoute(currentPath, 'en');
 const ptPath = lang === 'pt' ? currentPath : getAlternateRoute(currentPath, 'pt');
 const pageId = getPageIdFromPath(currentPath);
-const cmsPage = await loadPageDocument(pageId);
-const cmsSeo = cmsPage.seo[lang];
+const [cmsPage, siteChrome] = await Promise.all([
+  useCmsSeo ? loadPageDocument(pageId) : Promise.resolve(null),
+  getSiteChromeContent(lang),
+]);
+const cmsSeo = cmsPage?.seo[lang] ?? {
+  title: '',
+  description: '',
+  ogTitle: '',
+  ogDescription: '',
+  ogImage: '',
+  canonical: '',
+};
 
 const effectiveBaseTitle = cmsSeo.title.trim() || normalizedTitle;
 const pageTitle =
@@ -164,20 +176,15 @@ const combinedJsonLd = [...globalJsonLd, ...pageJsonLd];
   </head>
   <body class="min-h-screen flex flex-col bg-cream text-charcoal antialiased">
     <AdminShell pageId={pageId} locale={lang} isBlogPage={isBlogPage} />
-    <Header lang={lang} />
+    <Header lang={lang} copy={siteChrome} />
     <main class="flex-1">
       <slot />
     </main>
-    <Footer lang={lang} />
+    <Footer lang={lang} copy={siteChrome} />
     <VercelAnalytics />
     <CookieConsent
       lang={lang}
-      labels={{
-        message: t(lang, 'cookies.message'),
-        accept: t(lang, 'cookies.accept'),
-        decline: t(lang, 'cookies.decline'),
-        learnMore: t(lang, 'cookies.learnMore'),
-      }}
+      labels={siteChrome.cookies}
       privacyUrl={routeMap[lang].privacy}
     />
   </body>

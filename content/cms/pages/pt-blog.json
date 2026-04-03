@@ -1,6 +1,6 @@
 {
   "pageId": "pt-blog",
-  "updatedAt": "2026-02-28T17:51:19.052Z",
+  "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
       "title": "Blog | Madeira Property Concierge",
@@ -19,7 +19,105 @@
       "canonical": "/pt/blog"
     }
   },
-  "texts": [],
-  "links": [],
+  "texts": [
+    {
+      "id": "text:hero-eyebrow",
+      "selector": "[data-cms-id=\"text:hero-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Insights",
+        "pt": "Insights"
+      }
+    },
+    {
+      "id": "text:hero-title",
+      "selector": "[data-cms-id=\"text:hero-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Practical reads for Madeira property owners.",
+        "pt": "Leituras praticas para proprietarios na Madeira."
+      }
+    },
+    {
+      "id": "text:hero-subtitle",
+      "selector": "[data-cms-id=\"text:hero-subtitle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Articles on yield, regulation, and running a property from abroad.",
+        "pt": "Artigos sobre rentabilidade, regulamentacao e gestao de imoveis a distancia."
+      }
+    },
+    {
+      "id": "text:featured-label",
+      "selector": "[data-cms-id=\"text:featured-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Featured Analysis",
+        "pt": "Artigo em Destaque"
+      }
+    },
+    {
+      "id": "text:archive-title",
+      "selector": "[data-cms-id=\"text:archive-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Strategy Archive",
+        "pt": "Arquivo de Estrategia"
+      }
+    },
+    {
+      "id": "text:archive-subtitle",
+      "selector": "[data-cms-id=\"text:archive-subtitle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Operating models, regulatory risk, and on-the-ground execution.",
+        "pt": "Modelos operacionais, risco regulatorio e execucao no terreno."
+      }
+    },
+    {
+      "id": "text:posts-label",
+      "selector": "[data-cms-id=\"text:posts-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "posts",
+        "pt": "artigos"
+      }
+    },
+    {
+      "id": "text:read-more-label",
+      "selector": "[data-cms-id=\"text:read-more-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Read More",
+        "pt": "Ler Mais"
+      }
+    }
+  ],
+  "links": [
+    {
+      "id": "link:primary-cta",
+      "selector": "[data-cms-id=\"link:primary-cta\"]",
+      "label": {
+        "en": "Contact",
+        "pt": "Contacto"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    },
+    {
+      "id": "link:secondary-cta",
+      "selector": "[data-cms-id=\"link:secondary-cta\"]",
+      "label": {
+        "en": "Services",
+        "pt": "Servicos"
+      },
+      "href": {
+        "en": "/en/services",
+        "pt": "/pt/servicos"
+      }
+    }
+  ],
   "images": []
 }

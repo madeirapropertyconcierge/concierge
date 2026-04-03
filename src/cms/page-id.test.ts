@@ -13,6 +13,7 @@ describe('cms page id mapping', () => {
   });
 
   it('maps blog detail routes', () => {
-    expect(getPageIdFromPath('/en/blog/my-slug')).toBe('en-blog-my-slug');
+    expect(getPageIdFromPath('/en/blog/my-slug')).toBe('en-blog-post');
+    expect(getPageIdFromPath('/pt/blog/o-meu-artigo')).toBe('pt-blog-post');
   });
 });

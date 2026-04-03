@@ -1,6 +1,6 @@
 {
   "pageId": "pt-servicos",
-  "updatedAt": "2026-02-28T17:51:19.049Z",
+  "updatedAt": "2026-04-02T22:33:15.244Z",
   "seo": {
     "en": {
       "title": "Property Management Services | Madeira Property Concierge",
@@ -21,15 +21,130 @@
   },
   "texts": [
     {
+      "id": "text:hero-eyebrow",
+      "selector": "[data-cms-id=\"text:hero-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Service Packages",
+        "pt": "Pacotes de Servico"
+      }
+    },
+    {
+      "id": "text:hero-title",
+      "selector": "[data-cms-id=\"text:hero-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Five clear packages for overseas owners.",
+        "pt": "Cinco pacotes claros para proprietarios no estrangeiro."
+      }
+    },
+    {
+      "id": "text:hero-subtitle",
+      "selector": "[data-cms-id=\"text:hero-subtitle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "From core property care to full revenue and hosting management, choose the level of support you need and we execute on-island.",
+        "pt": "Desde o cuidado base do imovel ate a gestao completa de revenue e hosting, escolhe o nivel de apoio e nos executamos na ilha."
+      }
+    },
+    {
+      "id": "text:intro-eyebrow",
+      "selector": "[data-cms-id=\"text:intro-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Service Packages",
+        "pt": "Pacotes de Servico"
+      }
+    },
+    {
+      "id": "text:intro-title",
+      "selector": "[data-cms-id=\"text:intro-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "A clear structure that matches how the property is actually used.",
+        "pt": "Uma estrutura clara que acompanha a forma como o imovel e usado."
+      }
+    },
+    {
+      "id": "text:intro-body",
+      "selector": "[data-cms-id=\"text:intro-body\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Each package is built for a different operating model: vacant homes, second homes, higher-touch oversight, hosted rentals, and flexible on-demand support.",
+        "pt": "Cada pacote foi desenhado para um tipo de operacao diferente: casas vazias, segundas habitacoes, propriedades com mais supervisao, alojamento com revenue e apoio sob pedido."
+      }
+    },
+    {
+      "id": "text:add-ons-subtitle",
+      "selector": "[data-cms-id=\"text:add-ons-subtitle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Optional upgrades to improve presentation, automation, and guest-ready finishing.",
+        "pt": "Complementos opcionais para elevar a apresentacao, a automacao e a experiencia do hospede."
+      }
+    },
+    {
+      "id": "text:add-on-label",
+      "selector": "[data-cms-id=\"text:add-on-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Add-On",
+        "pt": "Add-On"
+      }
+    },
+    {
       "id": "text:add-on-quote-label",
-      "selector": ".js-services-add-on-quote-label",
+      "selector": "[data-cms-id=\"text:add-on-quote-label\"]",
       "kind": "inline",
       "value": {
         "en": "Scoped quote",
         "pt": "Orcamento por escopo"
       }
+    },
+    {
+      "id": "text:cta-title",
+      "selector": "[data-cms-id=\"text:cta-title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "We'll suggest the package that fits the operation, not the most expensive one.",
+        "pt": "Sugerimos o pacote que encaixa na operacao real do imovel."
+      }
+    },
+    {
+      "id": "text:cta-body",
+      "selector": "[data-cms-id=\"text:cta-body\"]",
+      "kind": "inline",
+      "value": {
+        "en": "In the first call, we work out whether you need property care, guest support, revenue and hosting management, or just flexible help on the ground.",
+        "pt": "Na primeira chamada, percebemos se precisa de cuidado do imovel, suporte a hospedes, revenue e hosting, ou apenas apoio sob pedido."
+      }
     }
   ],
-  "links": [],
+  "links": [
+    {
+      "id": "link:primary-cta",
+      "selector": "[data-cms-id=\"link:primary-cta\"]",
+      "label": {
+        "en": "Book Diagnostic Call",
+        "pt": "Marcar Chamada de Diagnostico"
+      },
+      "href": {
+        "en": "/en/contact",
+        "pt": "/pt/contacto"
+      }
+    },
+    {
+      "id": "link:secondary-cta",
+      "selector": "[data-cms-id=\"link:secondary-cta\"]",
+      "label": {
+        "en": "View Pricing",
+        "pt": "Ver Precos"
+      },
+      "href": {
+        "en": "/en/pricing",
+        "pt": "/pt/precos"
+      }
+    }
+  ],
   "images": []
 }

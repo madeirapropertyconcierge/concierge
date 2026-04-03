@@ -1,22 +1,20 @@
 ---
-interface Props {
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'img'> {
   id: string;
   selector: string;
   src: string;
   alt: string;
-  class?: string;
-  loading?: 'lazy' | 'eager';
 }
 
-const { id, selector, src, alt, loading = 'lazy' } = Astro.props;
-const className = Astro.props.class;
+const { id, selector, src, alt, ...rest } = Astro.props;
 ---
 
 <img
   src={src}
   alt={alt}
-  class={className}
-  loading={loading}
+  {...rest}
   data-cms-field="image"
   data-cms-id={id}
   data-cms-selector={selector}

@@ -1,0 +1,62 @@
+{
+  "pageId": "shared-404",
+  "updatedAt": "2026-04-03T00:00:00.000Z",
+  "seo": {
+    "en": {
+      "title": "",
+      "description": "",
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "canonical": ""
+    },
+    "pt": {
+      "title": "",
+      "description": "",
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "canonical": ""
+    }
+  },
+  "texts": [
+    {
+      "id": "text:title",
+      "selector": "[data-cms-id=\"text:title\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Page Not Found",
+        "pt": "Página Não Encontrada"
+      }
+    },
+    {
+      "id": "text:description",
+      "selector": "[data-cms-id=\"text:description\"]",
+      "kind": "inline",
+      "value": {
+        "en": "The page you're looking for doesn't exist or has been moved.",
+        "pt": "A página que procura não existe ou foi movida."
+      }
+    },
+    {
+      "id": "text:primary-cta",
+      "selector": "[data-cms-id=\"text:primary-cta\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Go to Homepage",
+        "pt": "Ir para o Início"
+      }
+    },
+    {
+      "id": "text:secondary-cta",
+      "selector": "[data-cms-id=\"text:secondary-cta\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Explore Services",
+        "pt": "Explorar Serviços"
+      }
+    }
+  ],
+  "links": [],
+  "images": []
+}

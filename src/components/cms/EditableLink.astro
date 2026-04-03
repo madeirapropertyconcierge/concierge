@@ -1,21 +1,20 @@
 ---
+import type { HTMLAttributes } from 'astro/types';
 import { renderInlineMarkdown } from '../../cms/markdown';
 
-interface Props {
+interface Props extends HTMLAttributes<'a'> {
   id: string;
   selector: string;
   href: string;
   label: string;
-  class?: string;
 }
 
-const { id, selector, href, label } = Astro.props;
-const className = Astro.props.class;
+const { id, selector, href, label, ...rest } = Astro.props;
 ---
 
 <a
   href={href}
-  class={className}
+  {...rest}
   data-cms-field="link"
   data-cms-id={id}
   data-cms-selector={selector}

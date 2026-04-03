@@ -1,13 +1,21 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { t } from '../i18n/utils';
 import { routeMap } from '../i18n/routes';
 import { madeiraImages } from '../lib/madeiraImages';
+import { getNotFoundContent } from '../lib/pageContent/siteChrome';
 
-const routes = routeMap.en;
+const lang = Astro.url.pathname.startsWith('/pt') ? 'pt' : 'en';
+const routes = routeMap[lang];
+const copy = await getNotFoundContent(lang);
 ---
 
-<BaseLayout title="Page Not Found" description="" lang="en" noindex={true}>
+<BaseLayout
+  title={copy.title}
+  description={copy.description}
+  lang={lang}
+  noindex={true}
+  useCmsSeo={false}
+>
   <div class="relative overflow-hidden">
     <section class="relative isolate overflow-hidden px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
       <img
@@ -21,10 +29,10 @@ const routes = routeMap.en;
       <div class="mx-auto max-w-3xl text-center text-white">
         <p class="eyebrow !border-white/30 !bg-white/10 !text-white/84">404</p>
         <h1 class="mt-5 text-balance text-5xl leading-[1.05] text-white sm:text-6xl lg:text-7xl">
-          {t('en', 'notFound.title')}
+          {copy.title}
         </h1>
         <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/82 sm:text-lg">
-          {t('en', 'notFound.description')}
+          {copy.description}
         </p>
 
         <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
@@ -32,13 +40,13 @@ const routes = routeMap.en;
             href={routes.home}
             class="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand"
           >
-            {t('en', 'notFound.cta')}
+            {copy.primaryCta}
           </a>
           <a
             href={routes.services}
             class="inline-flex items-center justify-center rounded-full border border-white/35 bg-white/8 px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-white backdrop-blur transition-colors hover:bg-white/20"
           >
-            Explore Services
+            {copy.secondaryCta}
           </a>
         </div>
       </div>

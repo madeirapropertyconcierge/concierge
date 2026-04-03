@@ -10,6 +10,7 @@ interface Props {
     propertyTypes: Record<string, string>;
     service: string;
     serviceOptions: Record<string, string>;
+    selectPlaceholder: string;
     message: string;
     submit: string;
     sending: string;
@@ -72,7 +73,7 @@ const { lang, formspreeEndpoint, labels } = Astro.props;
       name="propertyType"
       class="w-full rounded-xl border border-charcoal/12 bg-white/85 px-4 py-3 text-charcoal focus:border-ocean-blue focus:outline-none focus:ring-2 focus:ring-ocean-blue/20"
     >
-      <option value="">--</option>
+      <option value="">{labels.selectPlaceholder}</option>
       {Object.entries(labels.propertyTypes).map(([value, label]) => (
         <option value={value}>{label}</option>
       ))}
@@ -88,7 +89,7 @@ const { lang, formspreeEndpoint, labels } = Astro.props;
       name="service"
       class="w-full rounded-xl border border-charcoal/12 bg-white/85 px-4 py-3 text-charcoal focus:border-ocean-blue focus:outline-none focus:ring-2 focus:ring-ocean-blue/20"
     >
-      <option value="">--</option>
+      <option value="">{labels.selectPlaceholder}</option>
       {Object.entries(labels.serviceOptions).map(([value, label]) => (
         <option value={value}>{label}</option>
       ))}
@@ -147,8 +148,8 @@ const { lang, formspreeEndpoint, labels } = Astro.props;
         return;
       }
 
-      const defaultText = submitButton.dataset.submitDefault ?? submitButton.textContent ?? 'Submit';
-      const loadingText = submitButton.dataset.submitLoading ?? 'Sending...';
+      const defaultText = submitButton.dataset.submitDefault ?? submitButton.textContent ?? '';
+      const loadingText = submitButton.dataset.submitLoading ?? defaultText;
 
       submitButton.disabled = true;
       submitButton.textContent = loadingText;

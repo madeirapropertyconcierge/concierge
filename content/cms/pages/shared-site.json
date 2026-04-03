@@ -1,0 +1,341 @@
+{
+  "pageId": "shared-site",
+  "updatedAt": "2026-04-03T00:00:00.000Z",
+  "seo": {
+    "en": {
+      "title": "",
+      "description": "",
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "canonical": ""
+    },
+    "pt": {
+      "title": "",
+      "description": "",
+      "ogTitle": "",
+      "ogDescription": "",
+      "ogImage": "",
+      "canonical": ""
+    }
+  },
+  "texts": [
+    {
+      "id": "text:brand-eyebrow",
+      "selector": "[data-cms-id=\"text:brand-eyebrow\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Madeira",
+        "pt": "Madeira"
+      }
+    },
+    {
+      "id": "text:brand-wordmark",
+      "selector": "[data-cms-id=\"text:brand-wordmark\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Property Concierge",
+        "pt": "Property Concierge"
+      }
+    },
+    {
+      "id": "text:nav-home",
+      "selector": "[data-cms-id=\"text:nav-home\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Home",
+        "pt": "Início"
+      }
+    },
+    {
+      "id": "text:nav-services",
+      "selector": "[data-cms-id=\"text:nav-services\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Services",
+        "pt": "Serviços"
+      }
+    },
+    {
+      "id": "text:nav-about",
+      "selector": "[data-cms-id=\"text:nav-about\"]",
+      "kind": "inline",
+      "value": {
+        "en": "About",
+        "pt": "Sobre"
+      }
+    },
+    {
+      "id": "text:nav-how-it-works",
+      "selector": "[data-cms-id=\"text:nav-how-it-works\"]",
+      "kind": "inline",
+      "value": {
+        "en": "How It Works",
+        "pt": "Como Funciona"
+      }
+    },
+    {
+      "id": "text:nav-pricing",
+      "selector": "[data-cms-id=\"text:nav-pricing\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Pricing",
+        "pt": "Preços"
+      }
+    },
+    {
+      "id": "text:nav-blog",
+      "selector": "[data-cms-id=\"text:nav-blog\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Blog",
+        "pt": "Blog"
+      }
+    },
+    {
+      "id": "text:nav-contact",
+      "selector": "[data-cms-id=\"text:nav-contact\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Contact",
+        "pt": "Contacto"
+      }
+    },
+    {
+      "id": "text:nav-faq",
+      "selector": "[data-cms-id=\"text:nav-faq\"]",
+      "kind": "inline",
+      "value": {
+        "en": "FAQ",
+        "pt": "FAQ"
+      }
+    },
+    {
+      "id": "text:nav-guide",
+      "selector": "[data-cms-id=\"text:nav-guide\"]",
+      "kind": "inline",
+      "value": {
+        "en": "AL Guide",
+        "pt": "Guia AL"
+      }
+    },
+    {
+      "id": "text:nav-cta",
+      "selector": "[data-cms-id=\"text:nav-cta\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Book Diagnostic Call",
+        "pt": "Marcar Chamada de Diagnóstico"
+      }
+    },
+    {
+      "id": "text:nav-language-toggle",
+      "selector": "[data-cms-id=\"text:nav-language-toggle\"]",
+      "kind": "inline",
+      "value": {
+        "en": "PT",
+        "pt": "EN"
+      }
+    },
+    {
+      "id": "text:nav-language-toggle-aria",
+      "selector": "[data-cms-id=\"text:nav-language-toggle-aria\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Switch to Portuguese",
+        "pt": "Mudar para Inglês"
+      }
+    },
+    {
+      "id": "text:mobile-open-menu",
+      "selector": "[data-cms-id=\"text:mobile-open-menu\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Open menu",
+        "pt": "Abrir menu"
+      }
+    },
+    {
+      "id": "text:mobile-close-menu",
+      "selector": "[data-cms-id=\"text:mobile-close-menu\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Close menu",
+        "pt": "Fechar menu"
+      }
+    },
+    {
+      "id": "text:mobile-panel-label",
+      "selector": "[data-cms-id=\"text:mobile-panel-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Mobile navigation",
+        "pt": "Navegação móvel"
+      }
+    },
+    {
+      "id": "text:mobile-navigation-label",
+      "selector": "[data-cms-id=\"text:mobile-navigation-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Navigation",
+        "pt": "Navegação"
+      }
+    },
+    {
+      "id": "text:footer-tagline",
+      "selector": "[data-cms-id=\"text:footer-tagline\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Peace of mind for overseas owners.",
+        "pt": "Tranquilidade para proprietários no estrangeiro."
+      }
+    },
+    {
+      "id": "text:footer-description",
+      "selector": "[data-cms-id=\"text:footer-description\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Boutique hosting and property care in Madeira with a single bilingual EN/PT bridge and founder-led accountability.",
+        "pt": "Hosting boutique e cuidado de propriedade na Madeira com uma única ponte local bilingue EN/PT e responsabilidade direta da fundadora."
+      }
+    },
+    {
+      "id": "text:footer-company-heading",
+      "selector": "[data-cms-id=\"text:footer-company-heading\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Company",
+        "pt": "Empresa"
+      }
+    },
+    {
+      "id": "text:footer-copyright",
+      "selector": "[data-cms-id=\"text:footer-copyright\"]",
+      "kind": "inline",
+      "value": {
+        "en": "© 2026 Madeira Property Concierge. All rights reserved.",
+        "pt": "© 2026 Madeira Property Concierge. Todos os direitos reservados."
+      }
+    },
+    {
+      "id": "text:footer-privacy",
+      "selector": "[data-cms-id=\"text:footer-privacy\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Privacy Policy",
+        "pt": "Política de Privacidade"
+      }
+    },
+    {
+      "id": "text:footer-terms",
+      "selector": "[data-cms-id=\"text:footer-terms\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Terms of Service",
+        "pt": "Termos de Serviço"
+      }
+    },
+    {
+      "id": "text:footer-complaints-book",
+      "selector": "[data-cms-id=\"text:footer-complaints-book\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Complaints Book",
+        "pt": "Livro de Reclamações"
+      }
+    },
+    {
+      "id": "text:footer-adr-info",
+      "selector": "[data-cms-id=\"text:footer-adr-info\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Consumer ADR",
+        "pt": "RAL (consumo)"
+      }
+    },
+    {
+      "id": "text:footer-tax-id-label",
+      "selector": "[data-cms-id=\"text:footer-tax-id-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "NIF",
+        "pt": "NIF"
+      }
+    },
+    {
+      "id": "text:footer-cta-secondary",
+      "selector": "[data-cms-id=\"text:footer-cta-secondary\"]",
+      "kind": "inline",
+      "value": {
+        "en": "View Services",
+        "pt": "Ver Serviços"
+      }
+    },
+    {
+      "id": "text:footer-instagram-label",
+      "selector": "[data-cms-id=\"text:footer-instagram-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Instagram",
+        "pt": "Instagram"
+      }
+    },
+    {
+      "id": "text:footer-facebook-label",
+      "selector": "[data-cms-id=\"text:footer-facebook-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Facebook",
+        "pt": "Facebook"
+      }
+    },
+    {
+      "id": "text:footer-linkedin-label",
+      "selector": "[data-cms-id=\"text:footer-linkedin-label\"]",
+      "kind": "inline",
+      "value": {
+        "en": "LinkedIn",
+        "pt": "LinkedIn"
+      }
+    },
+    {
+      "id": "text:cookie-message",
+      "selector": "[data-cms-id=\"text:cookie-message\"]",
+      "kind": "inline",
+      "value": {
+        "en": "We use essential cookies for core functionality. Optional analytics or marketing cookies are only used after your explicit consent.",
+        "pt": "Utilizamos cookies essenciais para o funcionamento do website. Cookies opcionais de analítica ou marketing só são usados após o seu consentimento explícito."
+      }
+    },
+    {
+      "id": "text:cookie-accept",
+      "selector": "[data-cms-id=\"text:cookie-accept\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Accept",
+        "pt": "Aceitar"
+      }
+    },
+    {
+      "id": "text:cookie-decline",
+      "selector": "[data-cms-id=\"text:cookie-decline\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Decline",
+        "pt": "Recusar"
+      }
+    },
+    {
+      "id": "text:cookie-learn-more",
+      "selector": "[data-cms-id=\"text:cookie-learn-more\"]",
+      "kind": "inline",
+      "value": {
+        "en": "Learn More",
+        "pt": "Saber Mais"
+      }
+    }
+  ],
+  "links": [],
+  "images": []
+}

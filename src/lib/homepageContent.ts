@@ -1,11 +1,17 @@
 import type { Locale } from '../i18n/utils';
 import type { RouteKey } from '../i18n/routes';
 import { madeiraImages } from './madeiraImages';
+import {
+  loadRequiredPageFields,
+  type CmsPageImageValue,
+  type CmsPageLinkValue,
+  type CmsPageTextValue,
+} from './pageContent/cmsPageText';
 import { loadCoreServicePackages, type ServicePackageKey } from './pageContent/packages';
 
 export interface HomeTrustSignal {
-  value: string;
-  label: string;
+  value: CmsPageTextValue;
+  label: CmsPageTextValue;
 }
 
 export interface HomeServiceTile {
@@ -20,41 +26,38 @@ export interface HomeServiceTile {
 
 export interface HomeStep {
   step: string;
-  title: string;
-  detail: string;
+  title: CmsPageTextValue;
+  detail: CmsPageTextValue;
 }
 
 export interface HomePageContent {
-  metaDescription: string;
-  heroBackgroundAlt: string;
-  finalBackgroundAlt: string;
-  heroBadge: string;
-  heroTitle: string;
-  heroSubtitle: string;
-  primaryCta: string;
-  secondaryCta: string;
+  heroBackground: CmsPageImageValue;
+  finalBackground: CmsPageImageValue;
+  heroBadge: CmsPageTextValue;
+  heroTitle: CmsPageTextValue;
+  heroSubtitle: CmsPageTextValue;
+  heroPrimaryCta: CmsPageLinkValue;
+  heroSecondaryCta: CmsPageLinkValue;
   mediaCards: [
-    { image: string; alt: string; caption: string },
-    { image: string; alt: string; caption: string },
-    { image: string; alt: string; caption: string },
+    { image: CmsPageImageValue; caption: CmsPageTextValue },
+    { image: CmsPageImageValue; caption: CmsPageTextValue },
+    { image: CmsPageImageValue; caption: CmsPageTextValue },
   ];
   trustSignals: HomeTrustSignal[];
-  architectureEyebrow: string;
-  architectureTitle: string;
-  architectureLink: string;
+  architectureEyebrow: CmsPageTextValue;
+  architectureTitle: CmsPageTextValue;
+  architectureLink: CmsPageLinkValue;
   serviceTiles: HomeServiceTile[];
-  processEyebrow: string;
-  processTitle: string;
-  processLink: string;
+  processEyebrow: CmsPageTextValue;
+  processTitle: CmsPageTextValue;
+  processLink: CmsPageLinkValue;
   steps: HomeStep[];
-  finalEyebrow: string;
-  finalTitle: string;
-  finalSubtitle: string;
-  finalPrimaryCta: string;
-  finalSecondaryCta: string;
+  finalEyebrow: CmsPageTextValue;
+  finalTitle: CmsPageTextValue;
+  finalSubtitle: CmsPageTextValue;
+  finalPrimaryCta: CmsPageLinkValue;
+  finalSecondaryCta: CmsPageLinkValue;
 }
-
-type StaticHomePageContent = Omit<HomePageContent, 'serviceTiles'>;
 
 const homeTileConfig: Record<
   Exclude<ServicePackageKey, 'addOns'>,
@@ -92,6 +95,56 @@ const homeTileConfig: Record<
   },
 };
 
+const homePageIds = {
+  en: 'en-home',
+  pt: 'pt-home',
+} as const satisfies Record<Locale, string>;
+
+const homeTextIds = [
+  'text:hero-badge',
+  'text:hero-title',
+  'text:hero-subtitle',
+  'text:media-card-1-caption',
+  'text:media-card-2-caption',
+  'text:media-card-3-caption',
+  'text:trust-signal-1-value',
+  'text:trust-signal-1-label',
+  'text:trust-signal-2-value',
+  'text:trust-signal-2-label',
+  'text:trust-signal-3-value',
+  'text:trust-signal-3-label',
+  'text:architecture-eyebrow',
+  'text:architecture-title',
+  'text:process-eyebrow',
+  'text:process-title',
+  'text:step-1-title',
+  'text:step-1-detail',
+  'text:step-2-title',
+  'text:step-2-detail',
+  'text:step-3-title',
+  'text:step-3-detail',
+  'text:final-eyebrow',
+  'text:final-title',
+  'text:final-subtitle',
+] as const;
+
+const homeLinkIds = [
+  'link:hero-primary-cta',
+  'link:hero-secondary-cta',
+  'link:architecture-cta',
+  'link:process-cta',
+  'link:final-primary-cta',
+  'link:final-secondary-cta',
+] as const;
+
+const homeImageIds = [
+  'image:hero-background',
+  'image:final-background',
+  'image:media-card-1',
+  'image:media-card-2',
+  'image:media-card-3',
+] as const;
+
 async function buildHomeServiceTiles(locale: Locale): Promise<HomeServiceTile[]> {
   const packages = await loadCoreServicePackages(locale);
 
@@ -103,142 +156,81 @@ async function buildHomeServiceTiles(locale: Locale): Promise<HomeServiceTile[]>
   }));
 }
 
-const staticHomepageContent: Record<Locale, StaticHomePageContent> = {
-  en: {
-    metaDescription: 'Boutique hosting and property care in Madeira for overseas owners who want peace of mind.',
-    heroBackgroundAlt: madeiraImages.vineyardCoastalVillage.alt,
-    finalBackgroundAlt: madeiraImages.coastSunsetAerial.alt,
-    heroBadge: 'Madeira Property Concierge',
-    heroTitle: 'Boutique Hosting + Property Care. True Peace of Mind.',
-    heroSubtitle:
-      'Founder-led property management in Madeira for overseas owners. Bilingual EN/PT support, clear reporting, and local execution you can trust.',
-    primaryCta: 'Book Diagnostic Call',
-    secondaryCta: 'See Service Packages',
-    mediaCards: [
-      {
-        image: madeiraImages.pontaHikers.src,
-        alt: madeiraImages.pontaHikers.alt,
-        caption: 'Property Care & Preventative Checks',
-      },
-      {
-        image: madeiraImages.saoVicenteCoast.src,
-        alt: madeiraImages.saoVicenteCoast.alt,
-        caption: 'Guest Experience & Hosting Support',
-      },
-      {
-        image: madeiraImages.villageAerialShadow.src,
-        alt: madeiraImages.villageAerialShadow.alt,
-        caption: 'West Coast Expansion Coverage',
-      },
-    ],
-    trustSignals: [
-      { value: 'EN/PT', label: 'Bilingual, born Canadian-Madeiran' },
-      { value: '4h', label: 'Owner response target' },
-      { value: '56-point', label: 'Turnover quality checklist' },
-    ],
-    architectureEyebrow: 'Built For Overseas Owners',
-    architectureTitle: 'Small on purpose. One owner, one point of contact, full accountability.',
-    architectureLink: 'How We Operate',
-    processEyebrow: 'Owner Journey',
-    processTitle: 'Clear onboarding. Predictable operations.',
-    processLink: 'View The Process',
-    steps: [
-      {
-        step: '01',
-        title: 'Discovery Call',
-        detail:
-          'A 30-minute call to map goals, hosting needs, and the level of property support required.',
-      },
-      {
-        step: '02',
-        title: 'Property & Risk Audit',
-        detail:
-          'On-site assessment of condition, compliance gaps, vendor needs, and launch readiness.',
-      },
-      {
-        step: '03',
-        title: 'Launch & Management',
-        detail:
-          'We run day-to-day operations with monthly reports, maintenance logs, and SLA-driven support.',
-      },
-    ],
-    finalEyebrow: 'Ready To Talk?',
-    finalTitle: 'Own property in Madeira but live abroad? We handle it locally, you stay in the loop.',
-    finalSubtitle:
-      "Start with a 30-minute diagnostic call. We'll work out whether your property needs care, guest support, revenue management, or flexible on-the-ground help.",
-    finalPrimaryCta: 'Book Consultation',
-    finalSecondaryCta: 'View Pricing',
-  },
-  pt: {
-    metaDescription: 'Hosting boutique e cuidado de propriedade na Madeira para proprietarios no estrangeiro que querem tranquilidade.',
-    heroBackgroundAlt: madeiraImages.vineyardCoastalVillage.alt,
-    finalBackgroundAlt: madeiraImages.coastSunsetAerial.alt,
-    heroBadge: 'Madeira Property Concierge',
-    heroTitle: 'Hosting Boutique + Cuidado de Propriedade. Tranquilidade Real.',
-    heroSubtitle:
-      'Gestao de propriedade na Madeira, liderada pela fundadora, para proprietarios no estrangeiro. Suporte bilingue EN/PT, reporting claro e execucao local de confianca.',
-    primaryCta: 'Marcar Chamada de Diagnostico',
-    secondaryCta: 'Ver Pacotes de Servico',
-    mediaCards: [
-      {
-        image: madeiraImages.pontaHikers.src,
-        alt: madeiraImages.pontaHikers.alt,
-        caption: 'Cuidado de Propriedade e Verificacoes Preventivas',
-      },
-      {
-        image: madeiraImages.saoVicenteCoast.src,
-        alt: madeiraImages.saoVicenteCoast.alt,
-        caption: 'Experiencia de Hospede e Apoio de Hosting',
-      },
-      {
-        image: madeiraImages.villageAerialShadow.src,
-        alt: madeiraImages.villageAerialShadow.alt,
-        caption: 'Cobertura em Expansao na Costa Oeste',
-      },
-    ],
-    trustSignals: [
-      { value: 'EN/PT', label: 'Bilingue, nascida canadiana-madeirense' },
-      { value: '4h', label: 'Objetivo de resposta ao proprietario' },
-      { value: '56 pontos', label: 'Checklist de qualidade no turnover' },
-    ],
-    architectureEyebrow: 'Feito Para Proprietarios no Estrangeiro',
-    architectureTitle: 'Pequenos de proposito. Uma responsavel, um ponto de contacto, total responsabilidade.',
-    architectureLink: 'Como Operamos',
-    processEyebrow: 'Jornada do Proprietario',
-    processTitle: 'Integracao clara. Operacao previsivel.',
-    processLink: 'Ver O Processo',
-    steps: [
-      {
-        step: '01',
-        title: 'Chamada de Descoberta',
-        detail:
-          'Chamada de 30 minutos para mapear objetivos, necessidades de hosting e o nivel de apoio que o imovel exige.',
-      },
-      {
-        step: '02',
-        title: 'Auditoria de Imovel e Risco',
-        detail:
-          'Avaliacao no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidao.',
-      },
-      {
-        step: '03',
-        title: 'Lancamento e Gestao',
-        detail:
-          'Executamos a operacao diaria com relatorios mensais, registo de manutencao e suporte por SLA.',
-      },
-    ],
-    finalEyebrow: 'Pronto Para Falar?',
-    finalTitle: 'Tem imovel na Madeira mas vive fora? Nos tratamos localmente, voce acompanha tudo.',
-    finalSubtitle:
-      'Comece com uma chamada de diagnostico de 30 minutos. Percebemos se o seu imovel precisa de cuidado, apoio a hospedes, revenue e hosting, ou ajuda flexivel no terreno.',
-    finalPrimaryCta: 'Marcar Consulta',
-    finalSecondaryCta: 'Ver Precos',
-  },
-};
-
 export async function getHomepageContent(locale: Locale): Promise<HomePageContent> {
+  const pageId = homePageIds[locale];
+  const [serviceTiles, pageFields] = await Promise.all([
+    buildHomeServiceTiles(locale),
+    loadRequiredPageFields(pageId, locale, {
+      texts: homeTextIds,
+      links: homeLinkIds,
+      images: homeImageIds,
+    }),
+  ]);
+
   return {
-    ...staticHomepageContent[locale],
-    serviceTiles: await buildHomeServiceTiles(locale),
+    heroBackground: pageFields.images['image:hero-background'],
+    finalBackground: pageFields.images['image:final-background'],
+    heroBadge: pageFields.texts['text:hero-badge'],
+    heroTitle: pageFields.texts['text:hero-title'],
+    heroSubtitle: pageFields.texts['text:hero-subtitle'],
+    heroPrimaryCta: pageFields.links['link:hero-primary-cta'],
+    heroSecondaryCta: pageFields.links['link:hero-secondary-cta'],
+    mediaCards: [
+      {
+        image: pageFields.images['image:media-card-1'],
+        caption: pageFields.texts['text:media-card-1-caption'],
+      },
+      {
+        image: pageFields.images['image:media-card-2'],
+        caption: pageFields.texts['text:media-card-2-caption'],
+      },
+      {
+        image: pageFields.images['image:media-card-3'],
+        caption: pageFields.texts['text:media-card-3-caption'],
+      },
+    ],
+    trustSignals: [
+      {
+        value: pageFields.texts['text:trust-signal-1-value'],
+        label: pageFields.texts['text:trust-signal-1-label'],
+      },
+      {
+        value: pageFields.texts['text:trust-signal-2-value'],
+        label: pageFields.texts['text:trust-signal-2-label'],
+      },
+      {
+        value: pageFields.texts['text:trust-signal-3-value'],
+        label: pageFields.texts['text:trust-signal-3-label'],
+      },
+    ],
+    architectureEyebrow: pageFields.texts['text:architecture-eyebrow'],
+    architectureTitle: pageFields.texts['text:architecture-title'],
+    architectureLink: pageFields.links['link:architecture-cta'],
+    serviceTiles,
+    processEyebrow: pageFields.texts['text:process-eyebrow'],
+    processTitle: pageFields.texts['text:process-title'],
+    processLink: pageFields.links['link:process-cta'],
+    steps: [
+      {
+        step: '01',
+        title: pageFields.texts['text:step-1-title'],
+        detail: pageFields.texts['text:step-1-detail'],
+      },
+      {
+        step: '02',
+        title: pageFields.texts['text:step-2-title'],
+        detail: pageFields.texts['text:step-2-detail'],
+      },
+      {
+        step: '03',
+        title: pageFields.texts['text:step-3-title'],
+        detail: pageFields.texts['text:step-3-detail'],
+      },
+    ],
+    finalEyebrow: pageFields.texts['text:final-eyebrow'],
+    finalTitle: pageFields.texts['text:final-title'],
+    finalSubtitle: pageFields.texts['text:final-subtitle'],
+    finalPrimaryCta: pageFields.links['link:final-primary-cta'],
+    finalSecondaryCta: pageFields.links['link:final-secondary-cta'],
   };
 }

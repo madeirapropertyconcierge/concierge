@@ -2,15 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import HomeShowcase from '../../components/pages/HomeShowcase.astro';
 import { t } from '../../i18n/utils';
-import { getHomepageContent } from '../../lib/homepageContent';
 
 const lang = 'pt';
-const copy = await getHomepageContent(lang);
 ---
 
 <BaseLayout
   title={t(lang, 'site.title')}
-  description={copy.metaDescription}
+  description=""
   lang={lang}
 >
   <HomeShowcase lang={lang} />

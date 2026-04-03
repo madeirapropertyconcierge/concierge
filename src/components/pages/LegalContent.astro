@@ -1,4 +1,5 @@
 ---
+import EditableText from '../cms/EditableText.astro';
 import VisualPageLayout from './VisualPageLayout.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
 import LegalSectionCard from '../legal/LegalSectionCard.astro';
@@ -8,6 +9,7 @@ import { breadcrumbJsonLd } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
 import { SITE } from '../../lib/constants';
 import { getLegalPageContent, type LegalPageType } from '../../lib/pageContent/legal';
+import { getSiteChromeContent } from '../../lib/pageContent/siteChrome';
 
 interface Props {
   lang: Locale;
@@ -21,45 +23,52 @@ const hasLegalPlaceholders = [SITE.legal.legalName, SITE.legal.taxId, SITE.legal
   (value) => value.includes('replace') || value.includes('XXXXX') || value.includes('XXXXXXXXX'),
 );
 
-const page = getLegalPageContent(lang, type, {
-  legalName: SITE.legal.legalName,
-  taxId: SITE.legal.taxId,
-  commercialRegistry: SITE.legal.commercialRegistry,
-  email: SITE.email,
-  phone: SITE.phone,
-  address: SITE.address,
-  complaintsBookUrl: SITE.legal.complaintsBookUrl,
-  adrInfoUrl: SITE.legal.adrInfoUrl,
-  termsHref: routes.terms,
-  hasLegalPlaceholders,
-});
+const [page, siteChrome] = await Promise.all([
+  getLegalPageContent(lang, type, {
+    legalName: SITE.legal.legalName,
+    taxId: SITE.legal.taxId,
+    commercialRegistry: SITE.legal.commercialRegistry,
+    email: SITE.email,
+    phone: SITE.phone,
+    address: SITE.address,
+    complaintsBookUrl: SITE.legal.complaintsBookUrl,
+    adrInfoUrl: SITE.legal.adrInfoUrl,
+    termsHref: routes.terms,
+    hasLegalPlaceholders,
+  }),
+  getSiteChromeContent(lang),
+]);
 
 const pageRoute = type === 'privacy' ? routes.privacy : routes.terms;
 
 const pageSchema = [
   breadcrumbJsonLd([
-    { name: lang === 'pt' ? 'Início' : 'Home', url: routes.home },
-    { name: page.heroTitle, url: pageRoute },
+    { name: siteChrome.nav.home, url: routes.home },
+    { name: page.heroTitle.value, url: pageRoute },
   ]),
 ];
 ---
 
 <VisualPageLayout
   lang={lang}
-  title={page.metaTitle}
-  description={page.metaDescription}
+  title=""
+  description=""
   heroEyebrow={page.heroEyebrow}
   heroTitle={page.heroTitle}
   heroSubtitle={page.heroSubtitle}
   heroImage={madeiraImages.yachtCoastline.src}
   heroAlt={madeiraImages.yachtCoastline.alt}
-  heroPrimaryCta={{ label: lang === 'pt' ? 'Contacto' : 'Contact', href: routes.contact }}
-  heroSecondaryCta={{ label: lang === 'pt' ? 'Início' : 'Home', href: routes.home }}
+  heroPrimaryCta={page.primaryCta}
+  heroSecondaryCta={page.secondaryCta}
   jsonLd={pageSchema}
 >
   <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
     <div class="premium-panel p-6 sm:p-8 lg:p-10">
-      <p class="text-xs uppercase tracking-[0.16em] text-charcoal/50">{page.updatedLabel}</p>
+      <EditableText
+        {...page.updatedLabel}
+        as="p"
+        class="text-xs uppercase tracking-[0.16em] text-charcoal/50"
+      />
 
       <div class="mt-6 space-y-6">
         {page.sections.map((section) => <LegalSectionCard section={section} />)}

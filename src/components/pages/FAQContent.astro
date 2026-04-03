@@ -1,13 +1,15 @@
 ---
+import EditableLink from '../cms/EditableLink.astro';
+import EditableText from '../cms/EditableText.astro';
 import VisualPageLayout from './VisualPageLayout.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
 import FaqCategoryPanel from '../faq/FaqCategoryPanel.astro';
-import { t } from '../../i18n/utils';
 import { routeMap } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
 import { getFaqPageContent } from '../../lib/pageContent/faq';
+import { getSiteChromeContent } from '../../lib/pageContent/siteChrome';
 
 interface Props {
   lang: Locale;
@@ -15,23 +17,26 @@ interface Props {
 
 const { lang } = Astro.props;
 const routes = routeMap[lang];
-const copy = getFaqPageContent(lang);
+const [copy, siteChrome] = await Promise.all([
+  getFaqPageContent(lang),
+  getSiteChromeContent(lang),
+]);
 const faqItemsFlat = copy.categories.flatMap((category) => category.items);
 
 const pageSchema = [
   breadcrumbJsonLd([
-    { name: 'Home', url: routes.home },
-    { name: t(lang, 'nav.faq'), url: routes.faq },
+    { name: siteChrome.nav.home, url: routes.home },
+    { name: siteChrome.nav.faq, url: routes.faq },
   ]),
   {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: faqItemsFlat.map((item) => ({
       '@type': 'Question',
-      name: item.question,
+      name: item.question.value,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: item.answer,
+        text: item.answer.value,
       },
     })),
   },
@@ -40,15 +45,15 @@ const pageSchema = [
 
 <VisualPageLayout
   lang={lang}
-  title={t(lang, 'faq.metaTitle')}
-  description={t(lang, 'faq.metaDescription')}
-  heroEyebrow="FAQ"
+  title=""
+  description=""
+  heroEyebrow={copy.heroEyebrow}
   heroTitle={copy.heroTitle}
   heroSubtitle={copy.heroSubtitle}
   heroImage={madeiraImages.fruitMarketStalls.src}
   heroAlt={madeiraImages.fruitMarketStalls.alt}
-  heroPrimaryCta={{ label: copy.closing.cta, href: routes.contact }}
-  heroSecondaryCta={{ label: t(lang, 'nav.services'), href: routes.services }}
+  heroPrimaryCta={copy.heroPrimaryCta}
+  heroSecondaryCta={copy.heroSecondaryCta}
   jsonLd={pageSchema}
 >
   <section class="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
@@ -64,9 +69,20 @@ const pageSchema = [
     <div class="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgba(11,24,30,0.87)_0%,rgba(11,24,30,0.67)_55%,rgba(11,24,30,0.83)_100%)]"></div>
 
     <div class="mx-auto max-w-4xl px-4 py-14 text-center text-white sm:px-6 lg:py-20">
-      <h2 class="text-balance text-4xl leading-[1.05] text-white sm:text-5xl">{copy.closing.title}</h2>
-      <p class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{copy.closing.body}</p>
-      <a href={routes.contact} class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand">{copy.closing.cta}</a>
+      <EditableText
+        {...copy.closingTitle}
+        as="h2"
+        class="text-balance text-4xl leading-[1.05] text-white sm:text-5xl"
+      />
+      <EditableText
+        {...copy.closingBody}
+        as="p"
+        class="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg"
+      />
+      <EditableLink
+        {...copy.closingCta}
+        class="mt-8 inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-[0.06em] text-charcoal transition-colors hover:bg-golden-sand"
+      />
     </div>
   </section>
 </VisualPageLayout>

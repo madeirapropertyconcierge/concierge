@@ -57,7 +57,7 @@ export async function loadServicePackages(locale: SiteLocale): Promise<ServicePa
       idealFor: idealFor || undefined,
       servicesBullets: entry.servicesBullets[locale].map((item) => item.trim()).filter(Boolean),
       homeBlurb: resolveLocaleText(entry.homeBlurb, locale),
-      showQuoteLabel: false,
+      showQuoteLabel: entry.price === null,
     };
   });
 }
