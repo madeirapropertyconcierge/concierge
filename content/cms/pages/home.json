@@ -255,8 +255,8 @@
       }
     },
     {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2)",
       "kind": "block",
       "value": {
         "en": "",
@@ -264,8 +264,161 @@
       }
     },
     {
-      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1)",
-      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Experiência de Hóspede e Apoio de Hosting"
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(2) > article:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Cobertura em Expansão na Costa Oeste"
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Chamada de 30 minutos para mapear objetivos, necessidades de hosting e o nível de apoio que o imóvel exige."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(2) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(2) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Avaliacao no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidao."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(2) > h3:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(2) > h3:nth-of-type(1)",
+      "kind": "inline",
+      "value": {
+        "en": "",
+        "pt": "Auditoria de Imóvel e Risco"
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(2) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(2) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Avaliacao no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidao."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(2) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(2) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Avaliação no local do estado do imóvel, lacunas de conformidade, necessidades de fornecedores e nível de prontidão."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(3) > h3:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(3) > h3:nth-of-type(1)",
+      "kind": "inline",
+      "value": {
+        "en": "",
+        "pt": "Lançamento e Gestão"
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(3) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(3) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Executamos a operacao diaria com relatorios mensais, registo de manutencao e suporte por SLA."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(3) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(4) > article:nth-of-type(3) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Executamos a operação diária com relatórios mensais, registo de manutenção e suporte com SLA."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > blockquote:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > blockquote:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "\"A comunicacao e clara, rapida e pratica. Mesmo a partir do Canada, sabemos sempre o estado exato do imovel.\""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > blockquote:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > blockquote:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "A comunicação é clara, rápida e prática. Mesmo a partir do Canadá, sabemos sempre o estado exato do imóvel."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > blockquote:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(1) > blockquote:nth-of-type(1) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "“A comunicação é clara, rápida e prática. Mesmo a partir do Canadá, sabemos sempre o estado exato do imóvel.”"
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > blockquote:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > blockquote:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "\"Como proprietarios locais, queriamos um padrao operacional mais elevado. Tudo fica organizado, documentado e resolvido antes de escalar.\""
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > blockquote:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > article:nth-of-type(2) > blockquote:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "“Como proprietários locais, queríamos um padrão operacional mais elevado. Tudo fica organizado, documentado e resolvido antes de escalar.”"
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(5) > div:nth-of-type(2) > h2:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(5) > div:nth-of-type(2) > h2:nth-of-type(1)",
+      "kind": "inline",
+      "value": {
+        "en": "",
+        "pt": "Tem imóvel na Madeira mas vive fora? Nós tratamos localmente, você acompanha tudo."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(5) > div:nth-of-type(2) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(5) > div:nth-of-type(2) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Comece com uma chamada de diagnóstico de 30 minutos. Percebemos se o seu imóvel precisa de cuidados, apoio a hóspedes, revenue & hosting ou ajuda flexível no terreno."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1)",
       "kind": "block",
       "value": {
         "en": "",
@@ -367,6 +520,30 @@
       },
       "href": {
         "en": "/en/pricing",
+        "pt": "/pt/precos"
+      }
+    },
+    {
+      "id": "link:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(1)",
+      "label": {
+        "en": "",
+        "pt": ""
+      },
+      "href": {
+        "en": "",
+        "pt": "/pt/servicos"
+      }
+    },
+    {
+      "id": "link:main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(2)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > a:nth-of-type(2)",
+      "label": {
+        "en": "",
+        "pt": ""
+      },
+      "href": {
+        "en": "",
         "pt": "/pt/precos"
       }
     }
