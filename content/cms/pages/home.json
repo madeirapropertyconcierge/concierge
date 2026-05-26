@@ -253,6 +253,15 @@
         "en": "Start with a 30-minute diagnostic call. We'll work out whether your property needs care, guest support, revenue management, or flexible on-the-ground help.",
         "pt": "Comece com uma chamada de diagnostico de 30 minutos. Percebemos se o seu imovel precisa de cuidado, apoio a hospedes, revenue e hosting, ou ajuda flexivel no terreno."
       }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Gestão de propriedade na Madeira, liderada pela fundadora, para proprietários no estrangeiro. Suporte bilingue EN/PT, reporting claro e execução local de confiança."
+      }
     }
   ],
   "links": [
@@ -361,7 +370,10 @@
       "alt": {
         "en": "Seaside village and sheltered bay on the Madeira coast",
         "pt": "Aldeia costeira e baia protegida na costa da Madeira"
-      }
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
     },
     {
       "id": "image:final-background",
@@ -370,7 +382,10 @@
       "alt": {
         "en": "Steep viewpoint above the Atlantic coastline in Madeira",
         "pt": "Miradouro sobre a costa atlantica da Madeira"
-      }
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
     },
     {
       "id": "image:media-card-1",
@@ -379,7 +394,10 @@
       "alt": {
         "en": "Cliffs and blue Atlantic water at Ponta de Sao Lourenco in Madeira",
         "pt": "Falesias e agua azul do Atlantico na Ponta de Sao Lourenco"
-      }
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
     },
     {
       "id": "image:media-card-2",
@@ -388,7 +406,10 @@
       "alt": {
         "en": "Coastal path descending toward the Atlantic in Madeira",
         "pt": "Caminho costeiro a descer para o Atlantico na Madeira"
-      }
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
     },
     {
       "id": "image:media-card-3",
@@ -397,7 +418,10 @@
       "alt": {
         "en": "Terraced valley village surrounded by green mountains in Madeira",
         "pt": "Aldeia em socalcos rodeada por montanhas verdes na Madeira"
-      }
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
     }
   ]
 }
