@@ -65,7 +65,7 @@
       },
       "homeBlurb": {
         "en": "Secure key holding, monthly inspections, storm checks, and photo reports for vacant homes.",
-        "pt": "Guarda de chaves, inspeções mensais, verificações após tempestade e relatórios fotográficos para casas vazias."
+        "pt": "Guarda de chaves, inspecoes mensais, verificacoes de tempestade e relatorios fotograficos para casas vazias."
       }
     },
     {
@@ -76,7 +76,7 @@
       },
       "title": {
         "en": "Managed Care Package",
-        "pt": "Pacote de Gestão Assistida"
+        "pt": "Pacote de Gestao Assistida"
       },
       "price": {
         "headline": {
@@ -134,7 +134,7 @@
       },
       "homeBlurb": {
         "en": "Arrival and departure coordination, key handovers, utilities, and guest-ready home prep.",
-        "pt": "Coordenação de chegadas e saídas, entrega de chaves, gestão de utilidades e preparação da casa para hóspedes."
+        "pt": "Coordenacao de chegadas e saidas, entrega de chaves, utilidades e preparacao da casa para hospedes."
       }
     },
     {
@@ -200,7 +200,7 @@
       },
       "homeBlurb": {
         "en": "Higher-frequency checks, priority issue handling, and proactive maintenance coordination.",
-        "pt": "Mais frequência de verificações, prioridade em incidentes e coordenação proativa da manutenção."
+        "pt": "Mais frequencia de verificacoes, prioridade em incidentes e coordenacao proativa da manutencao."
       }
     },
     {
@@ -269,7 +269,7 @@
       },
       "homeBlurb": {
         "en": "End-to-end listings, dynamic pricing, guest messaging, booking management, and monthly performance reporting.",
-        "pt": "Gestão de anúncios de ponta a ponta, preços dinâmicos, comunicação com hóspedes, gestão de reservas e relatório mensal de desempenho."
+        "pt": "Gestao de anuncios de ponta a ponta, precos dinamicos, mensagens com hospedes, reservas e relatorio mensal de desempenho."
       }
     },
     {
@@ -280,7 +280,7 @@
       },
       "title": {
         "en": "On-Demand Services",
-        "pt": "Serviços Sob Pedido"
+        "pt": "Servicos Sob Pedido"
       },
       "price": {
         "headline": {
@@ -352,7 +352,7 @@
       },
       "homeBlurb": {
         "en": "Emergency support, extra visits, vendor waiting time, errands, and local coordination without a monthly retainer.",
-        "pt": "Suporte de emergência, visitas extra, acompanhamento de fornecedores, recados e coordenação local sem fee mensal."
+        "pt": "Suporte de emergencia, visitas extra, espera por fornecedores, recados e coordenacao local sem fee mensal."
       }
     },
     {
