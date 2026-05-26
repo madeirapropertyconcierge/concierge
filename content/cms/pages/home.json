@@ -422,7 +422,16 @@
       "kind": "block",
       "value": {
         "en": "",
-        "pt": "Gestão de propriedade na Madeira, liderada pela fundadora, para proprietários no estrangeiro. Suporte bilingue EN/PT, reporting claro e execução local de confiança.  Lisa"
+        "pt": "Gestão de propriedade na Madeira, liderada pela fundadora, para proprietários no estrangeiro. Suporte bilingue EN/PT, reporting claro e execução local de confiança."
+      }
+    },
+    {
+      "id": "text:main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "selector": "main > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(2) > p:nth-of-type(1) > p:nth-of-type(1)",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "Gestão de propriedade na Madeira, liderada pela fundadora, para proprietários no estrangeiro. Suporte bilingue EN/PT, reporting claro e execução local de confiança."
       }
     }
   ],
