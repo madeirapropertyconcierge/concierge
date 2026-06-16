@@ -5,7 +5,13 @@ interface ApiErrorPayload {
   error?: string;
 }
 
-export async function readApiPayload<T>(response: Response): Promise<T & ApiErrorPayload> {
+export interface ApiResult<T> {
+  ok: boolean;
+  status: number;
+  payload: T & ApiErrorPayload;
+}
+
+async function readApiPayload<T>(response: Response): Promise<T & ApiErrorPayload> {
   const contentType = response.headers.get('content-type') ?? '';
 
   if (contentType.includes('application/json')) {
@@ -18,43 +24,52 @@ export async function readApiPayload<T>(response: Response): Promise<T & ApiErro
   } as T & ApiErrorPayload;
 }
 
-export async function login(password: string): Promise<boolean> {
-  const response = await fetch('/api/admin/login', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ password }),
-  });
+async function toResult<T>(response: Response): Promise<ApiResult<T>> {
+  return {
+    ok: response.ok,
+    status: response.status,
+    payload: await readApiPayload<T>(response),
+  };
+}
 
-  return response.ok;
+export async function getJson<T>(url: string): Promise<ApiResult<T>> {
+  const response = await fetch(url, { credentials: 'include', cache: 'no-store' });
+  return toResult<T>(response);
+}
+
+export async function sendJson<T>(method: string, url: string, body?: unknown): Promise<ApiResult<T>> {
+  const response = await fetch(url, {
+    method,
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: body === undefined ? undefined : JSON.stringify(body),
+  });
+  return toResult<T>(response);
+}
+
+export async function sendForm<T>(url: string, formData: FormData): Promise<ApiResult<T>> {
+  const response = await fetch(url, { method: 'POST', credentials: 'include', body: formData });
+  return toResult<T>(response);
+}
+
+export async function login(password: string): Promise<boolean> {
+  const { ok } = await sendJson('POST', '/api/admin/login', { password });
+  return ok;
 }
 
 export async function fetchContent(): Promise<ContentResponse> {
-  const response = await fetch(`/api/admin/content?pageId=${encodeURIComponent(pageId)}`, {
-    credentials: 'include',
-    cache: 'no-store',
-  });
+  const { ok, payload } = await getJson<ContentResponse>(
+    `/api/admin/content?pageId=${encodeURIComponent(pageId)}`,
+  );
 
-  if (!response.ok) {
-    const payload = await readApiPayload<ContentResponse>(response);
+  if (!ok) {
     throw new Error(payload.error ?? 'Failed to load CMS content');
   }
 
-  return await readApiPayload<ContentResponse>(response);
+  return payload;
 }
 
 export async function checkSession(): Promise<boolean> {
-  const response = await fetch('/api/admin/session', {
-    credentials: 'include',
-    cache: 'no-store',
-  });
-
-  if (!response.ok) {
-    return false;
-  }
-
-  const payload = await readApiPayload<{ authenticated?: boolean }>(response);
-  return Boolean(payload.authenticated);
+  const { ok, payload } = await getJson<{ authenticated?: boolean }>('/api/admin/session');
+  return ok && Boolean(payload.authenticated);
 }

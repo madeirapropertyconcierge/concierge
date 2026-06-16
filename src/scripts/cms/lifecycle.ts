@@ -3,7 +3,7 @@ import {
   normalizePageDocument,
   normalizeServicePackageDocument,
 } from '../../cms/content-normalization';
-import { fetchContent, readApiPayload } from './api';
+import { fetchContent, sendForm, sendJson } from './api';
 import { applyCurrentState } from './apply';
 import { setForcedLogoutMarker } from './auth';
 import { setBusy, setDirty, updateActionAvailability } from './banner-ui';
@@ -68,23 +68,18 @@ export async function publishChanges(): Promise<void> {
   setBusy(true);
 
   try {
-    const response = await fetch('/api/admin/publish', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+    const { ok, status, payload } = await sendJson<{ commitSha?: string; warnings?: string[] }>(
+      'POST',
+      '/api/admin/publish',
+      {
         pages: [state.workingState.page],
         packages: state.workingState.packages,
         blogPosts: state.workingState.blogPosts,
         baseSha: state.workingState.baseSha,
-      }),
-    });
+      },
+    );
 
-    const payload = await readApiPayload<{ commitSha?: string; warnings?: string[] }>(response);
-
-    if (response.status === 409) {
+    if (status === 409) {
       // The site changed since this session loaded. Keep the in-flight edits and
       // re-sync only the base commit so the next Publish click can succeed.
       await syncBaseShaFromServer();
@@ -92,7 +87,7 @@ export async function publishChanges(): Promise<void> {
       return;
     }
 
-    if (!response.ok) {
+    if (!ok) {
       setStatus(payload.error ?? 'Publish failed');
       return;
     }
@@ -126,19 +121,12 @@ export async function uploadImage(
   const uploadedFile = formData.get('file');
   setBusy(true);
   try {
-    const response = await fetch('/api/admin/upload-image', {
-      method: 'POST',
-      body: formData,
-      credentials: 'include',
-    });
+    const { ok, payload } = await sendForm<{ ok?: boolean; src?: string; commitSha?: string }>(
+      '/api/admin/upload-image',
+      formData,
+    );
 
-    const payload = await readApiPayload<{
-      ok?: boolean;
-      src?: string;
-      commitSha?: string;
-    }>(response);
-
-    if (!response.ok || !payload.src || !state.workingState) {
+    if (!ok || !payload.src || !state.workingState) {
       setStatus(payload.error ?? 'Image upload failed');
       return;
     }

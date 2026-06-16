@@ -1,5 +1,5 @@
 import { normalizeImageField } from '../../cms/content-normalization';
-import { readApiPayload } from './api';
+import { sendJson } from './api';
 import { applyCurrentState } from './apply';
 import { markDirty } from './banner-ui';
 import { deepClone, locale, localeValue, pageId } from './context';
@@ -344,22 +344,13 @@ async function deleteGalleryItem(item: CmsGalleryItem): Promise<void> {
     return;
   }
 
-  const response = await fetch('/api/admin/delete-image', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ src: item.src }),
-  });
+  const { ok, payload } = await sendJson<{ ok?: boolean; src?: string; commitSha?: string }>(
+    'POST',
+    '/api/admin/delete-image',
+    { src: item.src },
+  );
 
-  const payload = await readApiPayload<{
-    ok?: boolean;
-    src?: string;
-    commitSha?: string;
-  }>(response);
-
-  if (!response.ok || !payload.src || !state.workingState) {
+  if (!ok || !payload.src || !state.workingState) {
     setStatus(payload.error ?? 'Image delete failed');
     return;
   }
