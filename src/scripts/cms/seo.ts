@@ -1,36 +1,20 @@
-import { normalizeCmsText } from '../../cms/text-normalization';
 import { applyCurrentState } from './apply';
 import { markDirty } from './banner-ui';
 import { closePanels, hideElement, seoForm, seoPanel, setStatus, showElement } from './dom';
+import { getFormFieldText, getFormFieldValue, setFormFieldValue } from './form-fields';
 import { state } from './store';
 import type { CmsSeoLocale, Locale } from './types';
 
 function setSeoField(name: string, value: string): void {
-  if (!seoForm) {
-    return;
-  }
-
-  const field = seoForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
-    field.value = value;
-  }
+  setFormFieldValue(seoForm, name, value);
 }
 
 function getSeoField(name: string): string {
-  if (!seoForm) {
-    return '';
-  }
-
-  const field = seoForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
-    return field.value.trim();
-  }
-
-  return '';
+  return getFormFieldValue(seoForm, name);
 }
 
 function getSeoTextField(name: string): string {
-  return normalizeCmsText(getSeoField(name));
+  return getFormFieldText(seoForm, name);
 }
 
 export function hydrateSeoForm(): void {

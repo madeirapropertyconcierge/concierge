@@ -11,35 +11,20 @@ import {
   setStatus,
   showElement,
 } from './dom';
+import { getFormFieldText, getFormFieldValue, setFormFieldValue } from './form-fields';
 import { state } from './store';
 import type { CmsBlogPost } from './types';
 
 function setBlogField(name: string, value: string): void {
-  if (!blogForm) {
-    return;
-  }
-
-  const field = blogForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {
-    field.value = value;
-  }
+  setFormFieldValue(blogForm, name, value);
 }
 
 function getBlogField(name: string): string {
-  if (!blogForm) {
-    return '';
-  }
-
-  const field = blogForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {
-    return field.value.trim();
-  }
-
-  return '';
+  return getFormFieldValue(blogForm, name);
 }
 
 function getBlogTextField(name: string): string {
-  return normalizeCmsText(getBlogField(name));
+  return getFormFieldText(blogForm, name);
 }
 
 export function findSelectedBlogPost(): CmsBlogPost | null {

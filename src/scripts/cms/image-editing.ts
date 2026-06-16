@@ -1,6 +1,5 @@
 import { selectorForId } from '../../cms/cms-keys';
 import { normalizeImageField } from '../../cms/content-normalization';
-import { normalizeCmsText } from '../../cms/text-normalization';
 import { applyCurrentState } from './apply';
 import { markDirty } from './banner-ui';
 import { locale, localeValue, resolveCmsId } from './context';
@@ -15,6 +14,7 @@ import {
   setStatus,
   showElement,
 } from './dom';
+import { getFormFieldText, getFormFieldValue, setFormFieldValue } from './form-fields';
 import { upsertImageField } from './fields';
 import { resolveAdminImageSrc } from './preview-images';
 import { state } from './store';
@@ -50,31 +50,15 @@ export function ensureImageField(target: SelectedImageTarget): CmsImageField | n
 }
 
 function setImageEditorField(name: string, value: string): void {
-  if (!imageEditorForm) {
-    return;
-  }
-
-  const field = imageEditorForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
-    field.value = value;
-  }
+  setFormFieldValue(imageEditorForm, name, value);
 }
 
 function getImageEditorField(name: string): string {
-  if (!imageEditorForm) {
-    return '';
-  }
-
-  const field = imageEditorForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement) {
-    return field.value.trim();
-  }
-
-  return '';
+  return getFormFieldValue(imageEditorForm, name);
 }
 
 function getImageEditorTextField(name: string): string {
-  return normalizeCmsText(getImageEditorField(name));
+  return getFormFieldText(imageEditorForm, name);
 }
 
 function setFormDisabled(form: HTMLFormElement | null, disabled: boolean): void {
