@@ -1,4 +1,3 @@
-import { escapeJsString } from '../../cms/cms-keys';
 import { renderMarkdown } from '../../cms/markdown-core';
 import { locale, localeValue } from './context';
 import { fallbackWarning, integrityWarning } from './dom';
@@ -73,7 +72,9 @@ function applyPageDocument(page: CmsPageDocument): void {
 
         if (element instanceof HTMLButtonElement && !element.closest('form')) {
           element.type = 'button';
-          element.setAttribute('onclick', `window.location.href='${escapeJsString(targetHref)}'`);
+          element.onclick = () => {
+            window.location.href = targetHref;
+          };
         }
       }
 

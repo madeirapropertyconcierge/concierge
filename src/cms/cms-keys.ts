@@ -17,10 +17,6 @@ export function selectorForId(id: string): string {
   return `[data-cms-id="${cssEscapeAttr(id)}"]`;
 }
 
-export function escapeJsString(value: string): string {
-  return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
-}
-
 function hashSeed(input: string): string {
   let hash = 5381;
   for (let index = 0; index < input.length; index += 1) {

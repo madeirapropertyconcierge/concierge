@@ -1,7 +1,6 @@
 import { load } from 'cheerio';
 import type { Locale } from '../i18n/utils';
 import type { CmsPageDocument } from './schema';
-import { escapeJsString } from './cms-keys';
 import { renderBlockMarkdown, renderInlineMarkdown, stripMarkdown } from './markdown';
 
 interface ResolvedLocaleText {
@@ -113,7 +112,7 @@ export function applyCmsPageDocumentToHtml(
 
         if (tagName === 'button') {
           node.attr('type', 'button');
-          node.attr('onclick', `window.location.href='${escapeJsString(href)}'`);
+          node.attr('onclick', 'window.location.href=this.dataset.cmsHref');
         }
       }
 

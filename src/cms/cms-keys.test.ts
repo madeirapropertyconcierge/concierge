@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { adHocId, cssEscapeAttr, escapeJsString, selectorForId } from './cms-keys';
+import { adHocId, cssEscapeAttr, selectorForId } from './cms-keys';
 
 describe('cms-keys', () => {
   it('builds a canonical attribute selector for an id', () => {
@@ -9,11 +9,6 @@ describe('cms-keys', () => {
   it('escapes quotes and backslashes inside ids', () => {
     expect(cssEscapeAttr('a"b\\c')).toBe('a\\"b\\\\c');
     expect(selectorForId('a"b')).toBe('[data-cms-id="a\\"b"]');
-  });
-
-  it('escapes single quotes and backslashes for inline JS strings', () => {
-    expect(escapeJsString("/path'x")).toBe("/path\\'x");
-    expect(escapeJsString('a\\b')).toBe('a\\\\b');
   });
 
   it('produces deterministic, fixed-shape ad-hoc ids', () => {

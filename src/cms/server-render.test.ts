@@ -186,7 +186,7 @@ describe('cms server render', () => {
     expect(output).not.toContain('>two<');
   });
 
-  it('gives non-anchor link targets an onclick attribute', () => {
+  it('navigates non-anchor link targets via a constant onclick reading data-cms-href', () => {
     const page: CmsPageDocument = {
       pageId: 'home',
       updatedAt: '2026-02-28T00:00:00.000Z',
@@ -209,7 +209,10 @@ describe('cms server render', () => {
     const input = '<html><body><main><button data-cms-id="link:cta">Go</button></main></body></html>';
     const output = applyCmsPageDocumentToHtml(input, page, 'en');
 
-    expect(output).toContain('onclick="window.location.href=\'/en/it\\\'s-here\'"');
+    // The handler is a fixed literal (no interpolation); the URL lives only in the
+    // HTML-encoded data attribute, so a quote in the href cannot break out.
+    expect(output).toContain('onclick="window.location.href=this.dataset.cmsHref"');
+    expect(output).toContain('data-cms-href="/en/it\'s-here"');
   });
 
   it('marks pt→en fallback with data-cms-fallback', () => {
