@@ -181,6 +181,7 @@ const banner = document.querySelector<HTMLElement>('#cms-admin-banner');
 const modeLabel = document.querySelector<HTMLElement>('#cms-mode-label');
 const statusEl = document.querySelector<HTMLElement>('#cms-status');
 const fallbackWarning = document.querySelector<HTMLElement>('#cms-fallback-warning');
+const integrityWarning = document.querySelector<HTMLElement>('#cms-integrity-warning');
 const dirtyIndicator = document.querySelector<HTMLElement>('#cms-dirty-indicator');
 
 const toggleModeButton = document.querySelector<HTMLButtonElement>('#cms-toggle-mode');
@@ -895,6 +896,43 @@ function updateFallbackWarning(page: CmsPageDocument): void {
   fallbackWarning.classList.add('cms-hidden');
 }
 
+function countOrphanFields(page: CmsPageDocument): number {
+  const selectors = [
+    ...page.texts.map((field) => field.selector),
+    ...page.links.map((field) => field.selector),
+    ...page.images.map((field) => field.selector),
+  ];
+
+  let orphans = 0;
+  for (const selector of selectors) {
+    try {
+      if (document.querySelectorAll(selector).length === 0) {
+        orphans += 1;
+      }
+    } catch {
+      // An unusable selector cannot match anything, so it is orphaned.
+      orphans += 1;
+    }
+  }
+
+  return orphans;
+}
+
+function updateIntegrityWarning(page: CmsPageDocument): void {
+  if (!integrityWarning) {
+    return;
+  }
+
+  const orphans = countOrphanFields(page);
+  if (orphans > 0) {
+    integrityWarning.textContent = `${orphans} orphaned field${orphans === 1 ? '' : 's'}`;
+    integrityWarning.classList.remove('cms-hidden');
+    return;
+  }
+
+  integrityWarning.classList.add('cms-hidden');
+}
+
 function setMetaContent(selector: string, content: string): void {
   const element = document.querySelector<HTMLMetaElement>(selector);
   if (element && content.trim()) {
@@ -931,6 +969,7 @@ function applyCurrentState(): void {
   applyServicePackageDocument(workingState.packages);
   applyPageDocument(workingState.page);
   updateFallbackWarning(workingState.page);
+  updateIntegrityWarning(workingState.page);
   updateSeoPreview(workingState.page);
 
   if (isPanelOpen(seoPanel)) {
