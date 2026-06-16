@@ -33,7 +33,6 @@ export type LocaleText = CmsTextField['value'];
 export type CmsSeoLocale = CmsPageDocument['seo']['en'];
 export type CmsBlogLocale = CmsBlogPost['locales']['en'];
 export type CmsBlogSeo = CmsBlogPost['seoByLocale']['en'];
-export type CmsServicePackagePrice = NonNullable<CmsServicePackageEntry['price']>;
 export type CmsServicePackageKey = CmsServicePackageEntry['key'];
 
 export type CmsServicePackageField =
