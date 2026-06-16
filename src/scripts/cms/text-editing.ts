@@ -5,7 +5,7 @@ import { normalizeCmsText } from '../../cms/text-normalization';
 import { applyCurrentState } from './apply';
 import { markDirty } from './banner-ui';
 import { locale, localeValue, normalizeTextInput, resolveCmsId, setLocaleValue } from './context';
-import { isSharedPackageElement } from './editable-dom';
+import { isSharedPackageElement, linkOwnsLabel } from './editable-dom';
 import {
   findServicePackageEntry,
   readSharedPackageFieldValue,
@@ -13,6 +13,7 @@ import {
   upsertTextField,
   writeSharedPackageFieldValue,
 } from './fields';
+import { openLinkEditor } from './link-editor';
 import { state } from './store';
 import type { CmsServicePackageField, CmsServicePackageKey } from './types';
 
@@ -148,7 +149,7 @@ export function beginTextEdit(element: HTMLElement): void {
   element.addEventListener('blur', handleBlur);
 }
 
-export function editLink(element: HTMLElement): void {
+export async function editLink(element: HTMLElement): Promise<void> {
   if (!state.workingState) {
     return;
   }
@@ -156,7 +157,7 @@ export function editLink(element: HTMLElement): void {
   const id = resolveCmsId(element, 'link');
   const selector = selectorForId(id);
   const existing = state.workingState.page.links.find((field) => field.id === id);
-  const isSimpleLinkLabelTarget = element.childElementCount === 0;
+  const ownsLabel = linkOwnsLabel(element);
 
   const currentLabel = existing ? localeValue(existing.label) : normalizeTextInput(element.textContent ?? '');
   const currentHref = existing?.href[locale]
@@ -164,23 +165,18 @@ export function editLink(element: HTMLElement): void {
       ? element.getAttribute('href') ?? ''
       : element.getAttribute('data-cms-href') ?? '');
 
-  const href = window.prompt('Target URL (absolute https:// or /relative)', currentHref);
-  if (href === null) {
+  const result = await openLinkEditor({
+    label: currentLabel,
+    href: currentHref,
+    allowLabel: ownsLabel,
+  });
+  if (result === null) {
     return;
   }
 
-  let label = currentLabel;
-  if (isSimpleLinkLabelTarget) {
-    const promptedLabel = window.prompt('Link/Button label', currentLabel);
-    if (promptedLabel === null) {
-      return;
-    }
-    label = normalizeTextInput(promptedLabel);
-  }
-
-  const nextHref = href.trim();
-  const nextLabel = normalizeTextInput(label);
-  const nextLabelValue = isSimpleLinkLabelTarget
+  const nextHref = result.href.trim();
+  const nextLabel = normalizeTextInput(result.label);
+  const nextLabelValue = ownsLabel
     ? (existing ? setLocaleValue(existing.label, nextLabel) : { en: '', pt: '', [locale]: nextLabel })
     : (existing?.label ?? { en: '', pt: '' });
   const nextHrefValue = existing
@@ -203,8 +199,8 @@ export function editLink(element: HTMLElement): void {
   });
 
   applyCurrentState();
-  if (!isSimpleLinkLabelTarget) {
-    markDirty('Link URL updated. Text can be edited directly inside the card/button.');
+  if (!ownsLabel) {
+    markDirty('Link target updated. Edit the button text directly on the page.');
     return;
   }
   markDirty('Link updated');

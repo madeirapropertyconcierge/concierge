@@ -26,8 +26,8 @@ function markFallback(node: ReturnType<ReturnType<typeof load>>, usedFallback: b
   }
 }
 
-function isSimpleLinkLabelTarget(childrenCount: number): boolean {
-  return childrenCount === 0;
+function linkOwnsLabel(node: ReturnType<ReturnType<typeof load>>, childrenCount: number): boolean {
+  return node.attr('data-cms-link-managed') !== undefined || childrenCount === 0;
 }
 
 function hasSharedOwner(
@@ -89,7 +89,7 @@ export function applyCmsPageDocumentToHtml(
     $(field.selector).each((_index, element) => {
       const node = $(element);
       const tagName = 'tagName' in element ? element.tagName.toLowerCase() : '';
-      const simpleLabelTarget = isSimpleLinkLabelTarget(node.children().length);
+      const ownsLabel = linkOwnsLabel(node, node.children().length);
 
       if (hasSharedOwner($, element)) {
         return;
@@ -101,12 +101,12 @@ export function applyCmsPageDocumentToHtml(
 
       if (tagName === 'a') {
         node.attr('href', href);
-        if (simpleLabelTarget) {
+        if (ownsLabel) {
           node.html(renderedLabel);
         }
       } else {
         node.attr('data-cms-href', href);
-        if (simpleLabelTarget) {
+        if (ownsLabel) {
           node.text(stripMarkdown(label));
         }
 

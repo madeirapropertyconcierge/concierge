@@ -36,6 +36,16 @@ export function isAdminControl(element: Element | null): boolean {
   return Boolean(element?.closest('[data-admin-allow]'));
 }
 
+/**
+ * Whether a link's entire inner content is owned by its CMS label, so the
+ * label can be edited and re-rendered without clobbering authored structure.
+ * True for managed links (e.g. `EditableLink`) and for plain text-only links;
+ * false for links wrapping custom markup (icons, nested elements).
+ */
+export function linkOwnsLabel(element: HTMLElement): boolean {
+  return element.dataset.cmsLinkManaged !== undefined || element.childElementCount === 0;
+}
+
 export function isTextCandidate(element: HTMLElement): boolean {
   if (!TEXT_TAGS.has(element.tagName)) {
     return false;

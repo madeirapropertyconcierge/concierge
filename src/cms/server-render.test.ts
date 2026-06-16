@@ -79,6 +79,34 @@ describe('cms server render', () => {
     expect(output).not.toContain('Will not replace card');
   });
 
+  it('re-renders the label of a managed link even when it has child markup', () => {
+    const page: CmsPageDocument = {
+      pageId: 'home',
+      updatedAt: '2026-02-28T00:00:00.000Z',
+      seo: {
+        en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+        pt: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+      },
+      texts: [],
+      links: [
+        {
+          id: 'link:cta',
+          selector: 'main > a:nth-of-type(1)',
+          label: { en: 'Who **we** help', pt: '' },
+          href: { en: '/en/how-it-works', pt: '' },
+        },
+      ],
+      images: [],
+    };
+
+    const input = '<html><body><main><a href="/old" data-cms-link-managed><strong>old</strong> label</a></main></body></html>';
+    const output = applyCmsPageDocumentToHtml(input, page, 'en');
+
+    expect(output).toContain('href="/en/how-it-works"');
+    expect(output).toContain('Who <strong>we</strong> help');
+    expect(output).not.toContain('old');
+  });
+
   it('skips page overrides for shared package-owned elements', () => {
     const page: CmsPageDocument = {
       pageId: 'home',

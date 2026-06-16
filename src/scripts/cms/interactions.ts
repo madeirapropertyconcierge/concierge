@@ -44,7 +44,7 @@ export function handleEditClick(event: MouseEvent): void {
   if (clickable instanceof HTMLElement && clickable.closest('main')) {
     event.preventDefault();
     event.stopPropagation();
-    editLink(clickable);
+    void editLink(clickable);
     return;
   }
 }

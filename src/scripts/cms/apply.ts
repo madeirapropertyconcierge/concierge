@@ -1,6 +1,6 @@
 import { renderMarkdown } from '../../cms/markdown-core';
 import { locale, localeValue } from './context';
-import { isSharedOwnedElement } from './editable-dom';
+import { isSharedOwnedElement, linkOwnsLabel } from './editable-dom';
 import { readSharedPackageFieldValue } from './fields';
 import { resolveAdminImageSrc } from './preview-images';
 import { updateSeoPreview } from './seo-preview';
@@ -58,16 +58,16 @@ function applyPageDocument(page: CmsPageDocument): void {
         return;
       }
 
-      const isSimpleLinkLabelTarget = element.childElementCount === 0;
+      const ownsLabel = linkOwnsLabel(element);
 
       if (element instanceof HTMLAnchorElement) {
         element.href = targetHref;
-        if (isSimpleLinkLabelTarget) {
+        if (ownsLabel) {
           element.innerHTML = renderedLabel;
         }
       } else {
         element.setAttribute('data-cms-href', targetHref);
-        if (isSimpleLinkLabelTarget) {
+        if (ownsLabel) {
           element.textContent = labelText;
         }
 

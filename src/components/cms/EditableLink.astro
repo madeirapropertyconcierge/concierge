@@ -18,5 +18,6 @@ const { id, selector, href, label, ...rest } = Astro.props;
   data-cms-field="link"
   data-cms-id={id}
   data-cms-selector={selector}
+  data-cms-link-managed
   set:html={renderInlineMarkdown(label)}
 />
