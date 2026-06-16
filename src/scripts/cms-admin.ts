@@ -51,55 +51,74 @@ import {
   resolveCmsId,
   setLocaleValue,
 } from "./cms/context";
+import {
+  banner,
+  blogDeleteButton,
+  blogDuplicateButton,
+  blogForm,
+  blogManagerClose,
+  blogManagerPanel,
+  blogNewButton,
+  blogSelect,
+  closePanels,
+  dirtyIndicator,
+  discardChangesButton,
+  editSeoButton,
+  fallbackWarning,
+  hideElement,
+  imageEditorClose,
+  imageEditorForm,
+  imageEditorOpenLibraryButton,
+  imageEditorPanel,
+  imageEditorPreview,
+  imageEditorSelected,
+  imageLibraryClose,
+  imageLibraryCount,
+  imageLibraryList,
+  imageLibraryPanel,
+  imageLibrarySearch,
+  imageReplaceUploadForm,
+  imageUploadForm,
+  integrityWarning,
+  isPanelOpen,
+  loginCancel,
+  loginError,
+  loginForm,
+  loginModal,
+  logoutButton,
+  modeLabel,
+  openBlogManagerButton,
+  openImageEditorButton,
+  openImageLibraryButton,
+  publishButton,
+  seoClose,
+  seoFillCanonicalButton,
+  seoForm,
+  seoPanel,
+  setPanelVisibility,
+  setStatus,
+  showElement,
+  statusEl,
+  toggleModeButton,
+} from "./cms/dom";
+import { checkSession, fetchContent, login, readApiPayload } from "./cms/api";
+import {
+  markDirty,
+  setBusy,
+  setDirty,
+  updateActionAvailability,
+  updateDirtyIndicator,
+  updateModeLabel,
+} from "./cms/banner-ui";
+import {
+  applyBlogFormChanges,
+  createEmptyBlogPost,
+  findSelectedBlogPost,
+  hydrateBlogForm,
+  renderBlogSelect,
+  toggleBlogManager,
+} from "./cms/blog";
 
-const loginModal = document.querySelector<HTMLElement>('#cms-login-modal');
-const loginForm = document.querySelector<HTMLFormElement>('#cms-login-form');
-const loginError = document.querySelector<HTMLElement>('#cms-login-error');
-const loginCancel = document.querySelector<HTMLButtonElement>('#cms-login-cancel');
-
-const banner = document.querySelector<HTMLElement>('#cms-admin-banner');
-const modeLabel = document.querySelector<HTMLElement>('#cms-mode-label');
-const statusEl = document.querySelector<HTMLElement>('#cms-status');
-const fallbackWarning = document.querySelector<HTMLElement>('#cms-fallback-warning');
-const integrityWarning = document.querySelector<HTMLElement>('#cms-integrity-warning');
-const dirtyIndicator = document.querySelector<HTMLElement>('#cms-dirty-indicator');
-
-const toggleModeButton = document.querySelector<HTMLButtonElement>('#cms-toggle-mode');
-const discardChangesButton = document.querySelector<HTMLButtonElement>('#cms-discard-changes');
-const editSeoButton = document.querySelector<HTMLButtonElement>('#cms-edit-seo');
-const openImageEditorButton = document.querySelector<HTMLButtonElement>('#cms-open-image-editor');
-const openImageLibraryButton = document.querySelector<HTMLButtonElement>('#cms-open-image-library');
-const openBlogManagerButton = document.querySelector<HTMLButtonElement>('#cms-open-blog-manager');
-const publishButton = document.querySelector<HTMLButtonElement>('#cms-publish');
-const logoutButton = document.querySelector<HTMLButtonElement>('#cms-logout');
-
-const seoPanel = document.querySelector<HTMLElement>('#cms-seo-editor');
-const seoClose = document.querySelector<HTMLButtonElement>('#cms-seo-close');
-const seoFillCanonicalButton = document.querySelector<HTMLButtonElement>('#cms-seo-fill-canonical');
-const seoForm = document.querySelector<HTMLFormElement>('#cms-seo-form');
-
-const imageEditorPanel = document.querySelector<HTMLElement>('#cms-image-editor');
-const imageEditorClose = document.querySelector<HTMLButtonElement>('#cms-image-editor-close');
-const imageEditorOpenLibraryButton = document.querySelector<HTMLButtonElement>('#cms-image-open-library');
-const imageEditorSelected = document.querySelector<HTMLElement>('#cms-image-selected');
-const imageEditorPreview = document.querySelector<HTMLImageElement>('#cms-image-preview');
-const imageReplaceUploadForm = document.querySelector<HTMLFormElement>('#cms-image-replace-upload-form');
-const imageEditorForm = document.querySelector<HTMLFormElement>('#cms-image-form');
-
-const imageLibraryPanel = document.querySelector<HTMLElement>('#cms-image-library');
-const imageLibraryClose = document.querySelector<HTMLButtonElement>('#cms-image-library-close');
-const imageLibraryList = document.querySelector<HTMLElement>('#cms-image-library-list');
-const imageLibraryCount = document.querySelector<HTMLElement>('#cms-image-library-count');
-const imageLibrarySearch = document.querySelector<HTMLInputElement>('#cms-image-search');
-const imageUploadForm = document.querySelector<HTMLFormElement>('#cms-image-upload-form');
-
-const blogManagerPanel = document.querySelector<HTMLElement>('#cms-blog-manager');
-const blogManagerClose = document.querySelector<HTMLButtonElement>('#cms-blog-manager-close');
-const blogSelect = document.querySelector<HTMLSelectElement>('#cms-blog-select');
-const blogForm = document.querySelector<HTMLFormElement>('#cms-blog-form');
-const blogNewButton = document.querySelector<HTMLButtonElement>('#cms-blog-new');
-const blogDuplicateButton = document.querySelector<HTMLButtonElement>('#cms-blog-duplicate');
-const blogDeleteButton = document.querySelector<HTMLButtonElement>('#cms-blog-delete');
 
 if (!isBlogPage && openBlogManagerButton) {
   openBlogManagerButton.classList.add('cms-hidden');
@@ -125,38 +144,7 @@ const TEXT_TAGS = new Set([
   'EM',
 ]);
 
-interface ApiErrorPayload {
-  error?: string;
-}
 
-async function readApiPayload<T>(response: Response): Promise<T & ApiErrorPayload> {
-  const contentType = response.headers.get('content-type') ?? '';
-
-  if (contentType.includes('application/json')) {
-    return (await response.json()) as T & ApiErrorPayload;
-  }
-
-  const text = (await response.text()).trim();
-  return {
-    ...(text ? { error: text } : {}),
-  } as T & ApiErrorPayload;
-}
-
-function showElement(element: HTMLElement | null): void {
-  element?.classList.remove('cms-hidden');
-}
-
-function hideElement(element: HTMLElement | null): void {
-  element?.classList.add('cms-hidden');
-}
-
-function setStatus(message: string): void {
-  if (!statusEl) {
-    return;
-  }
-
-  statusEl.textContent = message;
-}
 
 
 function isSharedPackageElement(element: Element | null): element is HTMLElement {
@@ -372,107 +360,6 @@ function writeSharedPackageFieldValue(
   }
 }
 
-function updateModeLabel(): void {
-  if (!modeLabel || !toggleModeButton) {
-    return;
-  }
-
-  modeLabel.textContent = state.editMode ? 'Edit' : 'View';
-  toggleModeButton.textContent = state.editMode ? 'Stop editing' : 'Edit content';
-}
-
-function updateDirtyIndicator(): void {
-  if (!dirtyIndicator) {
-    return;
-  }
-
-  dirtyIndicator.textContent = state.hasUnsavedChanges ? 'Unsaved changes' : 'Up to date';
-  dirtyIndicator.classList.toggle('cms-pill-dirty', state.hasUnsavedChanges);
-  dirtyIndicator.classList.toggle('cms-pill-neutral', !state.hasUnsavedChanges);
-}
-
-function updateActionAvailability(): void {
-  const canUseActions = state.authenticated && !state.isBusy;
-
-  if (toggleModeButton) {
-    toggleModeButton.disabled = !canUseActions;
-  }
-
-  if (publishButton) {
-    publishButton.disabled = !canUseActions || !state.hasUnsavedChanges;
-  }
-
-  if (discardChangesButton) {
-    discardChangesButton.disabled = !canUseActions || !state.hasUnsavedChanges;
-  }
-
-  if (editSeoButton) {
-    editSeoButton.disabled = !canUseActions;
-  }
-
-  if (openImageEditorButton) {
-    openImageEditorButton.disabled = !canUseActions;
-  }
-
-  if (openImageLibraryButton) {
-    openImageLibraryButton.disabled = !canUseActions;
-  }
-
-  if (openBlogManagerButton) {
-    openBlogManagerButton.disabled = !canUseActions;
-  }
-
-  if (logoutButton) {
-    logoutButton.disabled = !canUseActions;
-  }
-}
-
-function setDirty(nextValue: boolean): void {
-  state.hasUnsavedChanges = nextValue;
-  updateDirtyIndicator();
-  updateActionAvailability();
-}
-
-function markDirty(message: string): void {
-  setDirty(true);
-  setStatus(message);
-}
-
-function setBusy(nextValue: boolean): void {
-  state.isBusy = nextValue;
-  state.suppressBeforeUnloadPrompt = nextValue;
-  updateActionAvailability();
-}
-
-function setPanelVisibility(panel: HTMLElement | null, open: boolean): void {
-  if (!panel) {
-    return;
-  }
-
-  if (open) {
-    panel.classList.remove('cms-hidden');
-    return;
-  }
-
-  panel.classList.add('cms-hidden');
-}
-
-function isPanelOpen(panel: HTMLElement | null): boolean {
-  if (!panel) {
-    return false;
-  }
-
-  return !panel.classList.contains('cms-hidden');
-}
-
-function closePanels(except?: HTMLElement | null): void {
-  const panels = [seoPanel, imageEditorPanel, imageLibraryPanel, blogManagerPanel];
-  for (const panel of panels) {
-    if (panel && panel !== except) {
-      panel.classList.add('cms-hidden');
-    }
-  }
-}
 
 function localeFallbackUsed(value: LocaleText): boolean {
   return locale !== 'en' && !value[locale].trim() && Boolean(value.en.trim());
@@ -791,18 +678,6 @@ function closeLoginModal(): void {
   loginForm?.reset();
 }
 
-async function login(password: string): Promise<boolean> {
-  const response = await fetch('/api/admin/login', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ password }),
-  });
-
-  return response.ok;
-}
 
 function finalizeActiveTextEdit(): void {
   if (!state.activeEditableElement) {
@@ -1846,268 +1721,6 @@ function toggleImageLibrary(open: boolean): void {
   hideElement(imageLibraryPanel);
 }
 
-function setBlogField(name: string, value: string): void {
-  if (!blogForm) {
-    return;
-  }
-
-  const field = blogForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {
-    field.value = value;
-  }
-}
-
-function getBlogField(name: string): string {
-  if (!blogForm) {
-    return '';
-  }
-
-  const field = blogForm.elements.namedItem(name);
-  if (field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement || field instanceof HTMLSelectElement) {
-    return field.value.trim();
-  }
-
-  return '';
-}
-
-function getBlogTextField(name: string): string {
-  return normalizeCmsText(getBlogField(name));
-}
-
-function findSelectedBlogPost(): CmsBlogPost | null {
-  if (!state.workingState || !blogSelect || !blogSelect.value) {
-    return null;
-  }
-
-  return state.workingState.blogPosts.find((post) => post.id === blogSelect.value) ?? null;
-}
-
-function hydrateBlogForm(): void {
-  const post = findSelectedBlogPost();
-  if (!post) {
-    blogForm?.reset();
-    return;
-  }
-
-  setBlogField('slug', post.slug);
-  setBlogField('status', post.status);
-  setBlogField('publishedAt', post.publishedAt);
-  setBlogField('readingMinutes', String(post.readingMinutes));
-  setBlogField('coverImage', post.coverImage);
-  setBlogField('tags', post.tags.join(','));
-
-  setBlogField('titleEn', post.locales.en.title);
-  setBlogField('excerptEn', post.locales.en.excerpt);
-  setBlogField('bodyEn', post.locales.en.body);
-  setBlogField('coverAltEn', post.locales.en.coverAlt);
-
-  setBlogField('titlePt', post.locales.pt.title);
-  setBlogField('excerptPt', post.locales.pt.excerpt);
-  setBlogField('bodyPt', post.locales.pt.body);
-  setBlogField('coverAltPt', post.locales.pt.coverAlt);
-
-  setBlogField('seoTitleEn', post.seoByLocale.en.title);
-  setBlogField('seoDescEn', post.seoByLocale.en.description);
-  setBlogField('ogTitleEn', post.seoByLocale.en.ogTitle);
-  setBlogField('ogDescEn', post.seoByLocale.en.ogDescription);
-  setBlogField('ogImageEn', post.seoByLocale.en.ogImage);
-  setBlogField('canonicalEn', post.seoByLocale.en.canonical);
-
-  setBlogField('seoTitlePt', post.seoByLocale.pt.title);
-  setBlogField('seoDescPt', post.seoByLocale.pt.description);
-  setBlogField('ogTitlePt', post.seoByLocale.pt.ogTitle);
-  setBlogField('ogDescPt', post.seoByLocale.pt.ogDescription);
-  setBlogField('ogImagePt', post.seoByLocale.pt.ogImage);
-  setBlogField('canonicalPt', post.seoByLocale.pt.canonical);
-}
-
-function renderBlogSelect(preferredId?: string): void {
-  if (!state.workingState || !blogSelect) {
-    return;
-  }
-
-  const previous = preferredId ?? blogSelect.value;
-  blogSelect.innerHTML = '';
-
-  for (const post of state.workingState.blogPosts) {
-    const option = document.createElement('option');
-    option.value = post.id;
-    option.textContent = `${post.slug} (${post.status})`;
-    blogSelect.append(option);
-  }
-
-  const hasPrevious = previous && state.workingState.blogPosts.some((post) => post.id === previous);
-  if (hasPrevious) {
-    blogSelect.value = previous;
-  } else if (state.workingState.blogPosts[0]) {
-    blogSelect.value = state.workingState.blogPosts[0].id;
-  }
-
-  hydrateBlogForm();
-}
-
-function upsertBlogPost(post: CmsBlogPost): void {
-  if (!state.workingState) {
-    return;
-  }
-
-  const normalizedPost = normalizeBlogPost(post);
-  const index = state.workingState.blogPosts.findIndex((entry) => entry.id === post.id);
-  if (index >= 0) {
-    state.workingState.blogPosts[index] = normalizedPost;
-    return;
-  }
-
-  state.workingState.blogPosts.unshift(normalizedPost);
-}
-
-function createEmptyBlogPost(): CmsBlogPost {
-  const id = `post-${Date.now()}`;
-  return {
-    id,
-    slug: `new-post-${Date.now()}`,
-    status: 'draft',
-    publishedAt: nowIso().slice(0, 10),
-    updatedAt: nowIso(),
-    tags: [],
-    readingMinutes: 5,
-    coverImage: '',
-    locales: {
-      en: { title: '', excerpt: '', body: '', coverAlt: '' },
-      pt: { title: '', excerpt: '', body: '', coverAlt: '' },
-    },
-    seoByLocale: {
-      en: {
-        title: '',
-        description: '',
-        ogTitle: '',
-        ogDescription: '',
-        ogImage: '',
-        canonical: '',
-      },
-      pt: {
-        title: '',
-        description: '',
-        ogTitle: '',
-        ogDescription: '',
-        ogImage: '',
-        canonical: '',
-      },
-    },
-  };
-}
-
-function applyBlogFormChanges(): void {
-  const selected = findSelectedBlogPost();
-  if (!selected) {
-    return;
-  }
-
-  const readingMinutesRaw = getBlogField('readingMinutes') || String(selected.readingMinutes);
-  const readingMinutesParsed = Number.parseInt(readingMinutesRaw, 10);
-  const readingMinutes = Number.isFinite(readingMinutesParsed) && readingMinutesParsed > 0
-    ? readingMinutesParsed
-    : selected.readingMinutes;
-
-  const nextPost = normalizeBlogPost({
-    ...selected,
-    slug: getBlogField('slug'),
-    status: (getBlogField('status') as 'draft' | 'published') || 'draft',
-    publishedAt: getBlogField('publishedAt') || selected.publishedAt,
-    readingMinutes,
-    coverImage: getBlogField('coverImage'),
-    updatedAt: nowIso(),
-    tags: getBlogField('tags')
-      .split(',')
-      .map((tag) => normalizeCmsText(tag).trim())
-      .filter(Boolean),
-    locales: {
-      en: {
-        title: getBlogTextField('titleEn'),
-        excerpt: getBlogTextField('excerptEn'),
-        body: getBlogTextField('bodyEn'),
-        coverAlt: getBlogTextField('coverAltEn'),
-      },
-      pt: {
-        title: getBlogTextField('titlePt'),
-        excerpt: getBlogTextField('excerptPt'),
-        body: getBlogTextField('bodyPt'),
-        coverAlt: getBlogTextField('coverAltPt'),
-      },
-    },
-    seoByLocale: {
-      en: {
-        title: getBlogTextField('seoTitleEn'),
-        description: getBlogTextField('seoDescEn'),
-        ogTitle: getBlogTextField('ogTitleEn'),
-        ogDescription: getBlogTextField('ogDescEn'),
-        ogImage: getBlogField('ogImageEn'),
-        canonical: getBlogField('canonicalEn'),
-      },
-      pt: {
-        title: getBlogTextField('seoTitlePt'),
-        description: getBlogTextField('seoDescPt'),
-        ogTitle: getBlogTextField('ogTitlePt'),
-        ogDescription: getBlogTextField('ogDescPt'),
-        ogImage: getBlogField('ogImagePt'),
-        canonical: getBlogField('canonicalPt'),
-      },
-    },
-  });
-
-  if (JSON.stringify(selected) === JSON.stringify(nextPost)) {
-    setStatus('Post unchanged');
-    return;
-  }
-
-  upsertBlogPost(nextPost);
-  renderBlogSelect(nextPost.id);
-  markDirty('Blog post updated');
-}
-
-function toggleBlogManager(open: boolean): void {
-  if (!blogManagerPanel || !isBlogPage) {
-    return;
-  }
-
-  if (open) {
-    closePanels(blogManagerPanel);
-    showElement(blogManagerPanel);
-    renderBlogSelect();
-    return;
-  }
-
-  hideElement(blogManagerPanel);
-}
-
-async function fetchContent(): Promise<ContentResponse> {
-  const response = await fetch(`/api/admin/content?pageId=${encodeURIComponent(pageId)}`, {
-    credentials: 'include',
-    cache: 'no-store',
-  });
-
-  if (!response.ok) {
-    const payload = await readApiPayload<ContentResponse>(response);
-    throw new Error(payload.error ?? 'Failed to load CMS content');
-  }
-
-  return await readApiPayload<ContentResponse>(response);
-}
-
-async function checkSession(): Promise<boolean> {
-  const response = await fetch('/api/admin/session', {
-    credentials: 'include',
-    cache: 'no-store',
-  });
-
-  if (!response.ok) {
-    return false;
-  }
-
-  const payload = await readApiPayload<{ authenticated?: boolean }>(response);
-  return Boolean(payload.authenticated);
-}
-
 function hydrateStateFromResponse(response: ContentResponse): void {
   const baseState: WorkingState = {
     page: normalizePageDocument(response.page),
@@ -2409,7 +2022,12 @@ function bindAuthUI(): void {
   loginForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    const formData = new FormData(loginForm);
+    const form = loginForm;
+    if (!form) {
+      return;
+    }
+
+    const formData = new FormData(form);
     const password = String(formData.get('password') ?? '');
     const ok = await login(password);
 
@@ -2509,9 +2127,13 @@ function bindImageEditorUI(): void {
 
   imageReplaceUploadForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const data = new FormData(imageReplaceUploadForm);
+    const form = imageReplaceUploadForm;
+    if (!form) {
+      return;
+    }
+    const data = new FormData(form);
     await uploadImage(data, { applyToSelected: true });
-    imageReplaceUploadForm.reset();
+    form.reset();
   });
 
   imageEditorForm?.addEventListener('submit', (event) => {
@@ -2531,9 +2153,13 @@ function bindImageLibraryUI(): void {
 
   imageUploadForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const data = new FormData(imageUploadForm);
+    const form = imageUploadForm;
+    if (!form) {
+      return;
+    }
+    const data = new FormData(form);
     await uploadImage(data);
-    imageUploadForm.reset();
+    form.reset();
   });
 }
 
