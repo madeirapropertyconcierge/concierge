@@ -1,4 +1,4 @@
-import { adHocId, escapeJsString, selectorForId, type CmsFieldKind } from '../cms/cms-keys';
+import { escapeJsString, selectorForId } from '../cms/cms-keys';
 import { renderMarkdown } from '../cms/markdown-core';
 import {
   normalizeBlogPost,
@@ -10,167 +10,47 @@ import {
 } from '../cms/content-normalization';
 import { normalizeCmsText } from '../cms/text-normalization';
 
-type Locale = 'en' | 'pt';
-
-type LocaleText = Record<Locale, string>;
-
-interface CmsTextField {
-  id: string;
-  selector: string;
-  kind: 'inline' | 'block';
-  value: LocaleText;
-}
-
-interface CmsLinkField {
-  id: string;
-  selector: string;
-  label: LocaleText;
-  href: LocaleText;
-}
-
-interface CmsImageField {
-  id: string;
-  selector: string;
-  src: string;
-  alt: LocaleText;
-  attributionName: string;
-  attributionUrl: string;
-  licenseUrl: string;
-  caption?: LocaleText;
-}
-
-interface CmsSeoLocale {
-  title: string;
-  description: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: string;
-  canonical: string;
-}
-
-interface CmsPageDocument {
-  pageId: string;
-  updatedAt: string;
-  seo: Record<Locale, CmsSeoLocale>;
-  texts: CmsTextField[];
-  links: CmsLinkField[];
-  images: CmsImageField[];
-}
-
-type CmsServicePackageKey =
-  | 'essentialCare'
-  | 'managedCare'
-  | 'premiumCare'
-  | 'revenueHosting'
-  | 'onDemand'
-  | 'addOns';
-
-type CmsServicePackageField =
-  | 'tierLabel'
-  | 'title'
-  | 'audience'
-  | 'priceHeadline'
-  | 'priceDetail'
-  | 'idealFor'
-  | 'homeBlurb'
-  | 'feature'
-  | 'servicesBullet';
-
-interface CmsServicePackagePrice {
-  headline: LocaleText;
-  detail: LocaleText;
-}
-
-interface CmsServicePackageEntry {
-  key: CmsServicePackageKey;
-  tierLabel: LocaleText;
-  title: LocaleText;
-  price: CmsServicePackagePrice | null;
-  audience: LocaleText;
-  features: Record<Locale, string[]>;
-  idealFor: LocaleText;
-  servicesBullets: Record<Locale, string[]>;
-  homeBlurb: LocaleText;
-}
-
-interface CmsServicePackageDocument {
-  updatedAt: string;
-  packages: CmsServicePackageEntry[];
-}
-
-interface CmsBlogLocale {
-  title: string;
-  excerpt: string;
-  body: string;
-  coverAlt: string;
-}
-
-interface CmsBlogSeo {
-  title: string;
-  description: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: string;
-  canonical: string;
-}
-
-interface CmsBlogPost {
-  id: string;
-  slug: string;
-  status: 'draft' | 'published';
-  publishedAt: string;
-  updatedAt: string;
-  tags: string[];
-  readingMinutes: number;
-  coverImage: string;
-  locales: Record<Locale, CmsBlogLocale>;
-  seoByLocale: Record<Locale, CmsBlogSeo>;
-}
-
-interface ContentResponse {
-  page: CmsPageDocument;
-  packages: CmsServicePackageDocument;
-  blogPosts: CmsBlogPost[];
-  branchSha: string | null;
-  galleryItems?: CmsGalleryItem[];
-  authenticated: boolean;
-}
-
-interface WorkingState {
-  page: CmsPageDocument;
-  packages: CmsServicePackageDocument;
-  blogPosts: CmsBlogPost[];
-  baseSha: string | null;
-}
-
-interface SelectedImageTarget {
-  selector: string;
-  id: string;
-}
-
-type GallerySource = 'public' | 'page' | 'blog' | 'seo';
-
-interface CmsGalleryItem {
-  id: string;
-  src: string;
-  alt: LocaleText;
-  attributionName: string;
-  attributionUrl: string;
-  licenseUrl: string;
-  caption?: LocaleText;
-  source: GallerySource;
-  sourceLabels: string[];
-}
-
-const root = document.querySelector<HTMLDivElement>('#cms-admin-root');
-if (!root) {
-  throw new Error('CMS admin root not found');
-}
-
-const pageId = root.dataset.pageId ?? 'home';
-const locale = (root.dataset.locale ?? 'en') as Locale;
-const isBlogPage = root.dataset.isBlogPage === 'true';
-const isMediaPage = window.location.pathname === '/admin/images';
+import type {
+  CmsBlogLocale,
+  CmsBlogPost,
+  CmsBlogSeo,
+  CmsGalleryItem,
+  CmsImageField,
+  CmsLinkField,
+  CmsPageDocument,
+  CmsSeoLocale,
+  CmsServicePackageDocument,
+  CmsServicePackageEntry,
+  CmsServicePackageField,
+  CmsServicePackageKey,
+  CmsServicePackagePrice,
+  CmsTextField,
+  ContentResponse,
+  GallerySource,
+  Locale,
+  LocaleText,
+  SelectedImageTarget,
+  WorkingState,
+} from "./cms/types";
+import { state } from "./cms/store";
+import {
+  clearAllPendingAdminImagePreviews,
+  clearPendingAdminImagePreview,
+  resolveAdminImageSrc,
+  setPendingAdminImagePreview,
+} from "./cms/preview-images";
+import {
+  deepClone,
+  isBlogPage,
+  isMediaPage,
+  locale,
+  localeValue,
+  normalizeTextInput,
+  nowIso,
+  pageId,
+  resolveCmsId,
+  setLocaleValue,
+} from "./cms/context";
 
 const loginModal = document.querySelector<HTMLElement>('#cms-login-modal');
 const loginForm = document.querySelector<HTMLFormElement>('#cms-login-form');
@@ -225,19 +105,6 @@ if (!isBlogPage && openBlogManagerButton) {
   openBlogManagerButton.classList.add('cms-hidden');
 }
 
-let authenticated = false;
-let editMode = false;
-let hasUnsavedChanges = false;
-let isBusy = false;
-let suppressBeforeUnloadPrompt = false;
-let publishedState: WorkingState | null = null;
-let workingState: WorkingState | null = null;
-let globalGalleryItems: CmsGalleryItem[] = [];
-let selectedImageTarget: SelectedImageTarget | null = null;
-let activeEditableElement: HTMLElement | null = null;
-let bannerResizeObserver: ResizeObserver | null = null;
-const pendingAdminImagePreviewUrls = new Map<string, string>();
-
 const BANNER_OFFSET_CSS_VAR = '--cms-admin-banner-offset';
 const LOGOUT_MARKER_STORAGE_KEY = 'cms-admin-force-logout';
 
@@ -257,45 +124,6 @@ const TEXT_TAGS = new Set([
   'STRONG',
   'EM',
 ]);
-
-function deepClone<T>(value: T): T {
-  return JSON.parse(JSON.stringify(value)) as T;
-}
-
-function nowIso(): string {
-  return new Date().toISOString();
-}
-
-function setPendingAdminImagePreview(src: string, file: File): void {
-  const existing = pendingAdminImagePreviewUrls.get(src);
-  if (existing) {
-    URL.revokeObjectURL(existing);
-  }
-
-  pendingAdminImagePreviewUrls.set(src, URL.createObjectURL(file));
-}
-
-function clearPendingAdminImagePreview(src: string): void {
-  const existing = pendingAdminImagePreviewUrls.get(src);
-  if (!existing) {
-    return;
-  }
-
-  URL.revokeObjectURL(existing);
-  pendingAdminImagePreviewUrls.delete(src);
-}
-
-function clearAllPendingAdminImagePreviews(): void {
-  for (const previewUrl of pendingAdminImagePreviewUrls.values()) {
-    URL.revokeObjectURL(previewUrl);
-  }
-
-  pendingAdminImagePreviewUrls.clear();
-}
-
-function resolveAdminImageSrc(src: string): string {
-  return pendingAdminImagePreviewUrls.get(src) ?? src;
-}
 
 interface ApiErrorPayload {
   error?: string;
@@ -330,20 +158,6 @@ function setStatus(message: string): void {
   statusEl.textContent = message;
 }
 
-function localeValue(value: LocaleText): string {
-  return value[locale] || value.en || '';
-}
-
-function normalizeTextInput(value: string): string {
-  return normalizeCmsText(value.trim());
-}
-
-function setLocaleValue(value: LocaleText, nextValue: string): LocaleText {
-  return {
-    ...value,
-    [locale]: nextValue,
-  };
-}
 
 function isSharedPackageElement(element: Element | null): element is HTMLElement {
   return Boolean(element instanceof HTMLElement && element.dataset.cmsSharedDoc === 'packages');
@@ -411,101 +225,57 @@ function findEditableTextElement(target: Element): HTMLElement | null {
   return null;
 }
 
-function structuralSeed(element: Element): string {
-  const parts: string[] = [];
-  let node: Element | null = element;
-
-  while (node && node !== document.body) {
-    const currentNode: Element = node;
-    const parentElement: HTMLElement | null = currentNode.parentElement;
-    if (!parentElement) {
-      break;
-    }
-
-    const tag = currentNode.tagName.toLowerCase();
-    const sameTagSiblings = Array.from(parentElement.children) as Element[];
-    const index = sameTagSiblings.filter((child) => child.tagName === currentNode.tagName).indexOf(currentNode) + 1;
-    parts.unshift(`${tag}:nth-of-type(${index})`);
-
-    if (parentElement.matches('main')) {
-      parts.unshift('main');
-      break;
-    }
-
-    node = parentElement;
-  }
-
-  return parts.join(' > ');
-}
-
-/**
- * Resolve the canonical `data-cms-id` for an element being edited. Authored
- * elements already carry one and we MUST reuse it (recomputing was the root
- * cause of orphaned fields). Truly ad-hoc elements get a deterministic id that
- * is stamped onto the DOM so subsequent edits reuse it instead of re-deriving.
- */
-function resolveCmsId(element: HTMLElement, kind: CmsFieldKind): string {
-  const existing = element.dataset.cmsId;
-  if (existing) {
-    return existing;
-  }
-
-  const id = adHocId(kind, structuralSeed(element));
-  element.dataset.cmsId = id;
-  return id;
-}
-
 function upsertTextField(field: CmsTextField): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
   const normalizedField = normalizeTextField(field);
-  const index = workingState.page.texts.findIndex((entry) => entry.id === field.id);
+  const index = state.workingState.page.texts.findIndex((entry) => entry.id === field.id);
   if (index >= 0) {
-    workingState.page.texts[index] = normalizedField;
+    state.workingState.page.texts[index] = normalizedField;
     return;
   }
 
-  workingState.page.texts.push(normalizedField);
+  state.workingState.page.texts.push(normalizedField);
 }
 
 function upsertLinkField(field: CmsLinkField): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
   const normalizedField = normalizeLinkField(field);
-  const index = workingState.page.links.findIndex((entry) => entry.id === field.id);
+  const index = state.workingState.page.links.findIndex((entry) => entry.id === field.id);
   if (index >= 0) {
-    workingState.page.links[index] = normalizedField;
+    state.workingState.page.links[index] = normalizedField;
     return;
   }
 
-  workingState.page.links.push(normalizedField);
+  state.workingState.page.links.push(normalizedField);
 }
 
 function upsertImageField(field: CmsImageField): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
   const normalizedField = normalizeImageField(field);
-  const index = workingState.page.images.findIndex((entry) => entry.id === field.id);
+  const index = state.workingState.page.images.findIndex((entry) => entry.id === field.id);
   if (index >= 0) {
-    workingState.page.images[index] = normalizedField;
+    state.workingState.page.images[index] = normalizedField;
     return;
   }
 
-  workingState.page.images.push(normalizedField);
+  state.workingState.page.images.push(normalizedField);
 }
 
 function findServicePackageEntry(key: CmsServicePackageKey): CmsServicePackageEntry | null {
-  if (!workingState) {
+  if (!state.workingState) {
     return null;
   }
 
-  return workingState.packages.packages.find((entry) => entry.key === key) ?? null;
+  return state.workingState.packages.packages.find((entry) => entry.key === key) ?? null;
 }
 
 function resolveLocalizedListValue(values: Record<Locale, string[]>, index: number): string {
@@ -607,8 +377,8 @@ function updateModeLabel(): void {
     return;
   }
 
-  modeLabel.textContent = editMode ? 'Edit' : 'View';
-  toggleModeButton.textContent = editMode ? 'Stop editing' : 'Edit content';
+  modeLabel.textContent = state.editMode ? 'Edit' : 'View';
+  toggleModeButton.textContent = state.editMode ? 'Stop editing' : 'Edit content';
 }
 
 function updateDirtyIndicator(): void {
@@ -616,24 +386,24 @@ function updateDirtyIndicator(): void {
     return;
   }
 
-  dirtyIndicator.textContent = hasUnsavedChanges ? 'Unsaved changes' : 'Up to date';
-  dirtyIndicator.classList.toggle('cms-pill-dirty', hasUnsavedChanges);
-  dirtyIndicator.classList.toggle('cms-pill-neutral', !hasUnsavedChanges);
+  dirtyIndicator.textContent = state.hasUnsavedChanges ? 'Unsaved changes' : 'Up to date';
+  dirtyIndicator.classList.toggle('cms-pill-dirty', state.hasUnsavedChanges);
+  dirtyIndicator.classList.toggle('cms-pill-neutral', !state.hasUnsavedChanges);
 }
 
 function updateActionAvailability(): void {
-  const canUseActions = authenticated && !isBusy;
+  const canUseActions = state.authenticated && !state.isBusy;
 
   if (toggleModeButton) {
     toggleModeButton.disabled = !canUseActions;
   }
 
   if (publishButton) {
-    publishButton.disabled = !canUseActions || !hasUnsavedChanges;
+    publishButton.disabled = !canUseActions || !state.hasUnsavedChanges;
   }
 
   if (discardChangesButton) {
-    discardChangesButton.disabled = !canUseActions || !hasUnsavedChanges;
+    discardChangesButton.disabled = !canUseActions || !state.hasUnsavedChanges;
   }
 
   if (editSeoButton) {
@@ -658,7 +428,7 @@ function updateActionAvailability(): void {
 }
 
 function setDirty(nextValue: boolean): void {
-  hasUnsavedChanges = nextValue;
+  state.hasUnsavedChanges = nextValue;
   updateDirtyIndicator();
   updateActionAvailability();
 }
@@ -669,8 +439,8 @@ function markDirty(message: string): void {
 }
 
 function setBusy(nextValue: boolean): void {
-  isBusy = nextValue;
-  suppressBeforeUnloadPrompt = nextValue;
+  state.isBusy = nextValue;
+  state.suppressBeforeUnloadPrompt = nextValue;
   updateActionAvailability();
 }
 
@@ -846,7 +616,7 @@ function updateFallbackWarning(page: CmsPageDocument): void {
       }
     }
 
-    for (const entry of workingState?.packages.packages ?? []) {
+    for (const entry of state.workingState?.packages.packages ?? []) {
       if (!entry.tierLabel.pt.trim() && entry.tierLabel.en.trim()) {
         fallbackCount += 1;
       }
@@ -962,15 +732,15 @@ function updateSeoPreview(page: CmsPageDocument): void {
 }
 
 function applyCurrentState(): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
-  applyServicePackageDocument(workingState.packages);
-  applyPageDocument(workingState.page);
-  updateFallbackWarning(workingState.page);
-  updateIntegrityWarning(workingState.page);
-  updateSeoPreview(workingState.page);
+  applyServicePackageDocument(state.workingState.packages);
+  applyPageDocument(state.workingState.page);
+  updateFallbackWarning(state.workingState.page);
+  updateIntegrityWarning(state.workingState.page);
+  updateSeoPreview(state.workingState.page);
 
   if (isPanelOpen(seoPanel)) {
     hydrateSeoForm();
@@ -990,7 +760,7 @@ function setBannerVisibility(): void {
     return;
   }
 
-  if (authenticated) {
+  if (state.authenticated) {
     banner.classList.remove('cms-hidden');
     document.body.classList.add('cms-admin-offset');
     syncBannerOffset();
@@ -1003,7 +773,7 @@ function setBannerVisibility(): void {
 }
 
 function syncBannerOffset(): void {
-  if (!banner || !authenticated || banner.classList.contains('cms-hidden')) {
+  if (!banner || !state.authenticated || banner.classList.contains('cms-hidden')) {
     return;
   }
 
@@ -1035,37 +805,37 @@ async function login(password: string): Promise<boolean> {
 }
 
 function finalizeActiveTextEdit(): void {
-  if (!activeEditableElement) {
+  if (!state.activeEditableElement) {
     return;
   }
 
-  const element = activeEditableElement;
-  activeEditableElement = null;
+  const element = state.activeEditableElement;
+  state.activeEditableElement = null;
   element.removeAttribute('contenteditable');
   element.removeAttribute('data-cms-editing');
   completeTextEdit(element);
 }
 
 function enableEditMode(): void {
-  editMode = true;
+  state.editMode = true;
   document.body.classList.add('cms-navigate-locked');
   updateModeLabel();
   setStatus('Edit mode enabled. Click text, links, or images to edit.');
 }
 
 function disableEditMode(): void {
-  editMode = false;
+  state.editMode = false;
   finalizeActiveTextEdit();
   document.body.classList.remove('cms-navigate-locked');
   updateModeLabel();
 }
 
 function toggleEditMode(): void {
-  if (!authenticated) {
+  if (!state.authenticated) {
     return;
   }
 
-  if (editMode) {
+  if (state.editMode) {
     disableEditMode();
     setStatus('View mode enabled');
     return;
@@ -1075,7 +845,7 @@ function toggleEditMode(): void {
 }
 
 function completeSharedPackageTextEdit(element: HTMLElement): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
@@ -1103,7 +873,7 @@ function completeSharedPackageTextEdit(element: HTMLElement): void {
   }
 
   writeSharedPackageFieldValue(entry, field, nextValue, index);
-  workingState.packages = normalizeServicePackageDocument(workingState.packages);
+  state.workingState.packages = normalizeServicePackageDocument(state.workingState.packages);
 
   element.innerHTML = renderMarkdown(nextValue, kind);
   element.dataset.cmsField = 'text';
@@ -1112,7 +882,7 @@ function completeSharedPackageTextEdit(element: HTMLElement): void {
 }
 
 function completeTextEdit(element: HTMLElement): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
@@ -1124,7 +894,7 @@ function completeTextEdit(element: HTMLElement): void {
   const id = resolveCmsId(element, 'text');
   const selector = selectorForId(id);
   const kind = MARKDOWN_BLOCK_TAGS.has(element.tagName) ? 'block' : 'inline';
-  const existing = workingState.page.texts.find((field) => field.id === id);
+  const existing = state.workingState.page.texts.find((field) => field.id === id);
   const previousValue = existing
     ? localeValue(existing.value).trim()
     : normalizeTextInput(element.dataset.cmsSource ?? '');
@@ -1159,11 +929,11 @@ function completeTextEdit(element: HTMLElement): void {
 }
 
 function beginTextEdit(element: HTMLElement): void {
-  if (activeEditableElement && activeEditableElement !== element) {
+  if (state.activeEditableElement && state.activeEditableElement !== element) {
     finalizeActiveTextEdit();
   }
 
-  activeEditableElement = element;
+  state.activeEditableElement = element;
   const source = normalizeCmsText(element.dataset.cmsSource ?? element.textContent ?? '');
   element.textContent = source;
   element.setAttribute('contenteditable', 'true');
@@ -1184,8 +954,8 @@ function beginTextEdit(element: HTMLElement): void {
     element.removeAttribute('contenteditable');
     element.removeAttribute('data-cms-editing');
     completeTextEdit(element);
-    if (activeEditableElement === element) {
-      activeEditableElement = null;
+    if (state.activeEditableElement === element) {
+      state.activeEditableElement = null;
     }
   };
 
@@ -1193,13 +963,13 @@ function beginTextEdit(element: HTMLElement): void {
 }
 
 function editLink(element: HTMLElement): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
   const id = resolveCmsId(element, 'link');
   const selector = selectorForId(id);
-  const existing = workingState.page.links.find((field) => field.id === id);
+  const existing = state.workingState.page.links.find((field) => field.id === id);
   const isSimpleLinkLabelTarget = element.childElementCount === 0;
 
   const currentLabel = existing ? localeValue(existing.label) : normalizeTextInput(element.textContent ?? '');
@@ -1255,11 +1025,11 @@ function editLink(element: HTMLElement): void {
 }
 
 function ensureImageField(target: SelectedImageTarget): CmsImageField | null {
-  if (!workingState) {
+  if (!state.workingState) {
     return null;
   }
 
-  const existing = workingState.page.images.find((field) => field.id === target.id);
+  const existing = state.workingState.page.images.find((field) => field.id === target.id);
   if (existing) {
     return existing;
   }
@@ -1333,7 +1103,7 @@ function hydrateImageEditorForm(): void {
     return;
   }
 
-  if (!workingState || !selectedImageTarget) {
+  if (!state.workingState || !state.selectedImageTarget) {
     imageEditorSelected && (imageEditorSelected.textContent = 'Click an image while edit mode is enabled to edit it here.');
     setFormDisabled(imageReplaceUploadForm, true);
     setFormDisabled(imageEditorForm, true);
@@ -1346,7 +1116,7 @@ function hydrateImageEditorForm(): void {
     return;
   }
 
-  const field = ensureImageField(selectedImageTarget);
+  const field = ensureImageField(state.selectedImageTarget);
   if (!field) {
     return;
   }
@@ -1386,12 +1156,12 @@ function toggleImageEditor(open: boolean): void {
 }
 
 function applyImageFormChanges(): void {
-  if (!workingState || !selectedImageTarget) {
+  if (!state.workingState || !state.selectedImageTarget) {
     setStatus('Select an image before editing image details.');
     return;
   }
 
-  const existing = ensureImageField(selectedImageTarget);
+  const existing = ensureImageField(state.selectedImageTarget);
   if (!existing) {
     setStatus('Selected image could not be resolved.');
     return;
@@ -1404,8 +1174,8 @@ function applyImageFormChanges(): void {
     : undefined;
 
   const nextField = normalizeImageField({
-    id: selectedImageTarget.id,
-    selector: selectedImageTarget.selector,
+    id: state.selectedImageTarget.id,
+    selector: state.selectedImageTarget.selector,
     src: getImageEditorField('src'),
     alt: {
       en: getImageEditorTextField('altEn'),
@@ -1430,17 +1200,17 @@ function applyImageFormChanges(): void {
 }
 
 function selectImageForEditing(element: HTMLImageElement): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
   const id = resolveCmsId(element, 'image');
-  selectedImageTarget = {
+  state.selectedImageTarget = {
     selector: selectorForId(id),
     id,
   };
 
-  ensureImageField(selectedImageTarget);
+  ensureImageField(state.selectedImageTarget);
   toggleImageEditor(true);
   setStatus('Image selected. Upload a replacement here or choose one from the image gallery.');
 }
@@ -1506,12 +1276,12 @@ function getSeoTextField(name: string): string {
 }
 
 function hydrateSeoForm(): void {
-  if (!seoForm || !workingState) {
+  if (!seoForm || !state.workingState) {
     return;
   }
 
-  const seoEn = workingState.page.seo.en;
-  const seoPt = workingState.page.seo.pt;
+  const seoEn = state.workingState.page.seo.en;
+  const seoPt = state.workingState.page.seo.pt;
 
   setSeoField('enTitle', seoEn.title);
   setSeoField('enDescription', seoEn.description);
@@ -1544,11 +1314,11 @@ function toggleSeoPanel(open: boolean): void {
 }
 
 function applySeoFormChanges(): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
-  const current = workingState.page.seo;
+  const current = state.workingState.page.seo;
 
   const nextSeo: Record<Locale, CmsSeoLocale> = {
     en: {
@@ -1574,7 +1344,7 @@ function applySeoFormChanges(): void {
     return;
   }
 
-  workingState.page.seo = nextSeo;
+  state.workingState.page.seo = nextSeo;
   applyCurrentState();
   markDirty('SEO updated');
 }
@@ -1725,12 +1495,12 @@ function addGalleryCandidate(
 function collectGalleryItems(): CmsGalleryItem[] {
   const map = new Map<string, CmsGalleryItem>();
 
-  for (const item of globalGalleryItems) {
+  for (const item of state.globalGalleryItems) {
     addGalleryCandidate(map, deepClone(item));
   }
 
-  if (workingState) {
-    for (const image of workingState.page.images) {
+  if (state.workingState) {
+    for (const image of state.workingState.page.images) {
       addGalleryCandidate(map, {
         id: `page:${image.id}`,
         src: image.src,
@@ -1744,7 +1514,7 @@ function collectGalleryItems(): CmsGalleryItem[] {
       });
     }
 
-    for (const post of workingState.blogPosts) {
+    for (const post of state.workingState.blogPosts) {
       if (!post.coverImage.trim()) {
         continue;
       }
@@ -1765,7 +1535,7 @@ function collectGalleryItems(): CmsGalleryItem[] {
     }
 
     for (const localeKey of ['en', 'pt'] as const) {
-      const seo = workingState.page.seo[localeKey];
+      const seo = state.workingState.page.seo[localeKey];
       if (!seo.ogImage.trim()) {
         continue;
       }
@@ -1774,8 +1544,8 @@ function collectGalleryItems(): CmsGalleryItem[] {
         id: `seo:${localeKey}:${pageId}`,
         src: seo.ogImage,
         alt: {
-          en: workingState.page.seo.en.ogTitle || workingState.page.seo.en.title,
-          pt: workingState.page.seo.pt.ogTitle || workingState.page.seo.pt.title,
+          en: state.workingState.page.seo.en.ogTitle || state.workingState.page.seo.en.title,
+          pt: state.workingState.page.seo.pt.ogTitle || state.workingState.page.seo.pt.title,
         },
         attributionName: '',
         attributionUrl: '',
@@ -1846,9 +1616,9 @@ function upsertGalleryItem(item: CmsGalleryItem): void {
     return;
   }
 
-  globalGalleryItems = [
+  state.globalGalleryItems = [
     item,
-    ...globalGalleryItems.filter((existingItem) => imageDedupKey(existingItem.src) !== key),
+    ...state.globalGalleryItems.filter((existingItem) => imageDedupKey(existingItem.src) !== key),
   ];
 }
 
@@ -1858,7 +1628,7 @@ function removeGalleryItem(item: CmsGalleryItem): void {
     return;
   }
 
-  globalGalleryItems = globalGalleryItems.filter((item) => imageDedupKey(item.src) !== key);
+  state.globalGalleryItems = state.globalGalleryItems.filter((item) => imageDedupKey(item.src) !== key);
   clearPendingAdminImagePreview(item.src);
 }
 
@@ -1870,13 +1640,13 @@ function replaceSelectedImage(options: {
   licenseUrl?: string;
   caption?: LocaleText;
 }): boolean {
-  if (!workingState || !selectedImageTarget) {
+  if (!state.workingState || !state.selectedImageTarget) {
     setStatus('Select an image on the page first.');
     toggleImageEditor(true);
     return false;
   }
 
-  const existing = ensureImageField(selectedImageTarget);
+  const existing = ensureImageField(state.selectedImageTarget);
   if (!existing) {
     setStatus('Selected image could not be resolved.');
     return false;
@@ -1961,7 +1731,7 @@ async function deleteGalleryItem(item: CmsGalleryItem): Promise<void> {
     commitSha?: string;
   }>(response);
 
-  if (!response.ok || !payload.src || !workingState) {
+  if (!response.ok || !payload.src || !state.workingState) {
     setStatus(payload.error ?? 'Image delete failed');
     return;
   }
@@ -1969,9 +1739,9 @@ async function deleteGalleryItem(item: CmsGalleryItem): Promise<void> {
   removeGalleryItem(item);
 
   if (payload.commitSha) {
-    workingState.baseSha = payload.commitSha;
-    if (publishedState) {
-      publishedState.baseSha = payload.commitSha;
+    state.workingState.baseSha = payload.commitSha;
+    if (state.publishedState) {
+      state.publishedState.baseSha = payload.commitSha;
     }
   }
 
@@ -2033,7 +1803,7 @@ function renderImageLibrary(): void {
     useButton.type = 'button';
     useButton.className = 'cms-btn cms-btn-primary';
     useButton.textContent = 'Replace selected image';
-    useButton.disabled = !selectedImageTarget;
+    useButton.disabled = !state.selectedImageTarget;
     useButton.addEventListener('click', () => {
       applyGalleryImageToSelected(item);
     });
@@ -2105,11 +1875,11 @@ function getBlogTextField(name: string): string {
 }
 
 function findSelectedBlogPost(): CmsBlogPost | null {
-  if (!workingState || !blogSelect || !blogSelect.value) {
+  if (!state.workingState || !blogSelect || !blogSelect.value) {
     return null;
   }
 
-  return workingState.blogPosts.find((post) => post.id === blogSelect.value) ?? null;
+  return state.workingState.blogPosts.find((post) => post.id === blogSelect.value) ?? null;
 }
 
 function hydrateBlogForm(): void {
@@ -2152,43 +1922,43 @@ function hydrateBlogForm(): void {
 }
 
 function renderBlogSelect(preferredId?: string): void {
-  if (!workingState || !blogSelect) {
+  if (!state.workingState || !blogSelect) {
     return;
   }
 
   const previous = preferredId ?? blogSelect.value;
   blogSelect.innerHTML = '';
 
-  for (const post of workingState.blogPosts) {
+  for (const post of state.workingState.blogPosts) {
     const option = document.createElement('option');
     option.value = post.id;
     option.textContent = `${post.slug} (${post.status})`;
     blogSelect.append(option);
   }
 
-  const hasPrevious = previous && workingState.blogPosts.some((post) => post.id === previous);
+  const hasPrevious = previous && state.workingState.blogPosts.some((post) => post.id === previous);
   if (hasPrevious) {
     blogSelect.value = previous;
-  } else if (workingState.blogPosts[0]) {
-    blogSelect.value = workingState.blogPosts[0].id;
+  } else if (state.workingState.blogPosts[0]) {
+    blogSelect.value = state.workingState.blogPosts[0].id;
   }
 
   hydrateBlogForm();
 }
 
 function upsertBlogPost(post: CmsBlogPost): void {
-  if (!workingState) {
+  if (!state.workingState) {
     return;
   }
 
   const normalizedPost = normalizeBlogPost(post);
-  const index = workingState.blogPosts.findIndex((entry) => entry.id === post.id);
+  const index = state.workingState.blogPosts.findIndex((entry) => entry.id === post.id);
   if (index >= 0) {
-    workingState.blogPosts[index] = normalizedPost;
+    state.workingState.blogPosts[index] = normalizedPost;
     return;
   }
 
-  workingState.blogPosts.unshift(normalizedPost);
+  state.workingState.blogPosts.unshift(normalizedPost);
 }
 
 function createEmptyBlogPost(): CmsBlogPost {
@@ -2346,11 +2116,11 @@ function hydrateStateFromResponse(response: ContentResponse): void {
     baseSha: response.branchSha,
   };
 
-  publishedState = deepClone(baseState);
-  workingState = deepClone(baseState);
-  authenticated = response.authenticated;
-  globalGalleryItems = deepClone(response.galleryItems ?? []);
-  selectedImageTarget = null;
+  state.publishedState = deepClone(baseState);
+  state.workingState = deepClone(baseState);
+  state.authenticated = response.authenticated;
+  state.globalGalleryItems = deepClone(response.galleryItems ?? []);
+  state.selectedImageTarget = null;
 
   applyCurrentState();
   renderImageLibrary();
@@ -2369,16 +2139,16 @@ async function refreshContent(): Promise<void> {
 
 async function syncBaseShaFromServer(): Promise<void> {
   const response = await fetchContent();
-  if (workingState) {
-    workingState.baseSha = response.branchSha;
+  if (state.workingState) {
+    state.workingState.baseSha = response.branchSha;
   }
-  if (publishedState) {
-    publishedState.baseSha = response.branchSha;
+  if (state.publishedState) {
+    state.publishedState.baseSha = response.branchSha;
   }
 }
 
 async function publishChanges(): Promise<void> {
-  if (!workingState || isBusy) {
+  if (!state.workingState || state.isBusy) {
     return;
   }
 
@@ -2394,10 +2164,10 @@ async function publishChanges(): Promise<void> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        pages: [workingState.page],
-        packages: workingState.packages,
-        blogPosts: workingState.blogPosts,
-        baseSha: workingState.baseSha,
+        pages: [state.workingState.page],
+        packages: state.workingState.packages,
+        blogPosts: state.workingState.blogPosts,
+        baseSha: state.workingState.baseSha,
       }),
     });
 
@@ -2438,7 +2208,7 @@ async function uploadImage(
     applyToSelected?: boolean;
   } = {},
 ): Promise<void> {
-  if (isBusy) {
+  if (state.isBusy) {
     return;
   }
 
@@ -2457,7 +2227,7 @@ async function uploadImage(
       commitSha?: string;
     }>(response);
 
-    if (!response.ok || !payload.src || !workingState) {
+    if (!response.ok || !payload.src || !state.workingState) {
       setStatus(payload.error ?? 'Image upload failed');
       return;
     }
@@ -2469,9 +2239,9 @@ async function uploadImage(
     upsertGalleryItem(createPublicGalleryItem(payload.src));
 
     if (payload.commitSha) {
-      workingState.baseSha = payload.commitSha;
-      if (publishedState) {
-        publishedState.baseSha = payload.commitSha;
+      state.workingState.baseSha = payload.commitSha;
+      if (state.publishedState) {
+        state.publishedState.baseSha = payload.commitSha;
       }
     }
 
@@ -2499,7 +2269,7 @@ async function uploadImage(
 }
 
 async function logout(): Promise<void> {
-  suppressBeforeUnloadPrompt = true;
+  state.suppressBeforeUnloadPrompt = true;
   setForcedLogoutMarker();
 
   try {
@@ -2512,10 +2282,10 @@ async function logout(): Promise<void> {
   } catch {
     // Keep local logout state even if request fails.
   } finally {
-    suppressBeforeUnloadPrompt = false;
+    state.suppressBeforeUnloadPrompt = false;
   }
 
-  authenticated = false;
+  state.authenticated = false;
   disableEditMode();
   closePanels();
   setBannerVisibility();
@@ -2525,13 +2295,13 @@ async function logout(): Promise<void> {
 }
 
 function discardChanges(): void {
-  if (!publishedState) {
+  if (!state.publishedState) {
     return;
   }
 
   finalizeActiveTextEdit();
-  workingState = deepClone(publishedState);
-  selectedImageTarget = null;
+  state.workingState = deepClone(state.publishedState);
+  state.selectedImageTarget = null;
   applyCurrentState();
   renderImageLibrary();
   renderBlogSelect();
@@ -2542,7 +2312,7 @@ function discardChanges(): void {
 }
 
 function handleEditClick(event: MouseEvent): void {
-  if (!editMode) {
+  if (!state.editMode) {
     return;
   }
 
@@ -2587,7 +2357,7 @@ function handleEditClick(event: MouseEvent): void {
 }
 
 function lockNavigation(event: MouseEvent): void {
-  if (!editMode) {
+  if (!state.editMode) {
     return;
   }
 
@@ -2602,7 +2372,7 @@ function lockNavigation(event: MouseEvent): void {
 }
 
 function lockFormSubmit(event: SubmitEvent): void {
-  if (!editMode) {
+  if (!state.editMode) {
     return;
   }
 
@@ -2618,7 +2388,7 @@ function bindAuthUI(): void {
   document.querySelectorAll<HTMLElement>('[data-cms-open-login]').forEach((element) => {
     element.addEventListener('click', (event) => {
       event.preventDefault();
-      if (authenticated) {
+      if (state.authenticated) {
         setStatus('Already authenticated');
         return;
       }
@@ -2649,7 +2419,7 @@ function bindAuthUI(): void {
     }
 
     clearForcedLogoutMarker();
-    authenticated = true;
+    state.authenticated = true;
     closeLoginModal();
     setBannerVisibility();
     updateActionAvailability();
@@ -2668,7 +2438,7 @@ function bindBannerUI(): void {
   });
 
   discardChangesButton?.addEventListener('click', () => {
-    if (!hasUnsavedChanges) {
+    if (!state.hasUnsavedChanges) {
       setStatus('Nothing to discard');
       return;
     }
@@ -2689,7 +2459,7 @@ function bindBannerUI(): void {
   openImageEditorButton?.addEventListener('click', () => {
     const open = !isPanelOpen(imageEditorPanel);
     toggleImageEditor(open);
-    if (open && !selectedImageTarget) {
+    if (open && !state.selectedImageTarget) {
       setStatus('Click an image in edit mode to load it into the editor.');
     }
   });
@@ -2782,18 +2552,18 @@ function bindBlogManagerUI(): void {
   });
 
   blogNewButton?.addEventListener('click', () => {
-    if (!workingState) {
+    if (!state.workingState) {
       return;
     }
 
     const post = createEmptyBlogPost();
-    workingState.blogPosts.unshift(post);
+    state.workingState.blogPosts.unshift(post);
     renderBlogSelect(post.id);
     markDirty('Created new post');
   });
 
   blogDuplicateButton?.addEventListener('click', () => {
-    if (!workingState) {
+    if (!state.workingState) {
       return;
     }
 
@@ -2808,13 +2578,13 @@ function bindBlogManagerUI(): void {
     clone.status = 'draft';
     clone.updatedAt = nowIso();
 
-    workingState.blogPosts.unshift(clone);
+    state.workingState.blogPosts.unshift(clone);
     renderBlogSelect(clone.id);
     markDirty('Post duplicated');
   });
 
   blogDeleteButton?.addEventListener('click', () => {
-    if (!workingState) {
+    if (!state.workingState) {
       return;
     }
 
@@ -2828,7 +2598,7 @@ function bindBlogManagerUI(): void {
       return;
     }
 
-    workingState.blogPosts = workingState.blogPosts.filter((post) => post.id !== selected.id);
+    state.workingState.blogPosts = state.workingState.blogPosts.filter((post) => post.id !== selected.id);
     renderBlogSelect();
     markDirty('Post deleted');
   });
@@ -2836,7 +2606,7 @@ function bindBlogManagerUI(): void {
 
 function bindUnloadGuard(): void {
   window.addEventListener('beforeunload', (event) => {
-    if (!hasUnsavedChanges || suppressBeforeUnloadPrompt) {
+    if (!state.hasUnsavedChanges || state.suppressBeforeUnloadPrompt) {
       return;
     }
 
@@ -2859,11 +2629,11 @@ async function boot(): Promise<void> {
   bindUnloadGuard();
 
   if (banner && typeof ResizeObserver === 'function') {
-    bannerResizeObserver = new ResizeObserver(() => {
+    state.bannerResizeObserver = new ResizeObserver(() => {
       syncBannerOffset();
     });
 
-    bannerResizeObserver.observe(banner);
+    state.bannerResizeObserver.observe(banner);
   }
 
   document.addEventListener('click', lockNavigation, true);
@@ -2871,9 +2641,9 @@ async function boot(): Promise<void> {
   document.addEventListener('click', handleEditClick, true);
 
   const forceLoggedOut = hasForcedLogoutMarker();
-  authenticated = forceLoggedOut ? false : await checkSession();
+  state.authenticated = forceLoggedOut ? false : await checkSession();
 
-  if (authenticated) {
+  if (state.authenticated) {
     clearForcedLogoutMarker();
     const content = await fetchContent();
     hydrateStateFromResponse(content);
@@ -2888,7 +2658,7 @@ async function boot(): Promise<void> {
   updateDirtyIndicator();
   updateActionAvailability();
 
-  if (!authenticated) {
+  if (!state.authenticated) {
     setStatus('Public view');
     if (isMediaPage) {
       openLoginModal();
