@@ -34,6 +34,7 @@ export const imageEditorClose = document.querySelector<HTMLButtonElement>('#cms-
 export const imageEditorOpenLibraryButton = document.querySelector<HTMLButtonElement>('#cms-image-open-library');
 export const imageEditorSelected = document.querySelector<HTMLElement>('#cms-image-selected');
 export const imageEditorPreview = document.querySelector<HTMLImageElement>('#cms-image-preview');
+export const imageEditorPreviewEmpty = document.querySelector<HTMLElement>('#cms-image-preview-empty');
 export const imageReplaceUploadForm = document.querySelector<HTMLFormElement>('#cms-image-replace-upload-form');
 export const imageEditorForm = document.querySelector<HTMLFormElement>('#cms-image-form');
 

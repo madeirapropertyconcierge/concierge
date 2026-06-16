@@ -9,6 +9,7 @@ import {
   imageEditorForm,
   imageEditorPanel,
   imageEditorPreview,
+  imageEditorPreviewEmpty,
   imageEditorSelected,
   imageReplaceUploadForm,
   setStatus,
@@ -47,6 +48,39 @@ export function ensureImageField(target: SelectedImageTarget): CmsImageField | n
 
   upsertImageField(nextField);
   return nextField;
+}
+
+/** Empty/error state for the preview: hide the <img> so it can never render a
+ * broken-image glyph, and show the placeholder caption instead. */
+function clearImagePreview(): void {
+  if (imageEditorPreview) {
+    imageEditorPreview.removeAttribute('src');
+    imageEditorPreview.alt = 'Selected image preview';
+    imageEditorPreview.hidden = true;
+  }
+  if (imageEditorPreviewEmpty) {
+    imageEditorPreviewEmpty.hidden = false;
+  }
+}
+
+function showImagePreview(src: string, alt: string): void {
+  const trimmed = src.trim();
+  if (!imageEditorPreview || !trimmed) {
+    clearImagePreview();
+    return;
+  }
+
+  imageEditorPreview.alt = alt;
+  // A missing/unservable file would otherwise leave a broken-image glyph that
+  // looks like an error — fall back to the placeholder caption instead.
+  imageEditorPreview.onerror = () => {
+    clearImagePreview();
+  };
+  imageEditorPreview.hidden = false;
+  if (imageEditorPreviewEmpty) {
+    imageEditorPreviewEmpty.hidden = true;
+  }
+  imageEditorPreview.src = trimmed;
 }
 
 function setImageEditorField(name: string, value: string): void {
@@ -89,10 +123,7 @@ export function hydrateImageEditorForm(): void {
     setFormDisabled(imageEditorForm, true);
     imageReplaceUploadForm?.reset();
     imageEditorForm.reset();
-    if (imageEditorPreview) {
-      imageEditorPreview.removeAttribute('src');
-      imageEditorPreview.alt = 'Selected image preview';
-    }
+    clearImagePreview();
     return;
   }
 
@@ -114,10 +145,7 @@ export function hydrateImageEditorForm(): void {
   setImageEditorField('attributionUrl', field.attributionUrl);
   setImageEditorField('licenseUrl', field.licenseUrl);
 
-  if (imageEditorPreview) {
-    imageEditorPreview.src = resolveAdminImageSrc(field.src);
-    imageEditorPreview.alt = localeValue(field.alt);
-  }
+  showImagePreview(resolveAdminImageSrc(field.src), localeValue(field.alt));
 }
 
 export function toggleImageEditor(open: boolean): void {

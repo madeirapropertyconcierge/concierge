@@ -156,7 +156,6 @@ export function replaceSelectedImage(options: {
 }): boolean {
   if (!state.workingState || !state.selectedImageTarget) {
     setStatus('Select an image on the page first.');
-    toggleImageEditor(true);
     return false;
   }
 
@@ -189,6 +188,11 @@ export function replaceSelectedImage(options: {
 }
 
 function applyGalleryImageToSelected(item: CmsGalleryItem): void {
+  if (!state.selectedImageTarget) {
+    setStatus('Select an image on the page first, then choose its replacement here.');
+    return;
+  }
+
   const changed = replaceSelectedImage({
     src: item.src,
     alt: item.alt,
