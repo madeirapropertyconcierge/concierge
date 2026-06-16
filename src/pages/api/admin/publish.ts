@@ -1,7 +1,6 @@
 import type { APIRoute } from 'astro';
 import { z } from 'zod';
 import {
-  ApiError,
   assertAdminSession,
   assertSameOrigin,
   errorResponse,
@@ -25,107 +24,15 @@ import {
 } from '../../../cms/github-publisher';
 import { getPublishErrorResponse } from '../../../cms/publish-errors';
 import {
+  collectPageLocaleWarnings,
+  validateBlogPosts,
+  validatePackages,
+  validatePageUrls,
+} from '../../../cms/publish-validation';
+import {
   cmsPublishRequestSchema,
   cmsServicePackageDocumentSchema,
-  type CmsBlogPost,
-  type CmsServicePackageDocument,
 } from '../../../cms/schema';
-
-function isValidCmsUrl(value: string): boolean {
-  if (!value) {
-    return true;
-  }
-
-  if (value.startsWith('/')) {
-    return true;
-  }
-
-  return /^https:\/\//.test(value);
-}
-
-function assertUrlField(value: string, fieldName: string): void {
-  if (!isValidCmsUrl(value)) {
-    throw new ApiError(400, `Invalid URL for ${fieldName}`);
-  }
-}
-
-function assertPublishedLocale(post: CmsBlogPost, locale: 'en' | 'pt'): void {
-  const entry = post.locales[locale];
-  const seo = post.seoByLocale[locale];
-
-  const required = [
-    ['title', entry.title],
-    ['excerpt', entry.excerpt],
-    ['body', entry.body],
-    ['coverAlt', entry.coverAlt],
-    ['seo.title', seo.title],
-    ['seo.description', seo.description],
-  ];
-
-  for (const [field, value] of required) {
-    if (!value || !value.trim()) {
-      throw new ApiError(400, `Published post "${post.slug}" is missing ${locale}.${field}`);
-    }
-  }
-}
-
-function validateBlogPosts(posts: CmsBlogPost[]): void {
-  const slugSet = new Set<string>();
-
-  for (const post of posts) {
-    if (slugSet.has(post.slug)) {
-      throw new ApiError(400, `Duplicate blog slug: ${post.slug}`);
-    }
-
-    slugSet.add(post.slug);
-
-    assertUrlField(post.coverImage, `${post.slug}.coverImage`);
-
-    for (const locale of ['en', 'pt'] as const) {
-      const seo = post.seoByLocale[locale];
-      const canonical = seo.canonical;
-
-      assertUrlField(seo.ogImage, `${post.slug}.${locale}.seo.ogImage`);
-      assertUrlField(canonical, `${post.slug}.${locale}.seo.canonical`);
-    }
-
-    if (post.status === 'published') {
-      assertPublishedLocale(post, 'en');
-      assertPublishedLocale(post, 'pt');
-      continue;
-    }
-
-    const hasAnyDraftContent =
-      post.locales.en.title.trim() ||
-      post.locales.en.body.trim() ||
-      post.locales.pt.title.trim() ||
-      post.locales.pt.body.trim();
-
-    if (!hasAnyDraftContent) {
-      throw new ApiError(400, `Draft post "${post.slug}" must include at least one locale title/body`);
-    }
-  }
-}
-
-function validatePackages(packages: CmsServicePackageDocument): void {
-  for (const entry of packages.packages) {
-    if (!entry.title.en.trim()) {
-      throw new ApiError(400, `Package "${entry.key}" is missing en.title`);
-    }
-
-    if (!entry.title.pt.trim()) {
-      throw new ApiError(400, `Package "${entry.key}" is missing pt.title`);
-    }
-
-    if (!entry.audience.en.trim()) {
-      throw new ApiError(400, `Package "${entry.key}" is missing en.audience`);
-    }
-
-    if (!entry.audience.pt.trim()) {
-      throw new ApiError(400, `Package "${entry.key}" is missing pt.audience`);
-    }
-  }
-}
 
 function toJsonFile(path: string, payload: unknown): PublishFile {
   return {
@@ -147,25 +54,11 @@ export const POST: APIRoute = async (context) => {
     validateBlogPosts(payload.blogPosts);
     validatePackages(payload.packages);
 
+    const warnings = collectPageLocaleWarnings(payload.pages);
+
     const files: PublishFile[] = [];
     for (const page of payload.pages) {
-      for (const locale of ['en', 'pt'] as const) {
-        const seo = page.seo[locale];
-        assertUrlField(seo.ogImage, `${page.pageId}.${locale}.seo.ogImage`);
-        assertUrlField(seo.canonical, `${page.pageId}.${locale}.seo.canonical`);
-      }
-
-      for (const link of page.links) {
-        assertUrlField(link.href.en, `${page.pageId}.links.${link.id}.href.en`);
-        assertUrlField(link.href.pt, `${page.pageId}.links.${link.id}.href.pt`);
-      }
-
-      for (const image of page.images) {
-        assertUrlField(image.src, `${page.pageId}.images.${image.id}.src`);
-        assertUrlField(image.attributionUrl, `${page.pageId}.images.${image.id}.attributionUrl`);
-        assertUrlField(image.licenseUrl, `${page.pageId}.images.${image.id}.licenseUrl`);
-      }
-
+      validatePageUrls(page);
       files.push(toJsonFile(`content/cms/pages/${page.pageId}.json`, page));
     }
 
@@ -222,7 +115,7 @@ export const POST: APIRoute = async (context) => {
       expectedHeadSha: payload.baseSha,
     });
 
-    return jsonResponse({ ok: true, commitSha });
+    return jsonResponse({ ok: true, commitSha, warnings });
   } catch (error) {
     const publishError = getPublishErrorResponse(error);
     if (publishError) {

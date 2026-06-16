@@ -153,4 +153,103 @@ describe('cms server render', () => {
     expect(output).not.toContain('/en/old-link');
     expect(output).not.toContain('/images/old-package.jpg');
   });
+
+  it('applies a canonical data-cms-id field to ALL matching elements', () => {
+    const page: CmsPageDocument = {
+      pageId: 'home',
+      updatedAt: '2026-02-28T00:00:00.000Z',
+      seo: {
+        en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+        pt: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+      },
+      texts: [
+        {
+          id: 'text:repeated',
+          selector: '[data-cms-id="text:repeated"]',
+          kind: 'inline',
+          value: { en: 'Synced', pt: 'Synced' },
+        },
+      ],
+      links: [],
+      images: [],
+    };
+
+    const input =
+      '<html><body><main>' +
+      '<p data-cms-id="text:repeated">one</p>' +
+      '<p data-cms-id="text:repeated">two</p>' +
+      '</main></body></html>';
+    const output = applyCmsPageDocumentToHtml(input, page, 'en');
+
+    expect(output.match(/data-cms-source="Synced"/g)?.length).toBe(2);
+    expect(output).not.toContain('>one<');
+    expect(output).not.toContain('>two<');
+  });
+
+  it('gives non-anchor link targets an onclick attribute', () => {
+    const page: CmsPageDocument = {
+      pageId: 'home',
+      updatedAt: '2026-02-28T00:00:00.000Z',
+      seo: {
+        en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+        pt: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+      },
+      texts: [],
+      links: [
+        {
+          id: 'link:cta',
+          selector: '[data-cms-id="link:cta"]',
+          label: { en: 'Go', pt: 'Go' },
+          href: { en: "/en/it's-here", pt: "/en/it's-here" },
+        },
+      ],
+      images: [],
+    };
+
+    const input = '<html><body><main><button data-cms-id="link:cta">Go</button></main></body></html>';
+    const output = applyCmsPageDocumentToHtml(input, page, 'en');
+
+    expect(output).toContain('onclick="window.location.href=\'/en/it\\\'s-here\'"');
+  });
+
+  it('marks pt→en fallback with data-cms-fallback', () => {
+    const page: CmsPageDocument = {
+      pageId: 'home',
+      updatedAt: '2026-02-28T00:00:00.000Z',
+      seo: {
+        en: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+        pt: { title: '', description: '', ogTitle: '', ogDescription: '', ogImage: '', canonical: '' },
+      },
+      texts: [
+        {
+          id: 'text:only-en',
+          selector: '[data-cms-id="text:only-en"]',
+          kind: 'inline',
+          value: { en: 'English only', pt: '' },
+        },
+        {
+          id: 'text:both',
+          selector: '[data-cms-id="text:both"]',
+          kind: 'inline',
+          value: { en: 'English', pt: 'Portugues' },
+        },
+      ],
+      links: [],
+      images: [],
+    };
+
+    const input =
+      '<html><body><main>' +
+      '<p data-cms-id="text:only-en">x</p>' +
+      '<p data-cms-id="text:both">y</p>' +
+      '</main></body></html>';
+
+    const ptOutput = applyCmsPageDocumentToHtml(input, page, 'pt');
+    expect(ptOutput).toContain('English only');
+    expect(ptOutput).toMatch(/data-cms-id="text:only-en"[^>]*data-cms-fallback="pt"|data-cms-fallback="pt"[^>]*data-cms-id="text:only-en"/);
+    expect(ptOutput).not.toContain('data-cms-fallback="pt"' + ' data-cms-id="text:both"');
+
+    const enOutput = applyCmsPageDocumentToHtml(input, page, 'en');
+    expect(enOutput).not.toContain('data-cms-fallback');
+  });
 });

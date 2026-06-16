@@ -1,4 +1,5 @@
-import { marked } from 'marked';
+import { adHocId, escapeJsString, selectorForId, type CmsFieldKind } from '../cms/cms-keys';
+import { renderMarkdown } from '../cms/markdown-core';
 import {
   normalizeBlogPost,
   normalizeImageField,
@@ -226,6 +227,7 @@ if (!isBlogPage && openBlogManagerButton) {
 let authenticated = false;
 let editMode = false;
 let hasUnsavedChanges = false;
+let isBusy = false;
 let suppressBeforeUnloadPrompt = false;
 let publishedState: WorkingState | null = null;
 let workingState: WorkingState | null = null;
@@ -392,6 +394,14 @@ function findEditableTextElement(target: Element): HTMLElement | null {
     return sharedElement;
   }
 
+  // Prefer the authored/keyed text field when the click lands inside one, so a
+  // click on inline markup (e.g. a <strong> inside the field) edits the whole
+  // field rather than minting a field for the fragment.
+  const keyedElement = target.closest<HTMLElement>('main [data-cms-field="text"][data-cms-id]');
+  if (keyedElement && isTextCandidate(keyedElement)) {
+    return keyedElement;
+  }
+
   const textElement = target.closest<HTMLElement>('main *');
   if (textElement && isTextCandidate(textElement)) {
     return textElement;
@@ -400,52 +410,7 @@ function findEditableTextElement(target: Element): HTMLElement | null {
   return null;
 }
 
-function escapeHtml(input: string): string {
-  return input
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
-function sanitizeRenderedHtml(html: string): string {
-  const template = document.createElement('template');
-  template.innerHTML = html;
-
-  const anchors = template.content.querySelectorAll('a');
-  for (const anchor of anchors) {
-    const href = anchor.getAttribute('href') ?? '';
-    const isAllowed =
-      href.startsWith('/') ||
-      href.startsWith('#') ||
-      href.startsWith('https://') ||
-      href.startsWith('mailto:') ||
-      href.startsWith('tel:');
-
-    if (!isAllowed) {
-      anchor.setAttribute('href', '#');
-    }
-  }
-
-  const images = template.content.querySelectorAll('img');
-  for (const image of images) {
-    image.remove();
-  }
-
-  return template.innerHTML;
-}
-
-function renderMarkdown(source: string, kind: 'inline' | 'block'): string {
-  const escaped = escapeHtml(source);
-  const rendered = kind === 'block'
-    ? (marked.parse(escaped) as string)
-    : (marked.parseInline(escaped) as string);
-
-  return sanitizeRenderedHtml(rendered);
-}
-
-function computeSelector(element: Element): string {
+function structuralSeed(element: Element): string {
   const parts: string[] = [];
   let node: Element | null = element;
 
@@ -472,8 +437,21 @@ function computeSelector(element: Element): string {
   return parts.join(' > ');
 }
 
-function idForSelector(prefix: string, selector: string): string {
-  return `${prefix}:${selector}`;
+/**
+ * Resolve the canonical `data-cms-id` for an element being edited. Authored
+ * elements already carry one and we MUST reuse it (recomputing was the root
+ * cause of orphaned fields). Truly ad-hoc elements get a deterministic id that
+ * is stamped onto the DOM so subsequent edits reuse it instead of re-deriving.
+ */
+function resolveCmsId(element: HTMLElement, kind: CmsFieldKind): string {
+  const existing = element.dataset.cmsId;
+  if (existing) {
+    return existing;
+  }
+
+  const id = adHocId(kind, structuralSeed(element));
+  element.dataset.cmsId = id;
+  return id;
 }
 
 function upsertTextField(field: CmsTextField): void {
@@ -643,7 +621,7 @@ function updateDirtyIndicator(): void {
 }
 
 function updateActionAvailability(): void {
-  const canUseActions = authenticated;
+  const canUseActions = authenticated && !isBusy;
 
   if (toggleModeButton) {
     toggleModeButton.disabled = !canUseActions;
@@ -689,6 +667,12 @@ function markDirty(message: string): void {
   setStatus(message);
 }
 
+function setBusy(nextValue: boolean): void {
+  isBusy = nextValue;
+  suppressBeforeUnloadPrompt = nextValue;
+  updateActionAvailability();
+}
+
 function setPanelVisibility(panel: HTMLElement | null, open: boolean): void {
   if (!panel) {
     return;
@@ -719,70 +703,94 @@ function closePanels(except?: HTMLElement | null): void {
   }
 }
 
+function localeFallbackUsed(value: LocaleText): boolean {
+  return locale !== 'en' && !value[locale].trim() && Boolean(value.en.trim());
+}
+
+function markElementFallback(element: HTMLElement, used: boolean): void {
+  if (used) {
+    element.dataset.cmsFallback = locale;
+  } else {
+    delete element.dataset.cmsFallback;
+  }
+}
+
 function applyPageDocument(page: CmsPageDocument): void {
   for (const field of page.texts) {
-    const element = document.querySelector<HTMLElement>(field.selector);
-    if (!element || isSharedOwnedElement(element)) {
-      continue;
-    }
-
     const source = localeValue(field.value);
-    element.innerHTML = renderMarkdown(source, field.kind);
-    element.dataset.cmsField = 'text';
-    element.dataset.cmsId = field.id;
-    element.dataset.cmsSelector = field.selector;
-    element.dataset.cmsKind = field.kind;
-    element.dataset.cmsSource = source;
+    const rendered = renderMarkdown(source, field.kind);
+    const fallback = localeFallbackUsed(field.value);
+
+    document.querySelectorAll<HTMLElement>(field.selector).forEach((element) => {
+      if (isSharedOwnedElement(element)) {
+        return;
+      }
+
+      element.innerHTML = rendered;
+      element.dataset.cmsField = 'text';
+      element.dataset.cmsId = field.id;
+      element.dataset.cmsSelector = field.selector;
+      element.dataset.cmsKind = field.kind;
+      element.dataset.cmsSource = source;
+      markElementFallback(element, fallback);
+    });
   }
 
   for (const field of page.links) {
-    const element = document.querySelector<HTMLElement>(field.selector);
-    if (!element || isSharedOwnedElement(element)) {
-      continue;
-    }
+    const targetHref = localeValue(field.href);
+    const renderedLabel = renderMarkdown(localeValue(field.label), 'inline');
+    const labelText = localeValue(field.label);
+    const fallback = localeFallbackUsed(field.label) || localeFallbackUsed(field.href);
 
-    const isSimpleLinkLabelTarget = element.childElementCount === 0;
-
-    if (element instanceof HTMLAnchorElement) {
-      element.href = localeValue(field.href);
-      if (isSimpleLinkLabelTarget) {
-        element.innerHTML = renderMarkdown(localeValue(field.label), 'inline');
-      }
-    } else {
-      const targetHref = localeValue(field.href);
-      element.setAttribute('data-cms-href', targetHref);
-      if (isSimpleLinkLabelTarget) {
-        element.textContent = localeValue(field.label);
+    document.querySelectorAll<HTMLElement>(field.selector).forEach((element) => {
+      if (isSharedOwnedElement(element)) {
+        return;
       }
 
-      if (element instanceof HTMLButtonElement && !element.closest('form')) {
-        element.type = 'button';
-        element.onclick = () => {
-          const nextHref = element.getAttribute('data-cms-href') ?? '';
-          if (nextHref) {
-            window.location.href = nextHref;
-          }
-        };
-      }
-    }
+      const isSimpleLinkLabelTarget = element.childElementCount === 0;
 
-    element.dataset.cmsField = 'link';
-    element.dataset.cmsId = field.id;
-    element.dataset.cmsSelector = field.selector;
+      if (element instanceof HTMLAnchorElement) {
+        element.href = targetHref;
+        if (isSimpleLinkLabelTarget) {
+          element.innerHTML = renderedLabel;
+        }
+      } else {
+        element.setAttribute('data-cms-href', targetHref);
+        if (isSimpleLinkLabelTarget) {
+          element.textContent = labelText;
+        }
+
+        if (element instanceof HTMLButtonElement && !element.closest('form')) {
+          element.type = 'button';
+          element.setAttribute('onclick', `window.location.href='${escapeJsString(targetHref)}'`);
+        }
+      }
+
+      element.dataset.cmsField = 'link';
+      element.dataset.cmsId = field.id;
+      element.dataset.cmsSelector = field.selector;
+      markElementFallback(element, fallback);
+    });
   }
 
   for (const field of page.images) {
-    const element = document.querySelector<HTMLImageElement>(field.selector);
-    if (!element || isSharedOwnedElement(element)) {
-      continue;
-    }
+    const resolvedSrc = resolveAdminImageSrc(field.src);
+    const altText = localeValue(field.alt);
+    const fallback = localeFallbackUsed(field.alt);
 
-    element.src = resolveAdminImageSrc(field.src);
-    element.alt = localeValue(field.alt);
-    element.dataset.cmsField = 'image';
-    element.dataset.cmsId = field.id;
-    element.dataset.cmsSelector = field.selector;
-    element.dataset.cmsSourceSrc = field.src;
+    document.querySelectorAll<HTMLImageElement>(field.selector).forEach((element) => {
+      if (isSharedOwnedElement(element)) {
+        return;
+      }
+
+      element.src = resolvedSrc;
+      element.alt = altText;
+      element.dataset.cmsField = 'image';
+      element.dataset.cmsId = field.id;
+      element.dataset.cmsSelector = field.selector;
+      element.dataset.cmsSourceSrc = field.src;
+      markElementFallback(element, fallback);
+    });
   }
 }
 
@@ -1074,8 +1082,8 @@ function completeTextEdit(element: HTMLElement): void {
     return;
   }
 
-  const selector = computeSelector(element);
-  const id = idForSelector('text', selector);
+  const id = resolveCmsId(element, 'text');
+  const selector = selectorForId(id);
   const kind = MARKDOWN_BLOCK_TAGS.has(element.tagName) ? 'block' : 'inline';
   const existing = workingState.page.texts.find((field) => field.id === id);
   const previousValue = existing
@@ -1150,8 +1158,8 @@ function editLink(element: HTMLElement): void {
     return;
   }
 
-  const selector = computeSelector(element);
-  const id = idForSelector('link', selector);
+  const id = resolveCmsId(element, 'link');
+  const selector = selectorForId(id);
   const existing = workingState.page.links.find((field) => field.id === id);
   const isSimpleLinkLabelTarget = element.childElementCount === 0;
 
@@ -1387,10 +1395,10 @@ function selectImageForEditing(element: HTMLImageElement): void {
     return;
   }
 
-  const selector = computeSelector(element);
+  const id = resolveCmsId(element, 'image');
   selectedImageTarget = {
-    selector,
-    id: idForSelector('image', selector),
+    selector: selectorForId(id),
+    id,
   };
 
   ensureImageField(selectedImageTarget);
@@ -2320,14 +2328,24 @@ async function refreshContent(): Promise<void> {
   updateActionAvailability();
 }
 
+async function syncBaseShaFromServer(): Promise<void> {
+  const response = await fetchContent();
+  if (workingState) {
+    workingState.baseSha = response.branchSha;
+  }
+  if (publishedState) {
+    publishedState.baseSha = response.branchSha;
+  }
+}
+
 async function publishChanges(): Promise<void> {
-  if (!workingState) {
+  if (!workingState || isBusy) {
     return;
   }
 
   finalizeActiveTextEdit();
   setStatus('Publishing changes...');
-  suppressBeforeUnloadPrompt = true;
+  setBusy(true);
 
   try {
     const response = await fetch('/api/admin/publish', {
@@ -2344,17 +2362,34 @@ async function publishChanges(): Promise<void> {
       }),
     });
 
-    const payload = await readApiPayload<{ commitSha?: string }>(response);
+    const payload = await readApiPayload<{ commitSha?: string; warnings?: string[] }>(response);
+
+    if (response.status === 409) {
+      // The site changed since this session loaded. Keep the in-flight edits and
+      // re-sync only the base commit so the next Publish click can succeed.
+      await syncBaseShaFromServer();
+      setStatus('Publish conflict: the site changed since you loaded. Your edits are kept — click Publish again to retry.');
+      return;
+    }
 
     if (!response.ok) {
       setStatus(payload.error ?? 'Publish failed');
       return;
     }
 
-    setStatus(`Published ${payload.commitSha ?? ''}`.trim());
+    const warnings = payload.warnings ?? [];
+    if (warnings.length > 0) {
+      for (const warning of warnings) {
+        console.warn(`[cms publish] ${warning}`);
+      }
+      setStatus(`Published ${payload.commitSha ?? ''}`.trim() + ` — ${warnings.length} translation warning(s), see console.`);
+    } else {
+      setStatus(`Published ${payload.commitSha ?? ''}`.trim());
+    }
+
     await refreshContent();
   } finally {
-    suppressBeforeUnloadPrompt = false;
+    setBusy(false);
   }
 }
 
@@ -2364,8 +2399,12 @@ async function uploadImage(
     applyToSelected?: boolean;
   } = {},
 ): Promise<void> {
+  if (isBusy) {
+    return;
+  }
+
   const uploadedFile = formData.get('file');
-  suppressBeforeUnloadPrompt = true;
+  setBusy(true);
   try {
     const response = await fetch('/api/admin/upload-image', {
       method: 'POST',
@@ -2400,6 +2439,8 @@ async function uploadImage(
     if (options.applyToSelected) {
       const replaced = replaceSelectedImage({ src: payload.src });
       if (!replaced) {
+        // The preview blob will never be shown, so don't leak it.
+        clearPendingAdminImagePreview(payload.src);
         setStatus('Image uploaded. Choose a selected page image before replacing it.');
         renderImageLibrary();
         return;
@@ -2414,7 +2455,7 @@ async function uploadImage(
     renderImageLibrary();
     setStatus('Image uploaded. It is ready in the gallery and preview uses the local file until deploy finishes.');
   } finally {
-    suppressBeforeUnloadPrompt = false;
+    setBusy(false);
   }
 }
 

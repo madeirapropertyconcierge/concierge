@@ -1,3 +1,4 @@
+import { selectorForId } from './cms-keys';
 import { normalizeCmsText } from './text-normalization';
 import type {
   CmsBlogPost,
@@ -34,6 +35,7 @@ function normalizeSeoLocale(seo: CmsSeoLocale): CmsSeoLocale {
 export function normalizeTextField(field: CmsTextField): CmsTextField {
   return {
     ...field,
+    selector: selectorForId(field.id),
     value: normalizeLocaleText(field.value),
   };
 }
@@ -41,6 +43,7 @@ export function normalizeTextField(field: CmsTextField): CmsTextField {
 export function normalizeLinkField(field: CmsLinkField): CmsLinkField {
   return {
     ...field,
+    selector: selectorForId(field.id),
     label: normalizeLocaleText(field.label),
     href: {
       en: field.href.en.trim(),
@@ -52,6 +55,7 @@ export function normalizeLinkField(field: CmsLinkField): CmsLinkField {
 export function normalizeImageField(field: CmsImageField): CmsImageField {
   return {
     ...field,
+    selector: selectorForId(field.id),
     alt: normalizeLocaleText(field.alt),
     attributionName: normalizeCmsText(field.attributionName),
     attributionUrl: field.attributionUrl.trim(),

@@ -1,14 +1,30 @@
 import { load } from 'cheerio';
 import type { Locale } from '../i18n/utils';
 import type { CmsPageDocument } from './schema';
+import { escapeJsString } from './cms-keys';
 import { renderBlockMarkdown, renderInlineMarkdown, stripMarkdown } from './markdown';
 
-function resolveLocaleText(value: { en: string; pt: string }, locale: Locale): string {
-  return value[locale].trim() || value.en.trim();
+interface ResolvedLocaleText {
+  text: string;
+  usedFallback: boolean;
 }
 
-function escapeJsString(value: string): string {
-  return value.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+function resolveLocaleText(value: { en: string; pt: string }, locale: Locale): ResolvedLocaleText {
+  const primary = value[locale].trim();
+  if (primary) {
+    return { text: primary, usedFallback: false };
+  }
+
+  const fallback = value.en.trim();
+  return { text: fallback, usedFallback: locale !== 'en' && fallback.length > 0 };
+}
+
+function markFallback(node: ReturnType<ReturnType<typeof load>>, usedFallback: boolean, locale: Locale): void {
+  if (usedFallback) {
+    node.attr('data-cms-fallback', locale);
+  } else {
+    node.removeAttr('data-cms-fallback');
+  }
 }
 
 function isSimpleLinkLabelTarget(childrenCount: number): boolean {
@@ -45,7 +61,7 @@ export function applyCmsPageDocumentToHtml(
   const $ = load(html);
 
   for (const field of page.texts) {
-    const content = resolveLocaleText(field.value, locale);
+    const { text: content, usedFallback } = resolveLocaleText(field.value, locale);
     const rendered = field.kind === 'block'
       ? renderBlockMarkdown(content)
       : renderInlineMarkdown(content);
@@ -55,18 +71,20 @@ export function applyCmsPageDocumentToHtml(
         return;
       }
 
-      $(element).html(rendered);
-      $(element).attr('data-cms-field', 'text');
-      $(element).attr('data-cms-id', field.id);
-      $(element).attr('data-cms-selector', field.selector);
-      $(element).attr('data-cms-kind', field.kind);
-      $(element).attr('data-cms-source', content);
+      const node = $(element);
+      node.html(rendered);
+      node.attr('data-cms-field', 'text');
+      node.attr('data-cms-id', field.id);
+      node.attr('data-cms-selector', field.selector);
+      node.attr('data-cms-kind', field.kind);
+      node.attr('data-cms-source', content);
+      markFallback(node, usedFallback, locale);
     });
   }
 
   for (const field of page.links) {
-    const label = resolveLocaleText(field.label, locale);
-    const href = resolveLocaleText(field.href, locale);
+    const { text: label, usedFallback: labelFallback } = resolveLocaleText(field.label, locale);
+    const { text: href, usedFallback: hrefFallback } = resolveLocaleText(field.href, locale);
     const renderedLabel = renderInlineMarkdown(label);
 
     $(field.selector).each((_index, element) => {
@@ -102,11 +120,12 @@ export function applyCmsPageDocumentToHtml(
       node.attr('data-cms-field', 'link');
       node.attr('data-cms-id', field.id);
       node.attr('data-cms-selector', field.selector);
+      markFallback(node, labelFallback || hrefFallback, locale);
     });
   }
 
   for (const field of page.images) {
-    const alt = resolveLocaleText(field.alt, locale);
+    const { text: alt, usedFallback } = resolveLocaleText(field.alt, locale);
 
     $(field.selector).each((_index, element) => {
       const node = $(element);
@@ -119,6 +138,7 @@ export function applyCmsPageDocumentToHtml(
       node.attr('data-cms-field', 'image');
       node.attr('data-cms-id', field.id);
       node.attr('data-cms-selector', field.selector);
+      markFallback(node, usedFallback, locale);
     });
   }
 
