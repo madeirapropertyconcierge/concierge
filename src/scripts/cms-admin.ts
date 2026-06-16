@@ -118,6 +118,21 @@ import {
   renderBlogSelect,
   toggleBlogManager,
 } from "./cms/blog";
+import {
+  findServicePackageEntry,
+  readSharedPackageFieldValue,
+  upsertImageField,
+  upsertLinkField,
+  upsertTextField,
+  writeSharedPackageFieldValue,
+} from "./cms/fields";
+import {
+  findEditableTextElement,
+  isAdminControl,
+  isSharedOwnedElement,
+  isSharedPackageElement,
+  isTextCandidate,
+} from "./cms/editable-dom";
 
 
 if (!isBlogPage && openBlogManagerButton) {
@@ -128,237 +143,9 @@ const BANNER_OFFSET_CSS_VAR = '--cms-admin-banner-offset';
 const LOGOUT_MARKER_STORAGE_KEY = 'cms-admin-force-logout';
 
 const MARKDOWN_BLOCK_TAGS = new Set(['P', 'DIV', 'LI', 'BLOCKQUOTE']);
-const TEXT_TAGS = new Set([
-  'P',
-  'SPAN',
-  'DIV',
-  'LI',
-  'BLOCKQUOTE',
-  'H1',
-  'H2',
-  'H3',
-  'H4',
-  'H5',
-  'H6',
-  'STRONG',
-  'EM',
-]);
 
 
 
-
-function isSharedPackageElement(element: Element | null): element is HTMLElement {
-  return Boolean(element instanceof HTMLElement && element.dataset.cmsSharedDoc === 'packages');
-}
-
-function hasSharedEditableDescendant(element: HTMLElement): boolean {
-  return Boolean(element.querySelector('[data-cms-shared-doc="packages"]'));
-}
-
-function isSharedOwnedElement(element: Element | null): boolean {
-  const owner = element instanceof HTMLElement
-    ? element.closest<HTMLElement>('[data-cms-owner]')
-    : null;
-
-  return Boolean(owner && owner.dataset.cmsOwner && owner.dataset.cmsOwner !== 'page');
-}
-
-function isAdminControl(element: Element | null): boolean {
-  return Boolean(element?.closest('[data-admin-allow]'));
-}
-
-function isTextCandidate(element: HTMLElement): boolean {
-  if (!TEXT_TAGS.has(element.tagName)) {
-    return false;
-  }
-
-  if (element.tagName === 'DIV' && element.childElementCount > 0) {
-    return false;
-  }
-
-  if (element.matches('a,button,label,summary')) {
-    return false;
-  }
-
-  if (element.querySelector('img,svg,video,iframe,a,button,input,textarea,select')) {
-    return false;
-  }
-
-  if (hasSharedEditableDescendant(element)) {
-    return false;
-  }
-
-  return Boolean(element.textContent?.trim());
-}
-
-function findEditableTextElement(target: Element): HTMLElement | null {
-  const sharedElement = target.closest<HTMLElement>('[data-cms-shared-doc="packages"]');
-  if (sharedElement?.closest('main')) {
-    return sharedElement;
-  }
-
-  // Prefer the authored/keyed text field when the click lands inside one, so a
-  // click on inline markup (e.g. a <strong> inside the field) edits the whole
-  // field rather than minting a field for the fragment.
-  const keyedElement = target.closest<HTMLElement>('main [data-cms-field="text"][data-cms-id]');
-  if (keyedElement && isTextCandidate(keyedElement)) {
-    return keyedElement;
-  }
-
-  const textElement = target.closest<HTMLElement>('main *');
-  if (textElement && isTextCandidate(textElement)) {
-    return textElement;
-  }
-
-  return null;
-}
-
-function upsertTextField(field: CmsTextField): void {
-  if (!state.workingState) {
-    return;
-  }
-
-  const normalizedField = normalizeTextField(field);
-  const index = state.workingState.page.texts.findIndex((entry) => entry.id === field.id);
-  if (index >= 0) {
-    state.workingState.page.texts[index] = normalizedField;
-    return;
-  }
-
-  state.workingState.page.texts.push(normalizedField);
-}
-
-function upsertLinkField(field: CmsLinkField): void {
-  if (!state.workingState) {
-    return;
-  }
-
-  const normalizedField = normalizeLinkField(field);
-  const index = state.workingState.page.links.findIndex((entry) => entry.id === field.id);
-  if (index >= 0) {
-    state.workingState.page.links[index] = normalizedField;
-    return;
-  }
-
-  state.workingState.page.links.push(normalizedField);
-}
-
-function upsertImageField(field: CmsImageField): void {
-  if (!state.workingState) {
-    return;
-  }
-
-  const normalizedField = normalizeImageField(field);
-  const index = state.workingState.page.images.findIndex((entry) => entry.id === field.id);
-  if (index >= 0) {
-    state.workingState.page.images[index] = normalizedField;
-    return;
-  }
-
-  state.workingState.page.images.push(normalizedField);
-}
-
-function findServicePackageEntry(key: CmsServicePackageKey): CmsServicePackageEntry | null {
-  if (!state.workingState) {
-    return null;
-  }
-
-  return state.workingState.packages.packages.find((entry) => entry.key === key) ?? null;
-}
-
-function resolveLocalizedListValue(values: Record<Locale, string[]>, index: number): string {
-  const localized = values[locale]?.[index]?.trim();
-  if (localized) {
-    return localized;
-  }
-
-  return values.en[index]?.trim() ?? '';
-}
-
-function readSharedPackageFieldValue(
-  entry: CmsServicePackageEntry,
-  field: CmsServicePackageField,
-  index?: number,
-): string {
-  switch (field) {
-    case 'tierLabel':
-      return localeValue(entry.tierLabel);
-    case 'title':
-      return localeValue(entry.title);
-    case 'audience':
-      return localeValue(entry.audience);
-    case 'priceHeadline':
-      return entry.price ? localeValue(entry.price.headline) : '';
-    case 'priceDetail':
-      return entry.price ? localeValue(entry.price.detail) : '';
-    case 'idealFor':
-      return localeValue(entry.idealFor);
-    case 'homeBlurb':
-      return localeValue(entry.homeBlurb);
-    case 'feature':
-      return typeof index === 'number' ? resolveLocalizedListValue(entry.features, index) : '';
-    case 'servicesBullet':
-      return typeof index === 'number' ? resolveLocalizedListValue(entry.servicesBullets, index) : '';
-  }
-}
-
-function setLocalizedListValue(values: Record<Locale, string[]>, index: number, nextValue: string): void {
-  const nextItems = [...values[locale]];
-  while (nextItems.length <= index) {
-    nextItems.push('');
-  }
-  nextItems[index] = nextValue;
-  values[locale] = nextItems;
-}
-
-function writeSharedPackageFieldValue(
-  entry: CmsServicePackageEntry,
-  field: CmsServicePackageField,
-  nextValue: string,
-  index?: number,
-): void {
-  switch (field) {
-    case 'tierLabel':
-      entry.tierLabel = setLocaleValue(entry.tierLabel, nextValue);
-      return;
-    case 'title':
-      entry.title = setLocaleValue(entry.title, nextValue);
-      return;
-    case 'audience':
-      entry.audience = setLocaleValue(entry.audience, nextValue);
-      return;
-    case 'priceHeadline':
-      entry.price = entry.price ?? {
-        headline: { en: '', pt: '' },
-        detail: { en: '', pt: '' },
-      };
-      entry.price.headline = setLocaleValue(entry.price.headline, nextValue);
-      return;
-    case 'priceDetail':
-      entry.price = entry.price ?? {
-        headline: { en: '', pt: '' },
-        detail: { en: '', pt: '' },
-      };
-      entry.price.detail = setLocaleValue(entry.price.detail, nextValue);
-      return;
-    case 'idealFor':
-      entry.idealFor = setLocaleValue(entry.idealFor, nextValue);
-      return;
-    case 'homeBlurb':
-      entry.homeBlurb = setLocaleValue(entry.homeBlurb, nextValue);
-      return;
-    case 'feature':
-      if (typeof index === 'number') {
-        setLocalizedListValue(entry.features, index, nextValue);
-      }
-      return;
-    case 'servicesBullet':
-      if (typeof index === 'number') {
-        setLocalizedListValue(entry.servicesBullets, index, nextValue);
-      }
-      return;
-  }
-}
 
 
 function localeFallbackUsed(value: LocaleText): boolean {
