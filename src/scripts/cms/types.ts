@@ -1,57 +1,40 @@
-export type Locale = 'en' | 'pt';
+/**
+ * Client-facing CMS types.
+ *
+ * The content shapes are derived from the server Zod schema (src/cms/schema.ts)
+ * so the editor and the publish endpoint can never drift apart. These are
+ * type-only imports — zod itself never enters the browser bundle. Types that
+ * exist only in the editor UI are declared locally below.
+ */
 
-export type LocaleText = Record<Locale, string>;
+import type {
+  CmsBlogPost,
+  CmsImageField,
+  CmsLinkField,
+  CmsPageDocument,
+  CmsServicePackageDocument,
+  CmsServicePackageEntry,
+  CmsTextField,
+} from '../../cms/schema';
+import type { Locale } from '../../i18n/utils';
 
-export interface CmsTextField {
-  id: string;
-  selector: string;
-  kind: 'inline' | 'block';
-  value: LocaleText;
-}
+export type {
+  CmsBlogPost,
+  CmsImageField,
+  CmsLinkField,
+  CmsPageDocument,
+  CmsServicePackageDocument,
+  CmsServicePackageEntry,
+  CmsTextField,
+  Locale,
+};
 
-export interface CmsLinkField {
-  id: string;
-  selector: string;
-  label: LocaleText;
-  href: LocaleText;
-}
-
-export interface CmsImageField {
-  id: string;
-  selector: string;
-  src: string;
-  alt: LocaleText;
-  attributionName: string;
-  attributionUrl: string;
-  licenseUrl: string;
-  caption?: LocaleText;
-}
-
-export interface CmsSeoLocale {
-  title: string;
-  description: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: string;
-  canonical: string;
-}
-
-export interface CmsPageDocument {
-  pageId: string;
-  updatedAt: string;
-  seo: Record<Locale, CmsSeoLocale>;
-  texts: CmsTextField[];
-  links: CmsLinkField[];
-  images: CmsImageField[];
-}
-
-export type CmsServicePackageKey =
-  | 'essentialCare'
-  | 'managedCare'
-  | 'premiumCare'
-  | 'revenueHosting'
-  | 'onDemand'
-  | 'addOns';
+export type LocaleText = CmsTextField['value'];
+export type CmsSeoLocale = CmsPageDocument['seo']['en'];
+export type CmsBlogLocale = CmsBlogPost['locales']['en'];
+export type CmsBlogSeo = CmsBlogPost['seoByLocale']['en'];
+export type CmsServicePackagePrice = NonNullable<CmsServicePackageEntry['price']>;
+export type CmsServicePackageKey = CmsServicePackageEntry['key'];
 
 export type CmsServicePackageField =
   | 'tierLabel'
@@ -63,57 +46,6 @@ export type CmsServicePackageField =
   | 'homeBlurb'
   | 'feature'
   | 'servicesBullet';
-
-export interface CmsServicePackagePrice {
-  headline: LocaleText;
-  detail: LocaleText;
-}
-
-export interface CmsServicePackageEntry {
-  key: CmsServicePackageKey;
-  tierLabel: LocaleText;
-  title: LocaleText;
-  price: CmsServicePackagePrice | null;
-  audience: LocaleText;
-  features: Record<Locale, string[]>;
-  idealFor: LocaleText;
-  servicesBullets: Record<Locale, string[]>;
-  homeBlurb: LocaleText;
-}
-
-export interface CmsServicePackageDocument {
-  updatedAt: string;
-  packages: CmsServicePackageEntry[];
-}
-
-export interface CmsBlogLocale {
-  title: string;
-  excerpt: string;
-  body: string;
-  coverAlt: string;
-}
-
-export interface CmsBlogSeo {
-  title: string;
-  description: string;
-  ogTitle: string;
-  ogDescription: string;
-  ogImage: string;
-  canonical: string;
-}
-
-export interface CmsBlogPost {
-  id: string;
-  slug: string;
-  status: 'draft' | 'published';
-  publishedAt: string;
-  updatedAt: string;
-  tags: string[];
-  readingMinutes: number;
-  coverImage: string;
-  locales: Record<Locale, CmsBlogLocale>;
-  seoByLocale: Record<Locale, CmsBlogSeo>;
-}
 
 export interface ContentResponse {
   page: CmsPageDocument;
