@@ -4,23 +4,12 @@ import {
   discardChangesButton,
   editSeoButton,
   logoutButton,
-  modeLabel,
   openBlogManagerButton,
   openImageEditorButton,
   openImageLibraryButton,
   publishButton,
   setStatus,
-  toggleModeButton,
 } from './dom';
-
-export function updateModeLabel(): void {
-  if (!modeLabel || !toggleModeButton) {
-    return;
-  }
-
-  modeLabel.textContent = state.editMode ? 'Edit' : 'View';
-  toggleModeButton.textContent = state.editMode ? 'Stop editing' : 'Edit content';
-}
 
 export function updateDirtyIndicator(): void {
   if (!dirtyIndicator) {
@@ -34,10 +23,6 @@ export function updateDirtyIndicator(): void {
 
 export function updateActionAvailability(): void {
   const canUseActions = state.authenticated && !state.isBusy;
-
-  if (toggleModeButton) {
-    toggleModeButton.disabled = !canUseActions;
-  }
 
   if (publishButton) {
     publishButton.disabled = !canUseActions || !state.hasUnsavedChanges;

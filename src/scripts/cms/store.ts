@@ -8,7 +8,6 @@ import type { CmsGalleryItem, SelectedImageTarget, WorkingState } from './types'
  */
 export interface CmsState {
   authenticated: boolean;
-  editMode: boolean;
   hasUnsavedChanges: boolean;
   isBusy: boolean;
   suppressBeforeUnloadPrompt: boolean;
@@ -22,7 +21,6 @@ export interface CmsState {
 
 export const state: CmsState = {
   authenticated: false,
-  editMode: false,
   hasUnsavedChanges: false,
   isBusy: false,
   suppressBeforeUnloadPrompt: false,
@@ -33,3 +31,27 @@ export const state: CmsState = {
   activeEditableElement: null,
   bannerResizeObserver: null,
 };
+
+/**
+ * Lightweight subscription used to break the `applyCurrentState` → panel
+ * back-edge: `apply` notifies after re-rendering the page, and each open panel
+ * (SEO/image editor/image library) re-hydrates itself in response. This keeps
+ * the dependency graph one-directional (panels depend on `apply`, not vice
+ * versa).
+ */
+type StateListener = () => void;
+
+const listeners = new Set<StateListener>();
+
+export function subscribe(listener: StateListener): () => void {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+export function notifyStateApplied(): void {
+  for (const listener of listeners) {
+    listener();
+  }
+}

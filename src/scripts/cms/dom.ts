@@ -6,13 +6,11 @@ export const loginError = document.querySelector<HTMLElement>('#cms-login-error'
 export const loginCancel = document.querySelector<HTMLButtonElement>('#cms-login-cancel');
 
 export const banner = document.querySelector<HTMLElement>('#cms-admin-banner');
-export const modeLabel = document.querySelector<HTMLElement>('#cms-mode-label');
 export const statusEl = document.querySelector<HTMLElement>('#cms-status');
 export const fallbackWarning = document.querySelector<HTMLElement>('#cms-fallback-warning');
 export const integrityWarning = document.querySelector<HTMLElement>('#cms-integrity-warning');
 export const dirtyIndicator = document.querySelector<HTMLElement>('#cms-dirty-indicator');
 
-export const toggleModeButton = document.querySelector<HTMLButtonElement>('#cms-toggle-mode');
 export const discardChangesButton = document.querySelector<HTMLButtonElement>('#cms-discard-changes');
 export const editSeoButton = document.querySelector<HTMLButtonElement>('#cms-edit-seo');
 export const openImageEditorButton = document.querySelector<HTMLButtonElement>('#cms-open-image-editor');
