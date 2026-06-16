@@ -377,6 +377,7 @@
     font-size: clamp(1.55rem, 2.2vw, 2rem);
     line-height: 1.02;
     color: var(--color-charcoal);
+    scroll-margin-top: 7rem;
   }
 
   .blog-prose h3 {
@@ -384,6 +385,7 @@
     font-size: clamp(1.18rem, 1.7vw, 1.4rem);
     line-height: 1.1;
     color: rgba(16, 32, 43, 0.9);
+    scroll-margin-top: 7rem;
   }
 
   .blog-prose p {
