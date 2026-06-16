@@ -4,18 +4,15 @@
     <button id="cms-image-library-close" class="cms-btn cms-btn-muted" type="button" data-admin-allow>Close</button>
   </header>
 
-  <div class="cms-row cms-space-between cms-wrap" data-admin-allow>
+  <div class="cms-library-toolbar" data-admin-allow>
     <input id="cms-image-search" type="text" placeholder="Search by URL, alt, attribution" data-admin-allow />
+    <button id="cms-image-needs-alt" class="cms-chip-toggle" type="button" aria-pressed="false" data-admin-allow>
+      Needs alt text
+    </button>
     <p id="cms-image-library-count" class="cms-subtitle" data-admin-allow></p>
   </div>
   <p class="cms-subtitle" data-admin-allow>
-    The gallery scans the `public/` folder and also shows images referenced by page, blog, and SEO content.
-  </p>
-  <p class="cms-subtitle" data-admin-allow>
-    To replace an image on the page: click it in edit mode, then either use a gallery card here or upload directly in “Image details”.
-  </p>
-  <p class="cms-subtitle" data-admin-allow>
-    Files tagged with `Public folder` can be deleted here only when they are not referenced by a page, blog post, or SEO field.
+    Edit alt text right on a card to improve image SEO and accessibility — the “Needs alt text” filter shows images on this page that are still missing it. Click a card to replace it on the page.
   </p>
 
   <form id="cms-image-upload-form" class="cms-form cms-section-card" data-admin-allow>

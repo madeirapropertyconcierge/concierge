@@ -6,13 +6,14 @@ import {
 import { fetchContent, sendForm, sendJson } from './api';
 import { applyCurrentState } from './apply';
 import { setForcedLogoutMarker } from './auth';
-import { setBusy, setDirty, updateActionAvailability } from './banner-ui';
+import { markDirty, setBusy, setDirty, updateActionAvailability } from './banner-ui';
 import { setBannerVisibility } from './banner-visibility';
 import { renderBlogSelect } from './blog';
 import { deepClone } from './context';
 import { closePanels, setStatus } from './dom';
 import { createPublicGalleryItem, renderImageLibrary, replaceSelectedImage, upsertGalleryItem } from './gallery';
 import { hydrateImageEditorForm } from './image-editing';
+import { findOrphanFields, removeOrphanFields } from './integrity';
 import { clearPendingAdminImagePreview, setPendingAdminImagePreview } from './preview-images';
 import { hydrateSeoForm } from './seo';
 import { state } from './store';
@@ -190,6 +191,36 @@ export async function logout(): Promise<void> {
   setDirty(false);
   updateActionAvailability();
   setStatus('Logged out');
+}
+
+export function cleanupOrphanFields(): void {
+  const page = state.workingState?.page;
+  if (!page || state.isBusy) {
+    return;
+  }
+
+  finalizeActiveTextEdit();
+
+  const orphans = findOrphanFields(page);
+  if (orphans.length === 0) {
+    setStatus('No orphaned fields to clean up');
+    return;
+  }
+
+  const summary = orphans.map((field) => `• ${field.group} — ${field.id}`).join('\n');
+  const confirmed = window.confirm(
+    `Remove ${orphans.length} orphaned field${orphans.length === 1 ? '' : 's'} from this page?\n\n`
+    + `${summary}\n\n`
+    + 'These fields no longer match any element on the page. They are deleted from the '
+    + 'page content when you next Publish.',
+  );
+  if (!confirmed) {
+    return;
+  }
+
+  const removed = removeOrphanFields(page);
+  applyCurrentState();
+  markDirty(`Removed ${removed} orphaned field${removed === 1 ? '' : 's'} — Publish to save`);
 }
 
 export function discardChanges(): void {

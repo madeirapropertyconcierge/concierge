@@ -1,5 +1,6 @@
 import { state } from './store';
 import {
+  cleanupOrphansButton,
   dirtyIndicator,
   discardChangesButton,
   editSeoButton,
@@ -30,6 +31,12 @@ export function updateActionAvailability(): void {
 
   if (discardChangesButton) {
     discardChangesButton.disabled = !canUseActions || !state.hasUnsavedChanges;
+  }
+
+  // Visibility is driven by orphan count in updateIntegrityWarning; this only
+  // gates interaction while busy or logged out.
+  if (cleanupOrphansButton) {
+    cleanupOrphansButton.disabled = !canUseActions;
   }
 
   if (editSeoButton) {

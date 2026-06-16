@@ -1,88 +1,105 @@
 <div id="cms-seo-editor" class="cms-hidden cms-panel cms-panel-xl" data-admin-allow>
   <header class="cms-row cms-space-between" data-admin-allow>
-    <h3 class="cms-title">SEO Editor</h3>
+    <h3 class="cms-title">Page SEO</h3>
     <button id="cms-seo-close" class="cms-btn cms-btn-muted" type="button" data-admin-allow>Close</button>
   </header>
 
   <p class="cms-subtitle" data-admin-allow>
-    Manage search and social metadata for both locales. Leave fields empty to fall back to page defaults.
+    Edit how this page appears in Google and when shared on social. Empty fields fall back to the page defaults.
   </p>
 
+  <div class="cms-tabs" role="tablist" data-admin-allow>
+    <button class="cms-tab" type="button" role="tab" data-seo-locale="en" data-admin-allow>English</button>
+    <button class="cms-tab" type="button" role="tab" data-seo-locale="pt" data-admin-allow>Português</button>
+    <span class="cms-tab-spacer" data-admin-allow></span>
+    <button id="cms-seo-copy-en" class="cms-btn cms-btn-muted cms-btn-sm cms-hidden" type="button" data-admin-allow>
+      Copy from English
+    </button>
+  </div>
+
   <form id="cms-seo-form" class="cms-form" data-admin-allow>
-    <div class="cms-locale-grid" data-admin-allow>
-      <section class="cms-section-card" data-admin-allow>
-        <h4 class="cms-title-small" data-admin-allow>English</h4>
+    <section class="cms-seo-section" data-admin-allow>
+      <h4 class="cms-title-small" data-admin-allow>Search result</h4>
 
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>SEO title</span>
-          <input name="enTitle" type="text" data-admin-allow />
-        </label>
+      <div class="cms-seo-preview-google" aria-hidden="true" data-admin-allow>
+        <span id="cms-seo-pv-url" class="cms-g-url"></span>
+        <span id="cms-seo-pv-title" class="cms-g-title"></span>
+        <span id="cms-seo-pv-desc" class="cms-g-desc"></span>
+      </div>
 
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>SEO description</span>
-          <textarea name="enDescription" rows="3" data-admin-allow></textarea>
-        </label>
+      <label class="cms-field" data-admin-allow>
+        <span class="cms-field-head" data-admin-allow>
+          <span data-admin-allow>Page title</span>
+          <span id="cms-seo-count-title" class="cms-count" data-admin-allow></span>
+        </span>
+        <input name="title" type="text" placeholder="Uses the page default" data-admin-allow />
+      </label>
 
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Open Graph title</span>
-          <input name="enOgTitle" type="text" data-admin-allow />
-        </label>
+      <label class="cms-field" data-admin-allow>
+        <span class="cms-field-head" data-admin-allow>
+          <span data-admin-allow>Description</span>
+          <span id="cms-seo-count-description" class="cms-count" data-admin-allow></span>
+        </span>
+        <textarea name="description" rows="3" placeholder="Uses the page default" data-admin-allow></textarea>
+      </label>
+    </section>
 
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Open Graph description</span>
-          <textarea name="enOgDescription" rows="3" data-admin-allow></textarea>
-        </label>
+    <section class="cms-seo-section" data-admin-allow>
+      <h4 class="cms-title-small" data-admin-allow>Social share card</h4>
 
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Open Graph image URL</span>
-          <input name="enOgImage" type="text" data-admin-allow />
-        </label>
+      <div id="cms-seo-preview-social" class="cms-seo-preview-social" aria-hidden="true" data-admin-allow>
+        <div class="cms-social-img" data-admin-allow>
+          <img id="cms-seo-pv-ogimage" alt="" data-admin-allow />
+          <span class="cms-social-img-empty" data-admin-allow>No social image</span>
+        </div>
+        <div class="cms-social-body" data-admin-allow>
+          <span id="cms-seo-pv-oghost" class="cms-social-host"></span>
+          <span id="cms-seo-pv-ogtitle" class="cms-social-title"></span>
+          <span id="cms-seo-pv-ogdesc" class="cms-social-desc"></span>
+        </div>
+      </div>
 
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Canonical URL</span>
-          <input name="enCanonical" type="text" data-admin-allow />
-        </label>
-      </section>
+      <label class="cms-field" data-admin-allow>
+        <span class="cms-field-head" data-admin-allow>
+          <span data-admin-allow>Social title</span>
+          <span id="cms-seo-count-ogTitle" class="cms-count" data-admin-allow></span>
+        </span>
+        <input name="ogTitle" type="text" placeholder="Falls back to the page title" data-admin-allow />
+      </label>
 
-      <section class="cms-section-card" data-admin-allow>
-        <h4 class="cms-title-small" data-admin-allow>Portuguese</h4>
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Social description</span>
+        <textarea name="ogDescription" rows="2" placeholder="Falls back to the description" data-admin-allow></textarea>
+      </label>
 
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>SEO title</span>
-          <input name="ptTitle" type="text" data-admin-allow />
-        </label>
+      <div class="cms-field" data-admin-allow>
+        <span data-admin-allow>Social image</span>
+        <div class="cms-seo-ogimage-row" data-admin-allow>
+          <input name="ogImage" type="text" placeholder="/images/…" data-admin-allow />
+          <button id="cms-seo-pick-ogimage" class="cms-btn cms-btn-muted" type="button" data-admin-allow>
+            Choose from gallery
+          </button>
+          <button id="cms-seo-clear-ogimage" class="cms-btn cms-btn-muted" type="button" data-admin-allow>
+            Clear
+          </button>
+        </div>
+        <span class="cms-field-hint" data-admin-allow>Recommended size 1200 × 630 pixels.</span>
+      </div>
+    </section>
 
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>SEO description</span>
-          <textarea name="ptDescription" rows="3" data-admin-allow></textarea>
-        </label>
-
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Open Graph title</span>
-          <input name="ptOgTitle" type="text" data-admin-allow />
-        </label>
-
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Open Graph description</span>
-          <textarea name="ptOgDescription" rows="3" data-admin-allow></textarea>
-        </label>
-
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Open Graph image URL</span>
-          <input name="ptOgImage" type="text" data-admin-allow />
-        </label>
-
-        <label class="cms-field" data-admin-allow>
-          <span data-admin-allow>Canonical URL</span>
-          <input name="ptCanonical" type="text" data-admin-allow />
-        </label>
-      </section>
-    </div>
-
-    <div class="cms-row cms-wrap" data-admin-allow>
-      <button id="cms-seo-fill-canonical" class="cms-btn cms-btn-muted" type="button" data-admin-allow>
-        Fill canonical with current path
+    <details class="cms-seo-advanced" data-admin-allow>
+      <summary data-admin-allow>Advanced</summary>
+      <label class="cms-field" data-admin-allow>
+        <span data-admin-allow>Canonical URL</span>
+        <input name="canonical" type="text" placeholder="Uses this page's URL" data-admin-allow />
+      </label>
+      <button id="cms-seo-fill-canonical" class="cms-btn cms-btn-muted cms-btn-sm" type="button" data-admin-allow>
+        Use current path
       </button>
+    </details>
+
+    <div class="cms-seo-actions cms-row cms-space-between cms-wrap" data-admin-allow>
+      <span id="cms-seo-status" class="cms-subtitle" data-admin-allow></span>
       <button class="cms-btn cms-btn-primary" type="submit" data-admin-allow>Apply SEO changes</button>
     </div>
   </form>

@@ -1,4 +1,5 @@
 import { normalizeImageField } from '../../cms/content-normalization';
+import { normalizeCmsText } from '../../cms/text-normalization';
 import { sendJson } from './api';
 import { applyCurrentState } from './apply';
 import { markDirty } from './banner-ui';
@@ -10,6 +11,7 @@ import {
   imageLibraryList,
   imageLibraryPanel,
   imageLibrarySearch,
+  imageNeedsAltToggle,
   setStatus,
   showElement,
 } from './dom';
@@ -17,7 +19,7 @@ import { upsertImageField } from './fields';
 import { ensureImageField, hydrateImageEditorForm, toggleImageEditor } from './image-editing';
 import { clearPendingAdminImagePreview, resolveAdminImageSrc } from './preview-images';
 import { state } from './store';
-import type { CmsGalleryItem, GallerySource, LocaleText } from './types';
+import type { CmsGalleryItem, CmsImageField, GallerySource, LocaleText } from './types';
 
 function normalizeImageSrc(src: string): string {
   const trimmed = src.trim();
@@ -194,9 +196,90 @@ function collectGalleryItems(): CmsGalleryItem[] {
   });
 }
 
+/** When set, only images that are placed on this page but lack alt text show. */
+let needsAltOnly = false;
+
+/** Page image fields that point at the same asset as `src` (so alt is editable). */
+function pageImageFieldsForSrc(src: string): CmsImageField[] {
+  if (!state.workingState) {
+    return [];
+  }
+
+  const key = imageDedupKey(src);
+  if (!key) {
+    return [];
+  }
+
+  return state.workingState.page.images.filter((image) => imageDedupKey(image.src) === key);
+}
+
+function altIsMissing(item: CmsGalleryItem): boolean {
+  return !item.alt.en.trim() && !item.alt.pt.trim();
+}
+
+/** A gallery item "needs alt" when it is placed on this page yet has no alt text. */
+function itemNeedsAlt(item: CmsGalleryItem): boolean {
+  return pageImageFieldsForSrc(item.src).length > 0 && altIsMissing(item);
+}
+
+function saveGalleryAlt(src: string, altEn: string, altPt: string): void {
+  const fields = pageImageFieldsForSrc(src);
+  if (!state.workingState || fields.length === 0) {
+    return;
+  }
+
+  let changed = false;
+  for (const field of fields) {
+    const nextField = normalizeImageField({
+      ...field,
+      alt: { en: normalizeCmsText(altEn.trim()), pt: normalizeCmsText(altPt.trim()) },
+    });
+
+    if (JSON.stringify(field) !== JSON.stringify(nextField)) {
+      upsertImageField(nextField);
+      changed = true;
+    }
+  }
+
+  if (!changed) {
+    setStatus('Alt text unchanged');
+    return;
+  }
+
+  applyCurrentState();
+  renderImageLibrary();
+  markDirty('Alt text updated');
+}
+
+export function isGalleryPickActive(): boolean {
+  return Boolean(state.galleryPickHandler);
+}
+
+function finishGalleryPick(src: string | null): void {
+  const handler = state.galleryPickHandler;
+  state.galleryPickHandler = null;
+  hideElement(imageLibraryPanel);
+  handler?.(src);
+}
+
+export function cancelGalleryPick(): void {
+  finishGalleryPick(null);
+}
+
+export function toggleNeedsAltFilter(): void {
+  needsAltOnly = !needsAltOnly;
+  imageNeedsAltToggle?.classList.toggle('cms-chip-toggle-active', needsAltOnly);
+  imageNeedsAltToggle?.setAttribute('aria-pressed', needsAltOnly ? 'true' : 'false');
+  renderImageLibrary();
+}
+
 function filteredLibraryItems(): CmsGalleryItem[] {
-  const items = collectGalleryItems();
+  let items = collectGalleryItems();
   const query = imageLibrarySearch?.value.trim().toLowerCase() ?? '';
+
+  if (needsAltOnly) {
+    items = items.filter((item) => itemNeedsAlt(item));
+  }
 
   if (!query) {
     return items;
@@ -368,6 +451,91 @@ async function deleteGalleryItem(item: CmsGalleryItem): Promise<void> {
   setStatus('Image file deleted from the public folder.');
 }
 
+function buildAltBadge(item: CmsGalleryItem): HTMLElement {
+  const badge = document.createElement('span');
+  badge.className = 'cms-badge';
+
+  const editable = pageImageFieldsForSrc(item.src).length > 0;
+  if (!editable) {
+    badge.classList.add('cms-badge-muted');
+    badge.textContent = 'Not on this page';
+    return badge;
+  }
+
+  if (altIsMissing(item)) {
+    badge.classList.add('cms-badge-warn');
+    badge.textContent = 'Needs alt text';
+  } else {
+    badge.classList.add('cms-badge-ok');
+    badge.textContent = 'Alt text set';
+  }
+
+  return badge;
+}
+
+function buildAltEditor(item: CmsGalleryItem): HTMLElement | null {
+  const fields = pageImageFieldsForSrc(item.src);
+  if (fields.length === 0) {
+    return null;
+  }
+
+  const sourceAlt = fields[0].alt;
+
+  const editor = document.createElement('div');
+  editor.className = 'cms-library-alt-editor';
+
+  const makeField = (labelText: string, value: string): HTMLInputElement => {
+    const field = document.createElement('label');
+    field.className = 'cms-library-alt-field';
+    const label = document.createElement('span');
+    label.textContent = labelText;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.value = value;
+    input.placeholder = 'Describe this image for search & screen readers';
+    field.append(label, input);
+    editor.append(field);
+    return input;
+  };
+
+  const enInput = makeField('Alt text · EN', sourceAlt.en);
+  const ptInput = makeField('Alt text · PT', sourceAlt.pt);
+
+  const saveButton = document.createElement('button');
+  saveButton.type = 'button';
+  saveButton.className = 'cms-btn cms-btn-primary';
+  saveButton.textContent = 'Save alt text';
+  saveButton.addEventListener('click', () => {
+    saveGalleryAlt(item.src, enInput.value, ptInput.value);
+  });
+  editor.append(saveButton);
+
+  return editor;
+}
+
+function renderPickBanner(): void {
+  if (!imageLibraryList) {
+    return;
+  }
+
+  const banner = document.createElement('div');
+  banner.className = 'cms-pick-banner';
+
+  const label = document.createElement('span');
+  label.textContent = 'Pick an image for the social share card.';
+
+  const cancel = document.createElement('button');
+  cancel.type = 'button';
+  cancel.className = 'cms-btn cms-btn-muted cms-btn-sm';
+  cancel.textContent = 'Cancel';
+  cancel.addEventListener('click', () => {
+    cancelGalleryPick();
+  });
+
+  banner.append(label, cancel);
+  imageLibraryList.append(banner);
+}
+
 export function renderImageLibrary(): void {
   if (!imageLibraryList || !imageLibraryCount) {
     return;
@@ -375,13 +543,24 @@ export function renderImageLibrary(): void {
 
   imageLibraryList.innerHTML = '';
 
+  const picking = isGalleryPickActive();
+  if (picking) {
+    renderPickBanner();
+  }
+
   const items = filteredLibraryItems();
-  imageLibraryCount.textContent = `${items.length} image${items.length === 1 ? '' : 's'} in gallery`;
+  const needsAltCount = collectGalleryItems().filter((item) => itemNeedsAlt(item)).length;
+  const countLabel = `${items.length} image${items.length === 1 ? '' : 's'} in gallery`;
+  imageLibraryCount.textContent = needsAltCount > 0
+    ? `${countLabel} · ${needsAltCount} need alt text`
+    : countLabel;
 
   if (items.length === 0) {
     const empty = document.createElement('p');
     empty.className = 'cms-subtitle';
-    empty.textContent = 'No images match your filter.';
+    empty.textContent = needsAltOnly
+      ? 'Every image on this page has alt text. 🎉'
+      : 'No images match your filter.';
     imageLibraryList.append(empty);
     return;
   }
@@ -391,7 +570,12 @@ export function renderImageLibrary(): void {
     card.className = 'cms-library-item';
     card.addEventListener('click', (event) => {
       const eventTarget = event.target instanceof Element ? event.target : null;
-      if (eventTarget?.closest('button')) {
+      if (eventTarget?.closest('button, input, textarea, label, .cms-library-alt-editor')) {
+        return;
+      }
+
+      if (picking) {
+        finishGalleryPick(item.src);
         return;
       }
 
@@ -407,45 +591,62 @@ export function renderImageLibrary(): void {
     path.className = 'cms-library-path';
     path.textContent = item.src;
 
-    const alt = document.createElement('p');
-    alt.className = 'cms-library-meta';
-    alt.textContent = `ALT ${locale.toUpperCase()}: ${localeValue(item.alt) || '—'}`;
+    const badges = document.createElement('div');
+    badges.className = 'cms-library-badges';
+    badges.append(buildAltBadge(item));
 
     const source = document.createElement('p');
     source.className = 'cms-library-meta';
     source.textContent = `Source: ${item.sourceLabels.join(' • ')}`;
 
+    card.append(image, path, badges, source);
+
+    const altEditor = picking ? null : buildAltEditor(item);
+    if (altEditor) {
+      card.append(altEditor);
+    }
+
     const actions = document.createElement('div');
     actions.className = 'cms-library-actions';
 
-    const useButton = document.createElement('button');
-    useButton.type = 'button';
-    useButton.className = 'cms-btn cms-btn-primary';
-    useButton.textContent = 'Replace selected image';
-    useButton.disabled = !state.selectedImageTarget;
-    useButton.addEventListener('click', () => {
-      applyGalleryImageToSelected(item);
-    });
-
-    actions.append(useButton);
-
-    if (canDeleteGalleryItem(item)) {
-      const deleteButton = document.createElement('button');
-      deleteButton.type = 'button';
-      deleteButton.className = 'cms-btn cms-btn-danger';
-      deleteButton.textContent = 'Delete file';
-      deleteButton.disabled = isGalleryItemInUse(item);
-      deleteButton.title = isGalleryItemInUse(item)
-        ? 'This image is still referenced by page, blog, or SEO content.'
-        : 'Delete this file from the public folder';
-      deleteButton.addEventListener('click', async () => {
-        await deleteGalleryItem(item);
+    if (picking) {
+      const pickButton = document.createElement('button');
+      pickButton.type = 'button';
+      pickButton.className = 'cms-btn cms-btn-primary';
+      pickButton.textContent = 'Use for social card';
+      pickButton.addEventListener('click', () => {
+        finishGalleryPick(item.src);
       });
+      actions.append(pickButton);
+    } else {
+      const useButton = document.createElement('button');
+      useButton.type = 'button';
+      useButton.className = 'cms-btn cms-btn-primary';
+      useButton.textContent = 'Replace selected image';
+      useButton.disabled = !state.selectedImageTarget;
+      useButton.addEventListener('click', () => {
+        applyGalleryImageToSelected(item);
+      });
+      actions.append(useButton);
 
-      actions.append(deleteButton);
+      if (canDeleteGalleryItem(item)) {
+        const deleteButton = document.createElement('button');
+        deleteButton.type = 'button';
+        deleteButton.className = 'cms-btn cms-btn-danger';
+        deleteButton.textContent = 'Delete file';
+        deleteButton.disabled = isGalleryItemInUse(item);
+        deleteButton.title = isGalleryItemInUse(item)
+          ? 'This image is still referenced by page, blog, or SEO content.'
+          : 'Delete this file from the public folder';
+        deleteButton.addEventListener('click', async () => {
+          await deleteGalleryItem(item);
+        });
+
+        actions.append(deleteButton);
+      }
     }
 
-    card.append(image, path, alt, source, actions);
+    card.append(actions);
     imageLibraryList.append(card);
   }
 }

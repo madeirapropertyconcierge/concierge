@@ -19,6 +19,7 @@ import {
   blogManagerPanel,
   blogNewButton,
   blogSelect,
+  cleanupOrphansButton,
   discardChangesButton,
   editSeoButton,
   imageEditorClose,
@@ -28,6 +29,7 @@ import {
   imageLibraryClose,
   imageLibraryPanel,
   imageLibrarySearch,
+  imageNeedsAltToggle,
   imageReplaceUploadForm,
   imageUploadForm,
   isPanelOpen,
@@ -40,18 +42,32 @@ import {
   openImageEditorButton,
   openImageLibraryButton,
   publishButton,
+  seoClearOgImageButton,
   seoClose,
+  seoCopyEnButton,
   seoFillCanonicalButton,
   seoForm,
+  seoLocaleTabs,
   seoPanel,
+  seoPickOgImageButton,
   setStatus,
 } from './dom';
-import { renderImageLibrary, toggleImageLibrary } from './gallery';
+import { cancelGalleryPick, isGalleryPickActive, renderImageLibrary, toggleImageLibrary, toggleNeedsAltFilter } from './gallery';
 import { applyImageFormChanges, toggleImageEditor } from './image-editing';
-import { discardChanges, logout, publishChanges, refreshContent, uploadImage } from './lifecycle';
+import { cleanupOrphanFields, discardChanges, logout, publishChanges, refreshContent, uploadImage } from './lifecycle';
 import { clearAllPendingAdminImagePreviews } from './preview-images';
-import { applySeoFormChanges, fillSeoCanonicalFromCurrentPath, toggleSeoPanel } from './seo';
+import {
+  applySeoFormChanges,
+  beginOgImagePick,
+  clearSeoOgImage,
+  copySeoFromEnglish,
+  fillSeoCanonicalFromCurrentPath,
+  handleSeoFieldInput,
+  switchSeoLocale,
+  toggleSeoPanel,
+} from './seo';
 import { state } from './store';
+import type { Locale } from './types';
 
 export function bindAuthUI(): void {
   document.querySelectorAll<HTMLElement>('[data-cms-open-login]').forEach((element) => {
@@ -121,6 +137,10 @@ export function bindBannerUI(): void {
     discardChanges();
   });
 
+  cleanupOrphansButton?.addEventListener('click', () => {
+    cleanupOrphanFields();
+  });
+
   editSeoButton?.addEventListener('click', () => {
     const open = !isPanelOpen(seoPanel);
     toggleSeoPanel(open);
@@ -158,8 +178,34 @@ export function bindSeoUI(): void {
     toggleSeoPanel(false);
   });
 
+  for (const tab of seoLocaleTabs) {
+    tab.addEventListener('click', () => {
+      const nextLocale = tab.dataset.seoLocale as Locale | undefined;
+      if (nextLocale) {
+        switchSeoLocale(nextLocale);
+      }
+    });
+  }
+
+  seoCopyEnButton?.addEventListener('click', () => {
+    copySeoFromEnglish();
+  });
+
+  seoPickOgImageButton?.addEventListener('click', () => {
+    beginOgImagePick();
+  });
+
+  seoClearOgImageButton?.addEventListener('click', () => {
+    clearSeoOgImage();
+  });
+
   seoFillCanonicalButton?.addEventListener('click', () => {
     fillSeoCanonicalFromCurrentPath();
+  });
+
+  // Keep the live previews and counters in sync as the admin types.
+  seoForm?.addEventListener('input', () => {
+    handleSeoFieldInput();
   });
 
   seoForm?.addEventListener('submit', (event) => {
@@ -196,11 +242,21 @@ export function bindImageEditorUI(): void {
 
 export function bindImageLibraryUI(): void {
   imageLibraryClose?.addEventListener('click', () => {
+    // While picking a social image for the SEO editor, closing means "cancel"
+    // and hands control back to the SEO panel rather than just hiding.
+    if (isGalleryPickActive()) {
+      cancelGalleryPick();
+      return;
+    }
     toggleImageLibrary(false);
   });
 
   imageLibrarySearch?.addEventListener('input', () => {
     renderImageLibrary();
+  });
+
+  imageNeedsAltToggle?.addEventListener('click', () => {
+    toggleNeedsAltFilter();
   });
 
   imageUploadForm?.addEventListener('submit', async (event) => {

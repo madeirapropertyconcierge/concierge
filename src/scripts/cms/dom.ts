@@ -12,6 +12,7 @@ export const integrityWarning = document.querySelector<HTMLElement>('#cms-integr
 export const dirtyIndicator = document.querySelector<HTMLElement>('#cms-dirty-indicator');
 
 export const discardChangesButton = document.querySelector<HTMLButtonElement>('#cms-discard-changes');
+export const cleanupOrphansButton = document.querySelector<HTMLButtonElement>('#cms-cleanup-orphans');
 export const editSeoButton = document.querySelector<HTMLButtonElement>('#cms-edit-seo');
 export const openImageEditorButton = document.querySelector<HTMLButtonElement>('#cms-open-image-editor');
 export const openImageLibraryButton = document.querySelector<HTMLButtonElement>('#cms-open-image-library');
@@ -23,6 +24,10 @@ export const seoPanel = document.querySelector<HTMLElement>('#cms-seo-editor');
 export const seoClose = document.querySelector<HTMLButtonElement>('#cms-seo-close');
 export const seoFillCanonicalButton = document.querySelector<HTMLButtonElement>('#cms-seo-fill-canonical');
 export const seoForm = document.querySelector<HTMLFormElement>('#cms-seo-form');
+export const seoLocaleTabs = Array.from(document.querySelectorAll<HTMLButtonElement>('#cms-seo-editor [data-seo-locale]'));
+export const seoCopyEnButton = document.querySelector<HTMLButtonElement>('#cms-seo-copy-en');
+export const seoPickOgImageButton = document.querySelector<HTMLButtonElement>('#cms-seo-pick-ogimage');
+export const seoClearOgImageButton = document.querySelector<HTMLButtonElement>('#cms-seo-clear-ogimage');
 
 export const imageEditorPanel = document.querySelector<HTMLElement>('#cms-image-editor');
 export const imageEditorClose = document.querySelector<HTMLButtonElement>('#cms-image-editor-close');
@@ -37,6 +42,7 @@ export const imageLibraryClose = document.querySelector<HTMLButtonElement>('#cms
 export const imageLibraryList = document.querySelector<HTMLElement>('#cms-image-library-list');
 export const imageLibraryCount = document.querySelector<HTMLElement>('#cms-image-library-count');
 export const imageLibrarySearch = document.querySelector<HTMLInputElement>('#cms-image-search');
+export const imageNeedsAltToggle = document.querySelector<HTMLButtonElement>('#cms-image-needs-alt');
 export const imageUploadForm = document.querySelector<HTMLFormElement>('#cms-image-upload-form');
 
 export const blogManagerPanel = document.querySelector<HTMLElement>('#cms-blog-manager');

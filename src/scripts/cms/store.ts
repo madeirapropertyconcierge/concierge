@@ -15,6 +15,13 @@ export interface CmsState {
   workingState: WorkingState | null;
   globalGalleryItems: CmsGalleryItem[];
   selectedImageTarget: SelectedImageTarget | null;
+  /**
+   * When set, the image gallery is in "pick" mode: clicking a gallery card
+   * hands its source path to this callback instead of replacing the selected
+   * page image. Used by the SEO editor to choose a social-share image. The
+   * argument is the chosen source path, or `null` when the pick was cancelled.
+   */
+  galleryPickHandler: ((src: string | null) => void) | null;
   activeEditableElement: HTMLElement | null;
   bannerResizeObserver: ResizeObserver | null;
 }
@@ -28,6 +35,7 @@ export const state: CmsState = {
   workingState: null,
   globalGalleryItems: [],
   selectedImageTarget: null,
+  galleryPickHandler: null,
   activeEditableElement: null,
   bannerResizeObserver: null,
 };

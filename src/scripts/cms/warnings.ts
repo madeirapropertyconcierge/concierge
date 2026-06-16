@@ -1,5 +1,6 @@
 import { locale } from './context';
-import { fallbackWarning, integrityWarning } from './dom';
+import { cleanupOrphansButton, fallbackWarning, integrityWarning } from './dom';
+import { findOrphanFields } from './integrity';
 import { state } from './store';
 import type { CmsPageDocument } from './types';
 
@@ -79,41 +80,20 @@ function updateFallbackWarning(page: CmsPageDocument): void {
   fallbackWarning.classList.add('cms-hidden');
 }
 
-function countOrphanFields(page: CmsPageDocument): number {
-  const selectors = [
-    ...page.texts.map((field) => field.selector),
-    ...page.links.map((field) => field.selector),
-    ...page.images.map((field) => field.selector),
-  ];
+function updateIntegrityWarning(page: CmsPageDocument): void {
+  const orphans = findOrphanFields(page).length;
 
-  let orphans = 0;
-  for (const selector of selectors) {
-    try {
-      if (document.querySelectorAll(selector).length === 0) {
-        orphans += 1;
-      }
-    } catch {
-      // An unusable selector cannot match anything, so it is orphaned.
-      orphans += 1;
+  if (integrityWarning) {
+    if (orphans > 0) {
+      integrityWarning.textContent = `${orphans} orphaned field${orphans === 1 ? '' : 's'}`;
+      integrityWarning.classList.remove('cms-hidden');
+    } else {
+      integrityWarning.classList.add('cms-hidden');
     }
   }
 
-  return orphans;
-}
-
-function updateIntegrityWarning(page: CmsPageDocument): void {
-  if (!integrityWarning) {
-    return;
-  }
-
-  const orphans = countOrphanFields(page);
-  if (orphans > 0) {
-    integrityWarning.textContent = `${orphans} orphaned field${orphans === 1 ? '' : 's'}`;
-    integrityWarning.classList.remove('cms-hidden');
-    return;
-  }
-
-  integrityWarning.classList.add('cms-hidden');
+  // The cleanup action is only meaningful while orphans exist.
+  cleanupOrphansButton?.classList.toggle('cms-hidden', orphans === 0);
 }
 
 export { updateFallbackWarning, updateIntegrityWarning };
