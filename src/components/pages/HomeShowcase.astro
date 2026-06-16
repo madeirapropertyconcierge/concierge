@@ -22,9 +22,8 @@ const copy = await getHomepageContent(lang);
   <div class="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_18%_12%,rgba(247,180,94,0.18),transparent_45%),radial-gradient(circle_at_82%_14%,rgba(28,96,120,0.15),transparent_42%),linear-gradient(180deg,#f6f4ef_0%,#edf1f3_65%,#f6f4ef_100%)]"></div>
 
   <section class="relative isolate overflow-hidden px-4 pb-16 pt-8 sm:px-6 lg:px-8 lg:pb-24 lg:pt-10">
-    <img
-      src={copy.heroBackground.src}
-      alt={copy.heroBackground.alt}
+    <EditableImage
+      {...copy.heroBackground}
       class="absolute inset-0 -z-20 h-full w-full object-cover"
       loading="eager"
     />

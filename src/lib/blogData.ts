@@ -14,7 +14,7 @@ export interface LocalizedBlogPost {
   coverAlt: string;
   title: string;
   excerpt: string;
-  body: string[];
+  body: string;
   seo: {
     title: string;
     description: string;
@@ -41,10 +41,7 @@ function localizeBlogPost(post: CmsBlogPost, lang: Locale): LocalizedBlogPost {
     coverAlt: localeData.coverAlt,
     title: localeData.title,
     excerpt: localeData.excerpt,
-    body: localeData.body
-      .split('\n')
-      .map((line) => line.trim())
-      .filter(Boolean),
+    body: localeData.body,
     seo,
   };
 }
