@@ -1,7 +1,7 @@
 ---
 interface Props {
   lang: string;
-  formspreeEndpoint: string;
+  endpoint: string;
   labels: {
     name: string;
     email: string;
@@ -19,10 +19,10 @@ interface Props {
   };
 }
 
-const { lang, formspreeEndpoint, labels } = Astro.props;
+const { lang, endpoint, labels } = Astro.props;
 ---
 
-<form action={formspreeEndpoint} method="POST" class="space-y-5" data-contact-form>
+<form action={endpoint} method="POST" class="space-y-5" data-contact-form>
   <div>
     <label for="name" class="mb-1.5 block text-sm font-medium text-charcoal">
       {labels.name} *
@@ -111,6 +111,12 @@ const { lang, formspreeEndpoint, labels } = Astro.props;
   </div>
 
   <input type="hidden" name="language" value={lang} />
+
+  {/* Honeypot: hidden from real users; bots that fill it are silently dropped. */}
+  <div class="hidden" aria-hidden="true">
+    <label for="company">Company</label>
+    <input type="text" id="company" name="company" tabindex="-1" autocomplete="off" />
+  </div>
 
   <p class="hidden text-sm text-red-600" data-form-error>{labels.error}</p>
   <p class="hidden rounded-xl border border-ocean-blue/25 bg-ocean-blue/8 px-4 py-3 text-sm text-ocean-blue" data-form-success>

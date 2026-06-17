@@ -17,9 +17,21 @@ const githubEnvSchema = z.object({
   GITHUB_BRANCH: z.string().min(1).default('main'),
 });
 
+const contactEnvSchema = z.object({
+  BREVO_API_KEY: requiredString,
+  BREVO_SENDER_EMAIL: z.string().email().optional(),
+  BREVO_SENDER_NAME: z.string().min(1).optional(),
+});
+
 export interface AuthEnv {
   passwordHash: string;
   sessionSecret: string;
+}
+
+export interface ContactEnv {
+  brevoApiKey: string;
+  fromEmail: string | null;
+  fromName: string | null;
 }
 
 export interface GithubEnv {
@@ -135,6 +147,32 @@ export function getGithubEnv(): GithubEnv {
 export function tryGetGithubEnv(): GithubEnv | null {
   try {
     return getGithubEnv();
+  } catch {
+    return null;
+  }
+}
+
+export function getContactEnv(): ContactEnv {
+  const parsed = contactEnvSchema.safeParse({
+    BREVO_API_KEY: readFromNodeEnv('BREVO_API_KEY'),
+    BREVO_SENDER_EMAIL: readFromNodeEnv('BREVO_SENDER_EMAIL'),
+    BREVO_SENDER_NAME: readFromNodeEnv('BREVO_SENDER_NAME'),
+  });
+
+  if (!parsed.success) {
+    throw new Error('Missing contact email configuration (BREVO_API_KEY)');
+  }
+
+  return {
+    brevoApiKey: parsed.data.BREVO_API_KEY,
+    fromEmail: parsed.data.BREVO_SENDER_EMAIL ?? null,
+    fromName: parsed.data.BREVO_SENDER_NAME ?? null,
+  };
+}
+
+export function tryGetContactEnv(): ContactEnv | null {
+  try {
+    return getContactEnv();
   } catch {
     return null;
   }

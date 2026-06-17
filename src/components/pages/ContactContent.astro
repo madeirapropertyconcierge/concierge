@@ -6,7 +6,7 @@ import VisualPageLayout from './VisualPageLayout.astro';
 import ContactForm from '../ContactForm.astro';
 import WhatsAppButton from '../WhatsAppButton.astro';
 import { routeMap } from '../../i18n/routes';
-import { SITE, FORMSPREE_ENDPOINT } from '../../lib/constants';
+import { SITE, CONTACT_ENDPOINT } from '../../lib/constants';
 import type { Locale } from '../../i18n/utils';
 import { breadcrumbJsonLd, absoluteUrl } from '../../lib/seo';
 import { madeiraImages } from '../../lib/madeiraImages';
@@ -127,7 +127,7 @@ const pageSchema = [
   <section id="contact-form" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-20">
     <div class="grid gap-8 lg:grid-cols-[1.06fr_0.94fr]">
       <div class="premium-panel p-6 sm:p-8 lg:p-10">
-        <ContactForm lang={lang} formspreeEndpoint={FORMSPREE_ENDPOINT} labels={formLabels} />
+        <ContactForm lang={lang} endpoint={CONTACT_ENDPOINT} labels={formLabels} />
         <p class="mt-4 text-xs leading-relaxed text-charcoal/62">
           <EditableText {...pageFields.texts['text:form-notice-prefix']} as="span" />
           {' '}

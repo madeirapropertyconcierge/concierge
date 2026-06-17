@@ -1,20 +1,20 @@
 {
   "pageId": "terms",
-  "updatedAt": "2026-04-02T22:34:36.565Z",
+  "updatedAt": "2026-06-17T00:00:00.000Z",
   "seo": {
     "en": {
       "title": "Terms of Service | Madeira Property Concierge",
-      "description": "Read the terms governing Madeira Property Concierge website use, service agreements, billing, liability, and dispute resolution under Portuguese law.",
+      "description": "The terms governing use of the Madeira Property Concierge website and services: who operates it, service scope, fees, complaints, liability, and Portuguese law.",
       "ogTitle": "Terms of Service — Madeira Property Concierge",
-      "ogDescription": "Terms covering website use, service agreements, billing, liability, and dispute resolution. Governed by Portuguese law, jurisdiction of Funchal courts.",
+      "ogDescription": "Terms covering website use, service scope, fees, complaints, and liability. Governed by Portuguese law, courts of Funchal, Madeira.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/en/terms"
     },
     "pt": {
-      "title": "Termos de Servico | Madeira Property Concierge",
-      "description": "Consulte os termos que regem o uso do website, os servicos, a faturacao, a responsabilidade e a resolucao de litigios da Madeira Property Concierge.",
-      "ogTitle": "Termos de Servico — Madeira Property Concierge",
-      "ogDescription": "Termos sobre utilizacao do website, contratos de servico, faturacao, responsabilidade e resolucao de litigios. Lei portuguesa, tribunal do Funchal.",
+      "title": "Termos de Serviço | Madeira Property Concierge",
+      "description": "Os termos que regem o website e os serviços da Madeira Property Concierge: quem opera, âmbito, honorários, reclamações, responsabilidade e lei portuguesa.",
+      "ogTitle": "Termos de Serviço — Madeira Property Concierge",
+      "ogDescription": "Termos sobre utilização do website, âmbito do serviço, honorários, reclamações e responsabilidade. Lei portuguesa, tribunais do Funchal, Madeira.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/pt/termos"
     }
@@ -35,7 +35,7 @@
       "kind": "inline",
       "value": {
         "en": "Terms of Service",
-        "pt": "Termos de Servico"
+        "pt": "Termos de Serviço"
       }
     },
     {
@@ -43,8 +43,8 @@
       "selector": "[data-cms-id=\"text:hero-subtitle\"]",
       "kind": "inline",
       "value": {
-        "en": "Commercial and operational terms that apply to our website and service delivery.",
-        "pt": "Termos comerciais e operacionais aplicaveis ao website e a execucao dos servicos."
+        "en": "The commercial and operational terms that apply to our website and the services we provide.",
+        "pt": "Os termos comerciais e operacionais aplicáveis ao website e aos serviços que prestamos."
       }
     },
     {
@@ -52,8 +52,8 @@
       "selector": "[data-cms-id=\"text:updated-label\"]",
       "kind": "inline",
       "value": {
-        "en": "Last updated: February 28, 2026",
-        "pt": "Ultima atualizacao: 28 de fevereiro de 2026"
+        "en": "Last updated: June 17, 2026",
+        "pt": "Última atualização: 17 de junho de 2026"
       }
     },
     {
@@ -61,8 +61,8 @@
       "selector": "[data-cms-id=\"text:section-1-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Mandatory Provider Information (Portugal)",
-        "pt": "Informacao Obrigatoria do Prestador (Portugal)"
+        "en": "Who Operates This Website",
+        "pt": "Quem Opera Este Website"
       }
     },
     {
@@ -70,8 +70,8 @@
       "selector": "[data-cms-id=\"text:section-1-body\"]",
       "kind": "block",
       "value": {
-        "en": "In line with Decree-Law no. 7/2004 (Article 10), we publish core provider identification details:\n\n- Legal name: {{legalName}}\n- Registered address: {{address}}\n- Email: {{email}}\n- Tax identification (NIF): {{taxId}}\n- Commercial registry details: {{commercialRegistry}}",
-        "pt": "Nos termos do Decreto-Lei n. 7/2004 (artigo 10), disponibilizamos os elementos essenciais de identificacao:\n\n- Firma/denominacao: {{legalName}}\n- Morada: {{address}}\n- Email: {{email}}\n- NIF: {{taxId}}\n- Registo comercial: {{commercialRegistry}}"
+        "en": "Madeira Property Concierge is an independent property-care and hosting service, run personally by an individual operator with a commercial interest. It is not yet incorporated or registered as a company.\n\n- Operator: Lisa G. — Madeira Property Concierge\n- Location: 9240-119 Ponta Delgada, Madeira Island, Portugal\n- Email: hello@madeirapropertyconcierge.com\n- Telephone / WhatsApp: +351 967 637 133\n- Status: operating as a private individual, not yet listed in the Portuguese commercial registry. A tax number (NIF) and registry details will be published here once the activity is formally registered.\n\nWe provide this information in line with the transparency duties of Decree-Law no. 7/2004 on electronic commerce.",
+        "pt": "A Madeira Property Concierge é um serviço independente de gestão e alojamento de imóveis, operado pessoalmente por uma profissional a título individual e com fins comerciais. Ainda não está constituída nem registada como empresa.\n\n- Responsável: Lisa G. — Madeira Property Concierge\n- Localização: 9240-119 Ponta Delgada, Madeira Island, Portugal\n- Email: hello@madeirapropertyconcierge.com\n- Telefone / WhatsApp: +351 967 637 133\n- Estado: atua como pessoa singular, ainda não inscrita no registo comercial português. O número de identificação fiscal (NIF) e os dados de registo serão publicados aqui assim que a atividade for formalmente registada.\n\nDisponibilizamos esta informação em cumprimento dos deveres de transparência do Decreto-Lei n.º 7/2004 (comércio eletrónico)."
       }
     },
     {
@@ -80,7 +80,7 @@
       "kind": "inline",
       "value": {
         "en": "Service Scope and Contracting",
-        "pt": "Ambito de Servico e Contratacao"
+        "pt": "Âmbito do Serviço e Contratação"
       }
     },
     {
@@ -88,8 +88,8 @@
       "selector": "[data-cms-id=\"text:section-2-body\"]",
       "kind": "block",
       "value": {
-        "en": "Service scope, deliverables, and execution timelines are defined in each proposal or signed service agreement.\n\n- Website information is informational and does not constitute an automatically binding offer.\n- A service agreement becomes effective only after explicit acceptance by both parties.",
-        "pt": "O escopo, entregaveis e prazos sao definidos em proposta ou contrato de servico especifico.\n\n- A informacao do website e informativa e nao constitui proposta vinculativa automatica.\n- O contrato so produz efeitos apos aceitacao expressa das partes."
+        "en": "What we deliver, the timeline, and the price are agreed with you before any work begins.\n\n- Information on this website is general guidance, not a binding offer.\n- A service arrangement takes effect only once both sides confirm the scope and price in writing (email, message, or signed proposal).\n- Descriptions, photos, and prices shown here may change without notice.",
+        "pt": "O que entregamos, os prazos e o preço são acordados consigo antes de qualquer trabalho começar.\n\n- A informação deste website é de orientação geral e não constitui uma proposta vinculativa.\n- O acordo de serviço só produz efeitos depois de ambas as partes confirmarem o âmbito e o preço por escrito (email, mensagem ou proposta assinada).\n- As descrições, fotografias e preços aqui apresentados podem mudar sem aviso prévio."
       }
     },
     {
@@ -98,7 +98,7 @@
       "kind": "inline",
       "value": {
         "en": "Fees, Billing, and Taxes",
-        "pt": "Honorarios, Faturacao e Tributos"
+        "pt": "Honorários, Faturação e Impostos"
       }
     },
     {
@@ -106,8 +106,8 @@
       "selector": "[data-cms-id=\"text:section-3-body\"]",
       "kind": "block",
       "value": {
-        "en": "Management and project fees are invoiced according to the signed agreement.\n\n- Third-party vendor costs are disclosed separately when applicable.\n- Taxes and VAT treatment follow Portuguese law and the applicable invoicing framework.\n- Any additional mandatory fees are communicated before confirmation.",
-        "pt": "Mensalidades e projetos sao faturados conforme condicoes contratuais acordadas.\n\n- Custos de terceiros sao discriminados separadamente quando aplicavel.\n- IVA e demais enquadramentos fiscais seguem a lei portuguesa e o regime de faturacao aplicavel.\n- Qualquer encargo adicional obrigatorio e comunicado antes da confirmacao."
+        "en": "Fees are agreed per service or project before work starts.\n\n- Third-party costs (suppliers, materials, bookings) are passed on transparently and itemised separately.\n- Prices, taxes, and the form of invoicing follow Portuguese law and are confirmed in each written quote.\n- Formal invoicing and VAT details will be added here once the activity is registered with the Portuguese tax authority (Autoridade Tributária).\n- Any additional mandatory charge is communicated before you confirm.",
+        "pt": "Os honorários são acordados por serviço ou projeto antes do início do trabalho.\n\n- Os custos de terceiros (fornecedores, materiais, reservas) são repercutidos de forma transparente e discriminados separadamente.\n- Os preços, impostos e a forma de faturação seguem a lei portuguesa e são confirmados em cada orçamento escrito.\n- Os dados de faturação e de IVA serão acrescentados aqui assim que a atividade for registada na Autoridade Tributária.\n- Qualquer encargo adicional obrigatório é comunicado antes da sua confirmação."
       }
     },
     {
@@ -115,8 +115,8 @@
       "selector": "[data-cms-id=\"text:section-4-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Complaints Book and Consumer ADR",
-        "pt": "Livro de Reclamacoes e RAL"
+        "en": "Complaints and Dispute Resolution",
+        "pt": "Reclamações e Resolução de Litígios"
       }
     },
     {
@@ -124,8 +124,8 @@
       "selector": "[data-cms-id=\"text:section-4-body\"]",
       "kind": "block",
       "value": {
-        "en": "Consumer-facing operators in Portugal must provide complaint channels and ADR information.\n\n- Electronic complaints book access is available through the official Livro de Reclamacoes portal.\n- Information on consumer ADR entities (RAL) is available on the Portuguese Consumer Portal.\n- If a sector-specific ADR entity applies to a specific contract, it must be identified in that contract documentation.\n\n[Livro de Reclamacoes Eletronico]({{complaintsBookUrl}})\n\n[Consumer ADR entities (RAL)]({{adrInfoUrl}})",
-        "pt": "Operadores economicos com relacao de consumo em Portugal devem disponibilizar canais de reclamacao e informacao sobre resolucao alternativa de litigios.\n\n- O acesso ao Livro de Reclamacoes Eletronico esta disponivel no portal oficial.\n- A informacao sobre entidades RAL esta disponivel no Portal do Consumidor.\n- Quando aplicavel, a entidade RAL competente deve ser identificada na documentacao contratual.\n\n[Livro de Reclamacoes Eletronico]({{complaintsBookUrl}})\n\n[Entidades de RAL (Portal do Consumidor)]({{adrInfoUrl}})"
+        "en": "We want every client to be satisfied, so please raise any concern with us first — we aim to reply within 24 business hours.\n\n- The Portuguese Electronic Complaints Book (Livro de Reclamações) and the competent alternative dispute resolution (ADR) entity apply to registered economic operators, and will be made available here once the activity is formally registered.\n- In the meantime, consumers can also turn to the Portuguese consumer authorities and the ADR network for help.\n\n[Electronic Complaints Book](https://www.livroreclamacoes.pt/Inicio/)\n\n[Consumer ADR entities (RAL)](https://www.consumidor.gov.pt/parceiros/sistema-de-defesa-do-consumidor/entidades-de-resolucao-alternativa-de-litigios-de-consumo.aspx)",
+        "pt": "Queremos que cada cliente fique satisfeito, por isso, por favor, apresente-nos primeiro qualquer questão — procuramos responder em 24 horas úteis.\n\n- O Livro de Reclamações Eletrónico e a entidade de resolução alternativa de litígios (RAL) competente aplicam-se a operadores económicos registados e serão disponibilizados aqui assim que a atividade for formalmente registada.\n- Entretanto, os consumidores podem também recorrer às autoridades de defesa do consumidor e à rede de RAL.\n\n[Livro de Reclamações Eletrónico](https://www.livroreclamacoes.pt/Inicio/)\n\n[Entidades de RAL (Portal do Consumidor)](https://www.consumidor.gov.pt/parceiros/sistema-de-defesa-do-consumidor/entidades-de-resolucao-alternativa-de-litigios-de-consumo.aspx)"
       }
     },
     {
@@ -133,8 +133,8 @@
       "selector": "[data-cms-id=\"text:section-5-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Liability, Law, and Jurisdiction",
-        "pt": "Responsabilidade, Lei e Foro"
+        "en": "Liability, Governing Law, and Jurisdiction",
+        "pt": "Responsabilidade, Lei Aplicável e Foro"
       }
     },
     {
@@ -142,8 +142,8 @@
       "selector": "[data-cms-id=\"text:section-5-body\"]",
       "kind": "block",
       "value": {
-        "en": "We operate with professional care and vetted local partners. Liability limits apply as defined in signed agreements.\n\n- These terms are governed by Portuguese law.\n- Unless mandatory consumer rules state otherwise, disputes are handled in the competent courts of Funchal, Madeira.",
-        "pt": "Atuamos com diligencia profissional e com parceiros locais validados. Limites de responsabilidade aplicam-se conforme contrato assinado.\n\n- Estes termos regem-se pela lei portuguesa.\n- Salvo norma imperativa de protecao do consumidor em contrario, o foro competente e o do Funchal, Madeira."
+        "en": "We work with professional care and vetted local partners, but we cannot guarantee outcomes that depend on third parties such as booking platforms, contractors, or public authorities.\n\n- These terms are governed by Portuguese law.\n- Mandatory consumer-protection rules that favour you always take precedence.\n- Where those rules allow, the competent courts are those of Funchal, Madeira.",
+        "pt": "Atuamos com diligência profissional e com parceiros locais validados, mas não podemos garantir resultados que dependam de terceiros, como plataformas de reserva, prestadores ou autoridades públicas.\n\n- Estes termos regem-se pela lei portuguesa.\n- As normas imperativas de proteção do consumidor que lhe sejam mais favoráveis prevalecem sempre.\n- Quando essas normas o permitam, o foro competente é o do Funchal, Madeira."
       }
     },
     {
@@ -151,8 +151,8 @@
       "selector": "[data-cms-id=\"text:section-6-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Publication Checklist",
-        "pt": "Checklist de Publicacao"
+        "en": "Changes to These Terms",
+        "pt": "Alterações a Estes Termos"
       }
     },
     {
@@ -160,8 +160,8 @@
       "selector": "[data-cms-id=\"text:section-6-body\"]",
       "kind": "inline",
       "value": {
-        "en": "Before public launch, confirm all corporate and tax identifiers on this page are final and accurate.",
-        "pt": "Antes de publicar o website, confirme que os identificadores societarios e fiscais desta pagina estao finais e corretos."
+        "en": "We may update these terms as the service grows or the law changes. The version in force always appears on this page, with the date shown above.",
+        "pt": "Podemos atualizar estes termos à medida que o serviço evolui ou a lei muda. A versão em vigor está sempre nesta página, com a data indicada acima."
       }
     },
     {
@@ -169,8 +169,8 @@
       "selector": "[data-cms-id=\"text:section-6-note\"]",
       "kind": "inline",
       "value": {
-        "en": "This website currently contains placeholder legal identifiers. Replace them with final registered data before publication.",
-        "pt": "Este website contem identificadores legais em formato provisiorio. Substitua-os pelos dados oficiais antes da publicacao."
+        "en": "Internal reminder: add the NIF and commercial registry details here once the activity is formally registered.",
+        "pt": "Lembrete interno: acrescentar o NIF e o registo comercial assim que a atividade for formalmente registada."
       }
     }
   ],
@@ -192,7 +192,7 @@
       "selector": "[data-cms-id=\"link:secondary-cta\"]",
       "label": {
         "en": "Home",
-        "pt": "Inicio"
+        "pt": "Início"
       },
       "href": {
         "en": "/en/",

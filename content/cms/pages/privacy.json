@@ -1,20 +1,20 @@
 {
   "pageId": "privacy",
-  "updatedAt": "2026-04-02T22:34:36.565Z",
+  "updatedAt": "2026-06-17T00:00:00.000Z",
   "seo": {
     "en": {
       "title": "Privacy Policy | Madeira Property Concierge",
-      "description": "Learn how Madeira Property Concierge collects, uses, stores, and protects your personal data. GDPR-compliant privacy practices for our website and services.",
+      "description": "How Madeira Property Concierge collects, uses, stores, and protects your personal data. GDPR-compliant privacy practices for our website, contact form, and services.",
       "ogTitle": "Privacy Policy — Madeira Property Concierge",
-      "ogDescription": "How we handle your personal data. GDPR-compliant privacy practices covering our website, contact forms, and service operations.",
+      "ogDescription": "How we handle your personal data. GDPR-compliant practices covering our website, contact form, analytics, and service delivery.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/en/privacy"
     },
     "pt": {
-      "title": "Politica de Privacidade | Madeira Property Concierge",
-      "description": "Saiba como a Madeira Property Concierge recolhe, utiliza, armazena e protege os seus dados pessoais. Praticas de privacidade em conformidade com o RGPD.",
-      "ogTitle": "Politica de Privacidade — Madeira Property Concierge",
-      "ogDescription": "Como tratamos os seus dados pessoais. Praticas de privacidade em conformidade com o RGPD para o nosso website, formularios e prestacao de servicos.",
+      "title": "Política de Privacidade | Madeira Property Concierge",
+      "description": "Saiba como a Madeira Property Concierge recolhe, utiliza, armazena e protege os seus dados pessoais. Práticas de privacidade em conformidade com o RGPD.",
+      "ogTitle": "Política de Privacidade — Madeira Property Concierge",
+      "ogDescription": "Como tratamos os seus dados pessoais. Práticas em conformidade com o RGPD para o website, formulário de contacto, analítica e prestação de serviços.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/pt/privacidade"
     }
@@ -35,7 +35,7 @@
       "kind": "inline",
       "value": {
         "en": "Privacy Policy",
-        "pt": "Politica de Privacidade"
+        "pt": "Política de Privacidade"
       }
     },
     {
@@ -43,8 +43,8 @@
       "selector": "[data-cms-id=\"text:hero-subtitle\"]",
       "kind": "inline",
       "value": {
-        "en": "How we process and protect personal data across our website and services.",
-        "pt": "Como tratamos e protegemos dados pessoais no website e na prestacao de servicos."
+        "en": "How we handle and protect your personal data across our website and services.",
+        "pt": "Como tratamos e protegemos os seus dados pessoais no website e na prestação de serviços."
       }
     },
     {
@@ -52,8 +52,8 @@
       "selector": "[data-cms-id=\"text:updated-label\"]",
       "kind": "inline",
       "value": {
-        "en": "Last updated: February 28, 2026",
-        "pt": "Ultima atualizacao: 28 de fevereiro de 2026"
+        "en": "Last updated: June 17, 2026",
+        "pt": "Última atualização: 17 de junho de 2026"
       }
     },
     {
@@ -61,8 +61,8 @@
       "selector": "[data-cms-id=\"text:section-1-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Data Controller",
-        "pt": "Responsavel pelo Tratamento"
+        "en": "Who Is Responsible (Data Controller)",
+        "pt": "Responsável pelo Tratamento"
       }
     },
     {
@@ -70,8 +70,8 @@
       "selector": "[data-cms-id=\"text:section-1-body\"]",
       "kind": "block",
       "value": {
-        "en": "The data controller for this website and related services is:\n\n- Controller: Madeira Property Concierge\n- Email: hello@madeirapropertyconcierge.com\n- Telephone: +351 967 637 133\n- Postal address: Ponta Delgada, Madeira Island, Portugal",
-        "pt": "O responsavel pelo tratamento de dados deste website e servicos associados e:\n\n- Responsavel: Madeira Property Concierge\n- Email: hello@madeirapropertyconcierge.com\n- Telefone: +351 967 637 133\n- Morada postal: Ponta Delgada, Madeira Island, Portugal"
+        "en": "This website and the related services are run by an individual operator with a commercial interest (not yet a registered company), who is the data controller for your personal data.\n\n- Controller: Lisa G. — Madeira Property Concierge\n- Email: hello@madeirapropertyconcierge.com\n- Telephone / WhatsApp: +351 967 637 133\n- Location: 9240-119 Ponta Delgada, Madeira Island, Portugal\n\nGiven the small scale of our processing, we are not required to appoint a Data Protection Officer. All requests are handled directly by the operator.",
+        "pt": "Este website e os serviços associados são geridos por uma profissional a título individual, com fins comerciais (ainda não constituída como empresa), que é a responsável pelo tratamento dos seus dados pessoais.\n\n- Responsável: Lisa G. — Madeira Property Concierge\n- Email: hello@madeirapropertyconcierge.com\n- Telefone / WhatsApp: +351 967 637 133\n- Localização: 9240-119 Ponta Delgada, Madeira Island, Portugal\n\nDada a pequena dimensão do tratamento, não é exigível a designação de um Encarregado de Proteção de Dados. Todos os pedidos são tratados diretamente pela responsável."
       }
     },
     {
@@ -80,7 +80,7 @@
       "kind": "inline",
       "value": {
         "en": "Data We Process",
-        "pt": "Dados Tratados"
+        "pt": "Dados que Tratamos"
       }
     },
     {
@@ -88,8 +88,8 @@
       "selector": "[data-cms-id=\"text:section-2-body\"]",
       "kind": "block",
       "value": {
-        "en": "We process personal data that you provide directly when contacting us or requesting services.\n\n- Identity and contact details (name, email, phone).\n- Property context details shared in enquiry messages.\n- Communication history and service-preparation notes.\n- Technical data required for site operation and security (for example, essential logs).",
-        "pt": "Tratamos dados pessoais fornecidos diretamente por si em contactos e pedidos de servico.\n\n- Dados de identificacao e contacto (nome, email, telefone).\n- Contexto do imovel e necessidades comunicadas em pedidos de contacto.\n- Historico de comunicacoes e notas de preparacao de servico.\n- Dados tecnicos necessarios para operacao e seguranca do website."
+        "en": "We only process the personal data you choose to share with us, plus minimal technical data needed to run the site.\n\n- Contact form: your name, email, phone (optional), property type, the service you're interested in, your message, and the page language.\n- Email and WhatsApp: whatever you include when you write to us, including your phone number and the content of your message.\n- Service delivery: notes and records needed to prepare and provide the services we agree on.\n- Technical data: anonymised, aggregated website usage statistics and essential security and operational logs. We do not build profiles or track you across other websites.",
+        "pt": "Tratamos apenas os dados pessoais que decide partilhar connosco, além de dados técnicos mínimos necessários ao funcionamento do site.\n\n- Formulário de contacto: nome, email, telefone (opcional), tipo de imóvel, serviço pretendido, mensagem e idioma da página.\n- Email e WhatsApp: tudo o que incluir ao escrever-nos, incluindo o número de telefone e o conteúdo da mensagem.\n- Prestação de serviços: notas e registos necessários para preparar e executar os serviços acordados.\n- Dados técnicos: estatísticas de utilização anonimizadas e agregadas e registos essenciais de segurança e operação. Não criamos perfis nem o seguimos noutros websites."
       }
     },
     {
@@ -98,7 +98,7 @@
       "kind": "inline",
       "value": {
         "en": "Purposes and Legal Bases (GDPR Art. 6)",
-        "pt": "Finalidades e Fundamentos Juridicos (RGPD Art. 6)"
+        "pt": "Finalidades e Fundamentos Jurídicos (RGPD Art. 6)"
       }
     },
     {
@@ -106,8 +106,8 @@
       "selector": "[data-cms-id=\"text:section-3-body\"]",
       "kind": "block",
       "value": {
-        "en": "Your data is processed only where there is a valid legal basis:\n\n- Responding to pre-contractual requests and providing services: Art. 6(1)(b) GDPR.\n- Managing invoices and legal accounting/tax duties: Art. 6(1)(c) GDPR.\n- Protecting our operations and handling legal claims: Art. 6(1)(f) GDPR.\n- Optional marketing communications (if used): Art. 6(1)(a) GDPR consent.",
-        "pt": "Os dados apenas sao tratados quando exista fundamento legal aplicavel:\n\n- Resposta a pedidos pre-contratuais e execucao de servicos: art. 6, n. 1, al. b) RGPD.\n- Cumprimento de obrigacoes legais (faturacao/contabilidade/fiscal): art. 6, n. 1, al. c) RGPD.\n- Defesa de interesses legitimos (seguranca, defesa de direitos): art. 6, n. 1, al. f) RGPD.\n- Comunicacoes de marketing opcionais (quando aplicavel): consentimento, art. 6, n. 1, al. a) RGPD."
+        "en": "We process your data only where the law allows:\n\n- To answer your enquiry and prepare or provide a service — Art. 6(1)(b) GDPR (steps taken at your request / performance of a contract).\n- To meet accounting, invoicing, and tax obligations once the activity is registered — Art. 6(1)(c) GDPR.\n- To keep the site secure and to establish or defend legal claims — Art. 6(1)(f) GDPR (legitimate interests).\n- To load optional, cookieless analytics — Art. 6(1)(a) GDPR (your consent), which you can withdraw at any time.",
+        "pt": "Só tratamos os seus dados quando a lei o permite:\n\n- Para responder ao seu pedido e preparar ou prestar um serviço — art. 6.º, n.º 1, al. b) RGPD (diligências a seu pedido / execução de contrato).\n- Para cumprir obrigações de contabilidade, faturação e fiscais, após o registo da atividade — art. 6.º, n.º 1, al. c) RGPD.\n- Para manter o site seguro e exercer ou defender direitos em juízo — art. 6.º, n.º 1, al. f) RGPD (interesses legítimos).\n- Para carregar analítica opcional e sem cookies — art. 6.º, n.º 1, al. a) RGPD (consentimento), que pode retirar a qualquer momento."
       }
     },
     {
@@ -115,8 +115,8 @@
       "selector": "[data-cms-id=\"text:section-4-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Retention Periods",
-        "pt": "Prazos de Conservacao"
+        "en": "How Long We Keep Data",
+        "pt": "Prazos de Conservação"
       }
     },
     {
@@ -124,8 +124,8 @@
       "selector": "[data-cms-id=\"text:section-4-body\"]",
       "kind": "block",
       "value": {
-        "en": "We keep data only for the period necessary for each purpose and legal obligation.\n\n- Enquiry records: up to 12 months after last contact, unless a contract follows.\n- Contract, invoicing, and accounting records: according to Portuguese legal retention duties.\n- Technical/security records: only for operational security and legal defense windows.",
-        "pt": "Conservamos dados apenas durante o periodo necessario para cada finalidade e obrigacao legal.\n\n- Pedidos de contacto: ate 12 meses apos o ultimo contacto, salvo celebracao de contrato.\n- Registos contratuais e de faturacao: conforme prazos legais portugueses aplicaveis.\n- Registos tecnicos/seguranca: apenas enquanto necessarios para seguranca e defesa juridica."
+        "en": "We keep data only as long as needed for each purpose.\n\n- Enquiries that don't lead to a service: up to 12 months after our last contact.\n- Client, invoicing, and accounting records: for the periods required by Portuguese law.\n- Security and technical logs: only as long as needed for security and to defend legal claims.",
+        "pt": "Conservamos os dados apenas pelo tempo necessário a cada finalidade.\n\n- Pedidos que não resultam em serviço: até 12 meses após o último contacto.\n- Registos de cliente, faturação e contabilidade: pelos prazos exigidos pela lei portuguesa.\n- Registos técnicos e de segurança: apenas enquanto necessários à segurança e à defesa de direitos."
       }
     },
     {
@@ -134,7 +134,7 @@
       "kind": "inline",
       "value": {
         "en": "Recipients and International Transfers",
-        "pt": "Destinatarios e Transferencias Internacionais"
+        "pt": "Destinatários e Transferências Internacionais"
       }
     },
     {
@@ -142,8 +142,8 @@
       "selector": "[data-cms-id=\"text:section-5-body\"]",
       "kind": "block",
       "value": {
-        "en": "Data may be shared with service providers strictly needed to run our operations (for example hosting, email, forms, and scheduling tools).\n\n- Hosting provider: Vercel (infrastructure and site delivery).\n- Analytics provider: Vercel Web Analytics, loaded only after explicit cookie consent.\n- Processors act under contractual confidentiality and data-protection obligations.\n- If data is transferred outside the EEA, we apply lawful safeguards such as Standard Contractual Clauses.\n\n[Vercel Privacy Policy](https://vercel.com/legal/privacy-policy)",
-        "pt": "Os dados podem ser partilhados com subcontratantes estritamente necessarios ao funcionamento do servico (alojamento, email, formularios, agendamento).\n\n- Fornecedor de alojamento: Vercel (infraestrutura e entrega do website).\n- Fornecedor de analitica: Vercel Web Analytics, ativado apenas apos consentimento explicito de cookies.\n- Os subcontratantes atuam com deveres contratuais de confidencialidade e protecao de dados.\n- Se houver transferencias fora do EEE, aplicamos salvaguardas legais como Clausulas Contratuais-Tipo.\n\n[Politica de Privacidade da Vercel](https://vercel.com/legal/privacy-policy)"
+        "en": "We don't sell your data. We share it only with the service providers we need to operate, each acting as a processor under a data-processing agreement:\n\n- Hosting and content delivery: Vercel — runs the website and stores essential server logs.\n- Website analytics: Vercel Web Analytics — cookieless and anonymised, loaded only after you accept analytics in the cookie banner.\n- Contact form: your submission is processed by our own server function on Vercel (EU / Frankfurt region) and delivered to us by email through Brevo (Sendinblue SAS), our contact-form provider — an EU company with servers in France and Germany.\n- Email and messaging: our email provider, and Meta Platforms if you choose to reach us via WhatsApp (your WhatsApp messages are also governed by WhatsApp's own privacy terms).\n\nSome of these providers are based in the United States. Where data leaves the European Economic Area, the transfer is covered by appropriate safeguards such as the EU Standard Contractual Clauses.\n\n[Vercel Privacy Policy](https://vercel.com/legal/privacy-policy)\n\n[Brevo Privacy Policy](https://www.brevo.com/legal/privacypolicy/)",
+        "pt": "Não vendemos os seus dados. Partilhamo-los apenas com os prestadores necessários ao funcionamento do serviço, cada um atuando como subcontratante ao abrigo de um acordo de tratamento de dados:\n\n- Alojamento e entrega de conteúdos: Vercel — opera o website e guarda registos essenciais de servidor.\n- Analítica do website: Vercel Web Analytics — sem cookies e anonimizada, carregada apenas depois de aceitar a analítica no banner de cookies.\n- Formulário de contacto: o seu pedido é tratado por uma função de servidor própria na Vercel (região da UE / Frankfurt) e entregue a nós por email através da Brevo (Sendinblue SAS), o nosso fornecedor do formulário de contacto — uma empresa da UE com servidores em França e na Alemanha.\n- Email e mensagens: o nosso fornecedor de email e a Meta Platforms, caso opte por contactar-nos via WhatsApp (as mensagens de WhatsApp regem-se também pelos termos de privacidade do WhatsApp).\n\nAlguns destes prestadores estão sediados nos Estados Unidos. Sempre que há transferência de dados para fora do Espaço Económico Europeu, aplicam-se garantias adequadas, como as Cláusulas Contratuais-Tipo da UE.\n\n[Política de Privacidade da Vercel](https://vercel.com/legal/privacy-policy)\n\n[Política de Privacidade da Brevo](https://www.brevo.com/legal/privacypolicy/)"
       }
     },
     {
@@ -152,7 +152,7 @@
       "kind": "inline",
       "value": {
         "en": "Your Rights and Complaints",
-        "pt": "Direitos do Titular e Reclamacoes"
+        "pt": "Os Seus Direitos e Reclamações"
       }
     },
     {
@@ -160,8 +160,8 @@
       "selector": "[data-cms-id=\"text:section-6-body\"]",
       "kind": "block",
       "value": {
-        "en": "Under GDPR, you may request access, rectification, erasure, restriction, objection, and portability where applicable.\n\n- To exercise rights, contact: hello@madeirapropertyconcierge.com\n- You may withdraw consent at any time where consent is the legal basis.\n- You may lodge a complaint with the Portuguese supervisory authority (CNPD).\n\n[CNPD (Portuguese Data Protection Authority)](https://www.cnpd.pt/)",
-        "pt": "Nos termos do RGPD, pode exercer direitos de acesso, retificacao, apagamento, limitacao, oposicao e portabilidade, quando aplicavel.\n\n- Para exercer direitos: hello@madeirapropertyconcierge.com\n- Pode retirar o consentimento a qualquer momento quando o tratamento se basear em consentimento.\n- Pode apresentar reclamacao a autoridade de controlo portuguesa (CNPD).\n\n[CNPD (Comissao Nacional de Protecao de Dados)](https://www.cnpd.pt/)"
+        "en": "Under the GDPR you can ask us to access, correct, delete, restrict, or port your data, and you can object to certain processing.\n\n- To exercise any right, email hello@madeirapropertyconcierge.com — we respond within one month.\n- Where processing is based on consent, you can withdraw it at any time, without affecting processing already carried out.\n- If you believe we've mishandled your data, you can complain to the Portuguese supervisory authority, the CNPD.\n\n[CNPD — Portuguese Data Protection Authority](https://www.cnpd.pt/)",
+        "pt": "Ao abrigo do RGPD, pode solicitar o acesso, a retificação, o apagamento, a limitação e a portabilidade dos seus dados, bem como opor-se a determinados tratamentos.\n\n- Para exercer qualquer direito, escreva para hello@madeirapropertyconcierge.com — respondemos no prazo de um mês.\n- Quando o tratamento se baseia no consentimento, pode retirá-lo a qualquer momento, sem afetar o tratamento já realizado.\n- Se considerar que tratámos mal os seus dados, pode apresentar reclamação à autoridade de controlo portuguesa, a CNPD.\n\n[CNPD — Comissão Nacional de Proteção de Dados](https://www.cnpd.pt/)"
       }
     },
     {
@@ -169,8 +169,8 @@
       "selector": "[data-cms-id=\"text:section-7-title\"]",
       "kind": "inline",
       "value": {
-        "en": "Cookies and Similar Technologies",
-        "pt": "Cookies e Tecnologias Semelhantes"
+        "en": "Cookies and Local Storage",
+        "pt": "Cookies e Armazenamento Local"
       }
     },
     {
@@ -178,8 +178,8 @@
       "selector": "[data-cms-id=\"text:section-7-body\"]",
       "kind": "block",
       "value": {
-        "en": "We use strictly necessary cookies for site operation. Non-essential cookies (such as analytics/marketing) require prior consent.\n\n- No non-essential cookies run before your explicit acceptance.\n- Vercel Web Analytics is enabled only after you click Accept in the cookie banner.\n- You can change cookie preferences at any time through browser settings and local storage controls.\n\n[Terms and cookie details](/en/terms)",
-        "pt": "Utilizamos cookies estritamente necessarios para operacao do website. Cookies nao essenciais (analiticos/marketing) exigem consentimento previo.\n\n- Nao sao ativados cookies nao essenciais antes da sua aceitacao explicita.\n- A Vercel Web Analytics so e ativada depois de clicar em Aceitar no banner de cookies.\n- Pode alterar preferencias de cookies a qualquer momento nas definicoes do navegador e do armazenamento local.\n\n[Termos e informacao de cookies](/pt/termos)"
+        "en": "We keep cookies to a minimum and ask before loading anything non-essential.\n\n- Strictly necessary only: we store your cookie choice in your browser's local storage so we don't ask again, and a secure session cookie is used only when the operator signs in to manage the site.\n- No tracking before consent: the cookie banner offers a clear Accept or Decline, shown side by side. Analytics is cookieless and runs only if you choose Accept.\n- Your control: decline at any time, or clear your browser's local storage and site data to reset your choice and revoke analytics.\n\n[See our Terms of Service](/en/terms)",
+        "pt": "Reduzimos os cookies ao mínimo e pedimos autorização antes de carregar algo não essencial.\n\n- Apenas o estritamente necessário: guardamos a sua escolha de cookies no armazenamento local do navegador para não voltarmos a perguntar, e um cookie de sessão seguro é usado apenas quando a operadora inicia sessão para gerir o site.\n- Sem seguimento antes do consentimento: o banner de cookies apresenta um Aceitar e um Recusar claros, lado a lado. A analítica é sem cookies e só funciona se escolher Aceitar.\n- O seu controlo: pode recusar a qualquer momento ou limpar o armazenamento local e os dados do site no navegador para repor a sua escolha e revogar a analítica.\n\n[Consulte os nossos Termos de Serviço](/pt/termos)"
       }
     }
   ],
@@ -201,7 +201,7 @@
       "selector": "[data-cms-id=\"link:secondary-cta\"]",
       "label": {
         "en": "Home",
-        "pt": "Inicio"
+        "pt": "Início"
       },
       "href": {
         "en": "/en/",

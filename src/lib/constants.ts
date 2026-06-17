@@ -5,11 +5,11 @@ export const SITE = {
   email: "hello@madeirapropertyconcierge.com",
   phone: "+351 967 637 133",
   whatsapp: "351967637133",
-  address: "Ponta Delgada, Madeira Island, Portugal",
+  address: "9240-119 Ponta Delgada, Madeira Island, Portugal",
   legal: {
-    legalName: "Madeira Property Concierge (replace with full registered entity name before launch)",
-    taxId: "PTXXXXXXXXX",
-    commercialRegistry: "Conservatoria do Registo Comercial do Funchal - n.º XXXXXXXX",
+    legalName: "Lisa G. — Madeira Property Concierge",
+    taxId: "To be added once the activity is registered (operated by a private individual)",
+    commercialRegistry: "Not registered — operated by a private individual, not yet a registered company",
     complaintsBookUrl: "https://www.livroreclamacoes.pt/Inicio/",
     adrInfoUrl:
       "https://www.consumidor.gov.pt/parceiros/sistema-de-defesa-do-consumidor/entidades-de-resolucao-alternativa-de-litigios-de-consumo.aspx",
@@ -21,4 +21,4 @@ export const SITE = {
   },
 } as const;
 
-export const FORMSPREE_ENDPOINT = "https://formspree.io/f/YOUR_FORM_ID";
+export const CONTACT_ENDPOINT = "/api/contact";
