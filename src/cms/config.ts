@@ -17,12 +17,6 @@ const githubEnvSchema = z.object({
   GITHUB_BRANCH: z.string().min(1).default('main'),
 });
 
-const contactEnvSchema = z.object({
-  BREVO_API_KEY: requiredString,
-  BREVO_SENDER_EMAIL: z.string().email().optional(),
-  BREVO_SENDER_NAME: z.string().min(1).optional(),
-});
-
 export interface AuthEnv {
   passwordHash: string;
   sessionSecret: string;
@@ -153,21 +147,23 @@ export function tryGetGithubEnv(): GithubEnv | null {
 }
 
 export function getContactEnv(): ContactEnv {
-  const parsed = contactEnvSchema.safeParse({
-    BREVO_API_KEY: readFromNodeEnv('BREVO_API_KEY'),
-    BREVO_SENDER_EMAIL: readFromNodeEnv('BREVO_SENDER_EMAIL'),
-    BREVO_SENDER_NAME: readFromNodeEnv('BREVO_SENDER_NAME'),
-  });
-
-  if (!parsed.success) {
+  // Only the API key is required. Sender fields are tolerant: values are
+  // trimmed, and a malformed sender email is ignored (falls back to SITE.email)
+  // rather than taking down the whole contact form.
+  const brevoApiKey = readFromNodeEnv('BREVO_API_KEY')?.trim();
+  if (!brevoApiKey) {
     throw new Error('Missing contact email configuration (BREVO_API_KEY)');
   }
 
-  return {
-    brevoApiKey: parsed.data.BREVO_API_KEY,
-    fromEmail: parsed.data.BREVO_SENDER_EMAIL ?? null,
-    fromName: parsed.data.BREVO_SENDER_NAME ?? null,
-  };
+  const senderEmailRaw = readFromNodeEnv('BREVO_SENDER_EMAIL')?.trim();
+  const fromEmail =
+    senderEmailRaw && z.string().email().safeParse(senderEmailRaw).success
+      ? senderEmailRaw
+      : null;
+
+  const fromName = readFromNodeEnv('BREVO_SENDER_NAME')?.trim() || null;
+
+  return { brevoApiKey, fromEmail, fromName };
 }
 
 export function tryGetContactEnv(): ContactEnv | null {

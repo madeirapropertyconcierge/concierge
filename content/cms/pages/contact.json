@@ -178,8 +178,8 @@
       "selector": "[data-cms-id=\"text:form-success\"]",
       "kind": "inline",
       "value": {
-        "en": "Message sent! We'll get back to you within 24 hours.",
-        "pt": "Mensagem enviada! Responderemos em 24 horas."
+        "en": "Message sent! We'll get back to you within 4 business hours.",
+        "pt": "Mensagem enviada! Responderemos em 4 horas uteis."
       }
     },
     {
