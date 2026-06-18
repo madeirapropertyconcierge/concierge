@@ -197,7 +197,7 @@
       "kind": "inline",
       "value": {
         "en": "Property & Risk Audit",
-        "pt": "Auditoria de Imóvel e Risco"
+        "pt": "Auditoria de Imovel e Risco"
       }
     },
     {
@@ -206,7 +206,7 @@
       "kind": "block",
       "value": {
         "en": "On-site assessment of condition, compliance gaps, vendor needs, and launch readiness.",
-        "pt": "Avaliacao no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidao."
+        "pt": "Avaliação no local do estado do imóvel, lacunas de conformidade, necessidades de fornecedores e prontidão operacional."
       }
     },
     {
@@ -221,10 +221,10 @@
     {
       "id": "text:step-3-detail",
       "selector": "[data-cms-id=\"text:step-3-detail\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "We run day-to-day operations with monthly reports, maintenance logs, and SLA-driven support.",
-        "pt": "Executamos a operação diária com relatórios mensais, registo de manutenção e suporte com SLA."
+        "pt": "Executamos a operacao diaria com relatorios mensais, registo de manutencao e suporte por SLA."
       }
     },
     {
@@ -270,6 +270,15 @@
       "value": {
         "en": "",
         "pt": "Cobertura em Expansão na Costa Oeste"
+      }
+    },
+    {
+      "id": "text:adhoc-1hqq0bx",
+      "selector": "[data-cms-id=\"text:adhoc-1hqq0bx\"]",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "\"A comunicação é clara, rápida e prática. Mesmo a partir do Canadá, sabemos sempre o estado exato do imóvel.\""
       }
     }
   ],
