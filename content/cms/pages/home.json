@@ -413,30 +413,6 @@
       "attributionName": "",
       "attributionUrl": "",
       "licenseUrl": ""
-    },
-    {
-      "id": "image:adhoc-1r3bn1z",
-      "selector": "[data-cms-id=\"image:adhoc-1r3bn1z\"]",
-      "src": "/images/library/img-3617.webp",
-      "alt": {
-        "en": "",
-        "pt": ""
-      },
-      "attributionName": "",
-      "attributionUrl": "",
-      "licenseUrl": ""
-    },
-    {
-      "id": "image:adhoc-1bcwga8",
-      "selector": "[data-cms-id=\"image:adhoc-1bcwga8\"]",
-      "src": "/images/library/1773415852020-img-0202.webp",
-      "alt": {
-        "en": "",
-        "pt": ""
-      },
-      "attributionName": "",
-      "attributionUrl": "",
-      "licenseUrl": ""
     }
   ]
 }
