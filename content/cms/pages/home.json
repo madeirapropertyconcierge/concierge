@@ -11,10 +11,10 @@
       "canonical": "/en/"
     },
     "pt": {
-      "title": "Madeira Property Concierge | Hosting Boutique e Gestao de Propriedade",
-      "description": "Gestao boutique de propriedade e hosting na Madeira para proprietarios no estrangeiro. Servico liderado pela fundadora, suporte bilingue EN/PT e relatorios mensais.",
-      "ogTitle": "Gestao Boutique de Propriedade na Madeira para Proprietarios no Estrangeiro",
-      "ogDescription": "Servico liderado pela fundadora para proprietarios no estrangeiro na Madeira. Suporte bilingue EN/PT, resposta em 4 horas e relatorios mensais transparentes.",
+      "title": "Madeira Property Concierge | Hosting Boutique e Gestão de Propriedade",
+      "description": "Gestão boutique de propriedade e hosting na Madeira para proprietários no estrangeiro. Serviço liderado pela fundadora, suporte bilingue EN/PT e relatórios mensais.",
+      "ogTitle": "Gestão Boutique de Propriedade na Madeira para Proprietários no Estrangeiro",
+      "ogDescription": "Serviço liderado pela fundadora para proprietários no estrangeiro na Madeira. Suporte bilingue EN/PT, resposta em 4 horas e relatórios mensais transparentes.",
       "ogImage": "/images/madeira/funchal-bay.webp",
       "canonical": "/pt/"
     }
@@ -41,7 +41,7 @@
     {
       "id": "text:hero-subtitle",
       "selector": "[data-cms-id=\"text:hero-subtitle\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "Founder-led property management in North Madeira for overseas owners. Bilingual EN/PT support. We offer absentee property owners a single, trusted point of contact for everything from routine property care, property protection, maintenance coordination, and guest coordination to fully managed Airbnb hosting.\nTrue peace of mind, wherever you are.",
         "pt": "Gestão de propriedades na Madeira, liderada pela fundadora e dedicada a proprietários residentes no estrangeiro. Suporte bilingue EN/PT, reporting transparente e execução local de confiança."
@@ -53,25 +53,25 @@
       "kind": "inline",
       "value": {
         "en": "Property Care & Preventative Checks",
-        "pt": "Cuidado de Propriedade e Verificacoes Preventivas"
+        "pt": "Cuidado de Propriedade e Verificações Preventivas"
       }
     },
     {
       "id": "text:media-card-2-caption",
       "selector": "[data-cms-id=\"text:media-card-2-caption\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "Guest Experience & Hosting Support",
-        "pt": "Experiencia de Hospede e Apoio de Hosting"
+        "pt": "Experiência de Hóspede e Apoio de Hosting"
       }
     },
     {
       "id": "text:media-card-3-caption",
       "selector": "[data-cms-id=\"text:media-card-3-caption\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "West Coast Expansion Coverage",
-        "pt": "Cobertura em Expansao na Costa Oeste"
+        "pt": "Cobertura em Expansão na Costa Oeste"
       }
     },
     {
@@ -95,7 +95,7 @@
     {
       "id": "text:trust-signal-2-value",
       "selector": "[data-cms-id=\"text:trust-signal-2-value\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "4h",
         "pt": "4h"
@@ -104,7 +104,7 @@
     {
       "id": "text:trust-signal-2-label",
       "selector": "[data-cms-id=\"text:trust-signal-2-label\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "Owner response target",
         "pt": "Objetivo de resposta ao Proprietário"
@@ -188,7 +188,7 @@
       "kind": "inline",
       "value": {
         "en": "A 30-minute call to map goals, hosting needs, and the level of property support required.",
-        "pt": "Chamada de 30 minutos para mapear objetivos, necessidades de hosting e o nivel de apoio que o imovel exige."
+        "pt": "Chamada de 30 minutos para mapear objetivos, necessidades de hosting e o nível de apoio que o imóvel exige."
       }
     },
     {
@@ -203,10 +203,10 @@
     {
       "id": "text:step-2-detail",
       "selector": "[data-cms-id=\"text:step-2-detail\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "On-site assessment of condition, compliance gaps, vendor needs, and launch readiness.",
-        "pt": "Avaliacao no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidao."
+        "pt": "Avaliação no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidão."
       }
     },
     {
@@ -215,13 +215,13 @@
       "kind": "inline",
       "value": {
         "en": "Launch & Management",
-        "pt": "Lancamento e Gestao"
+        "pt": "Lançamento e Gestão"
       }
     },
     {
       "id": "text:step-3-detail",
       "selector": "[data-cms-id=\"text:step-3-detail\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "We run day-to-day operations with monthly reports, maintenance logs, and SLA-driven support.",
         "pt": "Executamos a operação diária com relatórios mensais, registo de manutenção e suporte com SLA."
@@ -242,7 +242,7 @@
       "kind": "inline",
       "value": {
         "en": "Own property in Madeira but live abroad? We handle it locally, you stay in the loop.",
-        "pt": "Tem imovel na Madeira mas vive fora? Nos tratamos localmente, voce acompanha tudo."
+        "pt": "Tem imóvel na Madeira mas vive fora? Nós tratamos localmente, você acompanha tudo."
       }
     },
     {
@@ -251,7 +251,7 @@
       "kind": "inline",
       "value": {
         "en": "Start with a 30-minute diagnostic call. We'll work out whether your property needs care, guest support, revenue management, or flexible on-the-ground help.",
-        "pt": "Comece com uma chamada de diagnostico de 30 minutos. Percebemos se o seu imovel precisa de cuidado, apoio a hospedes, revenue e hosting, ou ajuda flexivel no terreno."
+        "pt": "Comece com uma chamada de diagnóstico de 30 minutos. Percebemos se o seu imóvel precisa de cuidado, apoio a hóspedes, revenue e hosting, ou ajuda flexível no terreno."
       }
     }
   ],
@@ -360,7 +360,7 @@
       "src": "/images/library/img-0919.webp",
       "alt": {
         "en": "Seaside village and sheltered bay on the Madeira coast",
-        "pt": "Aldeia costeira e baia protegida na costa da Madeira"
+        "pt": "Aldeia costeira e baía protegida na costa da Madeira"
       },
       "attributionName": "",
       "attributionUrl": "",
@@ -372,7 +372,7 @@
       "src": "/images/madeira/coastal-viewpoint.webp",
       "alt": {
         "en": "Steep viewpoint above the Atlantic coastline in Madeira",
-        "pt": "Miradouro sobre a costa atlantica da Madeira"
+        "pt": "Miradouro sobre a costa atlântica da Madeira"
       },
       "attributionName": "",
       "attributionUrl": "",
@@ -384,7 +384,7 @@
       "src": "/images/madeira/green-ridges.webp",
       "alt": {
         "en": "Cliffs and blue Atlantic water at Ponta de Sao Lourenco in Madeira",
-        "pt": "Falesias e agua azul do Atlantico na Ponta de Sao Lourenco"
+        "pt": "Falésias e água azul do Atlântico na Ponta de São Lourenço"
       },
       "attributionName": "",
       "attributionUrl": "",
@@ -396,7 +396,7 @@
       "src": "/images/library/img-0747.webp",
       "alt": {
         "en": "Coastal path descending toward the Atlantic in Madeira",
-        "pt": "Caminho costeiro a descer para o Atlantico na Madeira"
+        "pt": "Caminho costeiro a descer para o Atlântico na Madeira"
       },
       "attributionName": "",
       "attributionUrl": "",

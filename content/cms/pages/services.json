@@ -11,10 +11,10 @@
       "canonical": "/en/services"
     },
     "pt": {
-      "title": "Servicos de Gestao de Propriedade na Madeira | Madeira Property Concierge",
-      "description": "Cinco pacotes de servico para proprietarios na Madeira — de Cuidados Essenciais a Revenue & Hosting completo. Escopo transparente, sem taxas ocultas e execucao local.",
-      "ogTitle": "5 Pacotes Claros de Gestao para Proprietarios na Madeira",
-      "ogDescription": "Desde cuidado basico do imovel ate hosting completo no Airbnb — escolha o nivel de apoio que o seu imovel precisa. Sem taxas ocultas, execucao pela fundadora.",
+      "title": "Serviços de Gestão de Propriedade na Madeira | Madeira Property Concierge",
+      "description": "Cinco pacotes de serviço para proprietários na Madeira — de Cuidados Essenciais a Revenue & Hosting completo. Escopo transparente, sem taxas ocultas e execução local.",
+      "ogTitle": "5 Pacotes Claros de Gestão para Proprietários na Madeira",
+      "ogDescription": "Desde cuidado básico do imóvel até hosting completo no Airbnb — escolha o nível de apoio que o seu imóvel precisa. Sem taxas ocultas, execução pela fundadora.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/pt/servicos"
     }
@@ -26,7 +26,7 @@
       "kind": "inline",
       "value": {
         "en": "Service Packages",
-        "pt": "Pacotes de Servico"
+        "pt": "Pacotes de Serviço"
       }
     },
     {
@@ -35,7 +35,7 @@
       "kind": "inline",
       "value": {
         "en": "Five clear packages for overseas owners.",
-        "pt": "Cinco pacotes claros para proprietarios no estrangeiro."
+        "pt": "Cinco pacotes claros para proprietários no estrangeiro."
       }
     },
     {
@@ -44,7 +44,7 @@
       "kind": "inline",
       "value": {
         "en": "From core property care to full revenue and hosting management, choose the level of support you need and we execute on-island.",
-        "pt": "Desde o cuidado base do imovel ate a gestao completa de revenue e hosting, escolhe o nivel de apoio e nos executamos na ilha."
+        "pt": "Desde o cuidado base do imóvel até à gestão completa de revenue e hosting, escolhe o nível de apoio e nós executamos na ilha."
       }
     },
     {
@@ -53,7 +53,7 @@
       "kind": "inline",
       "value": {
         "en": "Service Packages",
-        "pt": "Pacotes de Servico"
+        "pt": "Pacotes de Serviço"
       }
     },
     {
@@ -62,7 +62,7 @@
       "kind": "inline",
       "value": {
         "en": "A clear structure that matches how the property is actually used.",
-        "pt": "Uma estrutura clara que acompanha a forma como o imovel e usado."
+        "pt": "Uma estrutura clara que acompanha a forma como o imóvel é usado."
       }
     },
     {
@@ -71,7 +71,7 @@
       "kind": "inline",
       "value": {
         "en": "Each package is built for a different operating model: vacant homes, second homes, higher-touch oversight, hosted rentals, and flexible on-demand support.",
-        "pt": "Cada pacote foi desenhado para um tipo de operacao diferente: casas vazias, segundas habitacoes, propriedades com mais supervisao, alojamento com revenue e apoio sob pedido."
+        "pt": "Cada pacote foi desenhado para um tipo de operação diferente: casas vazias, segundas habitações, propriedades com mais supervisão, alojamento com revenue e apoio sob pedido."
       }
     },
     {
@@ -80,7 +80,7 @@
       "kind": "inline",
       "value": {
         "en": "Additional services available as needed for on-the-ground support.",
-        "pt": "Servicos adicionais disponiveis conforme necessario para apoio no terreno."
+        "pt": "Serviços adicionais disponíveis conforme necessário para apoio no terreno."
       }
     },
     {
@@ -98,7 +98,7 @@
       "kind": "inline",
       "value": {
         "en": "Scoped quote",
-        "pt": "Orcamento por escopo"
+        "pt": "Orçamento por escopo"
       }
     },
     {
@@ -107,7 +107,7 @@
       "kind": "inline",
       "value": {
         "en": "We'll suggest the package that fits the operation, not the most expensive one.",
-        "pt": "Sugerimos o pacote que encaixa na operacao real do imovel."
+        "pt": "Sugerimos o pacote que encaixa na operação real do imóvel."
       }
     },
     {
@@ -116,7 +116,7 @@
       "kind": "inline",
       "value": {
         "en": "In the first call, we work out whether you need property care, guest support, revenue and hosting management, or just flexible help on the ground.",
-        "pt": "Na primeira chamada, percebemos se precisa de cuidado do imovel, suporte a hospedes, revenue e hosting, ou apenas apoio sob pedido."
+        "pt": "Na primeira chamada, percebemos se precisa de cuidado do imóvel, suporte a hóspedes, revenue e hosting, ou apenas apoio sob pedido."
       }
     }
   ],
@@ -138,7 +138,7 @@
       "selector": "[data-cms-id=\"link:secondary-cta\"]",
       "label": {
         "en": "View Pricing",
-        "pt": "Ver Precos"
+        "pt": "Ver Preços"
       },
       "href": {
         "en": "/en/pricing",

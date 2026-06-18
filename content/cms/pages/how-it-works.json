@@ -12,9 +12,9 @@
     },
     "pt": {
       "title": "Como Funciona — O Nosso Processo | Madeira Property Concierge",
-      "description": "Da chamada de diagnostico a operacao mensal em 30 dias. Conheca o processo liderado pela fundadora — auditoria, setup de sistemas e suporte com SLA definido.",
-      "ogTitle": "Da Chamada de Diagnostico a Operacao Mensal em 30 Dias",
-      "ogDescription": "Conheca o nosso processo de onboarding para proprietarios na Madeira — auditoria do imovel, setup de sistemas, SLA de 4 horas e relatorios mensais.",
+      "description": "Da chamada de diagnóstico à operação mensal em 30 dias. Conheça o processo liderado pela fundadora — auditoria, setup de sistemas e suporte com SLA definido.",
+      "ogTitle": "Da Chamada de Diagnóstico à Operação Mensal em 30 Dias",
+      "ogDescription": "Conheça o nosso processo de onboarding para proprietários na Madeira — auditoria do imóvel, setup de sistemas, SLA de 4 horas e relatórios mensais.",
       "ogImage": "/images/madeira/green-ridges.webp",
       "canonical": "/pt/como-funciona"
     }
@@ -26,7 +26,7 @@
       "kind": "inline",
       "value": {
         "en": "Operating Method",
-        "pt": "Metodo Operacional"
+        "pt": "Método Operacional"
       }
     },
     {
@@ -35,7 +35,7 @@
       "kind": "inline",
       "value": {
         "en": "A clear process for overseas owners.",
-        "pt": "Um processo claro para proprietarios que gerem a distancia."
+        "pt": "Um processo claro para proprietários que gerem à distância."
       }
     },
     {
@@ -44,7 +44,7 @@
       "kind": "inline",
       "value": {
         "en": "From first diagnostic to monthly rhythm, each phase is designed to reduce risk and improve predictability.",
-        "pt": "Do primeiro diagnostico a rotina mensal, cada etapa foi desenhada para reduzir risco e aumentar previsibilidade."
+        "pt": "Do primeiro diagnóstico à rotina mensal, cada etapa foi desenhada para reduzir risco e aumentar previsibilidade."
       }
     },
     {
@@ -53,7 +53,7 @@
       "kind": "inline",
       "value": {
         "en": "Diagnostic Call",
-        "pt": "Chamada de Diagnostico"
+        "pt": "Chamada de Diagnóstico"
       }
     },
     {
@@ -62,7 +62,7 @@
       "kind": "inline",
       "value": {
         "en": "We start with a 30-minute call to map your property goals, risk profile, and operating model.",
-        "pt": "Comecamos com uma chamada de 30 minutos para mapear objetivos, risco e modelo operacional do imovel."
+        "pt": "Começamos com uma chamada de 30 minutos para mapear objetivos, risco e modelo operacional do imóvel."
       }
     },
     {
@@ -71,7 +71,7 @@
       "kind": "inline",
       "value": {
         "en": "Property & Risk Audit",
-        "pt": "Auditoria de Imovel e Risco"
+        "pt": "Auditoria de Imóvel e Risco"
       }
     },
     {
@@ -98,7 +98,7 @@
       "kind": "inline",
       "value": {
         "en": "We activate workflows, communication templates, vendor standards, and guest/owner reporting routines.",
-        "pt": "Ativamos fluxos operacionais, templates de comunicacao, padroes de fornecedores e rotinas de reporte."
+        "pt": "Ativamos fluxos operacionais, templates de comunicação, padrões de fornecedores e rotinas de reporte."
       }
     },
     {
@@ -107,7 +107,7 @@
       "kind": "inline",
       "value": {
         "en": "Monthly Operations",
-        "pt": "Operacao Mensal"
+        "pt": "Operação Mensal"
       }
     },
     {
@@ -116,7 +116,7 @@
       "kind": "inline",
       "value": {
         "en": "You receive monthly reporting, maintenance logs, and SLA-driven support with one clear point of contact.",
-        "pt": "Recebe relatorio mensal, log de manutencao e suporte por SLA com um unico ponto de contacto responsavel."
+        "pt": "Recebe relatório mensal, log de manutenção e suporte por SLA com um único ponto de contacto responsável."
       }
     },
     {
@@ -125,7 +125,7 @@
       "kind": "inline",
       "value": {
         "en": "What you receive consistently",
-        "pt": "Entregaveis continuos"
+        "pt": "Entregáveis contínuos"
       }
     },
     {
@@ -134,7 +134,7 @@
       "kind": "inline",
       "value": {
         "en": "Monthly owner report with occupancy, revenue, costs, and maintenance",
-        "pt": "Relatorio mensal com ocupacao, receita, despesas e manutencao"
+        "pt": "Relatório mensal com ocupação, receita, despesas e manutenção"
       }
     },
     {
@@ -143,7 +143,7 @@
       "kind": "inline",
       "value": {
         "en": "Maintenance and issue log with clear next actions",
-        "pt": "Registo de ocorrencias e proximos passos com responsaveis definidos"
+        "pt": "Registo de ocorrências e próximos passos com responsáveis definidos"
       }
     },
     {
@@ -152,7 +152,7 @@
       "kind": "inline",
       "value": {
         "en": "SLA targets: owner response within 4 business hours; guest emergencies within 30 mins",
-        "pt": "SLA: resposta ao proprietario em ate 4h uteis; emergencias de hospedes em ate 30 minutos"
+        "pt": "SLA: resposta ao proprietário em até 4h úteis; emergências de hóspedes em até 30 minutos"
       }
     },
     {
@@ -161,7 +161,7 @@
       "kind": "inline",
       "value": {
         "en": "Single WhatsApp contact plus updates on critical decisions",
-        "pt": "Comunicacao unica via WhatsApp e atualizacoes em decisoes criticas"
+        "pt": "Comunicação única via WhatsApp e atualizações em decisões críticas"
       }
     },
     {
@@ -197,7 +197,7 @@
       "kind": "inline",
       "value": {
         "en": "Diagnostic call and package fit.",
-        "pt": "Chamada de diagnostico e definicao do pacote mais adequado."
+        "pt": "Chamada de diagnóstico e definição do pacote mais adequado."
       }
     },
     {
@@ -215,7 +215,7 @@
       "kind": "inline",
       "value": {
         "en": "Property audit: condition, needs/goals, risk, compliance and priorities.",
-        "pt": "Auditoria do imovel: condicao, necessidades/objetivos, riscos, conformidade e prioridades."
+        "pt": "Auditoria do imóvel: condição, necessidades/objetivos, riscos, conformidade e prioridades."
       }
     },
     {
@@ -233,7 +233,7 @@
       "kind": "inline",
       "value": {
         "en": "Property audit: condition, risk, compliance, and priorities.",
-        "pt": "Auditoria do imovel: condicao, riscos, conformidade e prioridades."
+        "pt": "Auditoria do imóvel: condição, riscos, conformidade e prioridades."
       }
     },
     {
@@ -251,7 +251,7 @@
       "kind": "inline",
       "value": {
         "en": "Vendor activation, SOP setup, and communication templates.",
-        "pt": "Ativacao de fornecedores, SOPs e templates de comunicacao."
+        "pt": "Ativação de fornecedores, SOPs e templates de comunicação."
       }
     },
     {
@@ -269,7 +269,7 @@
       "kind": "inline",
       "value": {
         "en": "Go-live with first monthly report and maintenance log.",
-        "pt": "Operacao ativa com primeiro relatorio mensal e log de manutencao."
+        "pt": "Operação ativa com primeiro relatório mensal e log de manutenção."
       }
     },
     {
@@ -278,7 +278,7 @@
       "kind": "inline",
       "value": {
         "en": "Your property should run on a system, not on surprises.",
-        "pt": "O seu imovel deve funcionar com sistema, nao com surpresas."
+        "pt": "O seu imóvel deve funcionar com sistema, não com surpresas."
       }
     },
     {
@@ -287,7 +287,7 @@
       "kind": "inline",
       "value": {
         "en": "Start with a diagnostic call and we'll show you what the day-to-day looks like.",
-        "pt": "Comece com uma chamada de diagnostico e mostramos como funciona o dia-a-dia."
+        "pt": "Comece com uma chamada de diagnóstico e mostramos como funciona o dia-a-dia."
       }
     }
   ],
@@ -309,7 +309,7 @@
       "selector": "[data-cms-id=\"link:secondary-cta\"]",
       "label": {
         "en": "Pricing",
-        "pt": "Precos"
+        "pt": "Preços"
       },
       "href": {
         "en": "/en/pricing",

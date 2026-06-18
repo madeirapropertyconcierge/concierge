@@ -12,9 +12,9 @@
     },
     "pt": {
       "title": "Sobre a Lisa, Fundadora | Madeira Property Concierge",
-      "description": "Conheca a Lisa, fundadora da Madeira Property Concierge. 15 anos em UX, bilingue EN/PT, raizes madeirenses e 3+ anos na ilha. O seu ponto de contacto de confianca.",
-      "ogTitle": "Conheca a Lisa — A Pessoa por Tras do Seu Imovel na Madeira",
-      "ogDescription": "Fundadora luso-canadiana bilingue, com 15 anos em UX e 3+ anos na ilha. Uma pessoa gere tudo — vai saber sempre quem e responsavel.",
+      "description": "Conheça a Lisa, fundadora da Madeira Property Concierge. 15 anos em UX, bilingue EN/PT, raízes madeirenses e 3+ anos na ilha. O seu ponto de contacto de confiança.",
+      "ogTitle": "Conheça a Lisa — A Pessoa por Trás do Seu Imóvel na Madeira",
+      "ogDescription": "Fundadora luso-canadiana bilingue, com 15 anos em UX e 3+ anos na ilha. Uma pessoa gere tudo — vai saber sempre quem é responsável.",
       "ogImage": "/images/about/lisa_1.webp",
       "canonical": "/pt/sobre"
     }
@@ -26,7 +26,7 @@
       "kind": "inline",
       "value": {
         "en": "Founder & Vision",
-        "pt": "Fundadora & Visao"
+        "pt": "Fundadora & Visão"
       }
     },
     {
@@ -35,7 +35,7 @@
       "kind": "inline",
       "value": {
         "en": "One person runs this. You'll always know who's responsible.",
-        "pt": "Uma pessoa gere tudo. Vai saber sempre quem e responsavel."
+        "pt": "Uma pessoa gere tudo. Vai saber sempre quem é responsável."
       }
     },
     {
@@ -44,7 +44,7 @@
       "kind": "inline",
       "value": {
         "en": "UX Director background, bilingual EN/PT, Madeiran roots. I'm your local point of contact so you don't have to manage from a distance.",
-        "pt": "Experiencia em UX, bilingue EN/PT, raizes madeirenses. Sou o seu ponto de contacto local para nao ter de gerir a distancia."
+        "pt": "Experiência em UX, bilingue EN/PT, raízes madeirenses. Sou o seu ponto de contacto local para não ter de gerir à distância."
       }
     },
     {
@@ -53,7 +53,7 @@
       "kind": "inline",
       "value": {
         "en": "The Story",
-        "pt": "A Historia"
+        "pt": "A História"
       }
     },
     {
@@ -62,7 +62,7 @@
       "kind": "inline",
       "value": {
         "en": "My Story",
-        "pt": "A Minha Historia"
+        "pt": "A Minha História"
       }
     },
     {
@@ -71,7 +71,7 @@
       "kind": "inline",
       "value": {
         "en": "I'm Lisa. My parents are from Madeira, and much of my family is still here. They emigrated to Canada, where I was born and raised, and later I built my career in London leading UX teams.",
-        "pt": "Sou a Lisa. Os meus pais sao da Madeira, e grande parte da minha familia continua aqui. Emigraram para o Canada, onde nasci e cresci, e mais tarde construí a minha carreira em Londres a liderar equipas de UX."
+        "pt": "Sou a Lisa. Os meus pais são da Madeira, e grande parte da minha família continua aqui. Emigraram para o Canadá, onde nasci e cresci, e mais tarde construí a minha carreira em Londres a liderar equipas de UX."
       }
     },
     {
@@ -80,7 +80,7 @@
       "kind": "inline",
       "value": {
         "en": "After my daughter was born, I felt a strong pull back to our roots and moved to Madeira. Living on-island, I built a trusted local network and kept seeing the same pattern for overseas owners: communication gaps, uneven quality, and costly surprises.",
-        "pt": "Depois de a minha filha nascer, senti um forte chamamento as nossas raizes e voltei para a Madeira. A viver na ilha, construí uma rede local de confianca e continuei a ver o mesmo padrao para quem vive fora: falhas de comunicacao, qualidade irregular e custos inesperados."
+        "pt": "Depois de a minha filha nascer, senti um forte chamamento às nossas raízes e voltei para a Madeira. A viver na ilha, construí uma rede local de confiança e continuei a ver o mesmo padrão para quem vive fora: falhas de comunicação, qualidade irregular e custos inesperados."
       }
     },
     {
@@ -89,7 +89,7 @@
       "kind": "inline",
       "value": {
         "en": "I was already managing two family properties in Madeira, and I knew it was the right time to expand. That is why I founded Madeira Property Concierge: a small, founder-led service with clear tiers, clear reporting, and one person you can hold accountable.",
-        "pt": "Ja fazia a gestao de duas propriedades da familia na Madeira e percebi que era o momento certo para expandir. Foi por isso que fundei a Madeira Property Concierge: um servico pequeno, liderado pela fundadora, com niveis claros, relatorios claros e uma pessoa a quem pode pedir responsabilidades."
+        "pt": "Já fazia a gestão de duas propriedades da família na Madeira e percebi que era o momento certo para expandir. Foi por isso que fundei a Madeira Property Concierge: um serviço pequeno, liderado pela fundadora, com níveis claros, relatórios claros e uma pessoa a quem pode pedir responsabilidades."
       }
     },
     {
@@ -107,7 +107,7 @@
       "kind": "inline",
       "value": {
         "en": "Leading UX teams and designing service systems that hold up.",
-        "pt": "A liderar equipas de UX e a desenhar operacoes centradas no utilizador."
+        "pt": "A liderar equipas de UX e a desenhar operações centradas no utilizador."
       }
     },
     {
@@ -125,7 +125,7 @@
       "kind": "inline",
       "value": {
         "en": "Living in Madeira and building a reliable local vendor network.",
-        "pt": "A viver na Madeira e a construir rede local de fornecedores de confianca."
+        "pt": "A viver na Madeira e a construir rede local de fornecedores de confiança."
       }
     },
     {
@@ -143,7 +143,7 @@
       "kind": "inline",
       "value": {
         "en": "Native bilingual, born Canadian-Madeiran. Bridges overseas owners and local teams.",
-        "pt": "Bilingue nativa, nascida canadiana-madeirense. Faz a ponte entre proprietarios e equipas locais."
+        "pt": "Bilingue nativa, nascida canadiana-madeirense. Faz a ponte entre proprietários e equipas locais."
       }
     },
     {
@@ -152,7 +152,7 @@
       "kind": "inline",
       "value": {
         "en": "Why It Feels Different",
-        "pt": "Porque e Diferente"
+        "pt": "Porque é Diferente"
       }
     },
     {
@@ -179,7 +179,7 @@
       "kind": "inline",
       "value": {
         "en": "Native-level English and Portuguese. I handle the cultural gaps that cause expensive misunderstandings between owners and local vendors.",
-        "pt": "Ingles e Portugues nativos. Trato das diferencas culturais que causam mal-entendidos caros entre proprietarios e fornecedores locais."
+        "pt": "Inglês e Português nativos. Trato das diferenças culturais que causam mal-entendidos caros entre proprietários e fornecedores locais."
       }
     },
     {
@@ -215,7 +215,7 @@
       "kind": "inline",
       "value": {
         "en": "I live in Madeira and raise my daughter here. My reputation is local, visible, and tied directly to your results.",
-        "pt": "Vivo na Madeira e crio aqui a minha filha. A minha reputacao e local, visivel e diretamente ligada aos seus resultados."
+        "pt": "Vivo na Madeira e crio aqui a minha filha. A minha reputação é local, visível e diretamente ligada aos seus resultados."
       }
     },
     {
@@ -233,7 +233,7 @@
       "kind": "inline",
       "value": {
         "en": "Family roots and years of local relationships. You get vetted vendors with clear standards and documentation, not guesswork.",
-        "pt": "Raizes familiares e anos de relacoes locais. Recebe fornecedores validados com padroes claros e documentacao."
+        "pt": "Raízes familiares e anos de relações locais. Recebe fornecedores validados com padrões claros e documentação."
       }
     },
     {
@@ -251,7 +251,7 @@
       "kind": "inline",
       "value": {
         "en": "I treat every property as if it were my own. I'll flag problems before they grow and I won't cut corners. If something goes wrong, you hear it from me first, with a fix already underway.",
-        "pt": "Trato cada propriedade como se fosse minha. Aviso antes dos problemas crescerem e nao corto nos cantos. Se algo correr mal, vai ouvir primeiro de mim, com uma solucao ja a caminho."
+        "pt": "Trato cada propriedade como se fosse minha. Aviso antes dos problemas crescerem e não corto nos cantos. Se algo correr mal, vai ouvir primeiro de mim, com uma solução já a caminho."
       }
     },
     {
@@ -260,7 +260,7 @@
       "kind": "inline",
       "value": {
         "en": "Want to know exactly what's happening with your property?",
-        "pt": "Quer saber exatamente o que se passa com o seu imovel?"
+        "pt": "Quer saber exatamente o que se passa com o seu imóvel?"
       }
     },
     {
@@ -269,7 +269,7 @@
       "kind": "inline",
       "value": {
         "en": "We'll look at your situation and put together a plan for care, hosting, or compliance.",
-        "pt": "Olhamos para a sua situacao e montamos um plano de cuidado, hosting ou conformidade."
+        "pt": "Olhamos para a sua situação e montamos um plano de cuidado, hosting ou conformidade."
       }
     },
     {
@@ -300,7 +300,7 @@
       "selector": "[data-cms-id=\"link:secondary-cta\"]",
       "label": {
         "en": "Services",
-        "pt": "Servicos"
+        "pt": "Serviços"
       },
       "href": {
         "en": "/en/services",

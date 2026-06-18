@@ -11,10 +11,10 @@
       "canonical": "/en/pricing"
     },
     "pt": {
-      "title": "Precos de Gestao de Propriedade na Madeira | Madeira Property Concierge",
-      "description": "Precos transparentes para gestao de propriedade na Madeira — cinco pacotes de Cuidados Essenciais a Revenue & Hosting. Sem taxas ocultas e add-ons por escopo.",
-      "ogTitle": "Precos Transparentes de Gestao de Propriedade na Madeira",
-      "ogDescription": "Cinco pacotes com precos claros, sem taxas ocultas e add-ons opcionais. Encontre o nivel certo de cuidado para o seu imovel na Madeira.",
+      "title": "Preços de Gestão de Propriedade na Madeira | Madeira Property Concierge",
+      "description": "Preços transparentes para gestão de propriedade na Madeira — cinco pacotes de Cuidados Essenciais a Revenue & Hosting. Sem taxas ocultas e add-ons por escopo.",
+      "ogTitle": "Preços Transparentes de Gestão de Propriedade na Madeira",
+      "ogDescription": "Cinco pacotes com preços claros, sem taxas ocultas e add-ons opcionais. Encontre o nível certo de cuidado para o seu imóvel na Madeira.",
       "ogImage": "/images/madeira/funchal-bay.webp",
       "canonical": "/pt/precos"
     }
@@ -35,7 +35,7 @@
       "kind": "inline",
       "value": {
         "en": "Pricing aligned with the level of support your property actually needs.",
-        "pt": "Precos alinhados com o tipo de apoio que o seu imovel realmente precisa."
+        "pt": "Preços alinhados com o tipo de apoio que o seu imóvel realmente precisa."
       }
     },
     {
@@ -44,7 +44,7 @@
       "kind": "inline",
       "value": {
         "en": "Five clear packages, flexible on-demand help, and optional add-ons. No hidden fees and no vague bundles.",
-        "pt": "Cinco pacotes claros, servicos sob pedido e add-ons opcionais. Sem taxas escondidas e sem linguagem vaga."
+        "pt": "Cinco pacotes claros, serviços sob pedido e add-ons opcionais. Sem taxas escondidas e sem linguagem vaga."
       }
     },
     {
@@ -53,7 +53,7 @@
       "kind": "inline",
       "value": {
         "en": "Scoped quote",
-        "pt": "Orcamento por escopo"
+        "pt": "Orçamento por escopo"
       }
     },
     {
@@ -80,7 +80,7 @@
       "kind": "inline",
       "value": {
         "en": "We'll recommend the package that matches the operation, not the most expensive one.",
-        "pt": "Recomendamos o pacote certo para a operacao real, nao o mais caro."
+        "pt": "Recomendamos o pacote certo para a operação real, não o mais caro."
       }
     },
     {
@@ -89,7 +89,7 @@
       "kind": "inline",
       "value": {
         "en": "Tell us how the property is used, whether it hosts guests, and where you need help. We'll reply with a clear, no-pressure scope.",
-        "pt": "Explique-nos como usa o imovel, se recebe hospedes e onde precisa de apoio. Respondemos com um escopo claro e sem pressao."
+        "pt": "Explique-nos como usa o imóvel, se recebe hóspedes e onde precisa de apoio. Respondemos com um escopo claro e sem pressão."
       }
     }
   ],
@@ -111,7 +111,7 @@
       "selector": "[data-cms-id=\"link:hero-secondary-cta\"]",
       "label": {
         "en": "Services",
-        "pt": "Servicos"
+        "pt": "Serviços"
       },
       "href": {
         "en": "/en/services",

@@ -17,7 +17,9 @@ import { openLinkEditor } from './link-editor';
 import { state } from './store';
 import type { CmsServicePackageField, CmsServicePackageKey } from './types';
 
-const MARKDOWN_BLOCK_TAGS = new Set(['P', 'DIV', 'LI', 'BLOCKQUOTE']);
+// A <p> is phrasing-content only and cannot host block markup, so paragraph
+// fields stay inline. Only true containers may carry multi-block (block) markup.
+const MARKDOWN_BLOCK_TAGS = new Set(['DIV', 'LI', 'BLOCKQUOTE']);
 
 export function finalizeActiveTextEdit(): void {
   if (!state.activeEditableElement) {

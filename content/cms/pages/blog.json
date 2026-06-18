@@ -12,9 +12,9 @@
     },
     "pt": {
       "title": "Blog — Insights sobre Propriedade na Madeira | Madeira Property Concierge",
-      "description": "Artigos especializados sobre gestao de propriedade na Madeira, licenciamento AL, estrategia de investimento, fiscalidade e orientacao para proprietarios remotos.",
-      "ogTitle": "Insights sobre Propriedade na Madeira para Proprietarios no Estrangeiro",
-      "ogDescription": "Artigos praticos sobre compra, gestao e hosting de imoveis na Madeira — licenciamento AL, fiscalidade, revenue e gestao remota.",
+      "description": "Artigos especializados sobre gestão de propriedade na Madeira, licenciamento AL, estratégia de investimento, fiscalidade e orientação para proprietários remotos.",
+      "ogTitle": "Insights sobre Propriedade na Madeira para Proprietários no Estrangeiro",
+      "ogDescription": "Artigos práticos sobre compra, gestão e hosting de imóveis na Madeira — licenciamento AL, fiscalidade, revenue e gestão remota.",
       "ogImage": "/images/madeira/coastal-viewpoint.webp",
       "canonical": "/pt/blog"
     }
@@ -35,7 +35,7 @@
       "kind": "inline",
       "value": {
         "en": "Practical reads for Madeira property owners.",
-        "pt": "Leituras praticas para proprietarios na Madeira."
+        "pt": "Leituras práticas para proprietários na Madeira."
       }
     },
     {
@@ -44,7 +44,7 @@
       "kind": "inline",
       "value": {
         "en": "Articles on yield, regulation, and running a property from abroad.",
-        "pt": "Artigos sobre rentabilidade, regulamentacao e gestao de imoveis a distancia."
+        "pt": "Artigos sobre rentabilidade, regulamentação e gestão de imóveis à distância."
       }
     },
     {
@@ -62,7 +62,7 @@
       "kind": "inline",
       "value": {
         "en": "Strategy Archive",
-        "pt": "Arquivo de Estrategia"
+        "pt": "Arquivo de Estratégia"
       }
     },
     {
@@ -71,7 +71,7 @@
       "kind": "inline",
       "value": {
         "en": "Operating models, regulatory risk, and on-the-ground execution.",
-        "pt": "Modelos operacionais, risco regulatorio e execucao no terreno."
+        "pt": "Modelos operacionais, risco regulatório e execução no terreno."
       }
     },
     {
@@ -111,7 +111,7 @@
       "selector": "[data-cms-id=\"link:secondary-cta\"]",
       "label": {
         "en": "Services",
-        "pt": "Servicos"
+        "pt": "Serviços"
       },
       "href": {
         "en": "/en/services",
