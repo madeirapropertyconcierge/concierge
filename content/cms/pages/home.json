@@ -242,16 +242,16 @@
       "kind": "inline",
       "value": {
         "en": "Own property in Madeira but live abroad? We handle it locally, you stay in the loop.",
-        "pt": "Tem um imóvel na Madeira, mas vive fora? Nós tratamos de tudo localmente, enquanto acompanha tudo à distância."
+        "pt": "Tem imovel na Madeira mas vive fora? Nos tratamos localmente, voce acompanha tudo."
       }
     },
     {
       "id": "text:final-subtitle",
       "selector": "[data-cms-id=\"text:final-subtitle\"]",
-      "kind": "inline",
+      "kind": "block",
       "value": {
         "en": "Start with a 30-minute diagnostic call. We'll work out whether your property needs care, guest support, revenue management, or flexible on-the-ground help.",
-        "pt": "Comece com uma chamada de diagnostico de 30 minutos. Percebemos se o seu imovel precisa de cuidado, apoio a hospedes, revenue e hosting, ou ajuda flexivel no terreno."
+        "pt": "Comece com uma chamada de diagnóstico de 30 minutos. Percebemos se o seu imóvel precisa de cuidados regulares, apoio a hóspedes, gestão de revenue e hosting, ou apoio flexível no terreno."
       }
     },
     {
