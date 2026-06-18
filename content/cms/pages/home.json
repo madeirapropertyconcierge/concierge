@@ -197,7 +197,7 @@
       "kind": "inline",
       "value": {
         "en": "Property & Risk Audit",
-        "pt": "Auditoria de Imovel e Risco"
+        "pt": "Auditoria de Imóvel e Risco"
       }
     },
     {
@@ -206,7 +206,7 @@
       "kind": "block",
       "value": {
         "en": "On-site assessment of condition, compliance gaps, vendor needs, and launch readiness.",
-        "pt": "Avaliação no local do estado do imóvel, lacunas de conformidade, necessidades de fornecedores e prontidão operacional."
+        "pt": "Avaliacao no local de estado, lacunas de conformidade, necessidades de fornecedores e prontidao."
       }
     },
     {
@@ -221,10 +221,10 @@
     {
       "id": "text:step-3-detail",
       "selector": "[data-cms-id=\"text:step-3-detail\"]",
-      "kind": "inline",
+      "kind": "block",
       "value": {
         "en": "We run day-to-day operations with monthly reports, maintenance logs, and SLA-driven support.",
-        "pt": "Executamos a operacao diaria com relatorios mensais, registo de manutencao e suporte por SLA."
+        "pt": "Executamos a operação diária com relatórios mensais, registo de manutenção e suporte com SLA."
       }
     },
     {
@@ -273,12 +273,12 @@
       }
     },
     {
-      "id": "text:adhoc-1hqq0bx",
-      "selector": "[data-cms-id=\"text:adhoc-1hqq0bx\"]",
+      "id": "text:adhoc-rkk5ce",
+      "selector": "[data-cms-id=\"text:adhoc-rkk5ce\"]",
       "kind": "block",
       "value": {
         "en": "",
-        "pt": "\"A comunicação é clara, rápida e prática. Mesmo a partir do Canadá, sabemos sempre o estado exato do imóvel.\""
+        "pt": "\"Como proprietários locais, procurávamos um padrão operacional mais elevado. Tudo fica organizado, documentado e resolvido antes de se tornar um problema maior.\""
       }
     }
   ],
