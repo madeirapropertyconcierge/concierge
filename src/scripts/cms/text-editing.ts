@@ -3,7 +3,7 @@ import { normalizeServicePackageDocument } from '../../cms/content-normalization
 import { renderMarkdown } from '../../cms/markdown-core';
 import { normalizeCmsText } from '../../cms/text-normalization';
 import { applyCurrentState } from './apply';
-import { markDirty } from './banner-ui';
+import { markDirty, setDirty } from './banner-ui';
 import { locale, localeValue, normalizeTextInput, resolveCmsId, setLocaleValue } from './context';
 import { isSharedPackageElement, linkOwnsLabel } from './editable-dom';
 import {
@@ -118,7 +118,15 @@ function completeTextEdit(element: HTMLElement): void {
 }
 
 export function beginTextEdit(element: HTMLElement): void {
-  if (state.activeEditableElement && state.activeEditableElement !== element) {
+  // Already editing this element: keep the live buffer intact. Re-seeding
+  // textContent from the stored source below would silently revert whatever the
+  // admin has typed so far — the "edit disappears" symptom when the same field
+  // is clicked again mid-edit.
+  if (state.activeEditableElement === element) {
+    return;
+  }
+
+  if (state.activeEditableElement) {
     finalizeActiveTextEdit();
   }
 
@@ -138,8 +146,22 @@ export function beginTextEdit(element: HTMLElement): void {
 
   element.focus();
 
+  // Flip the page to "unsaved" the moment the admin actually types, so Publish
+  // and Discard enable immediately. Without this, the first edit on a clean page
+  // leaves Publish disabled (it is gated on `hasUnsavedChanges`) until the field
+  // is blurred. A disabled button swallows the click *and* does not blur the
+  // field, so the first Publish click neither commits nor publishes the edit —
+  // the admin has to click out and try again. Marking dirty on input keeps the
+  // button live so a single Publish click reliably saves.
+  const handleInput = (): void => {
+    if (!state.hasUnsavedChanges) {
+      setDirty(true);
+    }
+  };
+
   const handleBlur = (): void => {
     element.removeEventListener('blur', handleBlur);
+    element.removeEventListener('input', handleInput);
     element.removeAttribute('contenteditable');
     element.removeAttribute('data-cms-editing');
     completeTextEdit(element);
@@ -148,6 +170,7 @@ export function beginTextEdit(element: HTMLElement): void {
     }
   };
 
+  element.addEventListener('input', handleInput);
   element.addEventListener('blur', handleBlur);
 }
 

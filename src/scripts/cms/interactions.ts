@@ -14,6 +14,13 @@ export function handleEditClick(event: MouseEvent): void {
     return;
   }
 
+  // A click inside the field that is already being edited must place the caret
+  // normally — never re-enter edit mode (which resets the buffer to the stored
+  // source) and never preventDefault (which would block caret positioning).
+  if (state.activeEditableElement && state.activeEditableElement.contains(target)) {
+    return;
+  }
+
   const image = target.closest('img');
   if (image instanceof HTMLImageElement && image.closest('main')) {
     event.preventDefault();

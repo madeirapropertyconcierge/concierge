@@ -15,6 +15,7 @@ import { createPublicGalleryItem, renderImageLibrary, replaceSelectedImage, upse
 import { hydrateImageEditorForm } from './image-editing';
 import { findOrphanFields, removeOrphanFields } from './integrity';
 import { clearPendingAdminImagePreview, setPendingAdminImagePreview } from './preview-images';
+import { acceptPublishedWorkingState } from './publish-state';
 import { hydrateSeoForm } from './seo';
 import { state } from './store';
 import { finalizeActiveTextEdit } from './text-editing';
@@ -47,6 +48,20 @@ export async function refreshContent(): Promise<void> {
   hydrateStateFromResponse(response);
   setBannerVisibility();
   updateActionAvailability();
+}
+
+function applyPublishedWorkingState(commitSha?: string): void {
+  const published = acceptPublishedWorkingState(state, commitSha);
+  if (!published) {
+    return;
+  }
+
+  applyCurrentState();
+  renderImageLibrary();
+  renderBlogSelect();
+  hydrateSeoForm();
+  hydrateImageEditorForm();
+  setDirty(false);
 }
 
 async function syncBaseShaFromServer(): Promise<void> {
@@ -103,7 +118,7 @@ export async function publishChanges(): Promise<void> {
       setStatus(`Published ${payload.commitSha ?? ''}`.trim());
     }
 
-    await refreshContent();
+    applyPublishedWorkingState(payload.commitSha);
   } finally {
     setBusy(false);
   }
