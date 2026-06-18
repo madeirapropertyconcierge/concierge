@@ -41,10 +41,10 @@
     {
       "id": "text:hero-subtitle",
       "selector": "[data-cms-id=\"text:hero-subtitle\"]",
-      "kind": "inline",
+      "kind": "block",
       "value": {
         "en": "Founder-led property management in North Madeira for overseas owners. Bilingual EN/PT support. We offer absentee property owners a single, trusted point of contact for everything from routine property care, property protection, maintenance coordination, and guest coordination to fully managed Airbnb hosting.\nTrue peace of mind, wherever you are.",
-        "pt": "Gestao de propriedade na Madeira, liderada pela fundadora, para proprietarios no estrangeiro. Suporte bilingue EN/PT, reporting claro e execucao local de confianca."
+        "pt": "Gestão de propriedades na Madeira, liderada pela fundadora e dedicada a proprietários residentes no estrangeiro. Suporte bilingue EN/PT, reporting transparente e execução local de confiança."
       }
     },
     {
@@ -409,6 +409,30 @@
       "alt": {
         "en": "Terraced valley village surrounded by green mountains in Madeira",
         "pt": "Aldeia em socalcos rodeada por montanhas verdes na Madeira"
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
+    },
+    {
+      "id": "image:adhoc-1r3bn1z",
+      "selector": "[data-cms-id=\"image:adhoc-1r3bn1z\"]",
+      "src": "/images/library/img-3617.webp",
+      "alt": {
+        "en": "",
+        "pt": ""
+      },
+      "attributionName": "",
+      "attributionUrl": "",
+      "licenseUrl": ""
+    },
+    {
+      "id": "image:adhoc-1bcwga8",
+      "selector": "[data-cms-id=\"image:adhoc-1bcwga8\"]",
+      "src": "/images/library/1773415852020-img-0202.webp",
+      "alt": {
+        "en": "",
+        "pt": ""
       },
       "attributionName": "",
       "attributionUrl": "",
