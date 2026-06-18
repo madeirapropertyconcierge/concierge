@@ -253,42 +253,6 @@
         "en": "Start with a 30-minute diagnostic call. We'll work out whether your property needs care, guest support, revenue management, or flexible on-the-ground help.",
         "pt": "Comece com uma chamada de diagnostico de 30 minutos. Percebemos se o seu imovel precisa de cuidado, apoio a hospedes, revenue e hosting, ou ajuda flexivel no terreno."
       }
-    },
-    {
-      "id": "text:adhoc-jgca1y",
-      "selector": "[data-cms-id=\"text:adhoc-jgca1y\"]",
-      "kind": "block",
-      "value": {
-        "en": "",
-        "pt": "Experiência de Hóspede e Apoio ao Hosting"
-      }
-    },
-    {
-      "id": "text:adhoc-4bjruv",
-      "selector": "[data-cms-id=\"text:adhoc-4bjruv\"]",
-      "kind": "block",
-      "value": {
-        "en": "",
-        "pt": "Cobertura em Expansão na Costa Oeste"
-      }
-    },
-    {
-      "id": "text:adhoc-rkk5ce",
-      "selector": "[data-cms-id=\"text:adhoc-rkk5ce\"]",
-      "kind": "block",
-      "value": {
-        "en": "",
-        "pt": "\"Como proprietários locais, procurávamos um padrão operacional mais elevado. Tudo fica organizado, documentado e resolvido antes de se tornar um problema maior.\""
-      }
-    },
-    {
-      "id": "text:adhoc-1hnkml7",
-      "selector": "[data-cms-id=\"text:adhoc-1hnkml7\"]",
-      "kind": "block",
-      "value": {
-        "en": "",
-        "pt": ""
-      }
     }
   ],
   "links": [
@@ -445,30 +409,6 @@
       "alt": {
         "en": "Terraced valley village surrounded by green mountains in Madeira",
         "pt": "Aldeia em socalcos rodeada por montanhas verdes na Madeira"
-      },
-      "attributionName": "",
-      "attributionUrl": "",
-      "licenseUrl": ""
-    },
-    {
-      "id": "image:adhoc-1r3bn1z",
-      "selector": "[data-cms-id=\"image:adhoc-1r3bn1z\"]",
-      "src": "/images/library/img-3617.webp",
-      "alt": {
-        "en": "",
-        "pt": ""
-      },
-      "attributionName": "",
-      "attributionUrl": "",
-      "licenseUrl": ""
-    },
-    {
-      "id": "image:adhoc-1bcwga8",
-      "selector": "[data-cms-id=\"image:adhoc-1bcwga8\"]",
-      "src": "/images/library/1773415852020-img-0202.webp",
-      "alt": {
-        "en": "",
-        "pt": ""
       },
       "attributionName": "",
       "attributionUrl": "",
