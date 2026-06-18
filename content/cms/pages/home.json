@@ -253,6 +253,15 @@
         "en": "Start with a 30-minute diagnostic call. We'll work out whether your property needs care, guest support, revenue management, or flexible on-the-ground help.",
         "pt": "Comece com uma chamada de diagnostico de 30 minutos. Percebemos se o seu imovel precisa de cuidado, apoio a hospedes, revenue e hosting, ou ajuda flexivel no terreno."
       }
+    },
+    {
+      "id": "text:adhoc-1v5l3zv",
+      "selector": "[data-cms-id=\"text:adhoc-1v5l3zv\"]",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "."
+      }
     }
   ],
   "links": [
