@@ -2,6 +2,14 @@ import { describe, expect, it } from 'bun:test';
 import { acceptPublishedWorkingState } from './publish-state';
 import type { WorkingState } from './types';
 
+// Mirror the slice acceptPublishedWorkingState mutates. Without this, a literal
+// `publishedState: null` infers as `null`, so the post-call assertions read
+// properties off `never`.
+type PublishStateSlice = {
+  workingState: WorkingState | null;
+  publishedState: WorkingState | null;
+};
+
 function createWorkingState(baseSha: string): WorkingState {
   return {
     page: {
@@ -47,7 +55,7 @@ function createWorkingState(baseSha: string): WorkingState {
 
 describe('acceptPublishedWorkingState', () => {
   it('promotes the current working state to the published snapshot', () => {
-    const cmsState = {
+    const cmsState: PublishStateSlice = {
       workingState: createWorkingState('old-sha'),
       publishedState: null,
     };
@@ -61,7 +69,7 @@ describe('acceptPublishedWorkingState', () => {
   });
 
   it('keeps the saved snapshot independent from future draft edits', () => {
-    const cmsState = {
+    const cmsState: PublishStateSlice = {
       workingState: createWorkingState('old-sha'),
       publishedState: null,
     };
@@ -79,7 +87,7 @@ describe('acceptPublishedWorkingState', () => {
   });
 
   it('does nothing when there is no working state', () => {
-    const cmsState = {
+    const cmsState: PublishStateSlice = {
       workingState: null,
       publishedState: null,
     };

@@ -16,7 +16,11 @@ const TEXT_TAGS = new Set([
   'EM',
 ]);
 
-export function isSharedPackageElement(element: Element | null): element is HTMLElement {
+// Plain boolean predicate, not an `element is HTMLElement` guard: the sole
+// caller already holds an HTMLElement, and that narrowing collapsed the guard's
+// else-branch to `never` (silently disabling type-checking for the rest of
+// completeTextEdit). The runtime `instanceof HTMLElement` check still stands.
+export function isSharedPackageElement(element: Element | null): boolean {
   return Boolean(element instanceof HTMLElement && element.dataset.cmsSharedDoc === 'packages');
 }
 

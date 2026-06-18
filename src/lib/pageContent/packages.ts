@@ -25,6 +25,11 @@ export interface ServicePackage extends PricingTier {
   popular?: boolean;
 }
 
+/** A service package guaranteed not to be the `addOns` entry. */
+export type CoreServicePackage = ServicePackage & {
+  key: Exclude<ServicePackageKey, 'addOns'>;
+};
+
 function resolveLocaleText(
   value: {
     en: string;
@@ -64,9 +69,9 @@ export async function loadServicePackages(locale: SiteLocale): Promise<ServicePa
   });
 }
 
-export async function loadCoreServicePackages(locale: SiteLocale): Promise<ServicePackage[]> {
+export async function loadCoreServicePackages(locale: SiteLocale): Promise<CoreServicePackage[]> {
   const packages = await loadServicePackages(locale);
-  return packages.filter((item) => item.key !== 'addOns');
+  return packages.filter((item): item is CoreServicePackage => item.key !== 'addOns');
 }
 
 export async function loadFooterServiceLabels(locale: SiteLocale): Promise<string[]> {
