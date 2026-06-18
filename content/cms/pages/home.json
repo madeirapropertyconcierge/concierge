@@ -59,7 +59,7 @@
     {
       "id": "text:media-card-2-caption",
       "selector": "[data-cms-id=\"text:media-card-2-caption\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "Guest Experience & Hosting Support",
         "pt": "Experiencia de Hospede e Apoio de Hosting"
@@ -68,7 +68,7 @@
     {
       "id": "text:media-card-3-caption",
       "selector": "[data-cms-id=\"text:media-card-3-caption\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "West Coast Expansion Coverage",
         "pt": "Cobertura em Expansao na Costa Oeste"
@@ -104,10 +104,10 @@
     {
       "id": "text:trust-signal-2-label",
       "selector": "[data-cms-id=\"text:trust-signal-2-label\"]",
-      "kind": "block",
+      "kind": "inline",
       "value": {
         "en": "Owner response target",
-        "pt": "Objetivo de resposta ao Proprietário"
+        "pt": "Objetivo de resposta ao proprietario"
       }
     },
     {
@@ -255,21 +255,12 @@
       }
     },
     {
-      "id": "text:adhoc-jgca1y",
-      "selector": "[data-cms-id=\"text:adhoc-jgca1y\"]",
+      "id": "text:adhoc-1v5l3zv",
+      "selector": "[data-cms-id=\"text:adhoc-1v5l3zv\"]",
       "kind": "block",
       "value": {
         "en": "",
-        "pt": "Experiência de Hóspede e Apoio ao Hosting"
-      }
-    },
-    {
-      "id": "text:adhoc-4bjruv",
-      "selector": "[data-cms-id=\"text:adhoc-4bjruv\"]",
-      "kind": "block",
-      "value": {
-        "en": "",
-        "pt": "Cobertura em Expansão na Costa Oeste"
+        "pt": "."
       }
     }
   ],
@@ -315,7 +306,7 @@
       "selector": "[data-cms-id=\"link:hero-secondary-cta\"]",
       "label": {
         "en": "See Service Packages",
-        "pt": "Ver Pacotes de Serviço"
+        "pt": "Ver Pacotes de Servico"
       },
       "href": {
         "en": "/en/services",
