@@ -41,8 +41,9 @@ function isAuthenticated(token: string | null): boolean {
 export const GET: APIRoute = async ({ url, cookies }) => {
   try {
     const pageId = resolvePageId(url);
-    const [page, packages, allBlogPosts] = await Promise.all([
+    const [page, site, packages, allBlogPosts] = await Promise.all([
       loadPageDocument(pageId),
+      loadPageDocument('site'),
       loadServicePackageDocument(),
       listBlogPosts(),
     ]);
@@ -64,6 +65,7 @@ export const GET: APIRoute = async ({ url, cookies }) => {
 
     return jsonResponse({
       page,
+      site,
       packages,
       blogPosts,
       branchSha,

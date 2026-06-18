@@ -1,18 +1,28 @@
 ---
 import { renderBlockMarkdown, renderInlineMarkdown } from '../../cms/markdown';
+import { selectorForId } from '../../cms/cms-keys';
 
 interface Props {
   id: string;
-  selector: string;
+  selector?: string;
   kind: 'inline' | 'block';
   value: string;
   as?: string;
+  /**
+   * Content document this field belongs to. Defaults to the current page. Set to
+   * `"site"` for shared chrome (header/footer) so edits route to site.json and
+   * the server-side page renderer leaves the element untouched. Owner-bound
+   * fields are skipped by the middleware, so they emit their own
+   * `data-cms-source` for the editor to read.
+   */
+  owner?: string;
   class?: string;
 }
 
-const { id, selector, kind, value, as = 'span', class: className, ...rest } = Astro.props;
+const { id, selector, kind, value, as = 'span', owner, class: className, ...rest } = Astro.props;
 const Tag = as as keyof HTMLElementTagNameMap;
 const html = kind === 'block' ? renderBlockMarkdown(value) : renderInlineMarkdown(value);
+const resolvedSelector = selector ?? selectorForId(id);
 ---
 
 <Tag
@@ -20,7 +30,9 @@ const html = kind === 'block' ? renderBlockMarkdown(value) : renderInlineMarkdow
   class={className}
   data-cms-field="text"
   data-cms-id={id}
-  data-cms-selector={selector}
+  data-cms-selector={resolvedSelector}
   data-cms-kind={kind}
+  data-cms-owner={owner}
+  data-cms-source={owner ? value : undefined}
   set:html={html}
 />

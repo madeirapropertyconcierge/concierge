@@ -4,6 +4,7 @@ import { SITE } from '../../lib/constants';
 import type { Locale } from '../../i18n/utils';
 import { loadCoreServicePackages } from '../../lib/pageContent/packages';
 import { getSiteChromeContent, type SiteChromeContent } from '../../lib/pageContent/siteChrome';
+import EditableText from '../cms/EditableText.astro';
 
 interface Props {
   lang: Locale;
@@ -22,18 +23,34 @@ const copy = providedCopy ?? await getSiteChromeContent(lang);
   <div class="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
     <div class="grid gap-10 lg:grid-cols-12">
       <div class="lg:col-span-5">
-        <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-white/70">{copy.brand.fullName}</p>
-        <h3 class="mt-3 max-w-sm text-4xl leading-[1.05] text-white sm:text-5xl">{copy.footer.tagline}</h3>
-        <p class="mt-5 max-w-md text-sm leading-relaxed text-white/75">
-          {copy.footer.description}
+        <p class="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-white/70">
+          <EditableText as="span" id="text:brand-eyebrow" owner="site" kind="inline" value={copy.brand.eyebrow} />
+          {' '}
+          <EditableText as="span" id="text:brand-wordmark" owner="site" kind="inline" value={copy.brand.wordmark} />
         </p>
+        <EditableText
+          as="h3"
+          id="text:footer-tagline"
+          owner="site"
+          kind="inline"
+          value={copy.footer.tagline}
+          class="mt-3 max-w-sm text-4xl leading-[1.05] text-white sm:text-5xl"
+        />
+        <EditableText
+          as="p"
+          id="text:footer-description"
+          owner="site"
+          kind="inline"
+          value={copy.footer.description}
+          class="mt-5 max-w-md text-sm leading-relaxed text-white/75"
+        />
 
         <div class="mt-6 flex flex-wrap items-center gap-3">
           <a href={routes.contact} class="inline-flex items-center justify-center rounded-full bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-charcoal transition-colors hover:bg-golden-sand">
-            {copy.nav.cta}
+            <EditableText as="span" id="text:nav-cta" owner="site" kind="inline" value={copy.nav.cta} />
           </a>
           <a href={routes.services} class="inline-flex items-center justify-center rounded-full border border-white/28 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-colors hover:bg-white/20">
-            {copy.footer.ctaSecondary}
+            <EditableText as="span" id="text:footer-cta-secondary" owner="site" kind="inline" value={copy.footer.ctaSecondary} />
           </a>
         </div>
 
@@ -53,7 +70,7 @@ const copy = providedCopy ?? await getSiteChromeContent(lang);
       </div>
 
       <div class="lg:col-span-2">
-        <h4 class="footer-heading">{copy.nav.services}</h4>
+        <EditableText as="h4" id="text:nav-services" owner="site" kind="inline" value={copy.nav.services} class="footer-heading" />
         <ul class="footer-links">
           {serviceLinks.map((item) => (
             <li>
@@ -70,23 +87,23 @@ const copy = providedCopy ?? await getSiteChromeContent(lang);
               </a>
             </li>
           ))}
-          <li><a href={routes.pricing}>{copy.nav.pricing}</a></li>
+          <li><a href={routes.pricing}><EditableText as="span" id="text:nav-pricing" owner="site" kind="inline" value={copy.nav.pricing} /></a></li>
         </ul>
       </div>
 
       <div class="lg:col-span-2">
-        <h4 class="footer-heading">{copy.footer.companyHeading}</h4>
+        <EditableText as="h4" id="text:footer-company-heading" owner="site" kind="inline" value={copy.footer.companyHeading} class="footer-heading" />
         <ul class="footer-links">
-          <li><a href={routes.about}>{copy.nav.about}</a></li>
-          <li><a href={routes.howItWorks}>{copy.nav.howItWorks}</a></li>
-          <li><a href={routes.blog}>{copy.nav.blog}</a></li>
-          <li><a href={routes.faq}>{copy.nav.faq}</a></li>
-          <li><a href={routes.guide}>{copy.nav.guide}</a></li>
+          <li><a href={routes.about}><EditableText as="span" id="text:nav-about" owner="site" kind="inline" value={copy.nav.about} /></a></li>
+          <li><a href={routes.howItWorks}><EditableText as="span" id="text:nav-how-it-works" owner="site" kind="inline" value={copy.nav.howItWorks} /></a></li>
+          <li><a href={routes.blog}><EditableText as="span" id="text:nav-blog" owner="site" kind="inline" value={copy.nav.blog} /></a></li>
+          <li><a href={routes.faq}><EditableText as="span" id="text:nav-faq" owner="site" kind="inline" value={copy.nav.faq} /></a></li>
+          <li><a href={routes.guide}><EditableText as="span" id="text:nav-guide" owner="site" kind="inline" value={copy.nav.guide} /></a></li>
         </ul>
       </div>
 
       <div class="lg:col-span-3">
-        <h4 class="footer-heading">{copy.nav.contact}</h4>
+        <EditableText as="h4" id="text:nav-contact" owner="site" kind="inline" value={copy.nav.contact} class="footer-heading" />
         <ul class="footer-links">
           <li>
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
@@ -100,7 +117,7 @@ const copy = providedCopy ?? await getSiteChromeContent(lang);
     </div>
 
     <div class="mt-12 flex flex-col gap-3 border-t border-white/14 pt-6 text-xs text-white/60 sm:flex-row sm:items-center sm:justify-between">
-      <p>{copy.footer.copyright}</p>
+      <EditableText as="p" id="text:footer-copyright" owner="site" kind="inline" value={copy.footer.copyright} />
       <div class="flex flex-wrap gap-6">
         <a
           href="#"
@@ -110,13 +127,13 @@ const copy = providedCopy ?? await getSiteChromeContent(lang);
         >
           Admin
         </a>
-        <a href={routes.privacy} class="transition-colors hover:text-white">{copy.footer.privacy}</a>
-        <a href={routes.terms} class="transition-colors hover:text-white">{copy.footer.terms}</a>
+        <a href={routes.privacy} class="transition-colors hover:text-white"><EditableText as="span" id="text:footer-privacy" owner="site" kind="inline" value={copy.footer.privacy} /></a>
+        <a href={routes.terms} class="transition-colors hover:text-white"><EditableText as="span" id="text:footer-terms" owner="site" kind="inline" value={copy.footer.terms} /></a>
         <a href={SITE.legal.complaintsBookUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white">
-          {copy.footer.complaintsBook}
+          <EditableText as="span" id="text:footer-complaints-book" owner="site" kind="inline" value={copy.footer.complaintsBook} />
         </a>
         <a href={SITE.legal.adrInfoUrl} target="_blank" rel="noopener noreferrer" class="transition-colors hover:text-white">
-          {copy.footer.adrInfo}
+          <EditableText as="span" id="text:footer-adr-info" owner="site" kind="inline" value={copy.footer.adrInfo} />
         </a>
       </div>
     </div>

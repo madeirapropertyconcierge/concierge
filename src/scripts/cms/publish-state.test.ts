@@ -10,29 +10,38 @@ type PublishStateSlice = {
   publishedState: WorkingState | null;
 };
 
+function createEmptyPageDocument(pageId: string): WorkingState['page'] {
+  return {
+    pageId,
+    updatedAt: '2026-06-18T00:00:00.000Z',
+    seo: {
+      en: {
+        title: '',
+        description: '',
+        ogTitle: '',
+        ogDescription: '',
+        ogImage: '',
+        canonical: '',
+      },
+      pt: {
+        title: '',
+        description: '',
+        ogTitle: '',
+        ogDescription: '',
+        ogImage: '',
+        canonical: '',
+      },
+    },
+    texts: [],
+    links: [],
+    images: [],
+  };
+}
+
 function createWorkingState(baseSha: string): WorkingState {
   return {
     page: {
-      pageId: 'home',
-      updatedAt: '2026-06-18T00:00:00.000Z',
-      seo: {
-        en: {
-          title: '',
-          description: '',
-          ogTitle: '',
-          ogDescription: '',
-          ogImage: '',
-          canonical: '',
-        },
-        pt: {
-          title: '',
-          description: '',
-          ogTitle: '',
-          ogDescription: '',
-          ogImage: '',
-          canonical: '',
-        },
-      },
+      ...createEmptyPageDocument('home'),
       texts: [
         {
           id: 'text:hero',
@@ -41,9 +50,8 @@ function createWorkingState(baseSha: string): WorkingState {
           value: { en: 'Draft hero', pt: '' },
         },
       ],
-      links: [],
-      images: [],
     },
+    site: createEmptyPageDocument('site'),
     packages: {
       updatedAt: '2026-06-18T00:00:00.000Z',
       packages: [],

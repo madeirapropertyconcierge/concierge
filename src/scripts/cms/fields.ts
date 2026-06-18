@@ -8,41 +8,54 @@ import { state } from './store';
 import type {
   CmsImageField,
   CmsLinkField,
+  CmsPageDocument,
   CmsServicePackageEntry,
   CmsServicePackageField,
   CmsServicePackageKey,
   CmsTextField,
+  FieldOwner,
   Locale,
 } from './types';
 
-export function upsertTextField(field: CmsTextField): void {
+/** The working-state document an edit flows into, by owner. */
+function ownerDocument(owner: FieldOwner): CmsPageDocument | null {
   if (!state.workingState) {
+    return null;
+  }
+
+  return owner === 'site' ? state.workingState.site : state.workingState.page;
+}
+
+export function upsertTextField(field: CmsTextField, owner: FieldOwner = 'page'): void {
+  const doc = ownerDocument(owner);
+  if (!doc) {
     return;
   }
 
   const normalizedField = normalizeTextField(field);
-  const index = state.workingState.page.texts.findIndex((entry) => entry.id === field.id);
+  const index = doc.texts.findIndex((entry) => entry.id === field.id);
   if (index >= 0) {
-    state.workingState.page.texts[index] = normalizedField;
+    doc.texts[index] = normalizedField;
     return;
   }
 
-  state.workingState.page.texts.push(normalizedField);
+  doc.texts.push(normalizedField);
 }
 
-export function upsertLinkField(field: CmsLinkField): void {
-  if (!state.workingState) {
+export function upsertLinkField(field: CmsLinkField, owner: FieldOwner = 'page'): void {
+  const doc = ownerDocument(owner);
+  if (!doc) {
     return;
   }
 
   const normalizedField = normalizeLinkField(field);
-  const index = state.workingState.page.links.findIndex((entry) => entry.id === field.id);
+  const index = doc.links.findIndex((entry) => entry.id === field.id);
   if (index >= 0) {
-    state.workingState.page.links[index] = normalizedField;
+    doc.links[index] = normalizedField;
     return;
   }
 
-  state.workingState.page.links.push(normalizedField);
+  doc.links.push(normalizedField);
 }
 
 export function upsertImageField(field: CmsImageField): void {

@@ -5,7 +5,7 @@ import { normalizeCmsText } from '../../cms/text-normalization';
 import { applyCurrentState } from './apply';
 import { markDirty, setDirty } from './banner-ui';
 import { locale, localeValue, normalizeTextInput, resolveCmsId, setLocaleValue } from './context';
-import { isSharedPackageElement, linkOwnsLabel } from './editable-dom';
+import { elementOwner, isSharedPackageElement, linkOwnsLabel } from './editable-dom';
 import {
   findServicePackageEntry,
   readSharedPackageFieldValue,
@@ -15,7 +15,7 @@ import {
 } from './fields';
 import { openLinkEditor } from './link-editor';
 import { state } from './store';
-import type { CmsServicePackageField, CmsServicePackageKey } from './types';
+import type { CmsServicePackageField, CmsServicePackageKey, FieldOwner } from './types';
 
 // A <p> is phrasing-content only and cannot host block markup, so paragraph
 // fields stay inline. Only true containers may carry multi-block (block) markup.
@@ -80,10 +80,15 @@ function completeTextEdit(element: HTMLElement): void {
     return;
   }
 
+  // Site-chrome fields (header/footer) flow into the shared `site` document;
+  // everything else into the current page document.
+  const owner: FieldOwner = elementOwner(element) === 'site' ? 'site' : 'page';
+  const doc = owner === 'site' ? state.workingState.site : state.workingState.page;
+
   const id = resolveCmsId(element, 'text');
   const selector = selectorForId(id);
   const kind = MARKDOWN_BLOCK_TAGS.has(element.tagName) ? 'block' : 'inline';
-  const existing = state.workingState.page.texts.find((field) => field.id === id);
+  const existing = doc.texts.find((field) => field.id === id);
   const previousValue = existing
     ? localeValue(existing.value).trim()
     : normalizeTextInput(element.dataset.cmsSource ?? '');
@@ -103,7 +108,7 @@ function completeTextEdit(element: HTMLElement): void {
     selector,
     kind,
     value: nextLocaleValue,
-  });
+  }, owner);
 
   element.innerHTML = renderMarkdown(nextValue, kind);
   element.dataset.cmsField = 'text';

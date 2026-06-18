@@ -24,6 +24,7 @@ import type { ContentResponse, WorkingState } from './types';
 export function hydrateStateFromResponse(response: ContentResponse): void {
   const baseState: WorkingState = {
     page: normalizePageDocument(response.page),
+    site: normalizePageDocument(response.site),
     packages: normalizeServicePackageDocument(response.packages),
     blogPosts: response.blogPosts.map(normalizeBlogPost),
     baseSha: response.branchSha,
@@ -88,7 +89,7 @@ export async function publishChanges(): Promise<void> {
       'POST',
       '/api/admin/publish',
       {
-        pages: [state.workingState.page],
+        pages: [state.workingState.page, state.workingState.site],
         packages: state.workingState.packages,
         blogPosts: state.workingState.blogPosts,
         baseSha: state.workingState.baseSha,

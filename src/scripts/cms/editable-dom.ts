@@ -36,6 +36,20 @@ export function isSharedOwnedElement(element: Element | null): boolean {
   return Boolean(owner && owner.dataset.cmsOwner && owner.dataset.cmsOwner !== 'page');
 }
 
+/**
+ * The content document an element belongs to, taken from the nearest
+ * `data-cms-owner` ancestor (or the element itself). Unmarked elements default
+ * to `'page'`. The shared `packages` doc also reports its own owner string here,
+ * so callers that only care about page/site must compare explicitly.
+ */
+export function elementOwner(element: Element | null): string {
+  const owner = element instanceof HTMLElement
+    ? element.closest<HTMLElement>('[data-cms-owner]')
+    : null;
+
+  return owner?.dataset.cmsOwner || 'page';
+}
+
 export function isAdminControl(element: Element | null): boolean {
   return Boolean(element?.closest('[data-admin-allow]'));
 }
@@ -78,6 +92,14 @@ export function findEditableTextElement(target: Element): HTMLElement | null {
   const sharedElement = target.closest<HTMLElement>('[data-cms-shared-doc="packages"]');
   if (sharedElement?.closest('main')) {
     return sharedElement;
+  }
+
+  // Site chrome (header/footer) is keyed but lives outside <main>. Its fields
+  // are explicitly bound via data-cms-owner="site", so honor a click on one
+  // wherever it sits on the page.
+  const siteElement = target.closest<HTMLElement>('[data-cms-owner="site"][data-cms-field="text"][data-cms-id]');
+  if (siteElement && isTextCandidate(siteElement)) {
+    return siteElement;
   }
 
   // Prefer the authored/keyed text field when the click lands inside one, so a

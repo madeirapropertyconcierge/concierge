@@ -3,6 +3,7 @@ import { routeMap } from '../../i18n/routes';
 import { getAlternateRoute } from '../../i18n/routes';
 import type { Locale } from '../../i18n/utils';
 import { getSiteChromeContent, type SiteChromeContent } from '../../lib/pageContent/siteChrome';
+import EditableText from '../cms/EditableText.astro';
 import MobileNav from './MobileNav.astro';
 
 interface Props {
@@ -17,12 +18,12 @@ const alternatePath = getAlternateRoute(currentPath, lang === 'en' ? 'pt' : 'en'
 const copy = providedCopy ?? await getSiteChromeContent(lang);
 
 const navItems = [
-  { label: copy.nav.services, href: routes.services },
-  { label: copy.nav.about, href: routes.about },
-  { label: copy.nav.howItWorks, href: routes.howItWorks },
-  { label: copy.nav.pricing, href: routes.pricing },
-  { label: copy.nav.blog, href: routes.blog },
-  { label: copy.nav.contact, href: routes.contact },
+  { label: copy.nav.services, href: routes.services, cmsId: 'text:nav-services' },
+  { label: copy.nav.about, href: routes.about, cmsId: 'text:nav-about' },
+  { label: copy.nav.howItWorks, href: routes.howItWorks, cmsId: 'text:nav-how-it-works' },
+  { label: copy.nav.pricing, href: routes.pricing, cmsId: 'text:nav-pricing' },
+  { label: copy.nav.blog, href: routes.blog, cmsId: 'text:nav-blog' },
+  { label: copy.nav.contact, href: routes.contact, cmsId: 'text:nav-contact' },
 ];
 ---
 
@@ -30,8 +31,22 @@ const navItems = [
   <div class="mx-auto max-w-7xl">
     <div class="header-shell">
       <a href={routes.home} class="flex flex-col leading-none">
-        <span class="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-ocean-blue">{copy.brand.eyebrow}</span>
-        <span class="font-serif text-xl tracking-tight text-charcoal sm:text-2xl">{copy.brand.wordmark}</span>
+        <EditableText
+          as="span"
+          id="text:brand-eyebrow"
+          owner="site"
+          kind="inline"
+          value={copy.brand.eyebrow}
+          class="text-[0.62rem] font-semibold uppercase tracking-[0.22em] text-ocean-blue"
+        />
+        <EditableText
+          as="span"
+          id="text:brand-wordmark"
+          owner="site"
+          kind="inline"
+          value={copy.brand.wordmark}
+          class="font-serif text-xl tracking-tight text-charcoal sm:text-2xl"
+        />
       </a>
 
       <nav class="hidden xl:flex items-center gap-1" aria-label={copy.mobileNav.navigationLabel}>
@@ -43,7 +58,7 @@ const navItems = [
               currentPath === item.href || currentPath.startsWith(`${item.href}/`) ? 'nav-pill-active' : '',
             ]}
           >
-            {item.label}
+            <EditableText as="span" id={item.cmsId} owner="site" kind="inline" value={item.label} />
           </a>
         ))}
       </nav>
@@ -54,14 +69,14 @@ const navItems = [
           class="inline-flex h-10 min-w-10 items-center justify-center rounded-full border border-charcoal/15 bg-white/70 px-3 text-xs font-semibold uppercase tracking-[0.08em] text-charcoal transition-colors hover:bg-charcoal hover:text-white"
           aria-label={copy.nav.languageToggleAria}
         >
-          {copy.nav.languageToggle}
+          <EditableText as="span" id="text:nav-language-toggle" owner="site" kind="inline" value={copy.nav.languageToggle} />
         </a>
 
         <a
           href={routes.contact}
           class="hidden md:inline-flex items-center justify-center rounded-full bg-charcoal px-5 py-2.5 text-xs font-semibold uppercase tracking-[0.08em] text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-ocean-blue"
         >
-          {copy.nav.cta}
+          <EditableText as="span" id="text:nav-cta" owner="site" kind="inline" value={copy.nav.cta} />
         </a>
 
         <MobileNav

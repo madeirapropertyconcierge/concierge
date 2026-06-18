@@ -35,6 +35,14 @@ export type CmsBlogLocale = CmsBlogPost['locales']['en'];
 export type CmsBlogSeo = CmsBlogPost['seoByLocale']['en'];
 export type CmsServicePackageKey = CmsServicePackageEntry['key'];
 
+/**
+ * Which content document a DOM field's edits flow into. `page` is the current
+ * page document; `site` is the shared chrome document (`content/cms/pages/site.json`)
+ * that backs the header and footer on every page. The owner is read from the
+ * element's `data-cms-owner` attribute.
+ */
+export type FieldOwner = 'page' | 'site';
+
 export type CmsServicePackageField =
   | 'tierLabel'
   | 'title'
@@ -48,6 +56,7 @@ export type CmsServicePackageField =
 
 export interface ContentResponse {
   page: CmsPageDocument;
+  site: CmsPageDocument;
   packages: CmsServicePackageDocument;
   blogPosts: CmsBlogPost[];
   branchSha: string | null;
@@ -57,6 +66,7 @@ export interface ContentResponse {
 
 export interface WorkingState {
   page: CmsPageDocument;
+  site: CmsPageDocument;
   packages: CmsServicePackageDocument;
   blogPosts: CmsBlogPost[];
   baseSha: string | null;

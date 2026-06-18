@@ -1,6 +1,6 @@
 import { renderMarkdown } from '../../cms/markdown-core';
 import { locale, localeValue } from './context';
-import { isSharedOwnedElement, linkOwnsLabel } from './editable-dom';
+import { elementOwner, linkOwnsLabel } from './editable-dom';
 import { readSharedPackageFieldValue } from './fields';
 import { resolveAdminImageSrc } from './preview-images';
 import { updateSeoPreview } from './seo-preview';
@@ -10,6 +10,7 @@ import type {
   CmsServicePackageDocument,
   CmsServicePackageField,
   CmsServicePackageKey,
+  FieldOwner,
   LocaleText,
 } from './types';
 import { updateFallbackWarning, updateIntegrityWarning } from './warnings';
@@ -26,14 +27,14 @@ function markElementFallback(element: HTMLElement, used: boolean): void {
   }
 }
 
-function applyPageDocument(page: CmsPageDocument): void {
+function applyOwnedDocument(page: CmsPageDocument, owner: FieldOwner): void {
   for (const field of page.texts) {
     const source = localeValue(field.value);
     const rendered = renderMarkdown(source, field.kind);
     const fallback = localeFallbackUsed(field.value);
 
     document.querySelectorAll<HTMLElement>(field.selector).forEach((element) => {
-      if (isSharedOwnedElement(element)) {
+      if (elementOwner(element) !== owner) {
         return;
       }
 
@@ -54,7 +55,7 @@ function applyPageDocument(page: CmsPageDocument): void {
     const fallback = localeFallbackUsed(field.label) || localeFallbackUsed(field.href);
 
     document.querySelectorAll<HTMLElement>(field.selector).forEach((element) => {
-      if (isSharedOwnedElement(element)) {
+      if (elementOwner(element) !== owner) {
         return;
       }
 
@@ -92,7 +93,7 @@ function applyPageDocument(page: CmsPageDocument): void {
     const fallback = localeFallbackUsed(field.alt);
 
     document.querySelectorAll<HTMLImageElement>(field.selector).forEach((element) => {
-      if (isSharedOwnedElement(element)) {
+      if (elementOwner(element) !== owner) {
         return;
       }
 
@@ -138,7 +139,8 @@ export function applyCurrentState(): void {
   }
 
   applyServicePackageDocument(state.workingState.packages);
-  applyPageDocument(state.workingState.page);
+  applyOwnedDocument(state.workingState.page, 'page');
+  applyOwnedDocument(state.workingState.site, 'site');
   updateFallbackWarning(state.workingState.page);
   updateIntegrityWarning(state.workingState.page);
   updateSeoPreview(state.workingState.page);
