@@ -43,7 +43,7 @@
       "selector": "[data-cms-id=\"text:hero-subtitle\"]",
       "kind": "block",
       "value": {
-        "en": "Founder-led property management in North Madeira for overseas owners. Bilingual EN/PT support. We offer absentee property owners a single, trusted point of contact for everything from routine property care, property protection, maintenance coordination, and guest coordination to fully managed Airbnb hosting.\nTrue peace of mind, wherever you are.",
+        "en": "Founder-led property management in North Madeira for overseas owners. Bilingual EN/PT support. We offer absentee property owners a single, trusted point of contact for everything from routine property care, property protection, maintenance coordination, and guest coordination to fully managed Airbnb hosting.True peace of mind, wherever you are.",
         "pt": "Gestão de propriedades na Madeira, liderada pela fundadora e dedicada a proprietários residentes no estrangeiro. Suporte bilingue EN/PT, reporting transparente e execução local de confiança."
       }
     },
@@ -279,6 +279,15 @@
       "value": {
         "en": "",
         "pt": "\"Como proprietários locais, procurávamos um padrão operacional mais elevado. Tudo fica organizado, documentado e resolvido antes de se tornar um problema maior.\""
+      }
+    },
+    {
+      "id": "text:adhoc-1v5l3zv",
+      "selector": "[data-cms-id=\"text:adhoc-1v5l3zv\"]",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": ""
       }
     }
   ],
