@@ -216,11 +216,11 @@
       "price": {
         "headline": {
           "en": "€95/month",
-          "pt": "EUR95/mes"
+          "pt": "30% DA RECEITA BRUTA"
         },
         "detail": {
           "en": "+ 25% of gross rental revenue",
-          "pt": "+ 25% da receita bruta"
+          "pt": ""
         }
       },
       "audience": {
@@ -294,7 +294,7 @@
       },
       "audience": {
         "en": "Flexible, on-demand support for situations that require a trusted person on the ground.",
-        "pt": "Apoio flexivel e sob pedido para situacoes que exigem uma pessoa de confianca no terreno."
+        "pt": "Apoio flexível e sob pedido para situações que exigem uma pessoa de confiança no terreno."
       },
       "features": {
         "en": [
@@ -345,9 +345,9 @@
           "Guest prep, key handovers, styling, photography, and ongoing retained support when needed"
         ],
         "pt": [
-          "Suporte de emergencia, visitas extra, verificacoes de tempestade e espera por reparacoes ou entregas",
-          "Inventarios, recados, entregas, setup e gestao de utilidades, e apoio administrativo local",
-          "Preparacao para hospedes, entrega de chaves, styling, fotografia e apoio continuado quando necessario"
+          "Suporte de emergência, visitas adicionais, verificações após tempestades e acompanhamento de reparações ou entregas",
+          "Inventários, recados, receção de entregas, gestão de utilidades e apoio administrativo local",
+          "Preparação para hóspedes, entrega de chaves, styling, fotografia e apoio continuado sempre que necessário"
         ]
       },
       "homeBlurb": {
