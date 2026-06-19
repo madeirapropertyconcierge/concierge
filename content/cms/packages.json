@@ -38,18 +38,18 @@
         ],
         "pt": [
           "Guarda segura de chaves",
-          "Inspecao mensal ao interior e exterior da propriedade",
-          "Ventilacao e circulacao de agua para prevenir problemas",
-          "Verificacoes visuais de fugas, humidade, pragas ou danos causados pelo tempo",
-          "Verificacoes mensais em caso de tempestade e mau tempo",
-          "Relatorio fotografico enviado apos cada visita",
-          "Contacto de emergencia e coordenacao caso surja algum problema",
-          "Coordenacao com profissionais e prestadores de servicos locais de confianca"
+          "Inspeção mensal ao interior e exterior da propriedade",
+          "Ventilação e circulação de água para prevenir problemas",
+          "Verificações visuais de fugas, humidade, pragas e danos causados pelas condições meteorológicas",
+          "Verificações após tempestades e episódios de mau tempo",
+          "Relatório fotográfico enviado após cada visita",
+          "Contacto de emergência e coordenação em caso de qualquer problema",
+          "Coordenação com profissionais e prestadores de serviços locais de confiança"
         ]
       },
       "idealFor": {
         "en": "Homes that are vacant for extended periods and owners visiting once or twice per year.",
-        "pt": "Casas que ficam vazias durante longos periodos e cujos proprietarios visitam uma ou duas vezes por ano."
+        "pt": "Casas que permanecem vazias durante longos períodos e cujos proprietários as visitam apenas uma ou duas vezes por ano."
       },
       "servicesBullets": {
         "en": [
