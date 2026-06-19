@@ -215,11 +215,11 @@
       },
       "price": {
         "headline": {
-          "en": "€95/month",
+          "en": "30% of gross rental revenue",
           "pt": "30% DA RECEITA BRUTA"
         },
         "detail": {
-          "en": "+ 25% of gross rental revenue",
+          "en": "",
           "pt": ""
         }
       },
