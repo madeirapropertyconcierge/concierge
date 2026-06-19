@@ -253,6 +253,24 @@
         "en": "Start with a 30-minute diagnostic call. We'll work out whether your property needs care, guest support, revenue management, or flexible on-the-ground help.",
         "pt": "Comece com uma chamada de diagnóstico de 30 minutos. Percebemos se o seu imóvel precisa de cuidado, apoio a hóspedes, revenue e hosting, ou ajuda flexível no terreno."
       }
+    },
+    {
+      "id": "text:adhoc-1hqq0bx",
+      "selector": "[data-cms-id=\"text:adhoc-1hqq0bx\"]",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "\"A comunicação é clara, rápida e prática. Mesmo a partir do Canadá, sabemos sempre o estado exato do imóvel.\""
+      }
+    },
+    {
+      "id": "text:adhoc-rkk5ce",
+      "selector": "[data-cms-id=\"text:adhoc-rkk5ce\"]",
+      "kind": "block",
+      "value": {
+        "en": "",
+        "pt": "\"Como proprietários locais, queríamos um padrão operacional mais elevado. Tudo fica organizado, documentado e resolvido antes de se tornar um problema.\""
+      }
     }
   ],
   "links": [
