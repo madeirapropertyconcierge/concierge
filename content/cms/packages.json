@@ -23,7 +23,7 @@
       },
       "audience": {
         "en": "Designed for overseas owners who want peace of mind knowing their property is being checked and maintained in their absence.",
-        "pt": "Pensado para proprietarios no estrangeiro que querem tranquilidade, sabendo que a sua propriedade esta a ser verificada e mantida na sua ausencia."
+        "pt": "Pensado para proprietários no estrangeiro que procuram tranquilidade, sabendo que a sua propriedade está a ser regularmente verificada e mantida durante a sua ausência."
       },
       "features": {
         "en": [
@@ -58,9 +58,9 @@
           "Storm readiness, photo reporting, and coordination with trusted local trades when issues arise"
         ],
         "pt": [
-          "Guarda de chaves e inspecoes mensais ao interior e exterior",
-          "Ventilacao, circulacao de agua e verificacoes visuais de humidade, fugas, pragas ou danos do tempo",
-          "Preparacao para tempestades, relatorios fotograficos e coordenacao com fornecedores locais de confianca"
+          "Guarda de chaves e inspeções mensais ao interior e exterior da propriedade",
+          "Ventilação, circulação de água e verificações visuais de humidade, fugas, pragas e danos causados pelo tempo",
+          "Preparação para tempestades, relatórios fotográficos e coordenação com fornecedores locais de confiança"
         ]
       },
       "homeBlurb": {
@@ -90,7 +90,7 @@
       },
       "audience": {
         "en": "Our most popular option, offering local coordination for owners living abroad with families and occasional visitors.",
-        "pt": "A nossa opcao mais popular, oferecendo coordenacao local para proprietarios que vivem no estrangeiro, com familia e visitantes ocasionais."
+        "pt": "A nossa opção mais popular, oferecendo coordenação local para proprietários que vivem no estrangeiro, com familia e visitantes ocasionais."
       },
       "features": {
         "en": [
@@ -127,9 +127,9 @@
           "House cleaning, terrace sweeping, and utility management as additional support"
         ],
         "pt": [
-          "Assenta na base dos Cuidados Essenciais com coordenacao de chegadas e saidas",
-          "Utilidades ligadas e desligadas, lixo tratado, entrega de chaves, atualizacoes detalhadas e relatorios fotograficos",
-          "Limpeza da casa, varredura de terracos e gestao de utilidades como apoio adicional"
+          "Inclui todos os serviços do Pacote de Cuidados Essenciais, com coordenação adicional de chegadas e saídas.",
+          "Utilidades ligadas e desligadas, gestão de resíduos, entrega de chaves, atualizações detalhadas e relatórios fotográficos.",
+          "Limpeza da casa, varrimento de terraços e gestão de utilidades como apoio adicional"
         ]
       },
       "homeBlurb": {
