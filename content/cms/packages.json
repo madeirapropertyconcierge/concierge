@@ -316,27 +316,27 @@
           "Custom monthly retainers are available for ongoing support"
         ],
         "pt": [
-          "Chamadas de emergencia",
-          "Visitas adicionais a propriedade",
-          "Verificacoes de tempestade (fora do pacote)",
-          "Esperar por reparacoes, inspecoes ou entregas",
-          "Coordenacao de renovacao ou projetos com fornecedores (orcamento por escopo)",
-          "Inventario e verificacoes de estado",
-          "Entregas de mobiliario ou eletrodomesticos",
+          "Chamadas de emergência",
+          "Visitas adicionais à propriedade",
+          "Verificações após tempestades (fora do pacote)",
+          "Coordenação e acompanhamento de reparações, inspeções ou entregas",
+          "Coordenação de obras de renovação ou projetos com fornecedores (orçamento mediante avaliação do âmbito do projeto)",
+          "Inventário e verificações do estado da propriedade",
+          "Entregas de mobiliário ou eletrodomésticos",
           "Tarefas locais e apoio administrativo",
-          "Setup de utilidades de agua, gas, eletricidade ou Wi-Fi (EUR60 por utilidade)",
-          "Gestao de utilidades de agua, gas, eletricidade e Wi-Fi",
-          "Apoio na navegacao de servicos locais e burocracia",
-          "Coordenacao de guias turisticos licenciados para hospedes (orcamento por escopo)",
-          "Styling interior e fotografia profissional para anuncios (orcamento por escopo)",
-          "Preparacao de boas-vindas para hospedes (limpeza e essenciais) desde EUR80",
-          "Coordenacao de entrega de chaves: EUR35",
-          "Retainers mensais personalizados disponiveis para apoio continuo"
+          "Configuração de utilidades (água, gás, eletricidade ou Wi-Fi) – 60 € por serviço.",
+          "Gestão de utilidades (água, gás, eletricidade e Wi-Fi)",
+          "Apoio na gestão de serviços locais e burocracia",
+          "Coordenação de guias turísticos licenciados para hóspedes (orçamento mediante o âmbito do serviço)",
+          "Preparação e valorização do interior (home staging) e fotografia profissional para anúncios (orçamento personalizado consoante o âmbito do projeto)",
+          "Preparação de boas-vindas para hóspedes (limpeza e bens essenciais) – desde 80 €",
+          "Coordenação da entrega de chaves – 35 €",
+          "Retainers mensais personalizados disponíveis para apoio contínuo"
         ]
       },
       "idealFor": {
         "en": "Homeowners who don't want to commit to a monthly service fee but need a trusted local EN/PT person on the ground.",
-        "pt": "Proprietarios que nao querem comprometer-se com uma mensalidade, mas precisam de uma pessoa local EN/PT de confianca no terreno."
+        "pt": "Proprietários que não pretendem assumir uma mensalidade fixa, mas que valorizam ter uma pessoa local de confiança, com apoio bilingue em português e inglês, sempre que necessário."
       },
       "servicesBullets": {
         "en": [
