@@ -271,6 +271,24 @@
         "en": "",
         "pt": "\"Como proprietários locais, queríamos um padrão operacional mais elevado. Tudo fica organizado, documentado e resolvido antes de se tornar um problema.\""
       }
+    },
+    {
+      "id": "text:adhoc-1e9kmgz",
+      "selector": "[data-cms-id=\"text:adhoc-1e9kmgz\"]",
+      "kind": "inline",
+      "value": {
+        "en": "",
+        "pt": "Proprietário de apartamento, Funchal"
+      }
+    },
+    {
+      "id": "text:adhoc-1ykr1wg",
+      "selector": "[data-cms-id=\"text:adhoc-1ykr1wg\"]",
+      "kind": "inline",
+      "value": {
+        "en": "",
+        "pt": "Proprietário local, São Vicente"
+      }
     }
   ],
   "links": [
