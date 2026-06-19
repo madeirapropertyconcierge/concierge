@@ -22,7 +22,7 @@
         }
       },
       "audience": {
-        "en": "Designed for overseas owners who want peace of mind knowing their property is being checked and maintained in their absence.",
+        "en": "Designed for overseas owners who want peace of mind knowing their property is being checked and maintained in their absence.  See What's Included →",
         "pt": "Pensado para proprietários no estrangeiro que procuram tranquilidade, sabendo que a sua propriedade está a ser regularmente verificada e mantida durante a sua ausência."
       },
       "features": {
@@ -53,9 +53,9 @@
       },
       "servicesBullets": {
         "en": [
-          "Secure key holding plus monthly interior and exterior inspections",
-          "Ventilation, water run-throughs, and visual checks for damp, leaks, pests, or weather damage",
-          "Storm readiness, photo reporting, and coordination with trusted local trades when issues arise"
+          "",
+          "",
+          ""
         ],
         "pt": [
           "Guarda de chaves e inspeções mensais ao interior e exterior da propriedade",
@@ -89,7 +89,7 @@
         }
       },
       "audience": {
-        "en": "Our most popular option, offering local coordination for owners living abroad with families and occasional visitors.",
+        "en": "Our most popular option, offering local coordination for owners living abroad with families and occasional visitors.  See What's Included →",
         "pt": "A nossa opção mais popular, oferecendo coordenação local para proprietários que vivem no estrangeiro, com familia e visitantes ocasionais."
       },
       "features": {
@@ -122,9 +122,9 @@
       },
       "servicesBullets": {
         "en": [
-          "Builds on Essential Care with guest arrival and departure coordination",
-          "Utilities on and off, rubbish removal, key handovers, and detailed updates with photo reporting",
-          "House cleaning, terrace sweeping, and utility management as additional support"
+          "",
+          "",
+          ""
         ],
         "pt": [
           "Inclui todos os serviços do Pacote de Cuidados Essenciais, com coordenação adicional de chegadas e saídas.",
@@ -159,7 +159,7 @@
         }
       },
       "audience": {
-        "en": "A higher-touch service for owners who want more frequent oversight and faster response times. We keep a closer eye on your property, handling small issues early so they don't become bigger (and more expensive) problems.",
+        "en": "A higher-touch service for owners who want more frequent oversight and faster response times. We keep a closer eye on your property, handling small issues early so they don't become bigger (and more expensive) problems.  See What's Included →",
         "pt": "Um serviço mais próximo para proprietários que pretendem uma maior frequência de supervisão e tempos de resposta mais rápidos. Mantemos uma vigilância mais atenta sobre a propriedade, identificando e resolvendo pequenos problemas atempadamente, antes que se tornem situações mais complexas e dispendiosas."
       },
       "features": {
@@ -188,9 +188,9 @@
       },
       "servicesBullets": {
         "en": [
-          "Two property visits per month with interior and exterior checks",
-          "Priority response for urgent issues plus minor troubleshooting and fixes during visits",
-          "Routine maintenance coordination, enhanced photo reporting, and seasonal readiness checks"
+          "",
+          "",
+          ""
         ],
         "pt": [
           "Duas visitas por mês, com verificações ao interior e exterior da propriedade",
@@ -224,7 +224,7 @@
         }
       },
       "audience": {
-        "en": "A fully managed white-glove service for international owners seeking to earn revenue from their properties with complete peace of mind. We manage everything end-to-end, from listings and guest communication to on-the-ground coordination.",
+        "en": "A fully managed white-glove service for international owners seeking to earn revenue from their properties with complete peace of mind. We manage everything end-to-end, from listings and guest communication to on-the-ground coordination.  See What's Included →",
         "pt": "Um serviço premium, totalmente gerido, para proprietários internacionais que pretendem gerar receita com total tranquilidade. Gerimos toda a operação de ponta a ponta, desde a criação e gestão dos anúncios e a comunicação com os hóspedes até à coordenação local no terreno."
       },
       "features": {
@@ -257,9 +257,9 @@
       },
       "servicesBullets": {
         "en": [
-          "Managed Care support plus multi-platform listings, guest messaging, and booking management",
-          "Listing optimisation, dynamic pricing, and monthly performance reporting",
-          "AL licensing support and multi-platform setup for Airbnb, Booking.com, and Vrbo"
+          "",
+          "",
+          ""
         ],
         "pt": [
           "Inclui todos os serviços do Pacote de Gestão Assistida, além da criação e gestão de anúncios em múltiplas plataformas, comunicação com hóspedes e gestão de reservas",
@@ -293,7 +293,7 @@
         }
       },
       "audience": {
-        "en": "Flexible, on-demand support for situations that require a trusted person on the ground.",
+        "en": "Flexible, on-demand support for situations that require a trusted person on the ground.  See What's Included →",
         "pt": "Apoio flexível e sob pedido para situações que exigem uma pessoa de confiança no terreno."
       },
       "features": {
@@ -340,9 +340,9 @@
       },
       "servicesBullets": {
         "en": [
-          "Emergency support, extra property visits, storm checks, and waiting time for repairs or deliveries",
-          "Inventories, errands, furniture deliveries, utility setup and management, and local admin support",
-          "Guest prep, key handovers, styling, photography, and ongoing retained support when needed"
+          "",
+          "",
+          ""
         ],
         "pt": [
           "Suporte de emergência, visitas adicionais, verificações após tempestades e acompanhamento de reparações ou entregas",
